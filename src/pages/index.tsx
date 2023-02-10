@@ -1,4 +1,12 @@
+import {
+  AppButton,
+  HomeGoNextSectionButton,
+  NavBarButton,
+} from "@/components/buttons";
+import { NavBar } from "@/components/layout";
+import { HomeSection, HomeSectionsContainer } from "@/components/sections";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -10,10 +18,58 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={"text-4xl font-bold text-teal-500 text-center"}>
-          Hello World
-        </h1>
+      <main className="snap-mandatory snap-y h-screen overflow-y-auto bg-secondary-100">
+        <section className="h-screen min-h-[30rem] snap-center flex flex-col relative">
+          <NavBar />
+
+          <Image
+            className="object-cover block absolute inset-0 w-full h-full object-bottom"
+            src="/pages/home/sections/first-background.png"
+            height={1280}
+            width={720}
+            aria-hidden
+            alt=""
+          />
+
+          <div className="z-10 flex flex-col items-center justify-center flex-1 space-y-8">
+            <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
+              <p className="text-xl font-medium text-primary-600">
+                {"Welcome to the kid's corner"}
+              </p>
+
+              <h1 className="text-5xl leading-snug font-normal text-neutral-dark-700">
+                Discover the fascinating secrets of the Amazon
+              </h1>
+
+              <p className="text-base font-medium text-neutral-dark-500">
+                And help us protect its animals, plants and communities.
+              </p>
+            </header>
+
+            <div className="space-x-4">
+              <AppButton variant="primary">Discover the Amazon!</AppButton>
+              <AppButton variant="secondary">Support our work</AppButton>
+            </div>
+          </div>
+
+          <Image
+            className="object-cover block absolute left-0 top-[80px] bottom-0 my-auto w-[45vh] min-w-[17rem] max-w-[371px] max-h-[calc(100%_-_120px)] object-bottom"
+            src="/pages/home/sections/first-illustration-left.png"
+            height={631}
+            width={371}
+            aria-hidden
+            alt=""
+          />
+
+          <Image
+            className="object-cover block absolute right-0 top-[80px] bottom-0 my-auto w-[45vh] min-w-[17rem] max-w-[314px] max-h-[calc(100%_-_120px)] object-bottom"
+            src="/pages/home/sections/first-illustration-right.png"
+            height={1071}
+            width={314}
+            aria-hidden
+            alt=""
+          />
+        </section>
       </main>
     </>
   );
