@@ -3,7 +3,7 @@ import { NavBarLink } from "./buttons";
 
 export function NavBar() {
   return (
-    <header className="pt-6 pb-2 z-10 border-b-1 border-neutral-500 flex mx-6 flex-row justify-between">
+    <header className="relative pt-6 pb-2 z-10 border-b-1 border-neutral-500 flex mx-6 flex-row justify-between">
       <Image
         src="/large-logo.png"
         height={66}
