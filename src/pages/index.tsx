@@ -1,7 +1,7 @@
 import {
   AppButton,
   HomeGoNextSectionButton,
-  NavBarButton,
+  NavBarLink,
 } from "@/components/buttons";
 import { NavBar } from "@/components/layout";
 import { HomeSection, HomeSectionsContainer } from "@/components/sections";

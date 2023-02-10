@@ -1,6 +1,27 @@
 import clsx from "clsx";
 import { IconRight } from "./icons/icons";
 import { useHomeSectionNavigation } from "./sections";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+type NavLinkProps = Omit<PropsOf<typeof Link>, "className"> & {
+  className?: string | ((isActive: boolean) => string);
+};
+function NavLink({ className, ...props }: NavLinkProps) {
+  const router = useRouter();
+
+  return (
+    <Link
+      aria-current={router.pathname === props.href ? "page" : false}
+      className={
+        typeof className === "function"
+          ? className(router.pathname === props.href)
+          : className
+      }
+      {...props}
+    />
+  );
+}
 
 export function HomeGoNextSectionButton() {
   const { onGoNext } = useHomeSectionNavigation();
@@ -15,21 +36,29 @@ export function HomeGoNextSectionButton() {
   );
 }
 
-export function NavBarButton(props: {
+export function NavBarLink(props: {
   className?: string;
+  href: string;
   children?: React.ReactNode;
-  onClick?: () => void;
 }) {
   return (
-    <button
-      className={clsx(
-        "hover:bg-neutral-100 text-neutral-dark-500 hover:text-neutral-dark-800 px-4 py-2 rounded-lg transition-all duration-75 hover:bg-opacity-50",
-        props.className
-      )}
-      onClick={props.onClick}
+    <NavLink
+      className={(isActive) =>
+        clsx(
+          "relative",
+          "transition-all duration-75 ease-in-out",
+          "after:absolute after:inset-x-0 after:bottom-[-0.9rem] after:h-[2px] after:pointer-events-none",
+          isActive
+            ? "after:bg-primary-600 after:scale-x-100 text-primary-600"
+            : "after:bg-transparent after:scale-x-0 text-neutral-dark-500",
+          "px-4 py-4 transition-all duration-75",
+          props.className
+        )
+      }
+      href={props.href}
     >
       {props.children}
-    </button>
+    </NavLink>
   );
 }
 

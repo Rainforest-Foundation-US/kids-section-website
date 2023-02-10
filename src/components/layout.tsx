@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { NavBarButton } from "./buttons";
+import { NavBarLink } from "./buttons";
 
 export function NavBar() {
   return (
@@ -11,11 +11,11 @@ export function NavBar() {
         alt="Rainforest Logo"
       />
 
-      <div className="flex flex-row space-x-2 items-center">
-        <NavBarButton>Home</NavBarButton>
-        <NavBarButton>About the Amazon</NavBarButton>
-        <NavBarButton>Narratives</NavBarButton>
-        <NavBarButton>Q&A</NavBarButton>
+      <div className="flex-row space-x-2 items-center hidden md:flex">
+        <NavBarLink href="/">Home</NavBarLink>
+        <NavBarLink href="/about-the-amazon">About the Amazon</NavBarLink>
+        <NavBarLink href="/narratives">Narratives</NavBarLink>
+        <NavBarLink href="/q-and-a">Q&A</NavBarLink>
       </div>
     </header>
   );

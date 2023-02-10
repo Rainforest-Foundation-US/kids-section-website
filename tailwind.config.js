@@ -6,6 +6,7 @@ module.exports = {
       sans: ["var(--app-font)"],
     },
     colors: {
+      transparent: "transparent",
       "neutral-dark": {
         100: "#969C89",
         300: "#878C7B",
