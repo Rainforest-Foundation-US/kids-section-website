@@ -1,12 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer utilities {
-  .green-shadow {
-    box-shadow: 6px 6px 0px rgba(0, 41, 0, 0.16);
-  }
-  .gray-shadow {
-    box-shadow: 6px 6px 0px rgba(60, 62, 55, 0.08);
-  }
-}

@@ -3,10 +3,18 @@ import {
   HomeGoNextSectionButton,
   NavBarLink,
 } from "@/components/buttons";
-import { NavBar } from "@/components/layout";
+import { Footer, NavBar } from "@/components/layout";
 import { HomeSection, HomeSectionsContainer } from "@/components/sections";
+import clsx from "clsx";
 import Head from "next/head";
 import Image from "next/image";
+
+const fujifilmImages = [
+  { id: 1, text: "Fujifilm Instax Wide Format" },
+  { id: 2, text: "Fujifilm Instax Wide Format" },
+  { id: 3, text: "Fujifilm Instax Wide Format" },
+  { id: 4, text: "Fujifilm Instax Wide Format" },
+];
 
 export default function Home() {
   return (
@@ -18,42 +26,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="snap-mandatory snap-y h-screen overflow-y-auto bg-secondary-100">
-        <section className="h-screen min-h-[30rem] snap-center flex flex-col relative">
-          <NavBar />
-
-          <Image
-            className="object-cover block absolute inset-0 w-full h-full object-bottom"
-            src="/pages/home/sections/first-background.png"
-            height={1280}
-            width={720}
-            aria-hidden
-            alt=""
-          />
-
-          <div className="z-10 flex flex-col items-center justify-center flex-1 space-y-8">
-            <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
-              <p className="text-xl font-medium text-primary-600">
-                {"Welcome to the kid's corner"}
-              </p>
-
-              <h1 className="text-5xl leading-snug font-normal text-neutral-dark-700">
-                Discover the fascinating secrets of the Amazon
-              </h1>
-
-              <p className="text-base font-medium text-neutral-dark-500">
-                And help us protect its animals, plants and communities.
-              </p>
-            </header>
-
-            <div className="space-x-4">
-              <AppButton variant="primary">Discover the Amazon!</AppButton>
-              <AppButton variant="secondary">Support our work</AppButton>
-            </div>
-          </div>
-
-          <Image
-            className="object-cover block absolute left-0 top-[80px] bottom-0 my-auto w-[45vh] min-w-[17rem] max-w-[371px] max-h-[calc(100%_-_120px)] object-bottom"
+      <main className="bg-secondary-100">
+        <div className="flex flex-col relative">
+          {/* <Image
+            className="object-cover z-20 block absolute left-0 top-[8rem] min-w-[17rem] max-w-[371px] object-bottom"
             src="/pages/home/sections/first-illustration-left.png"
             height={631}
             width={371}
@@ -62,14 +38,151 @@ export default function Home() {
           />
 
           <Image
-            className="object-cover block absolute right-0 top-[80px] bottom-0 my-auto w-[45vh] min-w-[17rem] max-w-[314px] max-h-[calc(100%_-_120px)] object-bottom"
+            className="object-cover z-20 block absolute right-0 top-[25rem] min-w-[17rem] max-w-[314px] object-bottom"
             src="/pages/home/sections/first-illustration-right.png"
             height={1071}
             width={314}
             aria-hidden
             alt=""
-          />
-        </section>
+          /> */}
+
+          <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
+            <NavBar />
+
+            <Image
+              className="absolute top-0 left-0 right-0 object-cover block w-full object-bottom h-full"
+              src="/pages/home/sections/first-background.png"
+              height={1280}
+              width={720}
+              aria-hidden
+              alt=""
+            />
+
+            <section className="z-10 relative flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
+              <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
+                <p className="text-xl font-medium text-primary-600">
+                  {"Welcome to the kid's corner"}
+                </p>
+
+                <h1 className="text-5xl leading-snug font-normal text-neutral-dark-700">
+                  Discover the fascinating secrets of the Amazon
+                </h1>
+
+                <p className="text-base font-medium text-neutral-dark-500">
+                  And help us protect its animals, plants and communities.
+                </p>
+              </header>
+
+              <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+                <AppButton variant="primary">Discover the Amazon!</AppButton>
+                <AppButton variant="secondary">Support our work</AppButton>
+              </div>
+            </section>
+          </div>
+
+          <div className="relative pb-12">
+            <div className="absolute inset-0 w-full">
+              <Image
+                className="object-cover absolute -mt-[360px] inset-x-0 block w-full object-center h-[640px]"
+                src="/pages/home/sections/first-divider.png"
+                height={640}
+                width={1280}
+                aria-hidden
+                alt=""
+              />
+
+              <Image
+                className="object-cover block w-full object-bottom h-full"
+                src="/pages/home/sections/second-background.png"
+                height={1349}
+                width={720}
+                aria-hidden
+                alt=""
+              />
+            </div>
+            <div className="absolute inset-0 w-full overflow-hidden">
+              <Image
+                className="object-cover absolute -mb-[160px] bottom-0 inset-x-0 block w-full object-center h-[640px]"
+                src="/pages/home/sections/second-divider.png"
+                height={640}
+                width={1280}
+                aria-hidden
+                alt=""
+              />
+            </div>
+
+            <div className="z-10 relative flex flex-col items-center justify-center flex-1 -mt-[calc(542px_/_2)] px-2">
+              <div className="w-full max-w-[814px] h-[542px] bg-secondary-100 p-2 shadow-app-lg shadow-shadow-gray -z-10 flex flex-col border-1 border-neutral-600">
+                <p className="my-auto text-center">Video here</p>
+              </div>
+            </div>
+
+            <div className="z-30 relative">
+              <section className="flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
+                <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
+                  <h2 className="text-5xl leading-snug font-normal text-neutral-dark-700">
+                    Kids from over the world are supporting our mission
+                  </h2>
+
+                  <p className="text-base font-medium text-neutral-dark-500">
+                    What are you waiting to join our squad?
+                  </p>
+                </header>
+
+                <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+                  <AppButton variant="primary">Discover the Amazon!</AppButton>
+                  <AppButton variant="secondary">Support our work</AppButton>
+                </div>
+              </section>
+
+              <ul className="z-10 flex flex-row-reverse items-center justify-center flex-1 mt-10 px-2 space-x-4 flex-wrap space-y-4">
+                {fujifilmImages.map((image, i) => {
+                  const isOdd = i % 2 !== 0;
+                  return (
+                    <li
+                      key={image.id}
+                      className={clsx(
+                        "transition-all duration-75",
+                        "p-4 bg-neutral-100 min-w-[272px] box-content border-1 border-neutral-600 shadow-app-lg shadow-shadow-gray",
+                        isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
+                        "hover:rotate-0 hover:z-10 hover:scale-105"
+                      )}
+                    >
+                      <div className="aspect-[13_/_10] w-full bg-secondary-300" />
+
+                      <p className="text-center pt-4 text-base">{image.text}</p>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <section className="z-30 flex flex-col items-center justify-center flex-1 space-y-4 px-2">
+                <header className="text-center max-w-[605px] space-y-4 bg-secondary-100 rounded-lg bg-opacity-0">
+                  <Image
+                    className="object-cover z-20 relative block mx-auto object-center -mt-4"
+                    src="/pages/home/sections/second-illustration-center.png"
+                    height={372}
+                    width={314}
+                    aria-hidden
+                    alt=""
+                  />
+
+                  <h2 className="text-4xl leading-snug font-normal text-neutral-dark-700">
+                    Teach the Amazon in class
+                  </h2>
+                </header>
+
+                <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+                  <AppButton variant="secondary">
+                    Resources for educators
+                  </AppButton>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <Footer />
       </main>
     </>
   );

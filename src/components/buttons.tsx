@@ -28,7 +28,7 @@ export function HomeGoNextSectionButton() {
 
   return (
     <button
-      className="border-2 border-primary-100 bg-primary-500 w-20 h-20 rounded-full flex items-center justify-center green-shadow"
+      className="border-2 border-primary-100 bg-primary-500 w-20 h-20 rounded-full flex items-center justify-center shadow-green-shadow"
       onClick={onGoNext}
     >
       <IconRight />
@@ -78,11 +78,20 @@ export function AppButton({
         "duration-75 transition-all",
         "text-base font-medium",
         "px-8 py-4 rounded-lg",
-        "border-1",
+        "border-1 shadow-app-lg",
+        "active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+
+        // Primary
         props.variant === "primary" &&
-          "text-primary-800 bg-primary-500 border-primary-600 green-shadow",
+          "text-primary-800 bg-primary-500 border-primary-600 shadow-shadow-green",
+        props.variant === "primary" &&
+          "hover:bg-primary-400 active:bg-primary-500",
+
+        // Secondary
         props.variant === "secondary" &&
-          "text-neutral-dark-600 bg-secondary-100 border-neutral-600 gray-shadow",
+          "text-neutral-dark-600 bg-secondary-100 border-neutral-600 shadow-shadow-gray",
+        props.variant === "secondary" &&
+          "hover:bg-neutral-100 active:bg-secondary-100",
         props.className
       )}
       onClick={props.onClick}

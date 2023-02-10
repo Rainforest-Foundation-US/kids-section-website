@@ -2,6 +2,15 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      "2xs": "380px",
+      xs: "480px",
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     fontFamily: {
       sans: ["var(--app-font)"],
     },
@@ -70,10 +79,19 @@ module.exports = {
         700: "#B54708",
         800: "#93370D",
       },
+      shadow: {
+        green: "rgba(0, 41, 0, 0.16)",
+        gray: "rgba(60, 62, 55, 0.08)",
+      },
     },
     extend: {
       borderWidth: {
         1: "1px",
+      },
+      boxShadow: {
+        "app-sm": "2px 2px 0px var(--tw-shadow-color)",
+        "app-md": "2px 2px 0px var(--tw-shadow-color)",
+        "app-lg": "6px 6px 0px var(--tw-shadow-color)",
       },
     },
   },

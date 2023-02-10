@@ -20,3 +20,28 @@ export function NavBar() {
     </header>
   );
 }
+
+export function Footer() {
+  return (
+    <footer className="bg-neutral-dark-700 py-10">
+      <div className="max-w-[1022px] w-full mx-auto">
+        <div className="flex flex-row justify-between items-center">
+          <Image
+            src="/large-logo-white.png"
+            height={66}
+            width={262}
+            alt="Rainforest Logo"
+          />
+
+          <nav>
+            <ul>
+              {/* <li>
+                <a href="/">Home</a>
+              </li> */}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+  );
+}
