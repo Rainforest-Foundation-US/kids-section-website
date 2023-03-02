@@ -1,6 +1,6 @@
 import {
   AppButton,
-  HomeGoNextSectionButton,
+  HomeGoToSectionButton,
   NavBarLink,
 } from "@/components/buttons";
 import { Footer, NavBar } from "@/components/layout";
@@ -54,6 +54,7 @@ export default function Home() {
               src="/pages/home/sections/first-background.png"
               height={1280}
               width={720}
+              priority
               aria-hidden
               alt=""
             />
@@ -88,6 +89,7 @@ export default function Home() {
                 height={640}
                 width={1280}
                 aria-hidden
+                priority
                 alt=""
               />
 

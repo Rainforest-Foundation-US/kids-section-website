@@ -23,7 +23,7 @@ function NavLink({ className, ...props }: NavLinkProps) {
   );
 }
 
-export function HomeGoNextSectionButton() {
+export function HomeGoToSectionButton() {
   const { onGoNext } = useHomeSectionNavigation();
 
   return (

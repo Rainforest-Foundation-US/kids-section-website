@@ -15,7 +15,8 @@ const HomeSectionContext = createContext<
 
 type HomeSectionDispatchFn = (
   ref: React.RefObject<HTMLDivElement>,
-  action: "add" | "remove"
+  action: "add" | "remove",
+  sectionNumber: number
 ) => void;
 const HomeSectionDispatchContext = createContext<
   HomeSectionDispatchFn | undefined
@@ -37,38 +38,41 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
     []
   );
 
-  const dispatch: HomeSectionDispatchFn = useCallback((ref, action) => {
-    if (!ref.current) return;
+  const dispatch: HomeSectionDispatchFn = useCallback(
+    (ref, action, sectionNumber) => {
+      if (!ref.current) return;
 
-    setSections((prev) => {
-      if (!ref.current) return prev;
+      setSections((prev) => {
+        if (!ref.current) return prev;
 
-      const newSections = Array.from(prev);
+        const newSections = Array.from(prev);
 
-      if (action === "add") {
-        observer.current?.observe(ref.current);
-        newSections.push(ref);
-      } else {
-        const index = newSections.indexOf(ref);
-        observer.current?.unobserve(ref.current);
-        newSections.splice(index, 1);
-      }
+        if (action === "add") {
+          observer.current?.observe(ref.current);
+          newSections.splice(sectionNumber, 0, ref);
+        } else {
+          const index = newSections.indexOf(ref);
+          observer.current?.unobserve(ref.current);
+          newSections.splice(index, 1);
+        }
 
-      return newSections;
-    });
-  }, []);
+        return newSections;
+      });
+    },
+    []
+  );
 
   const onObserverIntersect = useEvent(
     (entries: IntersectionObserverEntry[]) => {
-      // During my tests, this entries should be at most 1 on Chrome.
+      // During my tests, this entries should be at most 1 on Chrome
+      // but I left this here for completeness.
       for (const entry of entries) {
-        for (const [i, section] of sections.entries()) {
-          if (!section?.current) continue;
+        if (entry.isIntersecting) {
+          const divElement = entry.target as HTMLDivElement;
+          const sectionNumber = Number(divElement.dataset.sectionNumber);
 
-          if (section.current === entry.target && entry.isIntersecting) {
-            setCurrentSection(i);
-            console.log("Section is intersecting", entry.isIntersecting);
-          }
+          setCurrentSection(sectionNumber);
+          break;
         }
       }
     }
@@ -128,22 +132,28 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
 }
 
 export function HomeSection(props: {
+  number: number;
   className?: string;
   children?: React.ReactNode;
 }) {
+  const sectionNumber = props.number;
   const dispatch = useContext(HomeSectionDispatchContext);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (dispatch) {
-      dispatch(ref, "add");
+      dispatch(ref, "add", sectionNumber);
 
-      return () => dispatch(ref, "remove");
+      return () => dispatch(ref, "remove", sectionNumber);
     }
-  }, [dispatch]);
+  }, [dispatch, sectionNumber]);
 
   return (
-    <section ref={ref} className={props.className}>
+    <section
+      data-section-number={sectionNumber}
+      ref={ref}
+      className={props.className}
+    >
       {props.children}
     </section>
   );

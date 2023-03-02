@@ -1,10 +1,13 @@
-import { HomeGoNextSectionButton, NavBarLink } from "@/components/buttons";
-import { NavBar } from "@/components/layout";
+import { HomeGoToSectionButton, NavBarLink } from "@/components/buttons";
+import { LearningPath, NavBar } from "@/components/layout";
 import { HomeSection, HomeSectionsContainer } from "@/components/sections";
+import clsx from "clsx";
 import Head from "next/head";
 import Image from "next/image";
 
 export default function Home() {
+  const isScrollSnappingEnabled = false;
+
   return (
     <>
       <Head>
@@ -14,9 +17,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="snap-mandatory snap-y h-screen overflow-y-auto bg-neutral-600">
+      <main
+        className={clsx(
+          isScrollSnappingEnabled && "snap-mandatory snap-y",
+          "h-screen overflow-y-auto bg-neutral-600"
+        )}
+      >
         <HomeSectionsContainer>
-          <HomeSection className="h-screen snap-center flex flex-col relative">
+          <HomeSection
+            number={0}
+            className="min-h-screen snap-center flex flex-col relative"
+          >
             <NavBar />
 
             <Image
@@ -28,20 +39,38 @@ export default function Home() {
               alt=""
             />
 
-            <div className="z-10">
-              <HomeGoNextSectionButton />
+            <div className="relative z-10 flex flex-row flex-1 p-6">
+              <div className="flex flex-1 flex-col items-center justify-center">
+                <header className="max-w-[24.5rem] space-y-6">
+                  <h1 className="text-4xl text-neutral-dark-700">
+                    You are probably wondering, <b>What is a rainforest?</b>
+                  </h1>
+
+                  <HomeGoToSectionButton />
+                </header>
+              </div>
+
+              <aside className="w-[289px]">
+                <LearningPath />
+              </aside>
             </div>
           </HomeSection>
 
-          <HomeSection className="h-screen snap-center flex bg-complementary-600 relative">
+          <HomeSection
+            number={1}
+            className="h-screen snap-center flex bg-complementary-600 relative"
+          >
             <div className="z-10">
-              <HomeGoNextSectionButton />
+              <HomeGoToSectionButton />
             </div>
           </HomeSection>
 
-          <HomeSection className="h-screen snap-center bg-error-700 flex relative">
+          <HomeSection
+            number={2}
+            className="h-screen snap-center bg-error-700 flex relative"
+          >
             <div className="z-10">
-              <HomeGoNextSectionButton />
+              <HomeGoToSectionButton />
             </div>
           </HomeSection>
         </HomeSectionsContainer>
