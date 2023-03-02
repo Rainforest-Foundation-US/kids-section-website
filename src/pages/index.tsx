@@ -61,7 +61,7 @@ export default function Home() {
             <section className="z-10 relative flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
               <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
                 <p className="text-xl font-medium text-primary-600">
-                  {"Welcome to the kid's corner"}
+                  {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
                 <h1 className="text-5xl leading-snug font-normal text-neutral-dark-700">
@@ -121,11 +121,11 @@ export default function Home() {
               <section className="flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
                 <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
                   <h2 className="text-5xl leading-snug font-normal text-neutral-dark-700">
-                    Kids from over the world are supporting our mission
+                    Kids from around the world are helping protect the Amazon
                   </h2>
 
                   <p className="text-base font-medium text-neutral-dark-500">
-                    What are you waiting to join our squad?
+                    What are you waiting for?
                   </p>
                 </header>
 
