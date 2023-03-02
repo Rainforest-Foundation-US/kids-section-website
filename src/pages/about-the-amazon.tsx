@@ -91,7 +91,7 @@ export default function Home() {
               />
 
               <Image
-                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col border-1 border-neutral-600 bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
                 src="/pages/about-the-amazon/activities/1-img.webp"
                 height={1280}
                 width={720}
@@ -132,7 +132,7 @@ export default function Home() {
               />
 
               <Image
-                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col border-1 border-neutral-600 bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
                 src="/pages/about-the-amazon/activities/1-img.webp"
                 height={1280}
                 width={720}
