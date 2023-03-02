@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 export function NavBar() {
   return (
-    <header className="relative pt-6 pb-2 z-10 border-b-1 border-neutral-500 flex mx-6 flex-row justify-between">
+    <header className="relative z-10 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pt-6 pb-2">
       <Image
         src="/large-logo.png"
         height={66}
@@ -17,7 +17,7 @@ export function NavBar() {
         alt="Rainforest Logo"
       />
 
-      <div className="flex-row space-x-2 items-center hidden md:flex">
+      <div className="hidden flex-row items-center space-x-2 md:flex">
         <NavBarLink href="/">Home</NavBarLink>
         <NavBarLink href="/about-the-amazon">About the Amazon</NavBarLink>
         <NavBarLink href="/narratives">Narratives</NavBarLink>
@@ -30,8 +30,8 @@ export function NavBar() {
 export function Footer() {
   return (
     <footer className="bg-neutral-dark-700 py-10">
-      <div className="max-w-[1022px] w-full mx-auto">
-        <div className="flex flex-row justify-between items-center">
+      <div className="mx-auto w-full max-w-[1022px]">
+        <div className="flex flex-row items-center justify-between">
           <Image
             src="/large-logo-white.png"
             height={66}
@@ -130,9 +130,9 @@ export function LearningPath() {
   return (
     <div
       role="menu"
-      className="bg-[rgba(250,245,238,0.8)] rounded-2xl border-neutral-600 border-1 shadow-shadow-gray shadow-app-lg overflow-hidden"
+      className="overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray"
     >
-      <div className="p-6 text-xl text-neutral-dark-500 flex items-center justify-between">
+      <div className="flex items-center justify-between p-6 text-xl text-neutral-dark-500">
         <p>Learning Path</p>
 
         <button type="button" onClick={collapse}>
@@ -149,7 +149,7 @@ export function LearningPath() {
         <div ref={containerRef}>
           <div className="border-b-1 border-neutral-600" />
 
-          <div className="p-9 pt-6 space-y-7">
+          <div className="space-y-7 p-9 pt-6">
             <ol className="space-y-7">
               {learningPath.map((section) => (
                 <li key={section.id}>
@@ -166,7 +166,7 @@ export function LearningPath() {
                         activeSection === section.id
                           ? "bg-primary-600"
                           : "bg-neutral-500",
-                        "inline-block align-middle w-8 h-8 mb-1 rounded-full mr-2 text-neutral-100 text-center p-1"
+                        "mb-1 mr-2 inline-block h-8 w-8 rounded-full p-1 text-center align-middle text-neutral-100"
                       )}
                     >
                       {section.number}
@@ -181,9 +181,9 @@ export function LearningPath() {
                       {section.activities.map((activity) => (
                         <li
                           key={activity.id}
-                          className="pl-2 flex flex-row items-center space-x-6"
+                          className="flex flex-row items-center space-x-6 pl-2"
                         >
-                          <span className="w-2 h-2 bg-neutral-500 block rounded-full" />
+                          <span className="block h-2 w-2 rounded-full bg-neutral-500" />
 
                           <p
                             className={clsx(
@@ -203,7 +203,7 @@ export function LearningPath() {
             </ol>
 
             <AppButton variant="secondary" className="w-full">
-              <IconHeart className="inline mr-2" /> How to help?
+              <IconHeart className="mr-2 inline" /> How to help?
             </AppButton>
           </div>
         </div>

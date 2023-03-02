@@ -28,7 +28,7 @@ export function HomeGoToSectionButton() {
 
   return (
     <button
-      className="border-2 border-primary-100 bg-primary-500 w-20 h-20 rounded-full flex items-center justify-center shadow-green-shadow"
+      className="shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500"
       onClick={onGoNext}
     >
       <IconRight />
@@ -47,10 +47,10 @@ export function NavBarLink(props: {
         clsx(
           "relative",
           "transition-all duration-75 ease-in-out",
-          "after:absolute after:inset-x-0 after:bottom-[-0.9rem] after:h-[2px] after:pointer-events-none",
+          "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-0.9rem] after:h-[2px]",
           isActive
-            ? "after:bg-primary-600 after:scale-x-100 text-primary-600"
-            : "after:bg-transparent after:scale-x-0 text-neutral-dark-500",
+            ? "text-primary-600 after:scale-x-100 after:bg-primary-600"
+            : "text-neutral-dark-500 after:scale-x-0 after:bg-transparent",
           "px-4 py-4 transition-all duration-75",
           props.className
         )
@@ -75,21 +75,17 @@ export function AppButton({
   return (
     <button
       className={clsx(
-        "duration-75 transition-all",
-        "text-base font-medium",
-        "px-8 py-4 rounded-lg",
-        "border-1 shadow-app-lg",
-        "active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
 
         // Primary
         props.variant === "primary" &&
-          "text-primary-800 bg-primary-500 border-primary-600 shadow-shadow-green",
+          "border-primary-600 bg-primary-500 text-primary-800 shadow-shadow-green",
         props.variant === "primary" &&
           "hover:bg-primary-400 active:bg-primary-500",
 
         // Secondary
         props.variant === "secondary" &&
-          "text-neutral-dark-600 bg-secondary-100 border-neutral-600 shadow-shadow-gray",
+          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
         props.variant === "secondary" &&
           "hover:bg-neutral-100 active:bg-secondary-100",
         props.className

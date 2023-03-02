@@ -1,3 +1,26 @@
+function dashedBordersPlugin(matchUtilities, theme) {
+  console.log(theme("borderRadius"));
+
+  matchUtilities(
+    {
+      "dashed-border": (value) => {
+        const offset = 12;
+        const intValue = parseInt(value, 10);
+
+        let className = `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='${value}' ry='${value}' stroke='black' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='${offset}' stroke-linecap='square'/%3e%3c/svg%3e")`;
+
+        return {
+          "background-image": className,
+        };
+      },
+    },
+    {
+      values: theme("borderRadius"),
+      type: ["length"],
+    }
+  );
+}
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -95,5 +118,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ matchUtilities, theme }) {
+      dashedBordersPlugin(matchUtilities, theme);
+    },
+  ],
 };

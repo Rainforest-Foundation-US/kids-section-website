@@ -1,3 +1,4 @@
+import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
 import { HomeGoToSectionButton, NavBarLink } from "@/components/buttons";
 import { LearningPath, NavBar } from "@/components/layout";
 import { HomeSection, HomeSectionsContainer } from "@/components/sections";
@@ -19,19 +20,19 @@ export default function Home() {
 
       <main
         className={clsx(
-          isScrollSnappingEnabled && "snap-mandatory snap-y",
+          isScrollSnappingEnabled && "snap-y snap-mandatory",
           "h-screen overflow-y-auto bg-neutral-600"
         )}
       >
         <HomeSectionsContainer>
           <HomeSection
             number={0}
-            className="min-h-screen snap-center flex flex-col relative"
+            className="relative flex min-h-screen snap-center flex-col"
           >
             <NavBar />
 
             <Image
-              className="object-cover block absolute inset-0 w-full h-full"
+              className="absolute inset-0 block h-full w-full object-cover"
               src="/sections/welcome/background.png"
               height={1280}
               width={720}
@@ -39,10 +40,10 @@ export default function Home() {
               alt=""
             />
 
-            <div className="relative z-10 flex flex-row flex-1 p-6">
+            <div className="relative z-10 flex flex-1 flex-row p-6">
               <div className="flex flex-1 flex-col items-center justify-center">
                 <header className="max-w-[24.5rem] space-y-6">
-                  <h1 className="text-4xl text-neutral-dark-700">
+                  <h1 className="text-4xl leading-snug text-neutral-dark-700">
                     You are probably wondering, <b>What is a rainforest?</b>
                   </h1>
 
@@ -58,18 +59,86 @@ export default function Home() {
 
           <HomeSection
             number={1}
-            className="h-screen snap-center flex bg-complementary-600 relative"
+            className="relative flex h-screen snap-center"
           >
-            <div className="z-10">
+            <Image
+              className="absolute inset-0 block h-full w-full object-cover"
+              src="/pages/about-the-amazon/activities/1-bg.png"
+              height={1280}
+              width={720}
+              aria-hidden
+              alt=""
+            />
+
+            <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
+              <header className="text-center">
+                <p className="text-xl font-medium leading-snug text-primary-600">
+                  Click on the box with the right answer
+                </p>
+                <p className="text-4xl leading-snug text-neutral-dark-700">
+                  Rainforest are exactly what you’d think!
+                </p>
+              </header>
+
+              <FillInTheBlankActivity
+                question="Very <blank /> forest biomes!"
+                numberToOptions={{
+                  0: {
+                    options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
+                    correctOptionPosition: 3,
+                  },
+                }}
+              />
+
+              <Image
+                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col border-1 border-neutral-600 bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+                src="/pages/about-the-amazon/activities/1-img.webp"
+                height={1280}
+                width={720}
+                aria-hidden
+                alt=""
+              />
+
               <HomeGoToSectionButton />
             </div>
           </HomeSection>
 
           <HomeSection
             number={2}
-            className="h-screen snap-center bg-error-700 flex relative"
+            className="relative flex h-screen snap-center"
           >
-            <div className="z-10">
+            <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
+              <header className="text-center">
+                <p className="text-xl font-medium leading-snug text-primary-600">
+                  Click on the box with the right answer
+                </p>
+                <p className="text-4xl leading-snug text-neutral-dark-700">
+                  Thanks to the rain
+                </p>
+              </header>
+
+              <FillInTheBlankActivity
+                question="rainforests have <blank /> climates. They stay <blank /> all year round."
+                numberToOptions={{
+                  0: {
+                    options: ["Warm", "Cold", "Wet", "Dry"],
+                    correctOptionPosition: 1,
+                  },
+                  1: {
+                    options: ["Green", "Happy"],
+                    correctOptionPosition: 1,
+                  },
+                }}
+              />
+
+              <Image
+                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col border-1 border-neutral-600 bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+                src="/pages/about-the-amazon/activities/1-img.webp"
+                height={1280}
+                width={720}
+                aria-hidden
+                alt=""
+              />
               <HomeGoToSectionButton />
             </div>
           </HomeSection>

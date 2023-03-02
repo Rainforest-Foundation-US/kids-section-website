@@ -4,6 +4,7 @@ import {
   NavBarLink,
 } from "@/components/buttons";
 import { Footer, NavBar } from "@/components/layout";
+import { Polaroid } from "@/components/polaroid";
 import { HomeSection, HomeSectionsContainer } from "@/components/sections";
 import clsx from "clsx";
 import Head from "next/head";
@@ -27,7 +28,7 @@ export default function Home() {
       </Head>
 
       <main className="bg-secondary-100">
-        <div className="flex flex-col relative">
+        <div className="relative flex flex-col">
           {/* <Image
             className="object-cover z-20 block absolute left-0 top-[8rem] min-w-[17rem] max-w-[371px] object-bottom"
             src="/pages/home/sections/first-illustration-left.png"
@@ -50,7 +51,7 @@ export default function Home() {
             <NavBar />
 
             <Image
-              className="absolute top-0 left-0 right-0 object-cover block w-full object-bottom h-full"
+              className="absolute top-0 left-0 right-0 block h-full w-full object-cover object-bottom"
               src="/pages/home/sections/first-background.png"
               height={1280}
               width={720}
@@ -59,13 +60,13 @@ export default function Home() {
               alt=""
             />
 
-            <section className="z-10 relative flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
-              <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
+            <section className="relative z-10 mt-16 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
+              <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
                 <p className="text-xl font-medium text-primary-600">
                   {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
-                <h1 className="text-5xl leading-snug font-normal text-neutral-dark-700">
+                <h1 className="text-5xl font-normal leading-snug text-neutral-dark-700">
                   Discover the fascinating secrets of the Amazon
                 </h1>
 
@@ -74,7 +75,7 @@ export default function Home() {
                 </p>
               </header>
 
-              <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+              <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
                 <AppButton variant="primary">Discover the Amazon!</AppButton>
                 <AppButton variant="secondary">Support our work</AppButton>
               </div>
@@ -84,7 +85,7 @@ export default function Home() {
           <div className="relative pb-12">
             <div className="absolute inset-0 w-full">
               <Image
-                className="object-cover absolute -mt-[360px] inset-x-0 block w-full object-center h-[640px]"
+                className="absolute inset-x-0 -mt-[360px] block h-[640px] w-full object-cover object-center"
                 src="/pages/home/sections/first-divider.png"
                 height={640}
                 width={1280}
@@ -94,7 +95,7 @@ export default function Home() {
               />
 
               <Image
-                className="object-cover block w-full object-bottom h-full"
+                className="block h-full w-full object-cover object-bottom"
                 src="/pages/home/sections/second-background.png"
                 height={1349}
                 width={720}
@@ -104,7 +105,7 @@ export default function Home() {
             </div>
             <div className="absolute inset-0 w-full overflow-hidden">
               <Image
-                className="object-cover absolute -mb-[160px] bottom-0 inset-x-0 block w-full object-center h-[640px]"
+                className="absolute inset-x-0 bottom-0 -mb-[160px] block h-[640px] w-full object-cover object-center"
                 src="/pages/home/sections/second-divider.png"
                 height={640}
                 width={1280}
@@ -113,16 +114,16 @@ export default function Home() {
               />
             </div>
 
-            <div className="z-10 relative flex flex-col items-center justify-center flex-1 -mt-[calc(542px_/_2)] px-2">
-              <div className="w-full max-w-[814px] h-[542px] bg-secondary-100 p-2 shadow-app-lg shadow-shadow-gray -z-10 flex flex-col border-1 border-neutral-600">
+            <div className="relative z-10 -mt-[calc(542px_/_2)] flex flex-1 flex-col items-center justify-center px-2">
+              <div className="-z-10 flex h-[542px] w-full max-w-[814px] flex-col border-1 border-neutral-600 bg-secondary-100 p-2 shadow-app-lg shadow-shadow-gray">
                 <p className="my-auto text-center">Video here</p>
               </div>
             </div>
 
-            <div className="z-30 relative">
-              <section className="flex flex-col items-center justify-center flex-1 mt-16 space-y-8 px-2">
-                <header className="text-center max-w-[605px] space-y-2 bg-secondary-100 rounded-lg bg-opacity-0 py-4">
-                  <h2 className="text-5xl leading-snug font-normal text-neutral-dark-700">
+            <div className="relative z-30">
+              <section className="mt-16 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
+                <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
+                  <h2 className="text-5xl font-normal leading-snug text-neutral-dark-700">
                     Kids from around the world are helping protect the Amazon
                   </h2>
 
@@ -131,37 +132,33 @@ export default function Home() {
                   </p>
                 </header>
 
-                <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+                <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
                   <AppButton variant="primary">Discover the Amazon!</AppButton>
                   <AppButton variant="secondary">Support our work</AppButton>
                 </div>
               </section>
 
-              <ul className="z-10 flex flex-row-reverse items-center justify-center flex-1 mt-10 px-2 space-x-4 flex-wrap space-y-4">
+              <ul className="z-10 mt-10 flex flex-1 flex-row-reverse flex-wrap items-center justify-center space-x-4 space-y-4 px-2">
                 {fujifilmImages.map((image, i) => {
                   const isOdd = i % 2 !== 0;
                   return (
-                    <li
-                      key={image.id}
-                      className={clsx(
-                        "transition-all duration-75",
-                        "p-4 bg-neutral-100 min-w-[272px] box-content border-1 border-neutral-600 shadow-app-lg shadow-shadow-gray",
-                        isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
-                        "hover:rotate-0 hover:z-10 hover:scale-105"
-                      )}
-                    >
-                      <div className="aspect-[13_/_10] w-full bg-secondary-300" />
-
-                      <p className="text-center pt-4 text-base">{image.text}</p>
+                    <li key={image.id}>
+                      <Polaroid
+                        className={clsx(
+                          isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
+                          "hover:z-10 hover:rotate-0 hover:scale-105"
+                        )}
+                        src=""
+                      />
                     </li>
                   );
                 })}
               </ul>
 
-              <section className="z-30 flex flex-col items-center justify-center flex-1 space-y-4 px-2">
-                <header className="text-center max-w-[605px] space-y-4 bg-secondary-100 rounded-lg bg-opacity-0">
+              <section className="z-30 flex flex-1 flex-col items-center justify-center space-y-4 px-2">
+                <header className="max-w-[605px] space-y-4 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
                   <Image
-                    className="object-cover z-20 relative block mx-auto object-center -mt-4"
+                    className="relative z-20 mx-auto -mt-4 block object-cover object-center"
                     src="/pages/home/sections/second-illustration-center.png"
                     height={372}
                     width={314}
@@ -169,12 +166,12 @@ export default function Home() {
                     alt=""
                   />
 
-                  <h2 className="text-4xl leading-snug font-normal text-neutral-dark-700">
+                  <h2 className="text-4xl font-normal leading-snug text-neutral-dark-700">
                     Teach the Amazon in class
                   </h2>
                 </header>
 
-                <div className="xs:space-x-4 space-y-4 xs:space-y-0 text-center">
+                <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
                   <AppButton variant="secondary">
                     Resources for educators
                   </AppButton>
