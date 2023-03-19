@@ -59,7 +59,7 @@ export default function Home() {
 
           <HomeSection
             number={1}
-            className="relative flex h-screen snap-center"
+            className="relative flex min-h-screen snap-center"
           >
             <Image
               className="absolute inset-0 block h-full w-full object-cover"
@@ -105,7 +105,7 @@ export default function Home() {
 
           <HomeSection
             number={2}
-            className="relative flex h-screen snap-center"
+            className="relative flex min-h-screen snap-center"
           >
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
               <header className="text-center">
