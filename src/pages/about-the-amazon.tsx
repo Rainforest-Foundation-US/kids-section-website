@@ -1,7 +1,11 @@
 import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
 import { HomeGoToSectionButton } from "@/components/buttons";
 import { LearningPath, NavBar } from "@/components/layout";
-import { HomeSection, HomeSectionsContainer } from "@/components/sections";
+import {
+  ActivitySection,
+  ActivitySectionDivider,
+  HomeSectionsContainer,
+} from "@/components/sections";
 import clsx from "clsx";
 import Head from "next/head";
 import Image from "next/image";
@@ -24,7 +28,7 @@ export default function Home() {
         )}
       >
         <HomeSectionsContainer>
-          <HomeSection
+          <ActivitySection
             number={0}
             className="relative flex min-h-screen snap-center flex-col"
           >
@@ -54,9 +58,9 @@ export default function Home() {
                 <LearningPath />
               </aside>
             </div>
-          </HomeSection>
+          </ActivitySection>
 
-          <HomeSection
+          <ActivitySection
             number={1}
             className="relative flex min-h-screen snap-center"
           >
@@ -68,6 +72,8 @@ export default function Home() {
               aria-hidden
               alt=""
             />
+
+            <ActivitySectionDivider />
 
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
               <header className="text-center">
@@ -100,12 +106,14 @@ export default function Home() {
 
               <HomeGoToSectionButton />
             </div>
-          </HomeSection>
+          </ActivitySection>
 
-          <HomeSection
+          <ActivitySection
             number={2}
             className="relative flex min-h-screen snap-center"
           >
+            <ActivitySectionDivider />
+
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
               <header className="text-center">
                 <p className="text-xl font-medium leading-snug text-primary-600">
@@ -140,7 +148,7 @@ export default function Home() {
               />
               <HomeGoToSectionButton />
             </div>
-          </HomeSection>
+          </ActivitySection>
         </HomeSectionsContainer>
       </main>
     </>

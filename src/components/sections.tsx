@@ -131,7 +131,7 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
   );
 }
 
-export function HomeSection(props: {
+export function ActivitySection(props: {
   number: number;
   className?: string;
   children?: React.ReactNode;
@@ -156,6 +156,18 @@ export function HomeSection(props: {
     >
       {props.children}
     </section>
+  );
+}
+
+export function ActivitySectionDivider() {
+  return (
+    <div
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #CACBC2 50%, rgba(217, 217, 201, 0) 100%)",
+      }}
+      className="absolute inset-x-0 h-[720px] -translate-y-[50%]"
+    />
   );
 }
 
