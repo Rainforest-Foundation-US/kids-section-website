@@ -1,12 +1,7 @@
-import {
-  AppButton,
-  AppLink,
-  HomeGoToSectionButton,
-  NavBarLink,
-} from "@/components/buttons";
+import { AppButton, AppLink } from "@/components/buttons";
+import { HomeChameleonIllustration } from "@/components/home-illustrations";
 import { Footer, NavBar } from "@/components/layout";
 import { Polaroid } from "@/components/polaroid";
-import { HomeSection, HomeSectionsContainer } from "@/components/sections";
 import clsx from "clsx";
 import Head from "next/head";
 import Image from "next/image";
@@ -27,24 +22,6 @@ export default function Home() {
 
       <main className="bg-secondary-100">
         <div className="relative flex flex-col">
-          {/* <Image
-            className="object-cover z-20 block absolute left-0 top-[8rem] min-w-[17rem] max-w-[371px] object-bottom"
-            src="/pages/home/sections/first-illustration-left.png"
-            height={631}
-            width={371}
-            aria-hidden
-            alt=""
-          />
-
-          <Image
-            className="object-cover z-20 block absolute right-0 top-[25rem] min-w-[17rem] max-w-[314px] object-bottom"
-            src="/pages/home/sections/first-illustration-right.png"
-            height={1071}
-            width={314}
-            aria-hidden
-            alt=""
-          /> */}
-
           <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
             <NavBar />
 
@@ -58,28 +35,39 @@ export default function Home() {
               alt=""
             />
 
-            <section className="relative z-10 mt-16 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
-              <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
-                <p className="text-xl font-medium text-primary-600">
-                  {"Welcome to the RFUS Kids' Corner!"}
-                </p>
+            <div className="flex flex-col md:mt-16 md:flex-row">
+              <HomeChameleonIllustration className="relative block w-[8rem] min-w-[8rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
 
-                <h1 className="text-5xl font-normal leading-snug text-neutral-dark-700">
-                  Discover the fascinating secrets of the Amazon
-                </h1>
+              <section className="relative z-10 flex flex-1 flex-shrink-0 basis-[50%] flex-col items-center justify-center space-y-8 px-2">
+                <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
+                  <p className="text-xl font-medium text-primary-600">
+                    {"Welcome to the RFUS Kids' Corner!"}
+                  </p>
 
-                <p className="text-base font-medium text-neutral-dark-500">
-                  And help us protect its animals, plants and communities.
-                </p>
-              </header>
+                  <h1 className="text-5xl font-normal leading-snug text-neutral-dark-700">
+                    Discover the fascinating secrets of the Amazon
+                  </h1>
 
-              <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
-                <AppLink variant="primary" href="/about-the-amazon">
-                  Discover the Amazon!
-                </AppLink>
-                <AppButton variant="secondary">Support our work</AppButton>
-              </div>
-            </section>
+                  <p className="text-base font-medium text-neutral-dark-500">
+                    And help us protect its animals, plants and communities.
+                  </p>
+                </header>
+
+                <div className="space-y-4 text-center xs:space-x-4">
+                  <AppLink
+                    className="inline-block"
+                    variant="primary"
+                    href="/about-the-amazon"
+                  >
+                    Discover the Amazon!
+                  </AppLink>
+
+                  <AppButton variant="secondary">Support our work</AppButton>
+                </div>
+              </section>
+
+              <HomeChameleonIllustration className="invisible relative ml-auto block w-[8rem] min-w-[8rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
+            </div>
           </div>
 
           <div className="relative pb-12">

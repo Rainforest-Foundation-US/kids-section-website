@@ -51,7 +51,7 @@ export function NavBarLink(props: {
           isActive
             ? "text-primary-600 after:scale-x-100 after:bg-primary-600"
             : "text-neutral-dark-500 after:scale-x-0 after:bg-transparent",
-          "px-4 py-4 transition-all duration-75",
+          "duration-md px-4 py-4 text-sm transition-all",
           props.className
         )
       }
