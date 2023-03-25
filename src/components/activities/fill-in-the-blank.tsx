@@ -190,11 +190,17 @@ export function FillInTheBlankActivity<S extends string>(
     (option: ParsedBlankOption) => {
       const nextAnswers = { ...answers };
 
+      // If the option is already selected, skip it.
+      if (nextAnswers[option.blankId]) {
+        // TODO: Do animation to indicate that the option is already selected.
+        return;
+      }
+
       if (option.isValid) {
-        // Do success animation
+        // TODO: Do success animation
         nextAnswers[option.blankId] = option.id;
       } else {
-        // Do failure animation
+        // TODO: Do failure animation
         delete nextAnswers[option.blankId];
       }
 
