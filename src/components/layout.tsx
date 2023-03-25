@@ -5,17 +5,20 @@ import { useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "clsx";
+import Link from "next/link";
 
 export function NavBar() {
   return (
     <header className="relative z-10 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pt-6 pb-2">
-      <Image
-        src="/large-logo.png"
-        height={66}
-        width={262}
-        priority
-        alt="Rainforest Logo"
-      />
+      <Link href="/">
+        <Image
+          src="/large-logo.png"
+          height={66}
+          width={262}
+          priority
+          alt="Rainforest Logo"
+        />
+      </Link>
 
       <div className="hidden flex-row items-center space-x-2 md:flex">
         <NavBarLink href="/">Home</NavBarLink>

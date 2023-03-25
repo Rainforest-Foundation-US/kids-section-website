@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { IconRight } from "./icons/icons";
 import { useHomeSectionNavigation } from "./sections";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 type NavLinkProps = Omit<PropsOf<typeof Link>, "className"> & {
   className?: string | ((isActive: boolean) => string);
@@ -62,16 +62,14 @@ export function NavBarLink(props: {
   );
 }
 
-export function AppButton({
-  size = "medium",
-  ...props
-}: {
+interface AppButtonProps {
   className?: string;
   variant: "primary" | "secondary";
   size?: "medium" | "large";
   children?: React.ReactNode;
   onClick?: () => void;
-}) {
+}
+export function AppButton({ size = "medium", ...props }: AppButtonProps) {
   return (
     <button
       className={clsx(
@@ -94,5 +92,40 @@ export function AppButton({
     >
       {props.children}
     </button>
+  );
+}
+
+interface AppLinkProps {
+  className?: string;
+  variant: "primary" | "secondary";
+  href: string;
+  size?: "medium" | "large";
+  children?: React.ReactNode;
+  onClick?: () => void;
+}
+export function AppLink({ size = "medium", ...props }: AppLinkProps) {
+  return (
+    <Link
+      href={props.href}
+      className={clsx(
+        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+
+        // Primary
+        props.variant === "primary" &&
+          "border-primary-600 bg-primary-500 text-primary-800 shadow-shadow-green",
+        props.variant === "primary" &&
+          "hover:bg-primary-400 active:bg-primary-500",
+
+        // Secondary
+        props.variant === "secondary" &&
+          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
+        props.variant === "secondary" &&
+          "hover:bg-neutral-100 active:bg-secondary-100",
+        props.className
+      )}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </Link>
   );
 }

@@ -1,5 +1,6 @@
 import {
   AppButton,
+  AppLink,
   HomeGoToSectionButton,
   NavBarLink,
 } from "@/components/buttons";
@@ -76,7 +77,9 @@ export default function Home() {
               </header>
 
               <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
-                <AppButton variant="primary">Discover the Amazon!</AppButton>
+                <AppLink variant="primary" href="/about-the-amazon">
+                  Discover the Amazon!
+                </AppLink>
                 <AppButton variant="secondary">Support our work</AppButton>
               </div>
             </section>
@@ -133,7 +136,9 @@ export default function Home() {
                 </header>
 
                 <div className="space-y-4 text-center xs:space-x-4 xs:space-y-0">
-                  <AppButton variant="primary">Discover the Amazon!</AppButton>
+                  <AppLink variant="primary" href="./about-the-amazon">
+                    Discover the Amazon!
+                  </AppLink>
                   <AppButton variant="secondary">Support our work</AppButton>
                 </div>
               </section>
