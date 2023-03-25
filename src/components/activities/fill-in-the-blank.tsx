@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
+import { useDraggable, useDroppable } from "../../utils/draggable";
 
-// Check if string contains <blank> and </blank>
 type StringifiedQuestion<S extends string> =
   S extends `${infer _}<blank />${infer __}` ? S : never;
 
@@ -24,7 +24,7 @@ interface ParsedBlankOption {
   id: Id;
   text: string;
   isValid: boolean;
-  blankPosition: number;
+  blankId: Id;
 }
 
 interface ParsedBlank {
@@ -79,12 +79,13 @@ function parseQuestion<S extends string>(
       );
     }
 
+    const blankId = "blank-" + i;
     const options: ParsedBlankOption[] = numberToOptions[i].options.map(
       (option, j) => ({
-        id: "blank-" + i + "-option-" + j,
+        id: blankId + "-option-" + j,
         text: option,
         isValid: j === numberToOptions[i].correctOptionPosition - 1,
-        blankPosition: i,
+        blankId: blankId,
       })
     );
 
@@ -95,7 +96,7 @@ function parseQuestion<S extends string>(
     invariant(validOptionId, "validOptionId should be defined");
 
     elements.push({
-      id: "blank-" + i,
+      id: blankId,
       options,
       validOptionId,
     } satisfies ParsedBlank);
@@ -105,6 +106,76 @@ function parseQuestion<S extends string>(
   return { elements, allOptions };
 }
 
+function useSyncParseQuestions<S extends string>(
+  question: StringifiedQuestion<S>,
+  numberToOptions: NumberToOptions
+) {
+  const parsedQuestion = useMemo(
+    () => parseQuestion(question, numberToOptions),
+    [numberToOptions, question]
+  );
+
+  // blank.id -> option.id
+  const [answers, setAnswers] = useState<Record<Id, Id>>({});
+
+  return [parsedQuestion, answers, setAnswers] as const;
+}
+
+interface FillInTheBlankActivityOptionProps {
+  option: ParsedBlankOption;
+  isOddI: boolean;
+  onClick: () => void;
+}
+export function FillInTheBlankActivityOption(
+  props: FillInTheBlankActivityOptionProps
+) {
+  const [draggableProps, isDragging] = useDraggable(
+    "blank-" + props.option.blankId,
+    props.option,
+    props.onClick
+  );
+
+  return (
+    <span
+      {...draggableProps}
+      className={clsx(
+        props.isOddI ? "rotate-6" : "-rotate-6",
+        isDragging ? "cursor-grabbing" : "cursor-grab",
+        isDragging ? "opacity-50" : "opacity-100",
+        "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 px-8 py-4 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 hover:bg-neutral-100"
+      )}
+      tabIndex={0}
+      onClick={props.onClick}
+    >
+      {props.option.text}
+    </span>
+  );
+}
+
+export function FillInTheBlankActivityDropZone(props: {
+  blank: ParsedBlank;
+  onDrop: (option: ParsedBlankOption) => void;
+  selectedOption: ParsedBlankOption | null;
+}) {
+  const [droppableProps] = useDroppable(
+    "blank-" + props.blank.id,
+    props.onDrop
+  );
+
+  return (
+    <span
+      {...droppableProps}
+      className={clsx(
+        props.selectedOption && "bg-secondary-100 shadow-shadow-gray",
+        !props.selectedOption && "dashed-border-lg",
+        "mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm"
+      )}
+    >
+      {props.selectedOption ? props.selectedOption.text : "Fill in the option"}
+    </span>
+  );
+}
+
 interface FillInTheBlankActivityProps<S extends string> {
   question: StringifiedQuestion<S>;
   numberToOptions: NumberToOptions;
@@ -112,47 +183,71 @@ interface FillInTheBlankActivityProps<S extends string> {
 export function FillInTheBlankActivity<S extends string>(
   props: FillInTheBlankActivityProps<S>
 ) {
-  const { elements: questionObject, allOptions } = parseQuestion(
-    props.question,
-    props.numberToOptions
+  const [{ elements: questions, allOptions }, answers, setAnswers] =
+    useSyncParseQuestions(props.question, props.numberToOptions);
+
+  const onSelectOption = useCallback(
+    (option: ParsedBlankOption) => {
+      const nextAnswers = { ...answers };
+
+      if (option.isValid) {
+        // Do success animation
+        nextAnswers[option.blankId] = option.id;
+      } else {
+        // Do failure animation
+        delete nextAnswers[option.blankId];
+      }
+
+      setAnswers(nextAnswers);
+    },
+    [answers, setAnswers]
+  );
+
+  const getSelectedOption = useCallback(
+    (blank: ParsedBlank) => {
+      const answer = answers[blank.id];
+      if (answer) {
+        const option = allOptions.find((option) => option.id === answer);
+
+        if (option) {
+          return option;
+        }
+      }
+
+      return null;
+    },
+    [answers, allOptions]
   );
 
   return (
     <div className="flex flex-col items-center space-y-9">
       <p className="max-w-3xl text-center text-4xl font-bold leading-loose text-neutral-dark-700">
-        {questionObject.map((element) => {
-          if ("text" in element) {
-            return <span key={element.id}>{element.text}</span>;
-          } else if (element satisfies ParsedBlank) {
+        {questions.map((blank) => {
+          if ("text" in blank) {
+            return <span key={blank.id}>{blank.text}</span>;
+          } else if (blank satisfies ParsedBlank) {
             return (
-              <span
-                key={element.id}
-                className={clsx(
-                  "mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium shadow-app-lg transition-all duration-75 dashed-border-lg active:translate-x-1 active:translate-y-1 active:shadow-app-sm"
-                )}
-              >
-                Fill in the blank
-              </span>
+              <FillInTheBlankActivityDropZone
+                key={blank.id}
+                blank={blank}
+                onDrop={onSelectOption}
+                selectedOption={getSelectedOption(blank)}
+              />
             );
           }
         })}
       </p>
 
       <ul className="flex flex-row flex-wrap gap-4">
-        {allOptions.map((option, i) => {
-          const isOddI = i % 2 === 1;
-          return (
-            <span
-              key={option.id}
-              className={clsx(
-                isOddI ? "rotate-6" : "-rotate-6",
-                "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 px-8 py-4 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 hover:bg-neutral-100"
-              )}
-            >
-              {option.text}
-            </span>
-          );
-        })}
+        {allOptions.map((option, i) => (
+          <li key={option.id}>
+            <FillInTheBlankActivityOption
+              option={option}
+              isOddI={i % 2 === 1}
+              onClick={() => onSelectOption(option)}
+            />
+          </li>
+        ))}
       </ul>
     </div>
   );

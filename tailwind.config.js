@@ -1,6 +1,4 @@
 function dashedBordersPlugin(matchUtilities, theme) {
-  console.log(theme("borderRadius"));
-
   matchUtilities(
     {
       "dashed-border": (value) => {
