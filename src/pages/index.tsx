@@ -36,9 +36,9 @@ export default function Home() {
             />
 
             <div className="flex flex-col md:mt-16 md:flex-row">
-              <HomeChameleonIllustration className="relative block w-[8rem] min-w-[8rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
+              <HomeChameleonIllustration className="relative block w-[9rem] min-w-[9rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
 
-              <section className="relative z-10 flex flex-1 flex-shrink-0 basis-[50%] flex-col items-center justify-center space-y-8 px-2">
+              <section className="relative z-10 flex flex-1 flex-shrink-0 basis-[65%] flex-col items-center justify-center space-y-8 px-2">
                 <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
                   <p className="text-xl font-medium text-primary-600">
                     {"Welcome to the RFUS Kids' Corner!"}
@@ -66,7 +66,7 @@ export default function Home() {
                 </div>
               </section>
 
-              <HomeChameleonIllustration className="invisible relative ml-auto block w-[8rem] min-w-[8rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
+              <HomeChameleonIllustration className="invisible relative ml-auto block w-[9rem] min-w-[9rem] max-w-[17rem] translate-y-4 md:w-auto md:translate-y-0" />
             </div>
           </div>
 
