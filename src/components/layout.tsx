@@ -1,6 +1,14 @@
 import Image from "next/image";
 import { AppButton, NavBarLink } from "./buttons";
-import { IconChevronUp, IconHeart } from "./icons/icons";
+import {
+  IconChevronUp,
+  IconHeart,
+  FacebookIcon,
+  TwitterIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  YoutubeIcon,
+} from "./icons/icons";
 import { useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
@@ -38,14 +46,56 @@ export function Footer() {
             width={262}
             alt="Rainforest Logo"
           />
-
-          <nav>
-            <ul>
-              {/* <li>
-                <a href="/">Home</a>
-              </li> */}
-            </ul>
-          </nav>
+          <div className="flex flex-row gap-2">
+              <a href="https://www.facebook.com/RainforestUS" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
+                <FacebookIcon className="inline mt-1 ml-2" />
+              </a>
+              <a href="https://twitter.com/RainforestUS" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
+                <TwitterIcon className="inline mt-1 ml-2"/>
+              </a>
+              <a href="https://www.youtube.com/channel/UC9rUHT4FkKXfNSeVmpr2zYw" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
+                <YoutubeIcon className="inline mt-1 ml-2"/>
+              </a>
+              <a href="https://www.instagram.com/rainforestUS/" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
+                <InstagramIcon className="inline mt-1 ml-1"/>
+              </a>
+              <a href="https://www.linkedin.com/company/rainforestus" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
+                <LinkedinIcon className="inline mt-1 ml-2"/>
+              </a>
+          </div>
+        </div>
+        <div className="my-8 flex flex-row justify-between">
+          <a className="cursor-pointer text-base text-neutral-100">
+            Foundation Main website
+          </a>
+          <a className="cursor-pointer text-base	text-neutral-100">
+            Kids corner
+          </a>
+          <a href="/about-the-amazon" className="cursor-pointer text-base text-neutral-100">
+            About the amazon
+          </a>
+          <a href="/narratives" className="cursor-pointer text-base text-neutral-100">
+            Narratives
+          </a>
+          <a href="/q-and-a" className="cursor-pointer text-base text-neutral-100">Q&A</a>
+          <a className="cursor-pointer text-base text-neutral-100">
+            Resources for educatorss
+          </a>
+        </div>
+        <div className="text-xl font-semibold text-neutral-100">
+          Land acknowledgment
+        </div>
+        <div className="pt-2 text-base text-neutral-dark-100">
+          We at Rainforest Foundation US recognize and honor the original
+          peoples of the land on which our headquarters is based in Brooklyn,
+          New York: The Ramapough Munsee Lenape, who have cared for these lands
+          and waters for generations. We ask the Ramapough Munsee Lenape
+          people’s permission to be here as their guests and ask their blessing
+          for the good continuation of our work.
+        </div>
+        <div className="pt-8 pb-10 text-base text-neutral-dark-100">
+          RAINFOREST FOUNDATION US IS A 501 (C) (3) NOT FOR PROFIT
+          ORGANIZATIONTAX ID: 95-1622945 | PRIVACY POLICY
         </div>
       </div>
     </footer>
