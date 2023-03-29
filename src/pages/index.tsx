@@ -13,12 +13,38 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
-const fujifilmImages = [
-  { id: 1, text: "Fujifilm Instax Wide Format" },
-  { id: 2, text: "Fujifilm Instax Wide Format" },
-  { id: 3, text: "Fujifilm Instax Wide Format" },
-  { id: 4, text: "Fujifilm Instax Wide Format" },
-];
+const polaroids = [
+  {
+    id: 1,
+    caption: "Emily Saves the World Fundraiser",
+    src: "/pages/home/polaroids/Emily Saves the World Fundraiser.png",
+    verticalAlign: "center",
+  },
+  {
+    id: 2,
+    caption: "Heritage Montessori School Bake Sale",
+    src: "/pages/home/polaroids/Heritage Montessori School Bake Sale.jpg",
+    verticalAlign: "center",
+  },
+  {
+    id: 3,
+    caption: "Josalyn's Lemonade for the Rainforest",
+    src: "/pages/home/polaroids/Josalyn_s Lemonade for the Rainforest.JPG",
+    verticalAlign: "center",
+  },
+  {
+    id: 4,
+    caption: "Noah Chan Art for the Rainforest",
+    src: "/pages/home/polaroids/Noah Chan Art for the Rainforest.JPG",
+    verticalAlign: "top",
+  },
+  {
+    id: 5,
+    caption: "Noah Chan Art for the Rainforest",
+    src: "/pages/home/polaroids/Noah Chan Art for the Rainforest(1).JPG",
+    verticalAlign: "center",
+  },
+] as const;
 
 export default function Home() {
   return (
@@ -44,15 +70,15 @@ export default function Home() {
           <div className="relative z-30 flex flex-col-reverse md:mt-16 md:flex-row">
             <section className="relative z-10 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
               <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
-                <p className="text-xl font-medium text-primary-600">
+                <p className="font-medium text-primary-600 text-xl">
                   {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
-                <h1 className="text-5xl font-normal leading-snug text-neutral-dark-700">
+                <h1 className="font-normal leading-snug text-neutral-dark-700 text-5xl">
                   Discover the fascinating secrets of the Amazon
                 </h1>
 
-                <p className="text-base font-medium text-neutral-dark-500">
+                <p className="font-medium text-neutral-dark-500 text-base">
                   And help us protect its animals, plants and communities.
                 </p>
               </header>
@@ -117,11 +143,11 @@ export default function Home() {
             <div className="relative flex flex-col-reverse md:flex-row">
               <section className="mx-2 flex flex-1 flex-col items-center justify-center space-y-8 md:mt-16">
                 <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
-                  <h2 className="text-5xl font-normal leading-snug text-neutral-dark-700">
+                  <h2 className="font-normal leading-snug text-neutral-dark-700 text-5xl">
                     Kids from around the world are helping protect the Amazon
                   </h2>
 
-                  <p className="text-base font-medium text-neutral-dark-500">
+                  <p className="font-medium text-neutral-dark-500 text-base">
                     What are you waiting for?
                   </p>
                 </header>
@@ -141,17 +167,19 @@ export default function Home() {
               <HomeParrotIllustration className="mt-16 block w-[25vw] min-w-[9rem] max-w-[21rem] md:absolute md:mt-0 md:-translate-y-24" />
             </div>
 
-            <ul className="z-10 mt-10 flex flex-1 flex-row-reverse flex-wrap items-center justify-center space-x-4 space-y-4 px-2">
-              {fujifilmImages.map((image, i) => {
+            <ul className="z-10 mx-auto mt-10 flex max-w-5xl flex-1 flex-row-reverse flex-wrap items-center justify-center space-x-4 space-y-4 px-2">
+              {polaroids.map((polaroid, i) => {
                 const isOdd = i % 2 !== 0;
                 return (
-                  <li key={image.id}>
+                  <li key={polaroid.id}>
                     <Polaroid
                       className={clsx(
                         isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
-                        "relative hover:z-10 hover:rotate-0 hover:scale-105"
+                        "relative w-[18rem] hover:z-10 hover:rotate-0 hover:scale-105"
                       )}
-                      src=""
+                      src={polaroid.src}
+                      caption={polaroid.caption}
+                      verticalAlign={polaroid.verticalAlign}
                     />
                   </li>
                 );
@@ -169,7 +197,7 @@ export default function Home() {
                   alt=""
                 />
 
-                <h2 className="invisible text-4xl font-normal leading-snug text-neutral-dark-700">
+                <h2 className="invisible font-normal leading-snug text-neutral-dark-700 text-4xl">
                   Teach the Amazon in class
                 </h2>
               </header>

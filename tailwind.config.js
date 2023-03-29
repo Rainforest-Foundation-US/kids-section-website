@@ -1,3 +1,49 @@
+function maxLinesPlugin(matchUtilities, theme) {
+  const maxLinesDefault = {
+    "text-overflow": "ellipsis",
+    "word-wrap": "break-word",
+    overflow: "hidden",
+    display: "-webkit-box",
+    "-webkit-box-orient": "vertical",
+  };
+
+  matchUtilities(
+    {
+      text: (value) => {
+        if (value instanceof Array) {
+          const { lineHeight } = value[1];
+          return {
+            "--el-line-height": lineHeight,
+          };
+        }
+      },
+    },
+    {
+      values: theme("fontSize"),
+      type: ["absolute-size", "relative-size", "length", "percentage"],
+    }
+  );
+
+  matchUtilities(
+    {
+      "max-lines": (value) => {
+        const strValue = value + "";
+
+        return {
+          ...maxLinesDefault,
+          "max-height": `calc(var(--el-line-height) * ${value})`,
+          lineClamp: strValue,
+          "-webkit-line-clamp": strValue,
+        };
+      },
+    },
+    {
+      values: theme("maxLines"),
+      type: ["length"],
+    }
+  );
+}
+
 function dashedBordersPlugin(matchUtilities, theme) {
   matchUtilities(
     {
@@ -105,6 +151,12 @@ module.exports = {
         gray: "rgba(60, 62, 55, 0.08)",
       },
     },
+    maxLines: {
+      1: 1,
+      2: 2,
+      3: 3,
+      4: 4,
+    },
     extend: {
       borderWidth: {
         1: "1px",
@@ -120,6 +172,7 @@ module.exports = {
     function ({ addVariant, matchUtilities, theme }) {
       addVariant("children", "& > *");
       dashedBordersPlugin(matchUtilities, theme);
+      maxLinesPlugin(matchUtilities, theme);
     },
   ],
 };
