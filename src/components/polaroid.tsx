@@ -3,7 +3,7 @@ import Image from "next/image";
 
 interface PolaroidProps {
   className?: string;
-  src: string;
+  src: PropsOf<typeof Image>["src"];
   caption?: string;
   verticalAlign?: "top" | "center" | "bottom";
 }

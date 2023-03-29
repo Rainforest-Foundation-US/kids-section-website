@@ -1,6 +1,7 @@
 import { AppButton, AppLink } from "@/components/buttons";
 import {
   HomeChameleonIllustration,
+  HomeLastMonkeyIllustration,
   HomeLeftLeavesIllustration,
   HomeMonkeyIllustration,
   HomeParrotIllustration,
@@ -13,35 +14,44 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
+import firstBackground from "@/images/home/background/first-background.png";
+import secondBackground from "@/images/home/background/second-background.png";
+
+import firstPolaroid from "@/images/home/polaroids/Emily Saves the World Fundraiser.png";
+import secondPolaroid from "@/images/home/polaroids/Heritage Montessori School Bake Sale.jpg";
+import thirdPolaroid from "@/images/home/polaroids/Josalyn_s Lemonade for the Rainforest.jpg";
+import fourthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest.jpg";
+import fifthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest(1).jpg";
+
 const polaroids = [
   {
     id: 1,
     caption: "Emily Saves the World Fundraiser",
-    src: "/pages/home/polaroids/Emily Saves the World Fundraiser.png",
+    src: firstPolaroid,
     verticalAlign: "center",
   },
   {
     id: 2,
     caption: "Heritage Montessori School Bake Sale",
-    src: "/pages/home/polaroids/Heritage Montessori School Bake Sale.jpg",
+    src: secondPolaroid,
     verticalAlign: "center",
   },
   {
     id: 3,
     caption: "Josalyn's Lemonade for the Rainforest",
-    src: "/pages/home/polaroids/Josalyn_s Lemonade for the Rainforest.JPG",
+    src: thirdPolaroid,
     verticalAlign: "center",
   },
   {
     id: 4,
     caption: "Noah Chan Art for the Rainforest",
-    src: "/pages/home/polaroids/Noah Chan Art for the Rainforest.JPG",
+    src: fourthPolaroid,
     verticalAlign: "top",
   },
   {
     id: 5,
     caption: "Noah Chan Art for the Rainforest",
-    src: "/pages/home/polaroids/Noah Chan Art for the Rainforest(1).JPG",
+    src: fifthPolaroid,
     verticalAlign: "center",
   },
 ] as const;
@@ -59,11 +69,11 @@ export default function Home() {
 
           <Image
             className="absolute top-0 left-0 right-0 block h-full w-full object-cover object-bottom"
-            src="/pages/home/sections/first-background.png"
+            src={firstBackground}
             height={1280}
             width={720}
-            priority
             aria-hidden
+            placeholder="blur"
             alt=""
           />
 
@@ -111,10 +121,11 @@ export default function Home() {
 
             <Image
               className="block h-full w-full object-cover object-bottom"
-              src="/pages/home/sections/second-background.png"
+              src={secondBackground}
               height={1349}
               width={720}
               aria-hidden
+              placeholder="blur"
               alt=""
             />
           </div>
@@ -188,13 +199,9 @@ export default function Home() {
 
             <section className="z-30 mx-2 flex flex-1 flex-col items-center justify-center space-y-4">
               <header className="max-w-[605px] space-y-4 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
-                <Image
-                  className="relative z-20 mx-auto -mt-4 block object-cover object-center"
-                  src="/pages/home/sections/second-illustration-center.png"
-                  height={372}
-                  width={314}
+                <HomeLastMonkeyIllustration
+                  className="relative z-20 mx-auto -mt-4 block h-[372px] w-[314px] object-cover object-center"
                   aria-hidden
-                  alt=""
                 />
 
                 <h2 className="invisible font-normal leading-snug text-neutral-dark-700 text-4xl">
