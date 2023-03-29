@@ -152,27 +152,41 @@ export function FillInTheBlankActivityOption(
   );
 }
 
-export function FillInTheBlankActivityDropZone(props: {
+export function FillInTheBlankActivityDropZone({
+  onDrop,
+  ...props
+}: {
   blank: ParsedBlank;
   onDrop: (option: ParsedBlankOption) => void;
+  onClick: () => void;
   selectedOption: ParsedBlankOption | null;
 }) {
+  const blankId = props.blank.id;
+
   const [droppableProps] = useDroppable(
-    "blank-" + props.blank.id,
-    props.onDrop
+    "blank-" + blankId,
+    useCallback(
+      (option: ParsedBlankOption, _target: HTMLButtonElement) => {
+        if (option.blankId !== blankId) return;
+
+        onDrop(option);
+      },
+      [blankId, onDrop]
+    )
   );
 
   return (
-    <span
+    <button
       {...droppableProps}
       className={clsx(
         props.selectedOption && "bg-secondary-100 shadow-shadow-gray",
         !props.selectedOption && "dashed-border-lg",
         "mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm"
       )}
+      onClick={props.onClick}
     >
       {props.selectedOption ? props.selectedOption.text : "Fill in the option"}
-    </span>
+    </button>
   );
 }
 
@@ -225,9 +239,21 @@ export function FillInTheBlankActivity<S extends string>(
     [answers, allOptions]
   );
 
+  const onDeselectOption = useCallback(
+    (blank: ParsedBlank) => {
+      const nextAnswers = { ...answers };
+
+      // TODO: Do remove animation
+      delete nextAnswers[blank.id];
+
+      setAnswers(nextAnswers);
+    },
+    [answers, setAnswers]
+  );
+
   return (
     <div className="flex flex-col items-center space-y-9">
-      <p className="max-w-3xl text-center text-4xl font-bold leading-loose text-neutral-dark-700">
+      <p className="max-w-3xl select-none text-center text-4xl font-bold leading-loose text-neutral-dark-700">
         {questions.map((blank) => {
           if ("text" in blank) {
             return <span key={blank.id}>{blank.text}</span>;
@@ -237,6 +263,7 @@ export function FillInTheBlankActivity<S extends string>(
                 key={blank.id}
                 blank={blank}
                 onDrop={onSelectOption}
+                onClick={() => onDeselectOption(blank)}
                 selectedOption={getSelectedOption(blank)}
               />
             );

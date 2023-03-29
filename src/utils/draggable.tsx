@@ -76,26 +76,26 @@ export function useDraggable<T>(
   return [props, isDragging] as const;
 }
 
-export function useDroppable<T>(areaId: string, onDrop: (value: T) => void) {
-  const droppableRef = useRef<HTMLDivElement>(null);
+export function useDroppable<V, T extends HTMLElement = HTMLDivElement>(
+  areaId: string,
+  onDrop: (value: V, target: T) => void
+) {
+  const droppableRef = useRef<T>(null);
 
-  const handleDragOver = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-    },
-    []
-  );
+  const handleDragOver = useCallback((event: React.DragEvent<T>) => {
+    event.preventDefault();
+  }, []);
 
   const handleDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
+    (event: React.DragEvent<T>) => {
       const meta = event.dataTransfer.getData("text/plain");
-      const metaObj = deserialize<T>(meta);
+      const metaObj = deserialize<V>(meta);
 
       if (event.currentTarget.id !== areaId) {
         return;
       }
 
-      onDrop(metaObj.value);
+      onDrop(metaObj.value, event.currentTarget);
     },
     [areaId, onDrop]
   );
