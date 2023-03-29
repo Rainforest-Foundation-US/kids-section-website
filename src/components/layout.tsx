@@ -13,6 +13,7 @@ import { useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "clsx";
+import Link from "next/link";
 
 export function NavBar() {
   return (
@@ -38,49 +39,81 @@ export function NavBar() {
 export function Footer() {
   return (
     <footer className="bg-neutral-dark-700 py-10">
-      <div className="mx-auto w-full max-w-[1022px]">
-        <div className="flex flex-row items-center justify-between">
+      <div className="mx-6 max-w-5xl lg:mx-auto">
+        <div className="flex flex-col flex-wrap justify-between space-y-2 xs:flex-row xs:items-center xs:space-y-0">
           <Image
             src="/large-logo-white.png"
             height={66}
             width={262}
             alt="Rainforest Logo"
           />
+
           <div className="flex flex-row gap-2">
-              <a href="https://www.facebook.com/RainforestUS" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
-                <FacebookIcon className="inline mt-1 ml-2" />
-              </a>
-              <a href="https://twitter.com/RainforestUS" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
-                <TwitterIcon className="inline mt-1 ml-2"/>
-              </a>
-              <a href="https://www.youtube.com/channel/UC9rUHT4FkKXfNSeVmpr2zYw" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
-                <YoutubeIcon className="inline mt-1 ml-2"/>
-              </a>
-              <a href="https://www.instagram.com/rainforestUS/" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
-                <InstagramIcon className="inline mt-1 ml-1"/>
-              </a>
-              <a href="https://www.linkedin.com/company/rainforestus" className="w-8 h-8 rounded-2xl bg-neutral-dark-600">
-                <LinkedinIcon className="inline mt-1 ml-2"/>
-              </a>
+            <a
+              href="https://www.facebook.com/RainforestUS"
+              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
+            >
+              <FacebookIcon className="mt-1 ml-2 inline" />
+            </a>
+            <a
+              href="https://twitter.com/RainforestUS"
+              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
+            >
+              <TwitterIcon className="mt-1 ml-2 inline" />
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UC9rUHT4FkKXfNSeVmpr2zYw"
+              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
+            >
+              <YoutubeIcon className="mt-1 ml-2 inline" />
+            </a>
+            <a
+              href="https://www.instagram.com/rainforestUS/"
+              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
+            >
+              <InstagramIcon className="mt-1 ml-1 inline" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/rainforestus"
+              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
+            >
+              <LinkedinIcon className="mt-1 ml-2 inline" />
+            </a>
           </div>
         </div>
-        <div className="my-8 flex flex-row justify-between">
-          <a className="cursor-pointer text-base text-neutral-100">
+
+        <div className="-mx-4 mt-8 mb-6 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
+          <a
+            href="https://rainforestfoundation.org/"
+            className="cursor-pointer text-base text-neutral-100"
+          >
             Foundation Main website
           </a>
-          <a className="cursor-pointer text-base	text-neutral-100">
+          <Link href="/" className="cursor-pointer text-base	text-neutral-100">
             Kids corner
-          </a>
-          <a href="/about-the-amazon" className="cursor-pointer text-base text-neutral-100">
+          </Link>
+          <Link
+            href="/about-the-amazon"
+            className="cursor-pointer text-base text-neutral-100"
+          >
             About the amazon
-          </a>
-          <a href="/narratives" className="cursor-pointer text-base text-neutral-100">
+          </Link>
+          <Link
+            href="/narratives"
+            className="cursor-pointer text-base text-neutral-100"
+          >
             Narratives
-          </a>
-          <a href="/q-and-a" className="cursor-pointer text-base text-neutral-100">Q&A</a>
-          <a className="cursor-pointer text-base text-neutral-100">
+          </Link>
+          <Link
+            href="/q-and-a"
+            className="cursor-pointer text-base text-neutral-100"
+          >
+            Q&A
+          </Link>
+          {/* TODO: Add link to resources for educators page */}
+          <Link href="/" className="cursor-pointer text-base text-neutral-100">
             Resources for educatorss
-          </a>
+          </Link>
         </div>
         <div className="text-xl font-semibold text-neutral-100">
           Land acknowledgment
