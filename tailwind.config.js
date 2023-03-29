@@ -117,7 +117,8 @@ module.exports = {
     },
   },
   plugins: [
-    function ({ matchUtilities, theme }) {
+    function ({ addVariant, matchUtilities, theme }) {
+      addVariant("children", "& > *");
       dashedBordersPlugin(matchUtilities, theme);
     },
   ],
