@@ -40,7 +40,7 @@ export function NavBar() {
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-dark-700 py-10">
+    <footer className="relative z-10 bg-neutral-dark-700 py-10">
       <div className="mx-6 max-w-5xl lg:mx-auto">
         <div className="flex flex-col flex-wrap justify-between space-y-2 xs:flex-row xs:items-center xs:space-y-0">
           <Image

@@ -1,0 +1,17 @@
+.firstDivider {
+  background: linear-gradient(
+    rgba(202, 203, 194, 0) 0%,
+    rgb(202, 203, 194) 55%,
+    rgb(202, 203, 194) 65%,
+    rgba(217, 217, 201, 0) 100%
+  );
+}
+
+.secondDivider {
+  background: linear-gradient(
+    180deg,
+    rgba(202, 203, 194, 0) 0%,
+    #cacbc2 50%,
+    rgba(250, 245, 238, 0) 100%
+  );
+}
