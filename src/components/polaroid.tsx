@@ -25,7 +25,7 @@ export function Polaroid(props: PolaroidProps) {
       <figure>
         <Image
           style={style}
-          className="aspect-[13_/_10] w-full object-contain object-[var(--el-align)]"
+          className="aspect-[13_/_10] w-full object-cover object-[var(--el-align)]"
           src={props.src}
           width={130}
           height={100}
