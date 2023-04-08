@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AppButton, NavBarLink } from "./buttons";
+import { AppButton, AppLink, NavBarLink } from "./buttons";
 import {
   IconChevronUp,
   IconHeart,
@@ -8,16 +8,36 @@ import {
   InstagramIcon,
   LinkedinIcon,
   YoutubeIcon,
+  IconMenu,
 } from "./icons/icons";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "clsx";
 import Link from "next/link";
 
 export function NavBar() {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = useCallback(() => {
+    setExpanded((v) => !v);
+  }, []);
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (event.key === "Enter") {
+        toggleExpanded();
+      }
+
+      if (event.key === "Escape") {
+        setExpanded(false);
+      }
+    },
+    [toggleExpanded]
+  );
+
   return (
-    <header className="relative z-10 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pt-6 pb-2">
+    <header className="relative z-20 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pt-6 pb-2">
       <Link href="/">
         <Image
           src="/large-logo.png"
@@ -28,12 +48,100 @@ export function NavBar() {
         />
       </Link>
 
-      <div className="hidden flex-row items-center space-x-2 md:flex">
-        <NavBarLink href="/">Home</NavBarLink>
-        <NavBarLink href="/about-the-amazon">About the Amazon</NavBarLink>
-        <NavBarLink href="/narratives">Narratives</NavBarLink>
-        <NavBarLink href="/q-and-a">Q&A</NavBarLink>
-      </div>
+      <nav
+        role="navigation"
+        aria-label="Main menu"
+        className="flex flex-row items-center space-x-2"
+      >
+        <ul className="hidden flex-row space-x-1 md:flex">
+          <li>
+            <NavBarLink href="/">Home</NavBarLink>
+          </li>
+          <li>
+            <NavBarLink href="/about-the-amazon">About the Amazon</NavBarLink>
+          </li>
+          <li>
+            <NavBarLink href="/narratives">Narratives</NavBarLink>
+          </li>
+          <li>
+            <NavBarLink href="/q-and-a">Q&A</NavBarLink>
+          </li>
+        </ul>
+
+        <button
+          aria-expanded={expanded}
+          onKeyDown={onKeyDown}
+          onClick={toggleExpanded}
+        >
+          <IconMenu />
+        </button>
+
+        <ul
+          className={clsx(
+            expanded
+              ? "pointer-events-auto translate-y-0 opacity-100"
+              : "pointer-events-none translate-y-[-100vh] opacity-0 transition-none",
+            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-[50] space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:left-auto xs:bottom-auto xs:right-0 xs:p-12"
+          )}
+          aria-hidden={!expanded}
+        >
+          <li className="flex justify-center">
+            <AppLink href="https://rainforestfoundation.org/" variant="text">
+              Main website
+            </AppLink>
+          </li>
+          <li>
+            <AppLink href="/" variant="text" className="block w-full">
+              {"Kids' Corner"}
+            </AppLink>
+          </li>
+          <li>
+            <AppLink
+              href="https://rainforestfoundation.org/our-work/"
+              variant="text"
+              className="block w-full"
+            >
+              Our work
+            </AppLink>
+          </li>
+          <li>
+            <AppLink
+              href="https://rainforestfoundation.org/about/"
+              variant="text"
+              className="block w-full"
+            >
+              About us
+            </AppLink>
+          </li>
+          <li>
+            <AppLink
+              href="https://rainforestfoundation.org/news/"
+              variant="text"
+              className="block w-full"
+            >
+              News
+            </AppLink>
+          </li>
+          <li>
+            <AppLink
+              href="https://rainforestfoundation.org/engage/"
+              variant="text"
+              className="block w-full"
+            >
+              Take action
+            </AppLink>
+          </li>
+          <li>
+            <AppLink
+              href="https://rainforestfoundation.org/"
+              variant="primary"
+              className="block w-full"
+            >
+              Donate now
+            </AppLink>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }
@@ -87,40 +195,40 @@ export function Footer() {
         <div className="-mx-4 mt-8 mb-6 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
           <a
             href="https://rainforestfoundation.org/"
-            className="cursor-pointer text-base text-neutral-100"
+            className="cursor-pointer text-neutral-100 text-base"
           >
             Foundation Main website
           </a>
-          <Link href="/" className="cursor-pointer text-base	text-neutral-100">
+          <Link href="/" className="cursor-pointer text-neutral-100	text-base">
             Kids corner
           </Link>
           <Link
             href="/about-the-amazon"
-            className="cursor-pointer text-base text-neutral-100"
+            className="cursor-pointer text-neutral-100 text-base"
           >
             About the amazon
           </Link>
           <Link
             href="/narratives"
-            className="cursor-pointer text-base text-neutral-100"
+            className="cursor-pointer text-neutral-100 text-base"
           >
             Narratives
           </Link>
           <Link
             href="/q-and-a"
-            className="cursor-pointer text-base text-neutral-100"
+            className="cursor-pointer text-neutral-100 text-base"
           >
             Q&A
           </Link>
           {/* TODO: Add link to resources for educators page */}
-          <Link href="/" className="cursor-pointer text-base text-neutral-100">
+          <Link href="/" className="cursor-pointer text-neutral-100 text-base">
             Resources for educatorss
           </Link>
         </div>
-        <div className="text-xl font-semibold text-neutral-100">
+        <div className="font-semibold text-neutral-100 text-xl">
           Land acknowledgment
         </div>
-        <div className="pt-2 text-base text-neutral-dark-100">
+        <div className="pt-2 text-neutral-dark-100 text-base">
           We at Rainforest Foundation US recognize and honor the original
           peoples of the land on which our headquarters is based in Brooklyn,
           New York: The Ramapough Munsee Lenape, who have cared for these lands
@@ -128,7 +236,7 @@ export function Footer() {
           people’s permission to be here as their guests and ask their blessing
           for the good continuation of our work.
         </div>
-        <div className="pt-8 pb-10 text-base text-neutral-dark-100">
+        <div className="pt-8 pb-10 text-neutral-dark-100 text-base">
           RAINFOREST FOUNDATION US IS A 501 (C) (3) NOT FOR PROFIT
           ORGANIZATIONTAX ID: 95-1622945 | PRIVACY POLICY
         </div>
@@ -217,7 +325,7 @@ export function LearningPath() {
       role="menu"
       className="overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray"
     >
-      <div className="flex items-center justify-between p-6 text-xl text-neutral-dark-500">
+      <div className="flex items-center justify-between p-6 text-neutral-dark-500 text-xl">
         <p>Learning Path</p>
 
         <button type="button" onClick={collapse}>
@@ -243,7 +351,7 @@ export function LearningPath() {
                       activeSection === section.id
                         ? "text-primary-600"
                         : "text-neutral-dark-300",
-                      "text-base font-medium"
+                      "font-medium text-base"
                     )}
                   >
                     <span

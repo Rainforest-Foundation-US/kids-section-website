@@ -51,7 +51,7 @@ export function NavBarLink(props: {
           isActive
             ? "text-primary-600 after:scale-x-100 after:bg-primary-600"
             : "text-neutral-dark-500 after:scale-x-0 after:bg-transparent",
-          "duration-md px-4 py-4 text-sm transition-all",
+          "duration-md px-4 py-4 transition-all text-sm",
           props.className
         )
       }
@@ -64,7 +64,7 @@ export function NavBarLink(props: {
 
 interface AppButtonProps {
   className?: string;
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "text";
   size?: "medium" | "large";
   children?: React.ReactNode;
   onClick?: () => void;
@@ -73,7 +73,7 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
   return (
     <button
       className={clsx(
-        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        "rounded-lg border-1 px-8 py-4 font-medium shadow-app-lg transition-all duration-75 text-base active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
 
         // Primary
         props.variant === "primary" &&
@@ -86,6 +86,9 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
           "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
         props.variant === "secondary" &&
           "hover:bg-neutral-100 active:bg-secondary-100",
+
+        props.variant === "text" &&
+          "border-transparent text-neutral-100 hover:text-neutral-800",
         props.className
       )}
       onClick={props.onClick}
@@ -97,18 +100,20 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
 
 interface AppLinkProps {
   className?: string;
-  variant: "primary" | "secondary";
+  variant: "primary" | "secondary" | "text";
   href: string;
   size?: "medium" | "large";
   children?: React.ReactNode;
   onClick?: () => void;
 }
 export function AppLink({ size = "medium", ...props }: AppLinkProps) {
+  const Component = props.href?.startsWith("http") ? "a" : Link;
+
   return (
-    <Link
+    <Component
       href={props.href}
       className={clsx(
-        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        "rounded-lg border-1 px-8 py-4 font-medium shadow-app-lg transition-all duration-75 text-base active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
 
         // Primary
         props.variant === "primary" &&
@@ -121,11 +126,14 @@ export function AppLink({ size = "medium", ...props }: AppLinkProps) {
           "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
         props.variant === "secondary" &&
           "hover:bg-neutral-100 active:bg-secondary-100",
+
+        props.variant === "text" &&
+          "border-transparent text-neutral-100 hover:text-neutral-800",
         props.className
       )}
       onClick={props.onClick}
     >
       {props.children}
-    </Link>
+    </Component>
   );
 }
