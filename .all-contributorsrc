@@ -7,6 +7,18 @@
   "commitConvention": "angular",
   "contributors": [
     {
+      "login": "rowinbot",
+      "name": "Rowin Hernández",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18468260?v=4",
+      "profile": "http://rowinbot.com",
+      "contributions": [
+        "maintenance",
+        "doc",
+        "review",
+        "code"
+      ]
+    }
+    {
       "login": "amaans1997",
       "name": "Amaan Salheen",
       "avatar_url": "https://avatars.githubusercontent.com/u/90647633?v=4",
