@@ -18,6 +18,16 @@
         "code"
       ]
     }
+    {
+      "login": "amaans1997",
+      "name": "Amaan Salheen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90647633?v=4",
+      "profile": "https://github.com/amaans1997",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
