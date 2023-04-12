@@ -1,4 +1,7 @@
 # Rainforest Foundation US - Kids' Corner
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This is the Kids' Corner website for the Rainforest Foundation US. It is built with Next.js, TypeScript and TailwindCSS.
 
@@ -43,6 +46,20 @@ You can find the license for this project in the [LICENSE](LICENSE) file.
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/amaans1997"><img src="https://avatars.githubusercontent.com/u/90647633?v=4?s=100" width="100px;" alt="Amaan Salheen"/><br /><sub><b>Amaan Salheen</b></sub></a><br /><a href="#maintenance-amaans1997" title="Maintenance">🚧</a> <a href="https://github.com/Rainforest-Foundation-US/kids-section-website/commits?author=amaans1997" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
