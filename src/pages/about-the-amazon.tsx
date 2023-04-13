@@ -1,4 +1,5 @@
 import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
+import SelectAmazonImages from "@/components/activities/select-amazon-images";
 import { HomeGoToSectionButton } from "@/components/buttons";
 import { LearningPath, NavBar } from "@/components/layout";
 import {
@@ -149,6 +150,7 @@ export default function Home() {
               <HomeGoToSectionButton />
             </div>
           </ActivitySection>
+          <SelectAmazonImages />
         </HomeSectionsContainer>
       </main>
     </>
