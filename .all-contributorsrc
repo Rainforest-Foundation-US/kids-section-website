@@ -27,6 +27,16 @@
         "maintenance",
         "code"
       ]
+    },
+    {
+      "login": "karihernandez",
+      "name": "Kari Hernandez ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68033826?v=4",
+      "profile": "https://github.com/karihernandez",
+      "contributions": [
+        "design",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
