@@ -193,7 +193,7 @@ export function FillInTheBlankActivityDropZone({
   );
 
   return (
-    <motion.div ref={scope}>
+    <motion.span ref={scope} className="inline-block">
       <button
         {...droppableProps}
         className={clsx(
@@ -207,7 +207,7 @@ export function FillInTheBlankActivityDropZone({
           ? props.selectedOption.text
           : "Fill in the option"}
       </button>
-    </motion.div>
+    </motion.span>
   );
 }
 
