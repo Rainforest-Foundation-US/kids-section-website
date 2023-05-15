@@ -143,7 +143,7 @@ export function FillInTheBlankActivityOption(
         props.isOddI ? "rotate-6" : "-rotate-6",
         isDragging ? "cursor-grabbing" : "cursor-grab",
         isDragging ? "opacity-50" : "opacity-100",
-        "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 px-8 py-4 font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 text-base hover:bg-neutral-100"
+        "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 py-4 px-4 font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 text-base hover:bg-neutral-100 lg:px-8"
       )}
       tabIndex={0}
       onClick={props.onClick}
@@ -274,7 +274,7 @@ export function FillInTheBlankActivity<S extends string>(
 
   return (
     <div className="flex flex-col items-center space-y-9">
-      <p className="max-w-3xl select-none text-center font-bold leading-loose text-neutral-dark-700 text-4xl">
+      <p className="max-w-3xl select-none text-center font-bold leading-loose text-neutral-dark-700 text-3xl md:text-4xl">
         {questions.map((blank) => {
           if ("text" in blank) {
             return <span key={blank.id}>{blank.text}</span>;
@@ -292,7 +292,7 @@ export function FillInTheBlankActivity<S extends string>(
         })}
       </p>
 
-      <ul className="flex flex-row flex-wrap gap-4">
+      <ul className="flex flex-row flex-wrap justify-center gap-4">
         {allOptions.map((option, i) => (
           <li key={option.id}>
             <FillInTheBlankActivityOption
