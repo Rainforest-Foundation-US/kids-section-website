@@ -1,5 +1,6 @@
 import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
 import { LearningPath } from "@/components/activities/learning-path-map";
+import { LocateInMapActivity } from "@/components/activities/locate-in-map";
 import { HomeGoToSectionButton } from "@/components/buttons";
 import { NavBar } from "@/components/layout/nav";
 import {
@@ -148,6 +149,25 @@ export default function Home() {
                 alt=""
               />
               <HomeGoToSectionButton />
+            </div>
+          </ActivitySection>
+
+          <ActivitySection
+            number={3}
+            className="relative flex min-h-screen snap-center"
+          >
+            <ActivitySectionDivider />
+
+            <div className="relative z-10 flex flex-1 flex-col items-center justify-center py-10">
+              <LocateInMapActivity />
+
+              <HomeGoToSectionButton />
+
+              <header className="absolute inset-x-0 top-8 text-center">
+                <p className="mx-auto max-w-xl leading-snug text-neutral-dark-700 text-4xl">
+                  The three most important rainforests are:
+                </p>
+              </header>
             </div>
           </ActivitySection>
         </HomeSectionsContainer>
