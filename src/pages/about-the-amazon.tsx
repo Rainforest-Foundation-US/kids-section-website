@@ -1,7 +1,8 @@
 import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
 import SelectAmazonImages from "@/components/activities/select-amazon-images";
+import { LearningPath } from "@/components/activities/learning-path-map";
 import { HomeGoToSectionButton } from "@/components/buttons";
-import { LearningPath, NavBar } from "@/components/layout";
+import { NavBar } from "@/components/layout/nav";
 import {
   ActivitySection,
   ActivitySectionDivider,
@@ -47,7 +48,7 @@ export default function Home() {
             <div className="relative z-10 flex flex-1 flex-row p-6">
               <div className="flex flex-1 flex-col items-center justify-center">
                 <header className="max-w-[24.5rem] space-y-6">
-                  <h1 className="text-4xl leading-snug text-neutral-dark-700">
+                  <h1 className="leading-snug text-neutral-dark-700 text-4xl">
                     You are probably wondering, <b>What is a rainforest?</b>
                   </h1>
 
@@ -78,10 +79,10 @@ export default function Home() {
 
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
               <header className="text-center">
-                <p className="text-xl font-medium leading-snug text-primary-600">
+                <p className="font-medium leading-snug text-primary-600 text-xl">
                   Click on the box with the right answer
                 </p>
-                <p className="text-4xl leading-snug text-neutral-dark-700">
+                <p className="leading-snug text-neutral-dark-700 text-4xl">
                   Rainforest are exactly what you’d think!
                 </p>
               </header>
@@ -117,10 +118,10 @@ export default function Home() {
 
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
               <header className="text-center">
-                <p className="text-xl font-medium leading-snug text-primary-600">
+                <p className="font-medium leading-snug text-primary-600 text-xl">
                   Click on the box with the right answer
                 </p>
-                <p className="text-4xl leading-snug text-neutral-dark-700">
+                <p className="leading-snug text-neutral-dark-700 text-4xl">
                   Thanks to the rain
                 </p>
               </header>

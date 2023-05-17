@@ -1,0 +1,48 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "rowinbot",
+      "name": "Rowin Hernández",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18468260?v=4",
+      "profile": "http://rowinbot.com",
+      "contributions": [
+        "maintenance",
+        "doc",
+        "review",
+        "code"
+      ]
+    },
+    {
+      "login": "amaans1997",
+      "name": "Amaan Salheen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90647633?v=4",
+      "profile": "https://github.com/amaans1997",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    },
+    {
+      "login": "karihernandez",
+      "name": "Kari Hernandez ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68033826?v=4",
+      "profile": "https://github.com/karihernandez",
+      "contributions": [
+        "design",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "kids-section-website",
+  "projectOwner": "Rainforest-Foundation-US"
+}

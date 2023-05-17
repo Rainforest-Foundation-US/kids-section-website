@@ -7,7 +7,6 @@ import {
   HomeParrotIllustration,
   HomeRightLeavesIllustration,
 } from "@/components/home-illustrations";
-import { Footer, NavBar } from "@/components/layout";
 import { Polaroid } from "@/components/polaroid";
 import clsx from "clsx";
 import Head from "next/head";
@@ -22,6 +21,8 @@ import secondPolaroid from "@/images/home/polaroids/Heritage Montessori School B
 import thirdPolaroid from "@/images/home/polaroids/Josalyn_s Lemonade for the Rainforest.jpg";
 import fourthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest.jpg";
 import fifthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest(1).jpg";
+import { NavBar } from "@/components/layout/nav";
+import { Footer } from "@/components/layout/footer";
 
 const polaroids = [
   {
