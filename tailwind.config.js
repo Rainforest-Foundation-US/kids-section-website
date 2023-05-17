@@ -169,7 +169,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@themesberg/flowbite/plugin'),
     function ({ addVariant, matchUtilities, theme }) {
       addVariant("children", "& > *");
       dashedBordersPlugin(matchUtilities, theme);
