@@ -8,7 +8,7 @@ import {
   HomeRightLeavesIllustration,
 } from "@/components/home-illustrations";
 import { Polaroid } from "@/components/polaroid";
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";

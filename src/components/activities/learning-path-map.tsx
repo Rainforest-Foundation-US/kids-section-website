@@ -4,7 +4,7 @@ import { IconChevronUp, IconHeart } from "../icons/icons";
 import { useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 
 const AnimatedIconChevronUp = animated(IconChevronUp);
 

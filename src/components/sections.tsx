@@ -1,4 +1,5 @@
 import { useEvent } from "@/utils/hooks";
+import clsx from "@/utils/clsx";
 import {
   createContext,
   useCallback,
@@ -131,6 +132,18 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
   );
 }
 
+export function useHomeSectionNavigation() {
+  const context = useContext(HomeSectionNavigationContext);
+
+  if (!context) {
+    throw new Error(
+      "useHomeSectionNavigation must be used within a HomeSectionNavigationContext"
+    );
+  }
+
+  return context;
+}
+
 export function ActivitySection(props: {
   number: number;
   className?: string;
@@ -152,7 +165,10 @@ export function ActivitySection(props: {
     <section
       data-section-number={sectionNumber}
       ref={ref}
-      className={props.className}
+      className={clsx(
+        "relative flex max-h-[80rem] snap-center flex-col py-8",
+        props.className
+      )}
     >
       {props.children}
     </section>
@@ -164,21 +180,9 @@ export function ActivitySectionDivider() {
     <div
       style={{
         background:
-          "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #CACBC2 50%, rgba(217, 217, 201, 0) 100%)",
+          "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #DADBD2 46%, #DADBD2 52.5%, rgba(217, 217, 201, 0) 100%)",
       }}
       className="absolute inset-x-0 h-[720px] -translate-y-[50%]"
     />
   );
-}
-
-export function useHomeSectionNavigation() {
-  const context = useContext(HomeSectionNavigationContext);
-
-  if (!context) {
-    throw new Error(
-      "useHomeSectionNavigation must be used within a HomeSectionNavigationContext"
-    );
-  }
-
-  return context;
 }

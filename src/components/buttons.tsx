@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 import { IconRight } from "./icons/icons";
 import { useHomeSectionNavigation } from "./sections";
 import { useRouter } from "next/router";
@@ -23,12 +23,15 @@ function NavLink({ className, ...props }: NavLinkProps) {
   );
 }
 
-export function HomeGoToSectionButton() {
+export function HomeGoToSectionButton(props: { className?: string }) {
   const { onGoNext } = useHomeSectionNavigation();
 
   return (
     <button
-      className="shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500"
+      className={clsx(
+        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500",
+        props.className
+      )}
       onClick={onGoNext}
     >
       <IconRight />

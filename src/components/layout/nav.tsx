@@ -2,7 +2,7 @@ import Image from "next/image";
 import { AppLink, NavBarLink } from "../buttons";
 import { IconMenu } from "../icons/icons";
 import { useCallback, useState } from "react";
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 import Link from "next/link";
 
 export function NavBar() {

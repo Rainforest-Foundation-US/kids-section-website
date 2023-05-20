@@ -2,11 +2,10 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  ZoomableGroup,
   Marker,
 } from "react-simple-maps";
 import countriesTopoJSON from "./countries-topo.json";
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 
 const countryCodeKey = "ADM0_ISO";
 
@@ -37,9 +36,9 @@ export function LocateInMapActivity() {
         projection="geoMercator"
         projectionConfig={{
           center: [0, 20],
-          scale: 165,
+          scale: 145,
         }}
-        className="[filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
+        className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
       >
         <defs>
           {/* // filter transparency at borders (10px) */}
@@ -64,14 +63,14 @@ export function LocateInMapActivity() {
             <feFlood flood-color="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
-              stdDeviation="50"
+              stdDeviation="50 75"
               result="BLURRED_BLACK_FLOOD"
             />
             <feComponentTransfer
               in="BLURRED_BLACK_FLOOD"
               result="VIGNETTE_MASK"
             >
-              <feFuncA type="table" tableValues="0 0 0 0 1% 100%" />
+              <feFuncA type="table" tableValues="0 0 0 1% 100%" />
             </feComponentTransfer>
             <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
           </filter>
@@ -103,8 +102,11 @@ export function LocateInMapActivity() {
           </Geographies>
         </g>
 
-        <Marker coordinates={[0, 0]}>
-          <circle r={3} fill="#FF5533" />
+        <Marker coordinates={[-110, 46]}>
+          <circle r={4} cx={3} cy={3} fill="#00000018" />
+          <circle r={4} cx={2} cy={2} fill="#00000025" />
+          <circle r={5} fill="#FFF" />
+          <circle r={3} fill="#000" />
         </Marker>
       </ComposableMap>
     </div>

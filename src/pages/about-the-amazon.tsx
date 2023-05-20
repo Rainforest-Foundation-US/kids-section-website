@@ -8,7 +8,7 @@ import {
   ActivitySectionDivider,
   HomeSectionsContainer,
 } from "@/components/sections";
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -30,10 +30,7 @@ export default function Home() {
         )}
       >
         <HomeSectionsContainer>
-          <ActivitySection
-            number={0}
-            className="relative flex min-h-screen snap-center flex-col"
-          >
+          <ActivitySection number={0} className="min-h-[840px] py-0">
             <NavBar />
 
             <Image
@@ -47,9 +44,9 @@ export default function Home() {
 
             <div className="relative z-10 flex flex-1 flex-row p-6">
               <div className="flex flex-1 flex-col items-center justify-center">
-                <header className="max-w-[24.5rem] space-y-6">
+                <header className="max-w-[30rem] space-y-6">
                   <h1 className="leading-snug text-neutral-dark-700 text-4xl">
-                    You are probably wondering, <b>What is a rainforest?</b>
+                    You might be wondering: <b>What is a rainforest?</b>
                   </h1>
 
                   <HomeGoToSectionButton />
@@ -62,10 +59,7 @@ export default function Home() {
             </div>
           </ActivitySection>
 
-          <ActivitySection
-            number={1}
-            className="relative flex min-h-screen snap-center"
-          >
+          <ActivitySection number={1}>
             <Image
               className="absolute inset-0 block h-full w-full object-cover"
               src="/pages/about-the-amazon/activities/1-bg.png"
@@ -106,14 +100,20 @@ export default function Home() {
                 alt=""
               />
 
-              <HomeGoToSectionButton />
+              <HomeGoToSectionButton className="-translate-y-40" />
             </div>
           </ActivitySection>
 
-          <ActivitySection
-            number={2}
-            className="relative flex min-h-screen snap-center"
-          >
+          <ActivitySection number={2}>
+            <Image
+              className="absolute inset-0 block h-full w-full object-cover"
+              src="/pages/about-the-amazon/activities/1-bg.png"
+              height={1280}
+              width={720}
+              aria-hidden
+              alt=""
+            />
+
             <ActivitySectionDivider />
 
             <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
@@ -148,26 +148,26 @@ export default function Home() {
                 aria-hidden
                 alt=""
               />
-              <HomeGoToSectionButton />
+
+              <HomeGoToSectionButton className="-translate-y-40" />
             </div>
           </ActivitySection>
 
-          <ActivitySection
-            number={3}
-            className="relative flex min-h-screen snap-center"
-          >
+          <ActivitySection number={3}>
             <ActivitySectionDivider />
 
-            <div className="relative z-10 flex flex-1 flex-col items-center justify-center py-10">
-              <LocateInMapActivity />
+            <div className="z-10 flex flex-1 flex-col items-center justify-center py-10">
+              <div className="relative w-full max-w-6xl">
+                <LocateInMapActivity />
 
-              <HomeGoToSectionButton />
+                <header className="absolute inset-x-0 -top-8 text-center">
+                  <p className="mx-auto max-w-xl leading-snug text-neutral-dark-700 text-4xl">
+                    The three most important rainforests are:
+                  </p>
+                </header>
+              </div>
 
-              <header className="absolute inset-x-0 top-8 text-center">
-                <p className="mx-auto max-w-xl leading-snug text-neutral-dark-700 text-4xl">
-                  The three most important rainforests are:
-                </p>
-              </header>
+              <HomeGoToSectionButton className="-translate-y-24" />
             </div>
           </ActivitySection>
         </HomeSectionsContainer>

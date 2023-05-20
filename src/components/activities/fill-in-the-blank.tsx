@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
 import { useDraggable, useDroppable } from "../../utils/draggable";
