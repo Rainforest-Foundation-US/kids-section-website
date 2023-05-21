@@ -8,9 +8,26 @@ import {
   ActivitySectionDivider,
   HomeSectionsContainer,
 } from "@/components/sections";
+import { VignetteSection } from "@/components/sections/vignette-section";
 import clsx from "@/utils/clsx";
 import Head from "next/head";
 import Image from "next/image";
+
+import fillInTheBlank1 from "@/assets/activities/fill-in-the-blank/climate/1-biome.jpg";
+import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
+import intro1 from "@/assets/activities/intro/1-antarctica.jpg";
+
+import biodiversity1 from "@/assets/activities/biodiversity/1-forest.png";
+import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
+import biodiversity3 from "@/assets/activities/biodiversity/3-burning.png";
+import biodiversity4 from "@/assets/activities/biodiversity/4-natives.png";
+import { Footer } from "@/components/layout/footer";
+import { PickTheOptionActivity } from "@/components/activities/pick-the-option";
+import { WavySection } from "@/components/sections/wavy-section";
+import {
+  SittingSlothIllustration,
+  WavySeparator,
+} from "@/components/activities-illustrations";
 
 export default function Home() {
   const isScrollSnappingEnabled = false;
@@ -30,7 +47,7 @@ export default function Home() {
         )}
       >
         <HomeSectionsContainer>
-          <ActivitySection number={0} className="min-h-[840px] py-0">
+          <ActivitySection number={0} className="py-0">
             <NavBar />
 
             <Image
@@ -93,9 +110,7 @@ export default function Home() {
 
               <Image
                 className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
-                src="/pages/about-the-amazon/activities/1-img.webp"
-                height={1280}
-                width={720}
+                src={fillInTheBlank1}
                 aria-hidden
                 alt=""
               />
@@ -141,10 +156,8 @@ export default function Home() {
               />
 
               <Image
-                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
-                src="/pages/about-the-amazon/activities/1-img.webp"
-                height={1280}
-                width={720}
+                className="mt-16 flex w-full max-w-[701px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+                src={fillInTheBlank2}
                 aria-hidden
                 alt=""
               />
@@ -170,7 +183,114 @@ export default function Home() {
               <HomeGoToSectionButton className="-translate-y-24" />
             </div>
           </ActivitySection>
+
+          <WavySection number={4}>
+            <header className="text-center">
+              <p className="max-w-[30rem] leading-snug text-primary-100 text-4xl">
+                Why do you think there are <b>no rainforests in Antarctica?</b>
+              </p>
+            </header>
+
+            <Image
+              className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
+              src={intro1}
+              aria-hidden
+              alt=""
+            />
+
+            <HomeGoToSectionButton className="absolute bottom-20" />
+          </WavySection>
+
+          <VignetteSection
+            number={5}
+            title="Biodiversity"
+            subtitle="(or “biological diversity) is..."
+            image={biodiversity1}
+          />
+
+          <VignetteSection
+            number={6}
+            title="Biodiversity"
+            subtitle="(or “biological diversity) is..."
+            body="...a word that refers to the variety of life on Earth. The many different types of plants, animals, fungi, bacteria, and people too!"
+            image={biodiversity2}
+          />
+
+          <VignetteSection
+            number={7}
+            title="Biodiversity"
+            subtitle="(or “biological diversity) is..."
+            body="...threatened by deforestation and climate change."
+            image={biodiversity3}
+          />
+
+          <VignetteSection
+            number={8}
+            title="Biodiversity"
+            subtitle="(or “biological diversity) is..."
+            body="...protected by indigenous peoples around the world!"
+            imageAlignment="start"
+            image={biodiversity4}
+          />
+
+          <div className="relative">
+            <WavySeparator
+              className="absolute z-10"
+              direction="down"
+              color="#1E1F1B"
+            />
+          </div>
+
+          <ActivitySection number={9} className="py-6">
+            <Image
+              className="absolute inset-0 block h-full w-full object-cover"
+              src="/sections/welcome/background.png"
+              height={1280}
+              width={720}
+              aria-hidden
+              alt=""
+            />
+
+            <div className="relative z-10 mx-auto flex max-w-[40rem] flex-1 flex-col items-center space-y-6 py-40">
+              <h2 className="text-center leading-snug text-4xl">
+                So, just how biodiverse is the Amazon, and how much biodiversity
+                do indigenous peoples really protect?
+              </h2>
+
+              <SittingSlothIllustration />
+
+              <p className="text-center font-bold leading-snug text-4xl">
+                These numbers give us a better picture...
+              </p>
+
+              <HomeGoToSectionButton />
+            </div>
+          </ActivitySection>
+
+          <WavySection number={10}>
+            <PickTheOptionActivity
+              question="Rainforests are forests that:"
+              options={[
+                {
+                  text: "Stay green all year round, and get lots of rain!",
+                  isCorrect: true,
+                },
+                {
+                  text: "Do not have a large variety of plants and animals.",
+                  isCorrect: false,
+                },
+                {
+                  text: "exists on every continent",
+                  isCorrect: false,
+                },
+              ]}
+            />
+
+            <HomeGoToSectionButton />
+          </WavySection>
         </HomeSectionsContainer>
+
+        <Footer />
       </main>
     </>
   );

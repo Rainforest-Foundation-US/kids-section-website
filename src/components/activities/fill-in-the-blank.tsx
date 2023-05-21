@@ -223,23 +223,22 @@ export function FillInTheBlankActivity<S extends string>(
 
   const onSelectOption = useCallback(
     (option: ParsedBlankOption) => {
-      const nextAnswers = { ...answers };
+      const updatedAnswers = { ...answers };
 
       // If the option is already selected, skip it.
-      if (nextAnswers[option.blankId]) {
+      if (updatedAnswers[option.blankId]) {
         // TODO: Do animation to indicate that the option is already selected.
         return;
       }
 
       if (option.isValid) {
-        // TODO: Do success animation
-        nextAnswers[option.blankId] = option.id;
+        updatedAnswers[option.blankId] = option.id;
       } else {
         // TODO: Do failure animation
-        delete nextAnswers[option.blankId];
+        delete updatedAnswers[option.blankId];
       }
 
-      setAnswers(nextAnswers);
+      setAnswers(updatedAnswers);
     },
     [answers, setAnswers]
   );

@@ -13,14 +13,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
-import firstBackground from "@/images/home/background/first-background.png";
-import secondBackground from "@/images/home/background/second-background.png";
+import firstBackground from "@/assets/home/background/first-background.png";
+import secondBackground from "@/assets/home/background/second-background.png";
 
-import firstPolaroid from "@/images/home/polaroids/Emily Saves the World Fundraiser.png";
-import secondPolaroid from "@/images/home/polaroids/Heritage Montessori School Bake Sale.jpg";
-import thirdPolaroid from "@/images/home/polaroids/Josalyn_s Lemonade for the Rainforest.jpg";
-import fourthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest.jpg";
-import fifthPolaroid from "@/images/home/polaroids/Noah Chan Art for the Rainforest(1).jpg";
+import firstPolaroid from "@/assets/home/polaroids/Emily Saves the World Fundraiser.png";
+import secondPolaroid from "@/assets/home/polaroids/Heritage Montessori School Bake Sale.jpg";
+import thirdPolaroid from "@/assets/home/polaroids/Josalyn_s Lemonade for the Rainforest.jpg";
+import fourthPolaroid from "@/assets/home/polaroids/Noah Chan Art for the Rainforest.jpg";
+import fifthPolaroid from "@/assets/home/polaroids/Noah Chan Art for the Rainforest(1).jpg";
 import { NavBar } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 

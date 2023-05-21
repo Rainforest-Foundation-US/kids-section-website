@@ -4,7 +4,7 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
-import countriesTopoJSON from "./countries-topo.json";
+import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
 
 const countryCodeKey = "ADM0_ISO";
