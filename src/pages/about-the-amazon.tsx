@@ -189,7 +189,7 @@ export default function Home() {
             </div>
           </ActivitySection>
 
-          <ActivitySection number={3}>
+          <ActivitySection number={3} className="bg-complementary-100">
             <ActivitySectionDivider />
 
             <div className="z-10 flex flex-1 flex-col items-center justify-center py-10">

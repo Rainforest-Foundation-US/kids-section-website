@@ -6,11 +6,138 @@ import {
 } from "react-simple-maps";
 import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
+import { wrapTextToLength } from "@/utils/wrapTextToLength";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 const countryCodeKey = "ADM0_ISO";
 
 function getCountryCode(geo: any) {
   return geo.properties[countryCodeKey];
+}
+
+const mapAnnotationPadding = 10;
+const mapAnnotationOffset = 5;
+
+interface Marker {
+  position: [number, number];
+  text: string;
+  orientation:
+    | "top-right"
+    | "top-left"
+    | "bottom-right"
+    | "bottom-left"
+    | "left"
+    | "right";
+}
+
+function MapAnnotation(props: Marker) {
+  const textRef = useRef<SVGTextElement>(null);
+  const markerLines = useMemo(
+    () => wrapTextToLength(props.text, 17),
+    [props.text]
+  );
+
+  const [bbox, setBbox] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width: 186,
+    height: 0,
+  });
+
+  useLayoutEffect(() => {
+    if (!textRef.current) return;
+
+    const bbox = textRef.current.getBBox();
+
+    const width = bbox.width + mapAnnotationPadding * 2;
+    const height = bbox.height + mapAnnotationPadding * 2;
+
+    setBbox({
+      width,
+      height,
+    });
+  }, [textRef, markerLines]);
+
+  let groupPosition: [number, number];
+
+  switch (props.orientation) {
+    case "bottom-left":
+      groupPosition = [
+        -(mapAnnotationOffset + bbox.width),
+        mapAnnotationOffset,
+      ];
+      break;
+    case "top-left":
+      groupPosition = [
+        -(mapAnnotationOffset + bbox.width),
+        -(mapAnnotationOffset + bbox.height),
+      ];
+      break;
+    case "bottom-right":
+      groupPosition = [mapAnnotationOffset, mapAnnotationOffset];
+      break;
+    case "left":
+      groupPosition = [
+        -(mapAnnotationOffset * 2 + bbox.width),
+        -(bbox.height / 2),
+      ];
+      break;
+    case "right":
+      groupPosition = [mapAnnotationOffset, -(bbox.height / 2)];
+      break;
+    default:
+    case "top-right":
+      groupPosition = [
+        mapAnnotationOffset,
+        -(mapAnnotationOffset + bbox.height),
+      ];
+      break;
+  }
+
+  return (
+    <Marker
+      key={props.position[0] + "-" + props.position[1]}
+      coordinates={props.position}
+    >
+      <g transform={`translate(${groupPosition[0]}, ${groupPosition[1]})`}>
+        <rect
+          rx={4}
+          x={4}
+          y={4}
+          width={bbox.width}
+          height={bbox.height}
+          className="fill-shadow-gray"
+        />
+
+        <rect
+          rx={4}
+          x={0}
+          y={0}
+          width={bbox.width}
+          height={bbox.height}
+          className="fill-secondary-100 stroke-neutral-600 stroke-[0.5px]"
+        />
+
+        <text
+          ref={textRef}
+          className="text-[0.6rem] font-semibold"
+          y={mapAnnotationPadding}
+        >
+          {markerLines.map((text, l) => (
+            <tspan x={mapAnnotationPadding} dy="1.25em" key={l}>
+              {text}
+            </tspan>
+          ))}
+        </text>
+      </g>
+
+      <circle r={4} cx={3} cy={3} fill="#00000018" />
+      <circle r={4} cx={2} cy={2} fill="#00000025" />
+      <circle r={5} fill="#FFF" />
+      <circle r={3} fill="#000" />
+    </Marker>
+  );
 }
 
 export function LocateInMapActivity() {
@@ -30,6 +157,26 @@ export function LocateInMapActivity() {
     "CAF",
     "IDN",
   ];
+
+  const markers: Marker[] = [
+    { position: [-110, 46], text: "United States", orientation: "top-right" },
+    {
+      position: [-81, -1],
+      text: "The Amazon Basin, in South America",
+      orientation: "left",
+    },
+    {
+      position: [10, 7],
+      text: "The Congo Basin, in Subsaharan Africa",
+      orientation: "top-left",
+    },
+    {
+      position: [105, -6],
+      text: "The Indonesian Archipelago",
+      orientation: "bottom-left",
+    },
+  ];
+
   return (
     <div className="relative w-full max-w-6xl">
       <ComposableMap
@@ -41,8 +188,6 @@ export function LocateInMapActivity() {
         className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
       >
         <defs>
-          {/* // filter transparency at borders (10px) */}
-
           <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
             <feFlood flood-color="black" result="BLACK_FLOOD" />
             <feGaussianBlur
@@ -102,12 +247,14 @@ export function LocateInMapActivity() {
           </Geographies>
         </g>
 
-        <Marker coordinates={[-110, 46]}>
-          <circle r={4} cx={3} cy={3} fill="#00000018" />
-          <circle r={4} cx={2} cy={2} fill="#00000025" />
-          <circle r={5} fill="#FFF" />
-          <circle r={3} fill="#000" />
-        </Marker>
+        {markers.map((marker) => (
+          <MapAnnotation
+            orientation={marker.orientation}
+            key={marker.position[0] + "-" + marker.position[1]}
+            position={marker.position}
+            text={marker.text}
+          />
+        ))}
       </ComposableMap>
     </div>
   );
