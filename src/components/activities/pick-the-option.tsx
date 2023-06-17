@@ -36,6 +36,7 @@ interface PickTheOptionActivityProps {
   options: Omit<Option, "id">[];
   wrap?: boolean;
   children?: React.ReactNode;
+  rotateOptions?: boolean;
 }
 export function PickTheOptionActivity(props: PickTheOptionActivityProps) {
   const localOptions = useMemo<Option[]>(() => {
@@ -65,15 +66,24 @@ export function PickTheOptionActivity(props: PickTheOptionActivityProps) {
           props.wrap ? "flex-row flex-wrap" : "flex-col items-center"
         )}
       >
-        {localOptions.map((option) => (
-          <li key={option.id}>
-            <PickTheOptionOption
-              option={option}
-              isSelected={selectedOptions[option.id]}
-              onClick={() => onSelectOption(option)}
-            />
-          </li>
-        ))}
+        {localOptions.map((option, i) => {
+          const isOdd = i % 2 !== 0;
+          return (
+            <li
+              key={option.id}
+              className={clsx(
+                props.rotateOptions &&
+                  (isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]")
+              )}
+            >
+              <PickTheOptionOption
+                option={option}
+                isSelected={selectedOptions[option.id]}
+                onClick={() => onSelectOption(option)}
+              />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

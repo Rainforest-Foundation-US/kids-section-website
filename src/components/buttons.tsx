@@ -22,6 +22,36 @@ function NavLink({ className, ...props }: NavLinkProps) {
     />
   );
 }
+interface GoToButtonProps {
+  direction?: "left" | "right" | "bottom" | "top";
+  position?: "start" | "center" | "end";
+  className?: string;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled: boolean;
+}
+export function GoToButton({
+  direction = "bottom",
+  position = "start",
+  ...props
+}: GoToButtonProps) {
+  return (
+    <button
+      className={clsx(
+        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 ",
+        props.className,
+        direction === "left" && "rotate-90",
+        direction === "right" && "-rotate-90",
+        direction === "top" && "rotate-180",
+
+        props.disabled === false && "bg-primary-500"
+      )}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
+      <IconRight />
+    </button>
+  );
+}
 
 export function HomeGoToSectionButton(props: { className?: string }) {
   const { onGoNext } = useHomeSectionNavigation();
