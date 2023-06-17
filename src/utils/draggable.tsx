@@ -10,17 +10,25 @@ function serialize<T>(value: DraggableMeta<T>) {
 }
 
 function deserialize<T>(value: string) {
-  const object = JSON.parse(value);
+  try {
+    const object = JSON.parse(value);
 
-  if (typeof object !== "object") {
-    throw new Error("Deserialized value is not an object.");
+    if (typeof object !== "object") {
+      throw new Error("Deserialized value is not an object.");
+    }
+
+    if (!("targetAreaId" in object)) {
+      throw new Error("Deserialized value is not a DraggableMeta.");
+    }
+
+    return object as DraggableMeta<T>;
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      throw new Error("Deserialized value is not a DraggableMeta.");
+    }
+
+    throw err;
   }
-
-  if (!("targetAreaId" in object)) {
-    throw new Error("Deserialized value is not a DraggableMeta.");
-  }
-
-  return object as DraggableMeta<T>;
 }
 
 export function useDraggable<T>(
@@ -89,13 +97,25 @@ export function useDroppable<V, T extends HTMLElement = HTMLDivElement>(
   const handleDrop = useCallback(
     (event: React.DragEvent<T>) => {
       const meta = event.dataTransfer.getData("text/plain");
-      const metaObj = deserialize<V>(meta);
 
-      if (event.currentTarget.id !== areaId) {
-        return;
+      try {
+        const metaObj = deserialize<V>(meta);
+
+        if (event.currentTarget.id !== areaId) {
+          return;
+        }
+
+        onDrop(metaObj.value, event.currentTarget);
+      } catch (err) {
+        if (
+          err instanceof Error &&
+          err.message === "Deserialized value is not a DraggableMeta."
+        ) {
+          return;
+        }
+
+        throw err;
       }
-
-      onDrop(metaObj.value, event.currentTarget);
     },
     [areaId, onDrop]
   );

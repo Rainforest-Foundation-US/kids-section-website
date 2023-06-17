@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import { Footer } from "@/components/layout/footer";
 import { PickTheOptionActivity } from "@/components/activities/pick-the-option";
+import mainBackground from "@/assets/activities/1-background.png";
 
 export default function NarrativesRoute() {
   return (
@@ -23,7 +24,7 @@ export default function NarrativesRoute() {
 
             <Image
               className="absolute inset-0 block h-full w-full object-cover"
-              src="/sections/welcome/background.png"
+              src={mainBackground}
               height={1280}
               width={720}
               aria-hidden

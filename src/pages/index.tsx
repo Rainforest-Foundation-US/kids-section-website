@@ -69,12 +69,12 @@ export default function Home() {
           <NavBar />
 
           <Image
+            placeholder="blur"
             className="absolute top-0 left-0 right-0 block h-full w-full object-cover object-bottom"
             src={firstBackground}
             height={1280}
             width={720}
             aria-hidden
-            placeholder="blur"
             alt=""
           />
 
@@ -121,12 +121,12 @@ export default function Home() {
             />
 
             <Image
+              placeholder="blur"
               className="block h-full w-full object-cover object-bottom"
               src={secondBackground}
               height={1349}
               width={720}
               aria-hidden
-              placeholder="blur"
               alt=""
             />
           </div>

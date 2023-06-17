@@ -1,44 +1,73 @@
 import clsx from "@/utils/clsx";
-import Image from "next/image";
+import { truncateText } from "@/utils/truncateText";
+import { StaticImageData } from "next/image";
+import { useMemo } from "react";
+
+const MAX_POLAROID_LENGTH = 31;
 
 interface PolaroidProps {
   className?: string;
-  src: PropsOf<typeof Image>["src"];
+  src: string | StaticImageData;
   caption?: string;
+  shrinkOnResponsive?: boolean;
   verticalAlign?: "top" | "center" | "bottom";
 }
 export function Polaroid(props: PolaroidProps) {
-  const caption = props.caption ?? "Fujifilm Instax Wide Format";
+  const captionFromProps = props.caption ?? "Fujifilm Instax Wide Format";
+
+  const [caption, truncated] = useMemo(
+    () => truncateText(captionFromProps, MAX_POLAROID_LENGTH),
+    [captionFromProps]
+  );
 
   const style = {
     "--el-align": props.verticalAlign ?? "center",
   } as React.CSSProperties;
 
-  return (
-    <div
-      className={clsx(
-        props.className,
-        "transition-all duration-75",
-        "box-content min-w-[272px] border-1 border-neutral-600 bg-neutral-100 p-4 shadow-app-lg shadow-shadow-gray"
-      )}
-    >
-      <figure>
-        <Image
-          style={style}
-          className="aspect-[13_/_10] w-full object-cover object-[var(--el-align)]"
-          src={props.src}
-          width={130}
-          height={100}
-          alt={caption}
-        />
+  let imageSrc: string;
+  let blurDataURL: string | undefined;
 
-        <figcaption
-          className="mt-4 text-center text-base max-lines-1"
-          title={caption}
-        >
-          {caption}
-        </figcaption>
-      </figure>
-    </div>
+  if (typeof props.src === "string") {
+    imageSrc = props.src;
+  } else {
+    imageSrc = props.src.src;
+    blurDataURL = props.src.blurDataURL;
+  }
+
+  return (
+    <svg
+      className={clsx(
+        "transition-all duration-75",
+        "box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        props.className
+      )}
+      viewBox="0 0 140 132"
+    >
+      {blurDataURL && (
+        <image
+          x="0"
+          y="0"
+          style={style}
+          preserveAspectRatio="xMidYMax slice"
+          href={blurDataURL}
+          width={140}
+          height={110}
+        />
+      )}
+      <image
+        x="0"
+        y="0"
+        style={style}
+        preserveAspectRatio="xMidYMax slice"
+        href={imageSrc}
+        width={140}
+        height={110}
+      />
+
+      <text className="text-3xs" textAnchor="middle" x={70} y={127}>
+        {caption}
+        {truncated && "..."}
+      </text>
+    </svg>
   );
 }

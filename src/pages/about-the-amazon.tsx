@@ -17,6 +17,9 @@ import fillInTheBlank1 from "@/assets/activities/fill-in-the-blank/climate/1-bio
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
 import intro1 from "@/assets/activities/intro/1-antarctica.jpg";
 
+import mainBackground from "@/assets/activities/1-background.png";
+import secondBackground from "@/assets/activities/2-background.png";
+
 import biodiversity1 from "@/assets/activities/biodiversity/1-forest.png";
 import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
 import biodiversity3 from "@/assets/activities/biodiversity/3-burning.png";
@@ -28,6 +31,7 @@ import {
   SittingSlothIllustration,
   WavySeparator,
 } from "@/components/activities-illustrations";
+import { Polaroid } from "@/components/polaroid";
 
 export default function Home() {
   const isScrollSnappingEnabled = false;
@@ -43,7 +47,7 @@ export default function Home() {
       <main
         className={clsx(
           isScrollSnappingEnabled && "snap-y snap-mandatory",
-          "h-screen overflow-y-auto bg-neutral-600"
+          "h-screen overflow-hidden overflow-y-auto bg-neutral-600"
         )}
       >
         <HomeSectionsContainer>
@@ -51,8 +55,9 @@ export default function Home() {
             <NavBar />
 
             <Image
+              placeholder="blur"
               className="absolute inset-0 block h-full w-full object-cover"
-              src="/sections/welcome/background.png"
+              src={mainBackground}
               height={1280}
               width={720}
               aria-hidden
@@ -78,8 +83,9 @@ export default function Home() {
 
           <ActivitySection number={1}>
             <Image
+              placeholder="blur"
               className="absolute inset-0 block h-full w-full object-cover"
-              src="/pages/about-the-amazon/activities/1-bg.png"
+              src={secondBackground}
               height={1280}
               width={720}
               aria-hidden
@@ -108,12 +114,27 @@ export default function Home() {
                 }}
               />
 
-              <Image
-                className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
-                src={fillInTheBlank1}
-                aria-hidden
-                alt=""
-              />
+              <div className="relative mt-16 flex w-full max-w-[calc(814px_+_18rem)] justify-center">
+                <Image
+                  placeholder="blur"
+                  className="flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
+                  src={fillInTheBlank1}
+                  aria-hidden
+                  alt=""
+                />
+
+                <div className="absolute inset-y-0 right-0 flex items-center">
+                  <Polaroid
+                    shrinkOnResponsive
+                    className={
+                      "w-[clamp(10rem,_25vw,_18rem)] min-w-0 rotate-6 hover:z-10 hover:rotate-0 hover:scale-105"
+                    }
+                    src={fillInTheBlank1}
+                    caption="Fujifilm Instax Wide Format"
+                    verticalAlign="center"
+                  />
+                </div>
+              </div>
 
               <HomeGoToSectionButton className="-translate-y-40" />
             </div>
@@ -121,8 +142,9 @@ export default function Home() {
 
           <ActivitySection number={2}>
             <Image
+              placeholder="blur"
               className="absolute inset-0 block h-full w-full object-cover"
-              src="/pages/about-the-amazon/activities/1-bg.png"
+              src={secondBackground}
               height={1280}
               width={720}
               aria-hidden
@@ -156,6 +178,7 @@ export default function Home() {
               />
 
               <Image
+                placeholder="blur"
                 className="mt-16 flex w-full max-w-[701px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
                 src={fillInTheBlank2}
                 aria-hidden
@@ -192,6 +215,7 @@ export default function Home() {
             </header>
 
             <Image
+              placeholder="blur"
               className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
               src={intro1}
               aria-hidden
@@ -243,8 +267,9 @@ export default function Home() {
 
           <ActivitySection number={9} className="py-6">
             <Image
+              placeholder="blur"
               className="absolute inset-0 block h-full w-full object-cover"
-              src="/sections/welcome/background.png"
+              src={mainBackground}
               height={1280}
               width={720}
               aria-hidden
