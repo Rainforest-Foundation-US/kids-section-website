@@ -90,7 +90,7 @@ export function ContentPager(props: {
 
   return (
     <>
-      <div className="inset-y-0 left-0 z-10 mb-4 flex items-center lg:absolute">
+      <div className="inset-y-0 left-6 z-10 mb-4 flex items-center lg:absolute">
         <GlobalActivityHint />
       </div>
 
