@@ -5,6 +5,7 @@ import {
   useState,
   useRef,
 } from "react";
+import { screenBreakpoints } from "tailwind.config";
 
 export const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -115,4 +116,34 @@ export function useMeasure<E extends HTMLElement = HTMLElement>(
   }, [registerObserver]);
 
   return [ref, bounds] as const;
+}
+
+export function useOnBreakpointMatches(
+  breakpoint: keyof typeof screenBreakpoints,
+  callback: (event: MediaQueryListEvent | MediaQueryList) => void
+) {
+  const eventCallback = useEvent(callback);
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      `(min-width: ${screenBreakpoints[breakpoint]})`
+    );
+
+    query.addEventListener("change", eventCallback);
+    eventCallback(query);
+
+    return () => query.removeEventListener("change", eventCallback);
+  }, [breakpoint, eventCallback]);
+}
+
+export function useMatchesBreakpoint(
+  breakpoint: keyof typeof screenBreakpoints
+) {
+  const [matches, setMatches] = useState(false);
+
+  useOnBreakpointMatches(breakpoint, (event) => {
+    setMatches(event.matches);
+  });
+
+  return matches;
 }

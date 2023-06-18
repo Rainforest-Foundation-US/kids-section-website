@@ -1,6 +1,14 @@
 import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { CommonActivity } from "./common";
+
+export interface PickTheOptionActivityOptions {
+  question: string;
+  options: Omit<Option, "id">[];
+  wrap?: boolean;
+  rotateOptions?: boolean;
+}
 
 interface Option {
   id: string;
@@ -11,13 +19,15 @@ interface Option {
 interface PickTheOptionOptionProps {
   option: Option;
   isSelected: boolean;
+  disabled: boolean;
   onClick: () => void;
 }
 export function PickTheOptionOption(props: PickTheOptionOptionProps) {
   return (
     <button
+      disabled={props.disabled}
       className={clsx(
-        "inline-block rounded-lg border-1 py-4 px-4 font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 text-base lg:px-8",
+        "border-1 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg px-4 py-4 text-base font-medium transition-all duration-75 lg:px-8",
         props.isSelected
           ? props.option.isCorrect
             ? "border-primary-500 bg-primary-100 hover:border-primary-600"
@@ -31,14 +41,13 @@ export function PickTheOptionOption(props: PickTheOptionOptionProps) {
   );
 }
 
-interface PickTheOptionActivityProps {
-  question: string;
-  options: Omit<Option, "id">[];
-  wrap?: boolean;
-  children?: React.ReactNode;
-  rotateOptions?: boolean;
-}
-export function PickTheOptionActivity(props: PickTheOptionActivityProps) {
+type PickTheOptionActivityProps = React.PropsWithChildren<
+  PickTheOptionActivityOptions & CommonActivity
+>;
+export function PickTheOptionActivity({
+  onHint,
+  ...props
+}: PickTheOptionActivityProps) {
   const localOptions = useMemo<Option[]>(() => {
     return props.options.map((option) => ({
       ...option,
@@ -50,13 +59,28 @@ export function PickTheOptionActivity(props: PickTheOptionActivityProps) {
     Record<string, boolean>
   >({});
 
-  const onSelectOption = useCallback((option: Option) => {
-    setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
-  }, []);
+  const allCorrectOptionsSelected = useMemo(() => {
+    return localOptions
+      .filter((option) => option.isCorrect)
+      .every((option) => selectedOptions[option.id]);
+  }, [localOptions, selectedOptions]);
+
+  const onSelectOption = useCallback(
+    (option: Option) => {
+      if (option.isCorrect) {
+        onHint(null, "correct");
+      } else {
+        onHint(null, "incorrect");
+      }
+
+      setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
+    },
+    [onHint]
+  );
 
   return (
     <div className="flex max-w-3xl flex-col items-center space-y-6">
-      <p className="text-center leading-snug text-4xl">{props.question}</p>
+      <p className="text-center text-4xl leading-snug">{props.question}</p>
 
       {props.children}
 
@@ -78,6 +102,10 @@ export function PickTheOptionActivity(props: PickTheOptionActivityProps) {
             >
               <PickTheOptionOption
                 option={option}
+                disabled={
+                  allCorrectOptionsSelected ||
+                  (selectedOptions[option.id] && option.isCorrect)
+                }
                 isSelected={selectedOptions[option.id]}
                 onClick={() => onSelectOption(option)}
               />

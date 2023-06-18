@@ -8,6 +8,9 @@ import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
 import { wrapTextToLength } from "@/utils/wrapTextToLength";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { CommonActivity } from "./common";
+
+export interface LocateInMapActivityOptions {}
 
 const countryCodeKey = "ADM0_ISO";
 
@@ -140,7 +143,10 @@ function MapAnnotation(props: Marker) {
   );
 }
 
-export function LocateInMapActivity() {
+type LocateInMapActivityProps = React.PropsWithChildren<
+  LocateInMapActivityOptions & CommonActivity
+>;
+export function LocateInMapActivity(props: LocateInMapActivityProps) {
   const highlightedCountries = [
     "USA",
     "VEN",

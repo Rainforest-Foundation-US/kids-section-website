@@ -3,6 +3,12 @@ import { useCallback, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
 import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
+import { CommonActivity } from "./common";
+
+export interface FillInTheBlankActivityOptions {
+  question: StringifiedQuestion;
+  numberToOptions: NumberToOptions;
+}
 
 type StringifiedQuestion = string;
 
@@ -210,11 +216,13 @@ export function FillInTheBlankActivityDropZone({
   );
 }
 
-interface FillInTheBlankActivityProps {
-  question: StringifiedQuestion;
-  numberToOptions: NumberToOptions;
-}
-export function FillInTheBlankActivity(props: FillInTheBlankActivityProps) {
+type FillInTheBlankActivityProps = React.PropsWithChildren<
+  FillInTheBlankActivityOptions & CommonActivity
+>;
+export function FillInTheBlankActivity({
+  onHint,
+  ...props
+}: FillInTheBlankActivityProps) {
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
 
@@ -229,15 +237,17 @@ export function FillInTheBlankActivity(props: FillInTheBlankActivityProps) {
       }
 
       if (option.isValid) {
+        onHint(null, "correct");
         updatedAnswers[option.blankId] = option.id;
       } else {
+        onHint(null, "incorrect");
         // TODO: Do failure animation
         delete updatedAnswers[option.blankId];
       }
 
       setAnswers(updatedAnswers);
     },
-    [answers, setAnswers]
+    [answers, onHint, setAnswers]
   );
 
   const getSelectedOption = useCallback(

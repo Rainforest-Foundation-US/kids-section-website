@@ -1,9 +1,23 @@
 import clsx from "@/utils/clsx";
 import { useState } from "react";
 import { GoToButton } from "../buttons";
-import { FillInTheBlankActivity } from "./activities/fill-in-the-blank";
-import { PickTheImageActivity } from "./activities/pick-the-image";
-import { PickTheOptionActivity } from "./activities/pick-the-option";
+import {
+  GlobalActivityHint,
+  useResetHint,
+  useSetHint,
+} from "../global-activity-hint";
+import {
+  FillInTheBlankActivity,
+  FillInTheBlankActivityOptions,
+} from "./activities/fill-in-the-blank";
+import {
+  PickTheImageActivity,
+  PickTheImageActivityOptions,
+} from "./activities/pick-the-image";
+import {
+  PickTheOptionActivity,
+  PickTheOptionActivityOptions,
+} from "./activities/pick-the-option";
 import { PlainTextContent } from "./plain-text";
 
 type PlainContentData = {
@@ -13,17 +27,17 @@ type PlainContentData = {
 
 type FillInTheBlankActivityData = {
   type: "fill-in-the-blank";
-  data: PropsOf<typeof FillInTheBlankActivity>;
+  data: FillInTheBlankActivityOptions;
 };
 
 type PickTheOptionActivityData = {
   type: "pick-the-option";
-  data: PropsOf<typeof PickTheOptionActivity>;
+  data: PickTheOptionActivityOptions;
 };
 
 type PickTheImageActivityData = {
   type: "pick-the-image";
-  data: PropsOf<typeof PickTheImageActivity>;
+  data: PickTheImageActivityOptions;
 };
 
 export type Content =
@@ -32,21 +46,23 @@ export type Content =
   | PickTheOptionActivityData
   | PickTheImageActivityData;
 
-export function PolymorphicContent({ content }: { content: Content }) {
+function PolymorphicContent({ content }: { content: Content }) {
+  const setHint = useSetHint();
+
   if (content.type === "plain") {
     return <PlainTextContent {...content.data} />;
   }
 
   if (content.type === "fill-in-the-blank") {
-    return <FillInTheBlankActivity {...content.data} />;
+    return <FillInTheBlankActivity onHint={setHint} {...content.data} />;
   }
 
   if (content.type === "pick-the-option") {
-    return <PickTheOptionActivity {...content.data} />;
+    return <PickTheOptionActivity onHint={setHint} {...content.data} />;
   }
 
   if (content.type === "pick-the-image") {
-    return <PickTheImageActivity {...content.data} />;
+    return <PickTheImageActivity onHint={setHint} {...content.data} />;
   }
 
   return null;
@@ -63,23 +79,31 @@ export function ContentPager(props: {
   initialIndex?: number;
 }) {
   const [index, setIndex] = useState(props.initialIndex ?? 0);
+  const resetHint = useResetHint();
 
   const content = props.contentList[index];
 
-  return (
-    <div
-      className={clsx(
-        "flex flex-col space-y-4",
-        content.type !== "plain" && "items-center"
-      )}
-    >
-      <PolymorphicContent key={index} content={content} />
+  const goNext = () => {
+    setIndex((index + 1) % props.contentList.length);
+    resetHint();
+  };
 
-      <GoToButton
-        direction="right"
-        disabled={false}
-        onClick={() => setIndex((index + 1) % props.contentList.length)}
-      />
-    </div>
+  return (
+    <>
+      <div className="inset-y-0 left-0 z-10 mb-4 flex items-center lg:absolute">
+        <GlobalActivityHint />
+      </div>
+
+      <div
+        className={clsx(
+          "flex flex-col space-y-4",
+          content.type !== "plain" && "items-center"
+        )}
+      >
+        <PolymorphicContent key={index} content={content} />
+
+        <GoToButton direction="right" disabled={false} onClick={goNext} />
+      </div>
+    </>
   );
 }

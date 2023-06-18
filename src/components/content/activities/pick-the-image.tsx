@@ -2,6 +2,14 @@ import clsx from "@/utils/clsx";
 import Image, { StaticImageData } from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { CommonActivity } from "./common";
+
+export interface PickTheImageActivityOptions {
+  question: string;
+  options: Omit<Option, "id">[];
+  wrap?: boolean;
+  rotateOptions?: boolean;
+}
 
 interface Option {
   id: string;
@@ -13,13 +21,15 @@ interface Option {
 interface PickTheImageOptionProps {
   option: Option;
   isSelected: boolean;
+  disabled: boolean;
   onClick: () => void;
 }
 export function PickTheImageOption(props: PickTheImageOptionProps) {
   return (
     <button
+      disabled={props.disabled}
       className={clsx(
-        "inline-block rounded-lg border-1 p-3 font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 text-base",
+        "border-1 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg p-3 text-base font-medium transition-all duration-75",
         props.isSelected
           ? props.option.isCorrect
             ? "border-primary-500 bg-primary-100 hover:border-primary-600"
@@ -38,14 +48,13 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
   );
 }
 
-interface PickTheImageActivityProps {
-  question: string;
-  options: Omit<Option, "id">[];
-  wrap?: boolean;
-  children?: React.ReactNode;
-  rotateOptions?: boolean;
-}
-export function PickTheImageActivity(props: PickTheImageActivityProps) {
+type PickTheImageActivityProps = React.PropsWithChildren<
+  PickTheImageActivityOptions & CommonActivity
+>;
+export function PickTheImageActivity({
+  onHint,
+  ...props
+}: PickTheImageActivityProps) {
   const localOptions = useMemo<Option[]>(() => {
     return props.options.map((option) => ({
       ...option,
@@ -57,13 +66,28 @@ export function PickTheImageActivity(props: PickTheImageActivityProps) {
     Record<string, boolean>
   >({});
 
-  const onSelectOption = useCallback((option: Option) => {
-    setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
-  }, []);
+  const allCorrectOptionsSelected = useMemo(() => {
+    return localOptions
+      .filter((option) => option.isCorrect)
+      .every((option) => selectedOptions[option.id]);
+  }, [localOptions, selectedOptions]);
+
+  const onSelectOption = useCallback(
+    (option: Option) => {
+      if (option.isCorrect) {
+        onHint(null, "correct");
+      } else {
+        onHint(null, "incorrect");
+      }
+
+      setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
+    },
+    [onHint]
+  );
 
   return (
     <div className="flex max-w-3xl flex-col items-center space-y-6">
-      <p className="text-center leading-snug text-4xl">{props.question}</p>
+      <p className="text-center text-4xl leading-snug">{props.question}</p>
 
       {props.children}
 
@@ -85,6 +109,10 @@ export function PickTheImageActivity(props: PickTheImageActivityProps) {
             >
               <PickTheImageOption
                 option={option}
+                disabled={
+                  allCorrectOptionsSelected ||
+                  (selectedOptions[option.id] && option.isCorrect)
+                }
                 isSelected={selectedOptions[option.id]}
                 onClick={() => onSelectOption(option)}
               />
