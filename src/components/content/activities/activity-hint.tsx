@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import { RoundSlothIllustration } from "../activities-illustrations";
+import { RoundSlothIllustration } from "@/components/activities-illustrations";
+import clsx from "@/utils/clsx";
 
 interface ActivityHintProps {
   hint: string;

@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { AppButton } from "../buttons";
-import { IconChevronUp, IconHeart } from "../icons/icons";
+import { IconChevronUp, IconHeart } from "./icons/icons";
 import { useState } from "react";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
+import { AppButton } from "./buttons";
 
 const AnimatedIconChevronUp = animated(IconChevronUp);
 

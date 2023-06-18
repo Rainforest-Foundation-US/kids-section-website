@@ -1,11 +1,10 @@
 import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
-import { useDraggable, useDroppable } from "../../utils/draggable";
+import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
 
-type StringifiedQuestion<S extends string> =
-  S extends `${infer _}<blank />${infer __}` ? S : never;
+type StringifiedQuestion = string;
 
 type NumberToOptions = Record<
   number,
@@ -34,8 +33,8 @@ interface ParsedBlank {
   options: ParsedBlankOption[];
 }
 
-function parseQuestion<S extends string>(
-  question: StringifiedQuestion<S>,
+function parseQuestion(
+  question: StringifiedQuestion,
   numberToOptions: NumberToOptions
 ) {
   const elements: (ParsedSentence | ParsedBlank)[] = [];
@@ -107,8 +106,8 @@ function parseQuestion<S extends string>(
   return { elements, allOptions };
 }
 
-function useSyncParseQuestions<S extends string>(
-  question: StringifiedQuestion<S>,
+function useSyncParseQuestions(
+  question: StringifiedQuestion,
   numberToOptions: NumberToOptions
 ) {
   const parsedQuestion = useMemo(
@@ -211,13 +210,11 @@ export function FillInTheBlankActivityDropZone({
   );
 }
 
-interface FillInTheBlankActivityProps<S extends string> {
-  question: StringifiedQuestion<S>;
+interface FillInTheBlankActivityProps {
+  question: StringifiedQuestion;
   numberToOptions: NumberToOptions;
 }
-export function FillInTheBlankActivity<S extends string>(
-  props: FillInTheBlankActivityProps<S>
-) {
+export function FillInTheBlankActivity(props: FillInTheBlankActivityProps) {
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
 

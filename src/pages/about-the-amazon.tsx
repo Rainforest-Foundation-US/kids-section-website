@@ -1,6 +1,6 @@
-import { FillInTheBlankActivity } from "@/components/activities/fill-in-the-blank";
-import { LearningPath } from "@/components/activities/learning-path-map";
-import { LocateInMapActivity } from "@/components/activities/locate-in-map";
+import { FillInTheBlankActivity } from "@/components/content/activities/fill-in-the-blank";
+import { LearningPath } from "@/components/learning-path-map";
+import { LocateInMapActivity } from "@/components/content/activities/locate-in-map";
 import { HomeGoToSectionButton } from "@/components/buttons";
 import { NavBar } from "@/components/layout/nav";
 import {
@@ -25,7 +25,7 @@ import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
 import biodiversity3 from "@/assets/activities/biodiversity/3-burning.png";
 import biodiversity4 from "@/assets/activities/biodiversity/4-natives.png";
 import { Footer } from "@/components/layout/footer";
-import { PickTheOptionActivity } from "@/components/activities/pick-the-option";
+import { PickTheOptionActivity } from "@/components/content/activities/pick-the-option";
 import { WavySection } from "@/components/sections/wavy-section";
 import {
   SittingSlothIllustration,
