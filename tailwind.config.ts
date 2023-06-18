@@ -1,4 +1,7 @@
-function maxLinesPlugin(matchUtilities, theme) {
+import type { Config } from "tailwindcss";
+import type { PluginAPI } from "tailwindcss/types/config";
+
+function maxLinesPlugin({ matchUtilities, theme }: PluginAPI) {
   const maxLinesDefault = {
     "text-overflow": "ellipsis",
     "word-wrap": "break-word",
@@ -9,13 +12,18 @@ function maxLinesPlugin(matchUtilities, theme) {
 
   matchUtilities(
     {
-      text: (value) => {
+      text: (value: any) => {
         if (value instanceof Array) {
           const { lineHeight } = value[1];
+
           return {
             "--el-line-height": lineHeight,
           };
         }
+
+        return {
+          "--el-line-height": "1",
+        };
       },
     },
     {
@@ -44,7 +52,7 @@ function maxLinesPlugin(matchUtilities, theme) {
   );
 }
 
-function dashedBordersPlugin(matchUtilities, theme) {
+function dashedBordersPlugin({ matchUtilities, theme }: PluginAPI) {
   matchUtilities(
     {
       "dashed-border": (value) => {
@@ -65,19 +73,20 @@ function dashedBordersPlugin(matchUtilities, theme) {
   );
 }
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export const screenBreakpoints = {
+  "2xs": "380px",
+  xs: "480px",
+  sm: "640px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1280px",
+  "2xl": "1536px",
+};
+
+export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    screens: {
-      "2xs": "380px",
-      xs: "480px",
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      "2xl": "1536px",
-    },
+    screens: screenBreakpoints,
     fontFamily: {
       sans: ["var(--app-font)"],
     },
@@ -186,10 +195,10 @@ module.exports = {
     },
   },
   plugins: [
-    function ({ addVariant, matchUtilities, theme }) {
-      addVariant("children", "& > *");
-      dashedBordersPlugin(matchUtilities, theme);
-      maxLinesPlugin(matchUtilities, theme);
+    function (props: PluginAPI) {
+      props.addVariant("children", "& > *");
+      dashedBordersPlugin(props);
+      maxLinesPlugin(props);
     },
   ],
-};
+} satisfies Config;
