@@ -19,6 +19,8 @@ import intro1 from "@/assets/activities/intro/1-antarctica.jpg";
 
 import mainBackground from "@/assets/activities/1-background.png";
 import secondBackground from "@/assets/activities/2-background.png";
+import pictureOfTheAmazon1 from "@/assets/activities/picture-of-the-amazon.jpg";
+import amazonLargestRiver from "@/assets/activities/amazon-largest-river.jpg";
 
 import biodiversity1 from "@/assets/activities/biodiversity/1-forest.png";
 import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
@@ -32,10 +34,399 @@ import {
   WavySeparator,
 } from "@/components/activities-illustrations";
 import { Polaroid } from "@/components/polaroid";
+import {
+  ContentSectionList,
+  SectionWithContent,
+} from "@/components/content/content";
+
+const aboutTheAmazonSections: SectionWithContent[] = [
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "You might be wondering: <b>What is a rainforest?</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "fill-in-the-blank",
+      data: {
+        preText: "Rainforest are exactly what you’d think!",
+        question: "Very <blank /> forest biomes!",
+        numberToOptions: {
+          0: {
+            options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
+            correctOptionPosition: 3,
+          },
+        },
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "fill-in-the-blank",
+      data: {
+        preText: "Thanks to the rain,",
+        question:
+          "rainforests have <blank /> climates. They stay <blank /> all year round.",
+        numberToOptions: {
+          0: {
+            options: ["Warm", "Cold", "Wet", "Dry"],
+            correctOptionPosition: 1,
+          },
+          1: {
+            options: ["Green", "Happy"],
+            correctOptionPosition: 1,
+          },
+        },
+      },
+    },
+  },
+  {
+    type: "wavy",
+    content: {
+      type: "plain",
+      data: {
+        text: "Why do you think there are <b>no rainforests in Antarctica?</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, we have to learn more about the Amazon!",
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "plain",
+      data: {
+        text: "Rainforests are among <b>the oldest, most complex and interconnected communities of life</b> on Earth.",
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "plain",
+      data: {
+        text: "But some humans are permanently damaging rainforests, <b>specially the Amazon!</b>",
+      },
+    },
+  },
+  {
+    type: "wavy",
+    content: {
+      type: "plain",
+      data: {
+        text: "Rainforest Foundation US (RFUS) partners with indigenous peoples in the Amazon.\nWhat does indigenous mean to you?",
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: amazonLargestRiver,
+    backgroundOpacity: 0.64,
+    backgroundColor: "#FAF5EE",
+    content: {
+      type: "plain",
+      data: {
+        text: "The Amazon is the biggest tropical rainforest in the world! At its heart: <b>the Amazon River, the largest river on Earth, by far</b>",
+      },
+    },
+  },
+  {
+    type: "wavy",
+    content: {
+      type: "plain",
+      data: {
+        text: "<b>The other 9 largest rivers on Earth combined</b>, would have less water than the Amazon!",
+      },
+    },
+  },
+  // Pending: Add the map activity here
+  {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "fill-in-the-blank",
+      data: {
+        preText: "The Amazon spreads",
+        subText: "(and one territory)",
+        question: "across <blank /> countries",
+        numberToOptions: {
+          0: {
+            options: ["3", "5", "8"],
+            correctOptionPosition: 3,
+          },
+        },
+      },
+    },
+  },
+  // Pending: Add the map activity here
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "Now we know how big my home is, <b>but what does life in the Amazon actually look like?</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "pick-the-image",
+      data: {
+        wrap: true,
+        question: "Which images show the Amazon?",
+        options: [
+          // TODO: Use correct options + images
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+          {
+            imageSrc: pictureOfTheAmazon1,
+            isCorrect: true,
+            alt: "",
+          },
+        ],
+      },
+    },
+  },
+  // TODO: Add: "All of them are in the Amazon!" which is mostly a dup of the previous section but the "options" or locations have a shown label
+  {
+    type: "wavy",
+    content: {
+      type: "pick-the-option",
+      data: {
+        question: "Rainforests are forests that:",
+        options: [
+          {
+            text: "Stay green all year round, and get lots of rain!",
+            isCorrect: true,
+          },
+          {
+            text: "Do not have a large variety of plants and animals.",
+            isCorrect: false,
+          },
+          {
+            text: "exists on every continent",
+            isCorrect: false,
+          },
+        ],
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "So, we understand a bit about rainforests!\n<b>But, there's a lot more to learn...</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "There are more types of plants and animals in the Amazon <b>than han anywhere on Earth...</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "...and the <b>400 indigenous communities that live here protect</b> this biodiversity!",
+      },
+    },
+  },
+  {
+    type: "vignette",
+    content: {
+      title: "Biodiversity",
+      subtitle: "(or “biological diversity) is...",
+      imageAlignment: "start",
+      image: biodiversity1,
+    },
+  },
+  {
+    type: "vignette",
+    content: {
+      title: "Biodiversity",
+      subtitle: "(or “biological diversity) is...",
+      body: "...a word that refers to the variety of life on Earth. The many different types of plants, animals, fungi, bacteria, and people too!",
+      imageAlignment: "start",
+      image: biodiversity2,
+    },
+  },
+  {
+    type: "vignette",
+    content: {
+      title: "Biodiversity",
+      subtitle: "(or “biological diversity) is...",
+      body: "...threatened by deforestation and climate change.",
+      imageAlignment: "start",
+      image: biodiversity3,
+    },
+  },
+  {
+    type: "vignette",
+    content: {
+      title: "Biodiversity",
+      subtitle: "(or “biological diversity) is...",
+      body: "...protected by indigenous peoples around the world!",
+      imageAlignment: "start",
+      image: biodiversity4,
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "So, just how biodiverse is the Amazon, and how much biodiversity do indigenous peoples really protect?",
+        caption: "These numbers give us a better picture...",
+      },
+    },
+  },
+  // TODO: Add a section with statistics about biodiversity in the Amazon
+  {
+    type: "wavy",
+    content: {
+      type: "pager",
+      data: [
+        {
+          type: "pick-the-option",
+          data: {
+            wrap: true,
+            question:
+              "Plants and animals are interconnected. They have unique roles in ecosystems, and they need each other to survive",
+            options: [
+              {
+                text: "True",
+                isCorrect: true,
+              },
+              {
+                text: "False",
+                isCorrect: false,
+              },
+            ],
+          },
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            wrap: true,
+            question:
+              "With more biodiversity, ecosystems are more resilient. They’re stronger in the face of changes like <b>deforestation</b>.",
+            options: [
+              {
+                text: "True",
+                isCorrect: false,
+              },
+              {
+                text: "False",
+                isCorrect: true,
+              },
+            ],
+          },
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            wrap: true,
+            question:
+              "Plants and animals give people <b>necessary resources</b> like food, clean air, and clean water..",
+            options: [
+              {
+                text: "True",
+                isCorrect: true,
+              },
+              {
+                text: "False",
+                isCorrect: false,
+              },
+            ],
+          },
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            wrap: true,
+            question:
+              "The rainforest is being cut down. This deforestation is making biodiversity disappear..",
+            options: [
+              {
+                text: "True",
+                isCorrect: true,
+              },
+              {
+                text: "False",
+                isCorrect: false,
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+];
 
 export default function Home() {
-  const isScrollSnappingEnabled = false;
-
   return (
     <>
       <Head>
@@ -44,275 +435,17 @@ export default function Home() {
         </title>
       </Head>
 
-      <main
-        className={clsx(
-          isScrollSnappingEnabled && "snap-y snap-mandatory",
-          "h-screen overflow-hidden overflow-y-auto bg-neutral-600"
-        )}
-      >
+      <main className="bg-neutral-600">
         <HomeSectionsContainer>
-          <ActivitySection number={0} className="py-0">
+          <div className="absolute inset-x-0 top-0">
             <NavBar />
-
-            <Image
-              placeholder="blur"
-              className="absolute inset-0 block h-full w-full object-cover"
-              src={mainBackground}
-              height={1280}
-              width={720}
-              aria-hidden
-              alt=""
-            />
-
-            <div className="relative z-10 flex flex-1 flex-row p-6">
-              <div className="flex flex-1 flex-col items-center justify-center">
-                <header className="max-w-[30rem] space-y-6">
-                  <h1 className="leading-snug text-neutral-dark-700 text-4xl">
-                    You might be wondering: <b>What is a rainforest?</b>
-                  </h1>
-
-                  <HomeGoToSectionButton />
-                </header>
-              </div>
-
-              <aside className="w-[289px]">
-                <LearningPath />
-              </aside>
-            </div>
-          </ActivitySection>
-
-          <ActivitySection number={1}>
-            <Image
-              placeholder="blur"
-              className="absolute inset-0 block h-full w-full object-cover"
-              src={secondBackground}
-              height={1280}
-              width={720}
-              aria-hidden
-              alt=""
-            />
-
-            <ActivitySectionDivider />
-
-            <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
-              <header className="text-center">
-                <p className="font-medium leading-snug text-primary-600 text-xl">
-                  Click on the box with the right answer
-                </p>
-                <p className="leading-snug text-neutral-dark-700 text-4xl">
-                  Rainforest are exactly what you’d think!
-                </p>
-              </header>
-
-              <FillInTheBlankActivity
-                question="Very <blank /> forest biomes!"
-                numberToOptions={{
-                  0: {
-                    options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
-                    correctOptionPosition: 3,
-                  },
-                }}
-              />
-
-              <div className="relative mt-16 flex w-full max-w-[calc(814px_+_18rem)] justify-center">
-                <Image
-                  placeholder="blur"
-                  className="flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
-                  src={fillInTheBlank1}
-                  aria-hidden
-                  alt=""
-                />
-
-                <div className="absolute inset-y-0 right-0 flex items-center">
-                  <Polaroid
-                    shrinkOnResponsive
-                    className={
-                      "w-[clamp(10rem,_25vw,_18rem)] min-w-0 rotate-6 hover:z-10 hover:rotate-0 hover:scale-105"
-                    }
-                    src={fillInTheBlank1}
-                    caption="Fujifilm Instax Wide Format"
-                    verticalAlign="center"
-                  />
-                </div>
-              </div>
-
-              <HomeGoToSectionButton className="-translate-y-40" />
-            </div>
-          </ActivitySection>
-
-          <ActivitySection number={2}>
-            <Image
-              placeholder="blur"
-              className="absolute inset-0 block h-full w-full object-cover"
-              src={secondBackground}
-              height={1280}
-              width={720}
-              aria-hidden
-              alt=""
-            />
-
-            <ActivitySectionDivider />
-
-            <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10">
-              <header className="text-center">
-                <p className="font-medium leading-snug text-primary-600 text-xl">
-                  Click on the box with the right answer
-                </p>
-                <p className="leading-snug text-neutral-dark-700 text-4xl">
-                  Thanks to the rain
-                </p>
-              </header>
-
-              <FillInTheBlankActivity
-                question="rainforests have <blank /> climates. They stay <blank /> all year round."
-                numberToOptions={{
-                  0: {
-                    options: ["Warm", "Cold", "Wet", "Dry"],
-                    correctOptionPosition: 1,
-                  },
-                  1: {
-                    options: ["Green", "Happy"],
-                    correctOptionPosition: 1,
-                  },
-                }}
-              />
-
-              <Image
-                placeholder="blur"
-                className="mt-16 flex w-full max-w-[701px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
-                src={fillInTheBlank2}
-                aria-hidden
-                alt=""
-              />
-
-              <HomeGoToSectionButton className="-translate-y-40" />
-            </div>
-          </ActivitySection>
-
-          <ActivitySection number={3} className="bg-complementary-100">
-            <ActivitySectionDivider />
-
-            <div className="z-10 flex flex-1 flex-col items-center justify-center py-10">
-              <div className="relative w-full max-w-6xl">
-                <LocateInMapActivity />
-
-                <header className="absolute inset-x-0 -top-8 text-center">
-                  <p className="mx-auto max-w-xl leading-snug text-neutral-dark-700 text-4xl">
-                    The three most important rainforests are:
-                  </p>
-                </header>
-              </div>
-
-              <HomeGoToSectionButton className="-translate-y-24" />
-            </div>
-          </ActivitySection>
-
-          <WavySection number={4}>
-            <header className="text-center">
-              <p className="max-w-[30rem] leading-snug text-primary-100 text-4xl">
-                Why do you think there are <b>no rainforests in Antarctica?</b>
-              </p>
-            </header>
-
-            <Image
-              placeholder="blur"
-              className="mt-16 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray"
-              src={intro1}
-              aria-hidden
-              alt=""
-            />
-
-            <HomeGoToSectionButton className="absolute bottom-20" />
-          </WavySection>
-
-          <VignetteSection
-            number={5}
-            title="Biodiversity"
-            subtitle="(or “biological diversity) is..."
-            image={biodiversity1}
-          />
-
-          <VignetteSection
-            number={6}
-            title="Biodiversity"
-            subtitle="(or “biological diversity) is..."
-            body="...a word that refers to the variety of life on Earth. The many different types of plants, animals, fungi, bacteria, and people too!"
-            image={biodiversity2}
-          />
-
-          <VignetteSection
-            number={7}
-            title="Biodiversity"
-            subtitle="(or “biological diversity) is..."
-            body="...threatened by deforestation and climate change."
-            image={biodiversity3}
-          />
-
-          <VignetteSection
-            number={8}
-            title="Biodiversity"
-            subtitle="(or “biological diversity) is..."
-            body="...protected by indigenous peoples around the world!"
-            imageAlignment="start"
-            image={biodiversity4}
-          />
-
-          <div className="relative">
-            <WavySeparator
-              className="absolute z-10"
-              direction="down"
-              color="#1E1F1B"
-            />
           </div>
 
-          <ActivitySection number={9} className="py-6">
-            <Image
-              placeholder="blur"
-              className="absolute inset-0 block h-full w-full object-cover"
-              src={mainBackground}
-              height={1280}
-              width={720}
-              aria-hidden
-              alt=""
-            />
+          <aside className="absolute right-10 top-[8rem] z-20 w-[289px]">
+            <LearningPath />
+          </aside>
 
-            <div className="relative z-10 mx-auto flex max-w-[40rem] flex-1 flex-col items-center space-y-6 py-40">
-              <h2 className="text-center leading-snug text-4xl">
-                So, just how biodiverse is the Amazon, and how much biodiversity
-                do indigenous peoples really protect?
-              </h2>
-
-              <SittingSlothIllustration />
-
-              <p className="text-center font-bold leading-snug text-4xl">
-                These numbers give us a better picture...
-              </p>
-
-              <HomeGoToSectionButton />
-            </div>
-          </ActivitySection>
-
-          <WavySection number={10}>
-            <PickTheOptionActivity
-              question="Rainforests are forests that:"
-              options={[
-                {
-                  text: "Stay green all year round, and get lots of rain!",
-                  isCorrect: true,
-                },
-                {
-                  text: "Do not have a large variety of plants and animals.",
-                  isCorrect: false,
-                },
-                {
-                  text: "exists on every continent",
-                  isCorrect: false,
-                },
-              ]}
-            />
-
-            <HomeGoToSectionButton />
-          </WavySection>
+          <ContentSectionList sections={aboutTheAmazonSections} />
         </HomeSectionsContainer>
 
         <Footer />

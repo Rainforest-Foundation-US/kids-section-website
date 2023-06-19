@@ -1,15 +1,18 @@
-import Image from "next/image";
-import { ActivitySection, ActivitySectionDivider } from "../sections";
+import Image, { StaticImageData } from "next/image";
+import { ActivitySection } from "../sections";
 import { HomeGoToSectionButton } from "../buttons";
 import clsx from "@/utils/clsx";
 
-interface VignetteSectionProps {
-  number: number;
+export interface VignetteSectionOptions {
   title: string;
   subtitle: string;
   body?: string;
   imageAlignment?: "start" | "middle" | "end";
-  image: PropsOf<typeof Image>["src"];
+  image: string | StaticImageData;
+}
+
+interface VignetteSectionProps extends VignetteSectionOptions {
+  number: number;
 }
 export function VignetteSection({
   imageAlignment = "middle",
@@ -17,12 +20,12 @@ export function VignetteSection({
 }: VignetteSectionProps) {
   return (
     <>
-      <div className="h-[120px] bg-neutral-dark-700" />
+      <div className="bg-neutral-dark-700 h-[120px]" />
 
       <ActivitySection number={props.number} className="min-h-[720px]">
         <Image
           className={clsx(
-            "absolute inset-0 block h-full w-full bg-neutral-dark-800 object-cover",
+            "bg-neutral-dark-800 absolute inset-0 block h-full w-full object-cover",
             imageAlignment === "start" && "object-left-top",
             imageAlignment === "end" && "object-right-bottom"
           )}
@@ -50,16 +53,16 @@ export function VignetteSection({
         />
 
         <div className="relative z-10 flex flex-1 flex-col items-center justify-center p-10 text-center">
-          <p className="break-all font-medium text-neutral-100 text-7xl">
+          <p className="break-all text-7xl font-medium text-neutral-100">
             {props.title}
           </p>
 
-          <p className="my-2 text-secondary-100 text-base">{props.subtitle}</p>
+          <p className="text-secondary-100 my-2 text-base">{props.subtitle}</p>
 
           {props.body && (
             <>
               <div className="my-2 h-1 w-8 bg-neutral-100" />
-              <p className="my-2 max-w-xl text-secondary-100 text-base">
+              <p className="text-secondary-100 my-2 max-w-xl text-base">
                 {props.body}
               </p>
             </>

@@ -1,4 +1,3 @@
-import { useMatchesBreakpoint } from "@/utils/hooks";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useEffect } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
@@ -44,30 +43,28 @@ export function GlobalActivityHint() {
   const hintStatus = useAtomValue(hintStatusAtom);
   const setHint = useSetHint();
 
-  const isSm = useMatchesBreakpoint("lg");
+  // useEffect(() => {
+  //   if (!hint) return;
 
-  useEffect(() => {
-    if (!hint) return;
+  //   const timeout = setTimeout(() => {
+  //     setHint("", "info");
+  //   }, 5000);
 
-    const timeout = setTimeout(() => {
-      setHint("", "info");
-    }, 5000);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // }, [hint, setHint]);
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [hint, setHint]);
-
-  useEffect(() => {
-    return () => {
-      setHint("", "info");
-    };
-  }, [setHint]);
+  // useEffect(() => {
+  //   return () => {
+  //     setHint("", "info");
+  //   };
+  // }, [setHint]);
 
   return (
     <ActivityHint
       hint={hint}
-      hintPosition={isSm ? "center" : "end"}
+      hintPosition="center"
       status={hintStatus}
       hintSize="xs"
     />

@@ -9,7 +9,7 @@ export function WavySection(props: WavySectionProps) {
   return (
     <ActivitySection
       number={props.number}
-      className="min-h-[0] bg-complementary-700 text-primary-100"
+      className="bg-complementary-700 text-primary-100 max-h-[72rem] min-h-[720px]"
     >
       <WavySeparator
         className="absolute top-0 -translate-y-[99%]"

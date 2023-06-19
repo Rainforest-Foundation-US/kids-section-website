@@ -148,6 +148,7 @@ export function ActivitySection(props: {
   number: number;
   className?: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 }) {
   const sectionNumber = props.number;
   const dispatch = useContext(HomeSectionDispatchContext);
@@ -169,20 +170,32 @@ export function ActivitySection(props: {
         "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
         props.className
       )}
+      style={props.style}
     >
       {props.children}
     </section>
   );
 }
 
-export function ActivitySectionDivider() {
+interface ActivitySectionDividerProps {
+  variant?: "light" | "dark";
+  position?: "top" | "bottom";
+}
+export function ActivitySectionDivider(props: ActivitySectionDividerProps) {
   return (
     <div
       style={{
         background:
-          "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #DADBD2 46%, #DADBD2 52.5%, rgba(217, 217, 201, 0) 100%)",
+          props.variant === "dark"
+            ? "linear-gradient(180deg, #1E1F1B 0%, rgba(30, 31, 27, 0) 100%)"
+            : "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #DADBD2 46%, #DADBD2 52.5%, rgba(217, 217, 201, 0) 100%)",
       }}
-      className="absolute inset-x-0 h-[720px] -translate-y-[50%]"
+      className={clsx(
+        "absolute inset-x-0",
+        props.position === "bottom"
+          ? "bottom-0 h-[240px] -scale-y-100"
+          : "top-0 h-[720px] -translate-y-[50%]"
+      )}
     />
   );
 }

@@ -80,7 +80,10 @@ export function PickTheOptionActivity({
 
   return (
     <div className="flex max-w-3xl flex-col items-center space-y-6">
-      <p className="text-center text-4xl leading-snug">{props.question}</p>
+      <p
+        className="text-center text-4xl leading-snug"
+        dangerouslySetInnerHTML={{ __html: props.question }}
+      />
 
       {props.children}
 

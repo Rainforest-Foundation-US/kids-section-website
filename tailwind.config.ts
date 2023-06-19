@@ -91,7 +91,7 @@ export default {
       sans: ["var(--app-font)"],
     },
     fontSize: {
-      "3xs": ["0.5rem", { lineHeight: "1rem" }],
+      "3xs": ["0.6rem", { lineHeight: "1rem" }],
       "2xs": ["0.65rem", { lineHeight: "1rem" }],
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.25rem" }],

@@ -124,7 +124,7 @@ function MapAnnotation(props: Marker) {
 
         <text
           ref={textRef}
-          className="text-[0.6rem] font-semibold"
+          className="text-3xs font-semibold"
           y={mapAnnotationPadding}
         >
           {markerLines.map((text, l) => (
@@ -191,7 +191,7 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
           center: [0, 20],
           scale: 145,
         }}
-        className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
+        className="lg:[filter:url(#lg-vignette)] scale-125 [filter:url(#vignette)]"
       >
         <defs>
           <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
@@ -237,7 +237,7 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
                     geography={geo}
                     className={clsx(
                       highlightedCountries.includes(getCountryCode(geo))
-                        ? "fill-primary-300 stroke-neutral-100 stroke-[0.5px] opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-[1px]"
+                        ? "fill-primary-300 focus:stroke-primary-600 focus:stroke-[1px] stroke-neutral-100 stroke-[0.5px] opacity-100 transition-all duration-150 hover:z-10"
                         : "fill-neutral-100 opacity-50",
                       "focus-visible::stroke-primary-600 outline-none"
                     )}

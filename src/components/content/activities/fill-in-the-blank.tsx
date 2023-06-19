@@ -6,6 +6,8 @@ import { useAnimate, motion, easeIn } from "framer-motion";
 import { CommonActivity } from "./common";
 
 export interface FillInTheBlankActivityOptions {
+  preText: string;
+  subText?: string;
   question: StringifiedQuestion;
   numberToOptions: NumberToOptions;
 }
@@ -148,7 +150,7 @@ export function FillInTheBlankActivityOption(
         props.isOddI ? "rotate-6" : "-rotate-6",
         isDragging ? "cursor-grabbing" : "cursor-grab",
         isDragging ? "opacity-50" : "opacity-100",
-        "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 py-4 px-4 font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 text-base hover:bg-neutral-100 lg:px-8"
+        "border-1 bg-secondary-100 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg border-neutral-600 px-4 py-4 text-base font-medium transition-all duration-75 hover:bg-neutral-100 lg:px-8"
       )}
       tabIndex={0}
       onClick={props.onClick}
@@ -204,7 +206,7 @@ export function FillInTheBlankActivityDropZone({
         className={clsx(
           props.selectedOption && "bg-secondary-100 shadow-shadow-gray",
           !props.selectedOption && "dashed-border-lg",
-          "mx-2 inline-block rounded-lg px-8 py-4 align-middle font-medium shadow-app-lg transition-all duration-75 text-base active:translate-x-1 active:translate-y-1 active:shadow-app-sm"
+          "shadow-app-lg active:shadow-app-sm mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1"
         )}
         onClick={props.onClick}
       >
@@ -279,36 +281,54 @@ export function FillInTheBlankActivity({
   );
 
   return (
-    <div className="flex flex-col items-center space-y-9">
-      <p className="max-w-3xl select-none text-center font-bold leading-loose text-neutral-dark-700 text-3xl md:text-4xl">
-        {questions.map((blank) => {
-          if ("text" in blank) {
-            return <span key={blank.id}>{blank.text}</span>;
-          } else if (blank satisfies ParsedBlank) {
-            return (
-              <FillInTheBlankActivityDropZone
-                key={blank.id}
-                blank={blank}
-                onDrop={onSelectOption}
-                onClick={() => onDeselectOption(blank)}
-                selectedOption={getSelectedOption(blank)}
-              />
-            );
-          }
-        })}
+    <div className="text-center">
+      <p className="text-primary-600 text-xl font-medium leading-snug">
+        Click on the box with the right answer
       </p>
 
-      <ul className="flex flex-row flex-wrap justify-center gap-4">
-        {allOptions.map((option, i) => (
-          <li key={option.id}>
-            <FillInTheBlankActivityOption
-              option={option}
-              isOddI={i % 2 === 1}
-              onClick={() => onSelectOption(option)}
-            />
-          </li>
-        ))}
-      </ul>
+      <p className="text-neutral-dark-700 mb-2 text-4xl leading-snug">
+        {props.preText}
+      </p>
+
+      <div className="flex flex-col items-center space-y-9">
+        <div>
+          <p className="text-neutral-dark-700 max-w-3xl select-none text-center text-3xl font-bold leading-loose md:text-4xl">
+            {questions.map((blank) => {
+              if ("text" in blank) {
+                return <span key={blank.id}>{blank.text}</span>;
+              } else if (blank satisfies ParsedBlank) {
+                return (
+                  <FillInTheBlankActivityDropZone
+                    key={blank.id}
+                    blank={blank}
+                    onDrop={onSelectOption}
+                    onClick={() => onDeselectOption(blank)}
+                    selectedOption={getSelectedOption(blank)}
+                  />
+                );
+              }
+            })}
+          </p>
+
+          {props.subText && (
+            <p className="text-neutral-dark-700 mt-2 text-4xl leading-snug">
+              {props.subText}
+            </p>
+          )}
+        </div>
+
+        <ul className="flex flex-row flex-wrap justify-center gap-4">
+          {allOptions.map((option, i) => (
+            <li key={option.id}>
+              <FillInTheBlankActivityOption
+                option={option}
+                isOddI={i % 2 === 1}
+                onClick={() => onSelectOption(option)}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

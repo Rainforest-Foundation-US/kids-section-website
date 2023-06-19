@@ -7,6 +7,7 @@ export type ActivityHintStatus = "info" | "correct" | "incorrect";
 interface ActivityHintProps {
   hint: string;
   hintPosition: "start" | "center" | "end";
+  hintPositioning?: "absolute" | "relative";
   hintSize: "xs" | "sm" | "md" | "lg" | "xl";
   textAlign?: "left" | "center" | "right";
   status: ActivityHintStatus;
@@ -19,13 +20,27 @@ interface ActivityHintProps {
  */
 export function ActivityHint({
   textAlign = "center",
+  hintPositioning = "relative",
   ...props
 }: ActivityHintProps) {
   return (
-    <div className="relative flex">
+    <div
+      className={clsx(
+        "relative flex",
+        hintPositioning === "relative" &&
+          props.hintPosition === "center" &&
+          "flex-col items-center space-y-4",
+        hintPositioning === "relative" &&
+          props.hintPosition === "start" &&
+          "flex-row-reverse space-x-4",
+        hintPositioning === "relative" &&
+          props.hintPosition === "end" &&
+          "flex-row space-x-4"
+      )}
+    >
       <RoundSlothIllustration className="shadow-app-lg shadow-shadow-gray w-28 rounded-full sm:w-32 lg:w-44 " />
 
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         {props.hint && (
           <motion.div
             key={props.hint}
@@ -34,11 +49,17 @@ export function ActivityHint({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             className={clsx(
-              "shadow-app-lg shadow-shadow-gray absolute m-6 whitespace-pre rounded-3xl border-4 border-neutral-100 p-4 italic text-neutral-100",
-              props.hintPosition === "center" &&
-                "inset-x-0 left-[4rem] top-[100%] mx-auto translate-x-[-50%]",
-              props.hintPosition === "end" && "left-[100%]",
-              props.hintPosition === "start" && "right-[100%]",
+              "shadow-app-lg shadow-shadow-gray whitespace-pre rounded-3xl border-4 border-neutral-100 p-4 italic text-neutral-100",
+              hintPositioning === "absolute" && "absolute m-6",
+              hintPositioning === "absolute" &&
+                props.hintPosition === "center" &&
+                "inset-x-0 top-[100%] mx-auto translate-x-[-50%]",
+              hintPositioning === "absolute" &&
+                props.hintPosition === "end" &&
+                "left-[100%]",
+              hintPositioning === "absolute" &&
+                props.hintPosition === "start" &&
+                "right-[100%]",
               props.hintSize === "xs" && "w-[150px]",
               props.hintSize === "sm" && "w-[200px]",
               props.hintSize === "md" && "w-[280px]",
