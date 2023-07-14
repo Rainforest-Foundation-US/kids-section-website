@@ -231,18 +231,70 @@ const aboutTheAmazonSections: SectionWithContent[] = [
         text: "<b>The other 9 largest rivers on Earth combined</b>, would have less water than the Amazon!",
       },
     },
+    subContent: {
+      type: "polaroids",
+      images: [
+        {
+          image: antarctica,
+          caption: "Nile River",
+        },
+        {
+          image: antarctica,
+          caption: "Yangtze river",
+        },
+        {
+          image: antarctica,
+          caption: "Mississippi River",
+        },
+      ],
+    },
   },
   {
     type: "regular",
     background: null,
+    backgroundColor: "#F0F4EF",
     content: {
       type: "locate-in-map",
       data: {
-        question: "The three most important rainforests are:",
+        question:
+          "Half of the world’s remaining rainforest <b>is in the Amazon</b>.",
+        questionPosition: "left",
+        questionIllustration: "sitting-sloth",
         center: [-88, -20],
         scale: 280,
         countries: [
-          "USA",
+          "VEN",
+          "COL",
+          "BRA",
+          "PER",
+          "ECU",
+          "GUY",
+          "SUR",
+          "CMR",
+          "GAB",
+          "COG",
+          "COD",
+          "CAF",
+          "IDN",
+        ],
+        markers: [],
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: null,
+    backgroundColor: "#F0F4EF",
+    content: {
+      type: "locate-in-map",
+      data: {
+        question:
+          "Wow, <b>the whole United States</b> can fit inside the Amazon!",
+        questionPosition: "left",
+        questionIllustration: "sitting-sloth",
+        center: [-88, -20],
+        scale: 280,
+        countries: [
           "VEN",
           "COL",
           "BRA",
