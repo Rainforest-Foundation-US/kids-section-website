@@ -37,7 +37,7 @@ export function GoToButton({
   return (
     <button
       className={clsx(
-        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 ",
+        "shadow-green-shadow border-primary-100 flex h-20 w-20 items-center justify-center rounded-full border-2 ",
         props.className,
         direction === "left" && "rotate-90",
         direction === "right" && "-rotate-90",
@@ -59,7 +59,7 @@ export function HomeGoToSectionButton(props: { className?: string }) {
   return (
     <button
       className={clsx(
-        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500",
+        "shadow-green-shadow border-primary-100 bg-primary-500 flex h-20 w-20 items-center justify-center rounded-full border-2",
         props.className
       )}
       onClick={onGoNext}
@@ -82,9 +82,9 @@ export function NavBarLink(props: {
           "transition-all duration-75 ease-in-out",
           "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-0.9rem] after:h-[2px]",
           isActive
-            ? "text-primary-600 after:scale-x-100 after:bg-primary-600"
+            ? "text-primary-600 after:bg-primary-600 after:scale-x-100"
             : "text-neutral-dark-500 after:scale-x-0 after:bg-transparent",
-          "duration-md px-4 py-4 transition-all text-sm",
+          "duration-md px-4 py-4 text-sm transition-all",
           props.className
         )
       }
@@ -106,7 +106,7 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
   return (
     <button
       className={clsx(
-        "rounded-lg border-1 px-8 py-4 font-medium shadow-app-lg transition-all duration-75 text-base active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        "border-1 shadow-app-lg active:shadow-app-sm rounded-lg px-8 py-4 text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1",
 
         // Primary
         props.variant === "primary" &&
@@ -116,9 +116,9 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
 
         // Secondary
         props.variant === "secondary" &&
-          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
+          "bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray border-neutral-600",
         props.variant === "secondary" &&
-          "hover:bg-neutral-100 active:bg-secondary-100",
+          "active:bg-secondary-100 hover:bg-neutral-100",
 
         props.variant === "text" &&
           "border-transparent text-neutral-100 hover:text-neutral-800",
@@ -146,7 +146,7 @@ export function AppLink({ size = "medium", ...props }: AppLinkProps) {
     <Component
       href={props.href}
       className={clsx(
-        "rounded-lg border-1 px-8 py-4 font-medium shadow-app-lg transition-all duration-75 text-base active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        "border-1 shadow-app-lg active:shadow-app-sm rounded-lg px-8 py-4 text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1",
 
         // Primary
         props.variant === "primary" &&
@@ -156,9 +156,9 @@ export function AppLink({ size = "medium", ...props }: AppLinkProps) {
 
         // Secondary
         props.variant === "secondary" &&
-          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
+          "bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray border-neutral-600",
         props.variant === "secondary" &&
-          "hover:bg-neutral-100 active:bg-secondary-100",
+          "active:bg-secondary-100 hover:bg-neutral-100",
 
         props.variant === "text" &&
           "border-transparent text-neutral-100 hover:text-neutral-800",

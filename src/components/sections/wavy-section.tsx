@@ -9,21 +9,15 @@ export function WavySection(props: WavySectionProps) {
   return (
     <ActivitySection
       number={props.number}
-      className="bg-complementary-700 text-primary-100 max-h-[72rem] min-h-[720px]"
+      className="text-primary-100 relative z-10 my-0 min-h-[0px] py-0"
     >
-      <WavySeparator
-        className="absolute top-0 -translate-y-[99%]"
-        direction="up"
-      />
+      <WavySeparator className="w-full" direction="up" />
 
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center space-y-10 px-10">
-        {props.children}
-      </div>
+      <div className="bg-complementary-700 absolute inset-x-0 inset-y-[110px]" />
 
-      <WavySeparator
-        className="absolute bottom-0 z-10 translate-y-[99%]"
-        direction="down"
-      />
+      <div className="relative z-10 space-y-10 px-10">{props.children}</div>
+
+      <WavySeparator className="bg-secondary-100" direction="down" />
     </ActivitySection>
   );
 }

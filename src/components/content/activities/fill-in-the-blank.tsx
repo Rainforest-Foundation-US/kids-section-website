@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
 import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
-import { CommonActivity } from "./common";
+import { CommonActivityOptions } from "./common";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
@@ -219,7 +219,7 @@ export function FillInTheBlankActivityDropZone({
 }
 
 type FillInTheBlankActivityProps = React.PropsWithChildren<
-  FillInTheBlankActivityOptions & CommonActivity
+  FillInTheBlankActivityOptions & CommonActivityOptions
 >;
 export function FillInTheBlankActivity({
   onHint,

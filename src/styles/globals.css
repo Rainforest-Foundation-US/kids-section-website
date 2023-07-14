@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .primary-strong strong {
+    @apply text-primary-500;
+  }
+}

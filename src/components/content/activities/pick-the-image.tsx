@@ -2,7 +2,7 @@ import clsx from "@/utils/clsx";
 import Image, { StaticImageData } from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { CommonActivity } from "./common";
+import { CommonActivityOptions } from "./common";
 
 export interface PickTheImageActivityOptions {
   question: string;
@@ -49,7 +49,7 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
 }
 
 type PickTheImageActivityProps = React.PropsWithChildren<
-  PickTheImageActivityOptions & CommonActivity
+  PickTheImageActivityOptions & CommonActivityOptions
 >;
 export function PickTheImageActivity({
   onHint,

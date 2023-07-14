@@ -1,7 +1,7 @@
 import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { CommonActivity } from "./common";
+import { CommonActivityOptions } from "./common";
 
 export interface PickTheOptionActivityOptions {
   question: string;
@@ -42,7 +42,7 @@ export function PickTheOptionOption(props: PickTheOptionOptionProps) {
 }
 
 type PickTheOptionActivityProps = React.PropsWithChildren<
-  PickTheOptionActivityOptions & CommonActivity
+  PickTheOptionActivityOptions & CommonActivityOptions
 >;
 export function PickTheOptionActivity({
   onHint,

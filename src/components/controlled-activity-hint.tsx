@@ -38,28 +38,22 @@ export const useResetHint = () => {
   }, [setHint, setHintStatus]);
 };
 
-export function GlobalActivityHint() {
+export function ControlledActivityHint() {
   const hint = useAtomValue(hintAtom);
   const hintStatus = useAtomValue(hintStatusAtom);
   const setHint = useSetHint();
 
-  // useEffect(() => {
-  //   if (!hint) return;
+  useEffect(() => {
+    if (!hint) return;
 
-  //   const timeout = setTimeout(() => {
-  //     setHint("", "info");
-  //   }, 5000);
+    const timeout = setTimeout(() => {
+      setHint("", "info");
+    }, 5000);
 
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  // }, [hint, setHint]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     setHint("", "info");
-  //   };
-  // }, [setHint]);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [hint, setHint]);
 
   return (
     <ActivityHint

@@ -1,24 +1,17 @@
-import { FillInTheBlankActivity } from "@/components/content/activities/fill-in-the-blank";
 import { LearningPath } from "@/components/learning-path-map";
-import { LocateInMapActivity } from "@/components/content/activities/locate-in-map";
-import { HomeGoToSectionButton } from "@/components/buttons";
 import { NavBar } from "@/components/layout/nav";
-import {
-  ActivitySection,
-  ActivitySectionDivider,
-  HomeSectionsContainer,
-} from "@/components/sections";
-import { VignetteSection } from "@/components/sections/vignette-section";
-import clsx from "@/utils/clsx";
+import { HomeSectionsContainer } from "@/components/sections";
 import Head from "next/head";
-import Image from "next/image";
 
 import fillInTheBlank1 from "@/assets/activities/fill-in-the-blank/climate/1-biome.jpg";
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
-import intro1 from "@/assets/activities/intro/1-antarctica.jpg";
+import antarctica from "@/assets/activities/intro/1-antarctica.jpg";
 
 import mainBackground from "@/assets/activities/1-background.png";
 import secondBackground from "@/assets/activities/2-background.png";
+import mapBackground from "@/assets/activities/3-map-background.png";
+import humanActivityBackground from "@/assets/activities/4-human-background.png";
+
 import pictureOfTheAmazon1 from "@/assets/activities/picture-of-the-amazon.jpg";
 import amazonLargestRiver from "@/assets/activities/amazon-largest-river.jpg";
 
@@ -27,13 +20,6 @@ import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
 import biodiversity3 from "@/assets/activities/biodiversity/3-burning.png";
 import biodiversity4 from "@/assets/activities/biodiversity/4-natives.png";
 import { Footer } from "@/components/layout/footer";
-import { PickTheOptionActivity } from "@/components/content/activities/pick-the-option";
-import { WavySection } from "@/components/sections/wavy-section";
-import {
-  SittingSlothIllustration,
-  WavySeparator,
-} from "@/components/activities-illustrations";
-import { Polaroid } from "@/components/polaroid";
 import {
   ContentSectionList,
   SectionWithContent,
@@ -42,9 +28,12 @@ import {
 const aboutTheAmazonSections: SectionWithContent[] = [
   {
     type: "regular",
+    align: "left",
     content: {
       type: "plain",
       data: {
+        size: "md",
+        textAlign: "left",
         text: "You might be wondering: <b>What is a rainforest?</b>",
       },
     },
@@ -64,6 +53,10 @@ const aboutTheAmazonSections: SectionWithContent[] = [
           },
         },
       },
+    },
+    subContent: {
+      type: "postcard",
+      image: fillInTheBlank1,
     },
   },
   {
@@ -87,22 +80,86 @@ const aboutTheAmazonSections: SectionWithContent[] = [
         },
       },
     },
+    subContent: {
+      type: "postcard",
+      image: fillInTheBlank2,
+    },
+  },
+  {
+    type: "regular",
+    background: null,
+    content: {
+      type: "locate-in-map",
+      data: {
+        question: "The three most important rainforests are:",
+        center: [0, 20],
+        scale: 145,
+        countries: [
+          "USA",
+          "VEN",
+          "COL",
+          "BRA",
+          "PER",
+          "ECU",
+          "GUY",
+          "SUR",
+          "CMR",
+          "GAB",
+          "COG",
+          "COD",
+          "CAF",
+          "IDN",
+        ],
+        markers: [
+          {
+            position: [-110, 46],
+            text: "United States",
+            orientation: "top-right",
+          },
+          {
+            position: [-81, -1],
+            text: "The Amazon Basin, in South America",
+            orientation: "left",
+          },
+          {
+            position: [10, 7],
+            text: "The Congo Basin, in Subsaharan Africa",
+            orientation: "top-left",
+          },
+          {
+            position: [105, -6],
+            text: "The Indonesian Archipelago",
+            orientation: "bottom-left",
+          },
+        ],
+      },
+    },
   },
   {
     type: "wavy",
+    preContent: {
+      type: "emoji",
+      emoji: "thinking-face",
+    },
     content: {
       type: "plain",
       data: {
+        size: "md",
+        textAlign: "center",
         text: "Why do you think there are <b>no rainforests in Antarctica?</b>",
       },
     },
+    subContent: {
+      type: "postcard",
+      image: antarctica,
+    },
   },
   {
     type: "regular",
     content: {
       type: "plain",
       data: {
-        text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, we have to learn more about the Amazon!",
+        text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, <b>we have to learn more about the Amazon!</b>",
       },
     },
   },
@@ -112,13 +169,31 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
+        size: "xl",
         text: "Rainforests are among <b>the oldest, most complex and interconnected communities of life</b> on Earth.",
       },
     },
+    subContent: {
+      type: "polaroids",
+      images: [
+        {
+          image: antarctica,
+          caption: "Biodiversity",
+        },
+        {
+          image: antarctica,
+          caption: "Biodiversity",
+        },
+        {
+          image: antarctica,
+          caption: "Biodiversity",
+        },
+      ],
+    },
   },
   {
     type: "regular",
-    background: secondBackground,
+    background: humanActivityBackground,
     content: {
       type: "plain",
       data: {
@@ -131,7 +206,8 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        text: "Rainforest Foundation US (RFUS) partners with indigenous peoples in the Amazon.\nWhat does indigenous mean to you?",
+        size: "md",
+        text: "Rainforest Foundation US (RFUS) partners with indigenous peoples in the Amazon.\n<strong>What does <u>indigenous</u> mean to you?</strong>",
       },
     },
   },
@@ -156,10 +232,39 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       },
     },
   },
-  // Pending: Add the map activity here
   {
     type: "regular",
-    background: secondBackground,
+    background: null,
+    content: {
+      type: "locate-in-map",
+      data: {
+        question: "The three most important rainforests are:",
+        center: [-88, -20],
+        scale: 280,
+        countries: [
+          "USA",
+          "VEN",
+          "COL",
+          "BRA",
+          "PER",
+          "ECU",
+          "GUY",
+          "SUR",
+          "CMR",
+          "GAB",
+          "COG",
+          "COD",
+          "CAF",
+          "IDN",
+        ],
+        markers: [],
+      },
+    },
+  },
+  {
+    type: "regular",
+    background: mapBackground,
+    layout: "space-between",
     content: {
       type: "fill-in-the-blank",
       data: {
@@ -435,7 +540,7 @@ export default function Home() {
         </title>
       </Head>
 
-      <main className="bg-neutral-600">
+      <main className="overflow-hidden bg-neutral-600">
         <HomeSectionsContainer>
           <div className="absolute inset-x-0 top-0">
             <NavBar />

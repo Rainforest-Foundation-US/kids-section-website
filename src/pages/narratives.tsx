@@ -15,6 +15,7 @@ const pageContent: Content[] = [
   {
     type: "plain",
     data: {
+      textAlign: "left",
       caption: "Narratives",
       text: "Learn about Daniela, a young girl from an Indigenous community along the Amazon river. Answer questions as you read her story!",
     },
@@ -46,6 +47,7 @@ const pageContent: Content[] = [
   {
     type: "plain",
     data: {
+      textAlign: "left",
       text: "Lately Mom’s been sick, so I’ve been doing a lot around the house. I’m only eight, but I cook, clean, and do laundry. I even garden, harvesting plantain, yucca, and lots of other crops. I wish Mom and Dad would have another kid. That way, I’d have someone to help me with these chores! Most importantly, I’d have a new best friend!",
     },
   },
@@ -78,6 +80,7 @@ const pageContent: Content[] = [
   {
     type: "plain",
     data: {
+      textAlign: "left",
       text: "Today was Sunday. On Sundays, Mom usually travels about two hours down-river to Leticia, the nearest town, and sells soup in the local market. Today would be different, though. Mom had an appointment with the doctor in Leticia (our community doesn’t have a hospital). I’m happy she’s getting help, but I’m nervous, too. I’d have to work in the market all by myself.",
     },
   },

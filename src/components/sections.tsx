@@ -5,7 +5,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -23,6 +22,8 @@ const HomeSectionDispatchContext = createContext<
   HomeSectionDispatchFn | undefined
 >(undefined);
 
+const HomeSectionIndexContext = createContext<number | null>(null);
+
 interface HomeSectionNavigationValue {
   onGoToSection: (sectionIndex: number) => void;
   onGoNext: () => void;
@@ -33,7 +34,6 @@ const HomeSectionNavigationContext = createContext<
 
 export function HomeSectionsContainer(props: { children: React.ReactNode }) {
   const observer = useRef<IntersectionObserver | null>();
-  const [currentSection, setCurrentSection] = useState(0);
 
   const [sections, setSections] = useState<React.RefObject<HTMLDivElement>[]>(
     []
@@ -63,85 +63,49 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
     []
   );
 
-  const onObserverIntersect = useEvent(
-    (entries: IntersectionObserverEntry[]) => {
-      // During my tests, this entries should be at most 1 on Chrome
-      // but I left this here for completeness.
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          const divElement = entry.target as HTMLDivElement;
-          const sectionNumber = Number(divElement.dataset.sectionNumber);
-
-          setCurrentSection(sectionNumber);
-          break;
-        }
-      }
-    }
-  );
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
-
-    observer.current = new IntersectionObserver(onObserverIntersect, options);
-
-    return () => observer.current?.disconnect();
-  }, [onObserverIntersect]);
-
-  const onFocusSection = useEvent((sectionIndex: number) => {
-    const section = sections[sectionIndex];
-    if (!section?.current) return;
-
-    section.current.scrollIntoView({ behavior: "smooth" });
-  });
-
-  const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
-    (sectionIndex) => {
-      setCurrentSection(sectionIndex);
-      onFocusSection(sectionIndex);
-    }
-  );
-
-  const onGoNext: HomeSectionNavigationValue["onGoNext"] = useEvent(() => {
-    const next = currentSection + 1;
-    if (next >= sections.length) return;
-    onGoToSection(next);
-  });
-
-  const setCurrentSectionContextValue = useMemo(
-    (): HomeSectionNavigationValue => ({
-      onGoToSection,
-      onGoNext,
-    }),
-    [onGoToSection, onGoNext]
-  );
-
   return (
     <HomeSectionContext.Provider value={sections}>
       <HomeSectionDispatchContext.Provider value={dispatch}>
-        <HomeSectionNavigationContext.Provider
-          value={setCurrentSectionContextValue}
-        >
-          {props.children}
-        </HomeSectionNavigationContext.Provider>
+        {props.children}
       </HomeSectionDispatchContext.Provider>
     </HomeSectionContext.Provider>
   );
 }
 
 export function useHomeSectionNavigation() {
-  const context = useContext(HomeSectionNavigationContext);
+  const context = useContext(HomeSectionIndexContext);
 
-  if (!context) {
+  if (context === null) {
     throw new Error(
-      "useHomeSectionNavigation must be used within a HomeSectionNavigationContext"
+      "useHomeSectionNavigation must be used within ActivitySection"
     );
   }
 
-  return context;
+  const onFocusSection = useEvent((sectionIndex: number) => {
+    const section = document.querySelector(
+      `[data-section-number="${sectionIndex}"]`
+    );
+
+    if (!section) return;
+
+    section.scrollIntoView({ behavior: "smooth" });
+  });
+
+  const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
+    (sectionIndex) => {
+      onFocusSection(sectionIndex);
+    }
+  );
+
+  const onGoNext: HomeSectionNavigationValue["onGoNext"] = useEvent(() => {
+    const next = context + 1;
+    onGoToSection(next);
+  });
+
+  return {
+    onGoToSection,
+    onGoNext,
+  };
 }
 
 export function ActivitySection(props: {
@@ -163,38 +127,58 @@ export function ActivitySection(props: {
   }, [dispatch, sectionNumber]);
 
   return (
-    <section
-      data-section-number={sectionNumber}
-      ref={ref}
-      className={clsx(
-        "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
-        props.className
-      )}
-      style={props.style}
-    >
-      {props.children}
-    </section>
+    <HomeSectionIndexContext.Provider value={sectionNumber}>
+      <section
+        data-section-number={sectionNumber}
+        ref={ref}
+        className={clsx(
+          "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
+          props.className
+        )}
+        style={props.style}
+      >
+        {props.children}
+      </section>
+    </HomeSectionIndexContext.Provider>
   );
 }
 
 interface ActivitySectionDividerProps {
-  variant?: "light" | "dark";
+  variant?: "light" | "complementary" | "dark" | "default";
   position?: "top" | "bottom";
 }
-export function ActivitySectionDivider(props: ActivitySectionDividerProps) {
+export function ActivitySectionDivider({
+  position = "top",
+  variant = "default",
+}: ActivitySectionDividerProps) {
+  let background: string;
+
+  if (variant === "dark") {
+    background =
+      "linear-gradient(180deg, #1E1F1B 0%, rgba(30, 31, 27, 0) 100%)";
+  } else if (variant === "light") {
+    background =
+      "linear-gradient(180deg, #FAF5EE 0%, rgba(250, 245, 238, 0) 100%)";
+  } else if (variant === "complementary") {
+    background =
+      "linear-gradient(180deg, #F0F4EF 0%, rgba(240, 244, 239, 0.00) 100%)";
+  } else {
+    background =
+      "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #DADBD2 46%, #DADBD2 52.5%, rgba(217, 217, 201, 0) 100%)";
+  }
+
   return (
     <div
       style={{
-        background:
-          props.variant === "dark"
-            ? "linear-gradient(180deg, #1E1F1B 0%, rgba(30, 31, 27, 0) 100%)"
-            : "linear-gradient(180deg, rgba(202, 203, 194, 0) 0%, #DADBD2 46%, #DADBD2 52.5%, rgba(217, 217, 201, 0) 100%)",
+        background,
       }}
       className={clsx(
         "absolute inset-x-0",
-        props.position === "bottom"
-          ? "bottom-0 h-[240px] -scale-y-100"
-          : "top-0 h-[720px] -translate-y-[50%]"
+        position === "bottom" && "bottom-0 h-[240px] -scale-y-100",
+        position === "top" &&
+          (variant === "light"
+            ? "top-0 h-[318px]"
+            : "top-0 h-[720px] -translate-y-[50%]")
       )}
     />
   );
