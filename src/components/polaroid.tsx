@@ -83,7 +83,7 @@ export function Polaroid(props: PolaroidProps) {
       {lines.map((caption, i) => (
         <text
           key={i}
-          className="text-4xs"
+          className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
           y={127 + 16 * i}

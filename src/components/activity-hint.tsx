@@ -38,7 +38,7 @@ export function ActivityHint({
           "flex-row space-x-4"
       )}
     >
-      <RoundSlothIllustration className="shadow-app-lg shadow-shadow-gray w-28 rounded-full sm:w-32 lg:w-44 " />
+      <RoundSlothIllustration className="shadow-app-lg shadow-shadow-gray" />
 
       <AnimatePresence mode="popLayout">
         {props.hint && (

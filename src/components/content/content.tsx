@@ -136,7 +136,7 @@ export type SectionWithContent =
       name?: string;
       align?: "left" | "center" | "right";
       layout?: "space-between" | "packed";
-      textColorStyle?: "dark" | "light";
+      textColorStyle?: "dark" | "light" | "light-shadows";
       background?: string | StaticImageData | null;
       backgroundOpacity?: number;
       backgroundColor?: string;
@@ -164,7 +164,11 @@ export type SectionWithContent =
 
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   if (preContent.type === "sloth") {
-    return <RoundSlothIllustration />;
+    return (
+      <div className="mb-2">
+        <RoundSlothIllustration />
+      </div>
+    );
   }
 
   if (preContent.type === "emoji" && preContent.emoji === "thinking-face") {

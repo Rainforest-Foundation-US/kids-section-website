@@ -4,7 +4,7 @@ interface PlainTextContentProps {
   caption?: string;
   subText?: string;
   text: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
   textAlign?: "left" | "center" | "right";
   children?: React.ReactNode;
 }
@@ -21,6 +21,7 @@ export function PlainTextContent({
         size === "md" && "max-w-[30rem]",
         size === "lg" && "max-w-[40rem]",
         size === "xl" && "max-w-[60rem]",
+        size === "2xl" && "max-w-[70rem]",
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center",
         textAlign === "right" && "text-right"

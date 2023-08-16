@@ -296,7 +296,10 @@ export function RoundSlothIllustration(props: { className?: string }) {
   const gradient2Id = useId();
 
   return (
-    <svg viewBox="0 0 184 184" className={props.className}>
+    <svg
+      viewBox="0 0 184 184"
+      className={clsx("w-28 rounded-full sm:w-32 lg:w-44", props.className)}
+    >
       <defs>
         <linearGradient
           id={gradient1Id}

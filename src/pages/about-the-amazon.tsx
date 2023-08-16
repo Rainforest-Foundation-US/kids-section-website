@@ -3,18 +3,17 @@ import { NavBar } from "@/components/layout/nav";
 import { HomeSectionsContainer } from "@/components/sections";
 import Head from "next/head";
 
-import fillInTheBlank1 from "@/assets/activities/fill-in-the-blank/climate/1-biome.jpg";
-import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
-import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
-
-import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
-import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
-
 import secondBackground from "@/assets/activities/2-background.png";
 import mapBackground from "@/assets/activities/3-map-background.png";
 
+import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
 import pictureOfTheAmazon1 from "@/assets/activities/picture-of-the-amazon.jpg";
 import backgroundAmazon from "@/assets/activities/background-amazon.png";
+
+import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
+import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
+
+import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
 
 import biodiversityButterfly4 from "@/assets/activities/04-biodiversity-butterfly.jpeg";
 import biodiversityRoraima4 from "@/assets/activities/04-biodiversity-roraima.png";
@@ -42,10 +41,15 @@ import backgroundHouse13 from "@/assets/activities/13-background-house.png";
 import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
 import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
 
-import biodiversity1 from "@/assets/activities/biodiversity/1-forest.png";
-import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
-import biodiversity3 from "@/assets/activities/biodiversity/3-burning.png";
-import biodiversity4 from "@/assets/activities/biodiversity/4-natives.png";
+import biodiversity23_1 from "@/assets/activities/23-1-biodiversity-forest.png";
+import biodiversity23_2 from "@/assets/activities/23-2-biodiversity-species.png";
+import biodiversity23_3 from "@/assets/activities/23-3-biodiversity-burning.png";
+import biodiversity23_4 from "@/assets/activities/23-4-biodiversity-natives.png";
+
+import climateChangeWildfires34 from "@/assets/activities/34-climate-change-wildfires.png";
+
+import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jpg";
+
 import { Footer } from "@/components/layout/footer";
 import {
   ContentSectionList,
@@ -233,7 +237,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
   {
     type: "regular",
     backgroundOpacity: 0.5,
-    backgroundColor: "#0F100E",
+    backgroundColor: "#1E1F1B",
     background: backgroundDeforestation6,
     textColorStyle: "light",
     noNextButton: true,
@@ -652,7 +656,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       title: "Biodiversity",
       subtitle: "(or “biological diversity) is...",
       imageAlignment: "start",
-      image: biodiversity1,
+      image: biodiversity23_1,
     },
   },
   {
@@ -662,7 +666,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       subtitle: "(or “biological diversity) is...",
       body: "...a word that refers to the variety of life on Earth. The many different types of plants, animals, fungi, bacteria, and people too!",
       imageAlignment: "start",
-      image: biodiversity2,
+      image: biodiversity23_2,
     },
   },
   {
@@ -672,7 +676,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       subtitle: "(or “biological diversity) is...",
       body: "...threatened by deforestation and climate change.",
       imageAlignment: "start",
-      image: biodiversity3,
+      image: biodiversity23_3,
     },
   },
   {
@@ -682,7 +686,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       subtitle: "(or “biological diversity) is...",
       body: "...protected by Indigenous peoples around the world!",
       imageAlignment: "start",
-      image: biodiversity4,
+      image: biodiversity23_4,
     },
   },
   {
@@ -781,6 +785,140 @@ const aboutTheAmazonSections: SectionWithContent[] = [
               },
             ],
           },
+        },
+      ],
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
+      },
+    },
+  },
+  {
+    type: "divider",
+    style: "dark",
+  },
+  {
+    type: "regular",
+    backgroundColor: "#1E1F1B",
+    background: climateChangeWildfires34,
+    textColorStyle: "light",
+    preContent: {
+      type: "sloth",
+    },
+    content: {
+      type: "plain",
+      data: {
+        size: "2xl",
+        text: "I'm not sure what <q>climate change</q> and <q>deforestation</q> are. <b>Let's take a deeper look!</b>",
+      },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: birds6,
+          caption: "Jump to biodiversity section",
+        },
+        {
+          image: deforestation6,
+          caption: "Jump to threats to the Amazon",
+        },
+      ],
+    },
+  },
+  {
+    type: "divider",
+    style: "dark",
+  },
+  {
+    type: "regular",
+    backgroundColor: "#1E1F1B",
+    background: null,
+    textColorStyle: "light",
+    content: {
+      type: "plain",
+      data: {
+        size: "lg",
+        text: "What is climate change?",
+        subText:
+          "When we burn fossil fuels (like oil) we send greenhouse gasses (like carbon dioxide) into the air. These gasses heat out planet.",
+      },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: birds6,
+          caption: "Jump to biodiversity section",
+        },
+        {
+          image: deforestation6,
+          caption: "Jump to threats to the Amazon",
+        },
+      ],
+    },
+  },
+  {
+    type: "divider",
+    style: "dark",
+  },
+  {
+    type: "regular",
+    background: spatialPlanetEarth36,
+    textColorStyle: "light-shadows",
+    content: {
+      type: "plain",
+      data: {
+        size: "xl",
+        text: "Climate change has all kinds of negative effects, including causing more dangerous storms, and making it harder to grow food!",
+      },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: birds6,
+          caption: "Jump to biodiversity section",
+        },
+        {
+          image: deforestation6,
+          caption: "Jump to threats to the Amazon",
+        },
+      ],
+    },
+  },
+  {
+    type: "regular",
+    backgroundColor: "#F0F4EF", // complementary-100
+    background: null,
+    textColorStyle: "dark",
+    noNextButton: true,
+    preContent: {
+      type: "sloth",
+    },
+    content: {
+      type: "plain",
+      data: {
+        size: "xl",
+        text: "<b>The rainforest is a carbon sink</b>. It absorbs greenhouse gasses (GHGs) we send into the air, and Earth heats up less)",
+      },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: deforestation6,
+        },
+        {
+          image: birds6,
+        },
+        {
+          image: deforestation6,
         },
       ],
     },
