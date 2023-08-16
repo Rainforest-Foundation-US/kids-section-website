@@ -691,7 +691,6 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "plain",
       data: {
         text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
-        caption: "These numbers give us a better picture...",
       },
     },
     subContent: [
@@ -700,8 +699,8 @@ const aboutTheAmazonSections: SectionWithContent[] = [
         kind: "sitting-sloth",
       },
       {
-        type: "text",
-        text: "<b>These numbers give us a better picture...</b>",
+        type: "plain",
+        data: { text: "<b>These numbers give us a better picture...</b>" },
       },
     ],
   },
