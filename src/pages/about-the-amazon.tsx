@@ -42,6 +42,22 @@ import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.j
 import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
 import monkeys31 from "@/assets/activities/31-monkeys.jpg";
 
+import backgroundForest33 from "@/assets/activities/33-background-forest.jpg";
+
+import deforestation34 from "@/assets/activities/34-deforestation.jpg";
+import floodsClimateChange34 from "@/assets/activities/34-floods-climate-change.jpg";
+
+import trash35 from "@/assets/activities/35-trash.jpg";
+import industryPollution35 from "@/assets/activities/35-industry-pollution.jpg";
+import transport35 from "@/assets/activities/35-transport.jpg";
+
+import flood36 from "@/assets/activities/36-floods.jpg";
+import desert36 from "@/assets/activities/36-desert.jpg";
+import snowstorms36 from "@/assets/activities/36-snowstorms.jpg";
+
+import rainforest37 from "@/assets/activities/37-rainforest.jpg";
+import earth37 from "@/assets/activities/37-earth.jpg";
+
 import biodiversity23_1 from "@/assets/activities/23-1-biodiversity-forest.png";
 import biodiversity23_2 from "@/assets/activities/23-2-biodiversity-species.png";
 import biodiversity23_3 from "@/assets/activities/23-3-biodiversity-burning.png";
@@ -872,10 +888,22 @@ const aboutTheAmazonSections: SectionWithContent[] = [
   },
   {
     type: "regular",
+    background: backgroundForest33,
     content: {
-      type: "plain",
+      type: "fill-in-the-blank",
       data: {
-        text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
+        preText: "Right now, the Amazon is in danger, from two major threats.",
+        question: "<blank /> and <blank />",
+        numberToOptions: {
+          0: {
+            options: ["Biodiversity", "Technology", "Deforestation"],
+            correctOptionPosition: 3,
+          },
+          1: {
+            options: ["Climate change", "Indigenous peoples"],
+            correctOptionPosition: 1,
+          },
+        },
       },
     },
   },
@@ -902,12 +930,12 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "polaroids",
       polaroids: [
         {
-          image: birds6,
-          caption: "Jump to biodiversity section",
+          image: floodsClimateChange34,
+          caption: "Climate change",
         },
         {
-          image: deforestation6,
-          caption: "Jump to threats to the Amazon",
+          image: deforestation34,
+          caption: "Deforestation",
         },
       ],
     },
@@ -934,12 +962,16 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "polaroids",
       polaroids: [
         {
-          image: birds6,
-          caption: "Jump to biodiversity section",
+          image: trash35,
+          caption: "Trash",
         },
         {
-          image: deforestation6,
-          caption: "Jump to threats to the Amazon",
+          image: industryPollution35,
+          caption: "Industry",
+        },
+        {
+          image: transport35,
+          caption: "Transport",
         },
       ],
     },
@@ -963,12 +995,16 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "polaroids",
       polaroids: [
         {
-          image: birds6,
-          caption: "Jump to biodiversity section",
+          image: flood36,
+          caption: "Floods",
         },
         {
-          image: deforestation6,
-          caption: "Jump to threats to the Amazon",
+          image: desert36,
+          caption: "The hotter the planet is harder to live on!",
+        },
+        {
+          image: snowstorms36,
+          caption: "Snowstorms",
         },
       ],
     },
@@ -993,15 +1029,29 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "polaroids",
       polaroids: [
         {
-          image: deforestation6,
+          image: industryPollution35,
         },
         {
-          image: birds6,
+          image: rainforest37,
         },
         {
-          image: deforestation6,
+          image: earth37,
         },
       ],
+    },
+  },
+  {
+    type: "wavy",
+    preContent: {
+      type: "emoji",
+      emoji: "thinking-face",
+    },
+    content: {
+      type: "plain",
+      data: {
+        size: "md",
+        text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
+      },
     },
   },
 ];
