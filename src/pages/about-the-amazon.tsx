@@ -40,6 +40,7 @@ import backgroundHouse13 from "@/assets/activities/13-background-house.png";
 
 import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
 import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
+import monkeys31 from "@/assets/activities/31-monkeys.jpg";
 
 import biodiversity23_1 from "@/assets/activities/23-1-biodiversity-forest.png";
 import biodiversity23_2 from "@/assets/activities/23-2-biodiversity-species.png";
@@ -787,6 +788,86 @@ const aboutTheAmazonSections: SectionWithContent[] = [
           },
         },
       ],
+    },
+  },
+  // TODO: Finish section
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "Amazon biodiversity is so important, <b> but it is under threat! </b> ",
+        subText:
+          "Learn about the plants and animals whose home is disappearing with a Memory game.",
+      },
+    },
+  },
+  {
+    type: "wavy",
+    preContent: {
+      type: "emoji",
+      emoji: "thinking-face",
+    },
+    content: {
+      type: "plain",
+      data: {
+        size: "md",
+        text: "What do you think happens to animals \n <b> when rainforest disappears?</b>",
+      },
+    },
+  },
+  {
+    type: "regular",
+    content: {
+      type: "plain",
+      data: {
+        text: "So, a healthy Rainforest depends on plants and animals, like me and my friends!",
+      },
+    },
+    subContent: [
+      {
+        type: "illustration",
+        kind: "happy-sloth",
+      },
+      {
+        type: "plain",
+        data: {
+          text: "But <b>why does the rainforest matter</b>, and what does it have to do with you?",
+        },
+      },
+    ],
+  },
+  {
+    type: "regular",
+    background: backgroundAmazon,
+    content: {
+      type: "plain",
+      data: {
+        size: "lg",
+        textAlign: "center",
+        text: "Just as biodiversity keeps the Amazon healthy, the rainforest keeps our planet healthy!",
+      },
+    },
+    subContent: {
+      type: "postcard",
+      image: monkeys31,
+    },
+  },
+  {
+    type: "regular",
+    background: mapBackground,
+    layout: "space-between",
+    content: {
+      type: "plain",
+      data: {
+        text: "I see! People around the world need a healthy rainforest, just as much as my friends and I do!",
+      },
+    },
+    // TODO: Replace with sad-sloth
+
+    subContent: {
+      type: "illustration",
+      kind: "sitting-sloth",
     },
   },
   {
