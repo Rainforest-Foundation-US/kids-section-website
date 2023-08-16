@@ -13,6 +13,7 @@ export interface PickTheOptionActivityOptions {
 interface Option {
   id: string;
   text: string;
+  wrongAlertText?: string;
   isCorrect: boolean;
 }
 
@@ -70,7 +71,7 @@ export function PickTheOptionActivity({
       if (option.isCorrect) {
         onHint(null, "correct");
       } else {
-        onHint(null, "incorrect");
+        onHint(option.wrongAlertText ?? null, "incorrect");
       }
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));

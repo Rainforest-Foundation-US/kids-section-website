@@ -25,12 +25,9 @@ const HomeSectionDispatchContext = createContext<
 const HomeSectionIndexContext = createContext<number | null>(null);
 
 interface HomeSectionNavigationValue {
-  onGoToSection: (sectionIndex: number) => void;
+  onGoToSection: (sectionId: number | string) => void;
   onGoNext: () => void;
 }
-const HomeSectionNavigationContext = createContext<
-  HomeSectionNavigationValue | undefined
->(undefined);
 
 export function HomeSectionsContainer(props: { children: React.ReactNode }) {
   const observer = useRef<IntersectionObserver | null>();
@@ -81,9 +78,9 @@ export function useHomeSectionNavigation() {
     );
   }
 
-  const onFocusSection = useEvent((sectionIndex: number) => {
+  const focusOnSection = useEvent((sectionId: number | string) => {
     const section = document.querySelector(
-      `[data-section-number="${sectionIndex}"]`
+      `[data-section-number="${sectionId}"], [data-section-name="${sectionId}"]`
     );
 
     if (!section) return;
@@ -92,8 +89,8 @@ export function useHomeSectionNavigation() {
   });
 
   const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
-    (sectionIndex) => {
-      onFocusSection(sectionIndex);
+    (sectionId) => {
+      focusOnSection(sectionId);
     }
   );
 
@@ -110,6 +107,7 @@ export function useHomeSectionNavigation() {
 
 export function ActivitySection(props: {
   number: number;
+  name?: string;
   className?: string;
   children?: React.ReactNode;
   style?: React.CSSProperties;
@@ -130,6 +128,7 @@ export function ActivitySection(props: {
     <HomeSectionIndexContext.Provider value={sectionNumber}>
       <section
         data-section-number={sectionNumber}
+        data-section-name={props.name}
         ref={ref}
         className={clsx(
           "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
@@ -176,7 +175,7 @@ export function ActivitySectionDivider({
         "absolute inset-x-0",
         position === "bottom" && "bottom-0 h-[240px] -scale-y-100",
         position === "top" &&
-          (variant === "light"
+          (variant === "light" || variant === "dark"
             ? "top-0 h-[318px]"
             : "top-0 h-[720px] -translate-y-[50%]")
       )}

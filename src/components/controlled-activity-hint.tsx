@@ -1,5 +1,5 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
 
 const hintAtom = atom("");
@@ -42,18 +42,6 @@ export function ControlledActivityHint() {
   const hint = useAtomValue(hintAtom);
   const hintStatus = useAtomValue(hintStatusAtom);
   const setHint = useSetHint();
-
-  useEffect(() => {
-    if (!hint) return;
-
-    const timeout = setTimeout(() => {
-      setHint("", "info");
-    }, 5000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [hint, setHint]);
 
   return (
     <ActivityHint

@@ -1,6 +1,5 @@
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { Provider } from "jotai";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import {
@@ -9,13 +8,17 @@ import {
   WavySeparator,
 } from "../activities-illustrations";
 import { Badge } from "../badge";
-import { GoToButton, HomeGoToSectionButton } from "../buttons";
+import {
+  GoToButton,
+  GoToTargetSection,
+  HomeGoToSectionButton,
+} from "../buttons";
 import {
   ControlledActivityHint,
   useResetHint,
   useSetHint,
 } from "../controlled-activity-hint";
-import { Polaroid } from "../polaroid";
+import { Polaroid, PolaroidCaptionStyle } from "../polaroid";
 import { ActivitySectionDivider } from "../sections";
 import { RegularSection } from "../sections/regular-section";
 import {
@@ -41,6 +44,10 @@ import {
 } from "./activities/pick-the-option";
 import { PlainTextContent } from "./plain-text";
 import { SectionContent } from "./section-content";
+import {
+  PolymorphicIllustration,
+  PolymorphicIllustrationOptions,
+} from "./polymorphic-illustration";
 
 type PreContent =
   | {
@@ -88,26 +95,48 @@ type PagerData = {
   data: SingleContent[];
 };
 
+type ContentNavigationButton = {
+  alignment: "bottom-middle";
+  direction: "left" | "right" | "bottom";
+  target: "next" | string;
+  caption?: string;
+};
+
+type PolaroidData = {
+  image: string | StaticImageData;
+  caption?: string;
+  captionStyle?: PolaroidCaptionStyle;
+};
+
 type SubContent =
   | {
       type: "postcard";
       image: string | StaticImageData;
+      polaroid?: PolaroidData;
     }
   | {
       type: "polaroids";
-      images: {
-        image: string | StaticImageData;
-        caption: string;
-      }[];
-    };
+      polaroids: (PolaroidData & {
+        navButton?: ContentNavigationButton;
+      })[];
+    }
+  | {
+      type: "illustration";
+      kind: PolymorphicIllustrationOptions["kind"];
+    }
+  | PlainContentData;
 
 export type Content = SingleContent | PagerData;
+
+export type DividerStyle = "dark";
 
 export type SectionWithContent =
   | {
       type: "regular" | "wavy";
+      name?: string;
       align?: "left" | "center" | "right";
       layout?: "space-between" | "packed";
+      textColorStyle?: "dark" | "light";
       background?: string | StaticImageData | null;
       backgroundOpacity?: number;
       backgroundColor?: string;
@@ -117,13 +146,20 @@ export type SectionWithContent =
         height: number;
         className: string;
       }[];
+      noNextButton?: boolean;
       preContent?: PreContent;
       content: Content;
-      subContent?: SubContent;
+      subContent?: SubContent | SubContent[];
     }
   | {
       type: "vignette";
+      name?: string;
       content: VignetteSectionOptions;
+    }
+  | {
+      type: "divider";
+      name?: string;
+      style: DividerStyle;
     };
 
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
@@ -175,33 +211,70 @@ function PolymorphicContent({ content }: { content: Content }) {
 function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
   if (subContent.type === "postcard") {
     return (
-      <Image
-        placeholder="blur"
-        className="bg-secondary-100 shadow-app-lg shadow-shadow-gray mt-12 flex w-full max-w-[814px] -rotate-[4deg] flex-col object-contain p-2 lg:p-4"
-        src={subContent.image}
-        aria-hidden
-        alt=""
-      />
+      <div className="relative">
+        <Image
+          placeholder="blur"
+          className="bg-secondary-100 shadow-app-lg shadow-shadow-gray mt-12 flex w-full max-w-[814px] -rotate-[4deg] flex-col object-contain p-2 lg:p-4"
+          src={subContent.image}
+          aria-hidden
+          alt=""
+        />
+
+        {subContent.polaroid && (
+          <Polaroid
+            className="absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] hover:z-10 hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]"
+            src={subContent.polaroid.image}
+            caption={subContent.polaroid.caption}
+            captionStyle={subContent.polaroid.captionStyle}
+          />
+        )}
+      </div>
     );
   }
 
   if (subContent.type === "polaroids") {
     return (
       <ul className="mt-12 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-16">
-        {subContent.images.map((image, i) => (
-          <li key={i}>
+        {subContent.polaroids.map((polaroid, i) => (
+          <li
+            key={i}
+            className={clsx(
+              i % 2 === 0 ? "-rotate-[6.5deg]" : "rotate-[6.5deg]",
+              "transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105"
+            )}
+          >
             <Polaroid
-              className={clsx(
-                i % 2 === 0 ? "-rotate-[6.5deg]" : "rotate-[6.5deg]",
-                "relative w-[16rem] hover:z-10 hover:rotate-0 hover:scale-105 lg:w-[18rem]"
-              )}
-              src={image.image}
-              caption={image.caption}
+              className="w-[16rem] lg:w-[18rem]"
+              src={polaroid.image}
+              caption={polaroid.caption}
+              captionStyle={polaroid.captionStyle}
             />
+
+            {polaroid.navButton && (
+              <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
+                <GoToTargetSection
+                  direction={polaroid.navButton.direction}
+                  target={polaroid.navButton.target}
+                  disabled={false}
+                />
+              </div>
+            )}
           </li>
         ))}
       </ul>
     );
+  }
+
+  if (subContent.type === "illustration") {
+    return (
+      <div className="mt-2">
+        <PolymorphicIllustration kind={subContent.kind} />
+      </div>
+    );
+  }
+
+  if (subContent.type === "plain") {
+    return <PlainTextContent {...subContent.data} />;
   }
 
   return null;
@@ -211,7 +284,10 @@ function ContentSection(props: {
   section: SectionWithContent;
   previousSectionType: SectionWithContent["type"] | undefined;
   nextSectionType: SectionWithContent["type"] | undefined;
+  previousDividerStyle?: DividerStyle;
+  nextDividerStyle?: DividerStyle;
   number: number;
+  name?: string;
 }) {
   const sectionAlign =
     ((props.section.type === "regular" || props.section.type === "wavy") &&
@@ -219,11 +295,23 @@ function ContentSection(props: {
     "center";
 
   if (props.section.type === "regular" || props.section.type === "wavy") {
+    const subContentArray = props.section.subContent
+      ? Array.isArray(props.section.subContent)
+        ? props.section.subContent
+        : [props.section.subContent]
+      : undefined;
+
+    const lastSubContent = subContentArray?.[subContentArray.length - 1];
+
     const children = (
       <>
         {props.section.type === "regular" && props.number !== 0 && (
           <ActivitySectionDivider
-            variant={props.previousSectionType === "wavy" ? "light" : "default"}
+            variant={
+              props.previousSectionType === "wavy"
+                ? "light"
+                : props.previousDividerStyle ?? "default"
+            }
           />
         )}
 
@@ -233,6 +321,10 @@ function ContentSection(props: {
 
         {props.nextSectionType === "wavy" && (
           <ActivitySectionDivider variant="complementary" position="bottom" />
+        )}
+
+        {props.nextDividerStyle === "dark" && (
+          <ActivitySectionDivider variant="dark" position="bottom" />
         )}
 
         <SectionContent>
@@ -254,19 +346,20 @@ function ContentSection(props: {
 
             <PolymorphicContent content={props.section.content} />
 
-            {props.section.subContent && (
-              <PolymorphicSubContent subContent={props.section.subContent} />
-            )}
+            {props.section.subContent &&
+              subContentArray?.map((subContent, i) => (
+                <PolymorphicSubContent key={i} subContent={subContent} />
+              ))}
 
-            {props.section.content.type !== "pager" && (
-              <HomeGoToSectionButton
-                className={clsx(
-                  "relative z-10 mt-4",
-                  props.section.subContent?.type === "postcard" &&
-                    "-translate-y-40"
-                )}
-              />
-            )}
+            {!props.section.noNextButton &&
+              props.section.content.type !== "pager" && (
+                <HomeGoToSectionButton
+                  className={clsx(
+                    "relative z-10 mt-4",
+                    lastSubContent?.type === "postcard" && "-translate-y-40"
+                  )}
+                />
+              )}
           </div>
         </SectionContent>
       </>
@@ -274,19 +367,29 @@ function ContentSection(props: {
 
     if (props.section.type === "regular") {
       return (
-        <RegularSection
-          number={props.number}
-          backgroundImage={props.section.background}
-          backgroundOpacity={props.section.backgroundOpacity}
-          backgroundColor={props.section.backgroundColor}
-        >
-          {children}
-        </RegularSection>
+        <>
+          {props.previousDividerStyle === "dark" && (
+            <div className="bg-neutral-dark-700 z-10 h-[120px]" />
+          )}
+
+          <RegularSection
+            number={props.number}
+            name={props.name}
+            textColorStyle={props.section.textColorStyle}
+            backgroundImage={props.section.background}
+            backgroundOpacity={props.section.backgroundOpacity}
+            backgroundColor={props.section.backgroundColor}
+          >
+            {children}
+          </RegularSection>
+        </>
       );
     } else {
       return (
         <div className="bg-complementary-100">
-          <WavySection number={props.number}>{children}</WavySection>
+          <WavySection number={props.number} name={props.name}>
+            {children}
+          </WavySection>
         </div>
       );
     }
@@ -295,7 +398,11 @@ function ContentSection(props: {
   if (props.section.type === "vignette") {
     return (
       <div className="relative z-10">
-        <VignetteSection number={props.number} {...props.section.content} />
+        <VignetteSection
+          number={props.number}
+          name={props.name}
+          {...props.section.content}
+        />
 
         {props.nextSectionType !== "vignette" && (
           <WavySeparator color="#1E1F1B" direction="down" />
@@ -310,15 +417,29 @@ function ContentSection(props: {
 export function ContentSectionList(props: { sections: SectionWithContent[] }) {
   return (
     <>
-      {props.sections.map((section, i) => (
-        <ContentSection
-          key={i}
-          number={i}
-          section={section}
-          previousSectionType={props.sections[i - 1]?.type}
-          nextSectionType={props.sections[i + 1]?.type}
-        />
-      ))}
+      {props.sections.map((section, i) => {
+        const previousSection = props.sections[i - 1];
+        const nextSection = props.sections[i + 1];
+
+        return (
+          <ContentSection
+            key={i}
+            number={i}
+            name={section.name}
+            section={section}
+            previousSectionType={previousSection?.type}
+            nextSectionType={nextSection?.type}
+            previousDividerStyle={
+              previousSection?.type === "divider"
+                ? previousSection.style
+                : undefined
+            }
+            nextDividerStyle={
+              nextSection?.type === "divider" ? nextSection.style : undefined
+            }
+          />
+        );
+      })}
     </>
   );
 }
@@ -336,6 +457,11 @@ export function ContentPager(props: {
 
   const goNext = () => {
     setIndex((index + 1) % listCount);
+    resetHint();
+  };
+
+  const goBack = () => {
+    setIndex((index - 1) % listCount);
     resetHint();
   };
 
@@ -364,13 +490,30 @@ export function ContentPager(props: {
           >
             <PolymorphicContent content={content} />
           </motion.div>
+        </AnimatePresence>
+
+        <div className="flex flex-row space-x-2">
+          {index > 0 && (
+            <GoToButton
+              className="bg-neutral-100"
+              key="left"
+              direction="left"
+              disabled={false}
+              onClick={goBack}
+            />
+          )}
 
           {shouldGoToNextSection ? (
             <HomeGoToSectionButton />
           ) : (
-            <GoToButton direction="right" disabled={false} onClick={goNext} />
+            <GoToButton
+              key="right"
+              direction="right"
+              disabled={false}
+              onClick={goNext}
+            />
           )}
-        </AnimatePresence>
+        </div>
       </div>
     </>
   );

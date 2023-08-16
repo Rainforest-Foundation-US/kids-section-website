@@ -111,7 +111,7 @@ export default function NarrativesRoute() {
       </Head>
 
       <main className="bg-secondary-100 overflow-hidden overflow-y-auto">
-        <RegularSection number={1} fullScreen>
+        <RegularSection number={1} fullScreen textColorStyle="dark">
           <NavBar />
 
           <SectionContent>

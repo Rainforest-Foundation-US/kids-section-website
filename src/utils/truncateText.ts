@@ -1,12 +1,11 @@
 /**
  * Truncates text to a maximum length while preserving whole words.
- * Useful for truncating texts on SVG elements.
  */
 export function truncateText(
   text: string,
-  maxLength: number
+  maxLineLength: number
 ): [string, boolean] {
-  if (text.length <= maxLength) {
+  if (text.length <= maxLineLength) {
     return [text, false];
   }
 
@@ -18,7 +17,7 @@ export function truncateText(
   for (const s of segmenter.segment(text)) {
     const next = result + s.segment;
 
-    if (next.length > maxLength) {
+    if (next.length > maxLineLength) {
       result = result.trimEnd();
       truncated = true;
       break;
@@ -28,4 +27,34 @@ export function truncateText(
   }
 
   return [result, truncated];
+}
+
+/**
+ * Wraps text to a maximum length while preserving whole words and returns text spans.
+ */
+export function wrapText(text: string, maxLineLength: number): string[] {
+  if (text.length <= maxLineLength) {
+    return [text];
+  }
+
+  let result: string[] = [];
+  let curLine = "";
+
+  const segmenter = new Intl.Segmenter("en", { granularity: "word" });
+
+  for (const s of segmenter.segment(text)) {
+    const next = curLine + s.segment;
+
+    if (next.length > maxLineLength) {
+      result.push(curLine.trimEnd());
+      curLine = s.segment;
+      continue;
+    }
+
+    curLine = next;
+  }
+
+  if (curLine) result.push(curLine);
+
+  return result;
 }

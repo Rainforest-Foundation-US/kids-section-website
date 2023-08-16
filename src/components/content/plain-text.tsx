@@ -2,6 +2,7 @@ import clsx from "@/utils/clsx";
 
 interface PlainTextContentProps {
   caption?: string;
+  subText?: string;
   text: string;
   size?: "sm" | "md" | "lg" | "xl";
   textAlign?: "left" | "center" | "right";
@@ -30,6 +31,11 @@ export function PlainTextContent({
         className="primary-strong whitespace-pre-line text-4xl leading-snug"
         dangerouslySetInnerHTML={{ __html: props.text }}
       />
+      {props.subText && (
+        <p className="primary-strong whitespace-pre-line text-lg leading-snug">
+          {props.subText}
+        </p>
+      )}
 
       {props.children}
     </section>

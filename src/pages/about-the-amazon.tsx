@@ -5,15 +5,42 @@ import Head from "next/head";
 
 import fillInTheBlank1 from "@/assets/activities/fill-in-the-blank/climate/1-biome.jpg";
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
-import antarctica from "@/assets/activities/intro/1-antarctica.jpg";
+import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
 
-import mainBackground from "@/assets/activities/1-background.png";
+import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
+import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
+
 import secondBackground from "@/assets/activities/2-background.png";
 import mapBackground from "@/assets/activities/3-map-background.png";
-import humanActivityBackground from "@/assets/activities/4-human-background.png";
 
 import pictureOfTheAmazon1 from "@/assets/activities/picture-of-the-amazon.jpg";
-import amazonLargestRiver from "@/assets/activities/amazon-largest-river.jpg";
+import backgroundAmazon from "@/assets/activities/background-amazon.png";
+
+import biodiversityButterfly4 from "@/assets/activities/04-biodiversity-butterfly.jpeg";
+import biodiversityRoraima4 from "@/assets/activities/04-biodiversity-roraima.png";
+import biodiversitySloth4 from "@/assets/activities/04-biodiversity-sloth.jpeg";
+
+import backgroundDeforestation6 from "@/assets/activities/06-background-deforestation.jpg";
+import birds6 from "@/assets/activities/06-birds.jpeg";
+import deforestation6 from "@/assets/activities/06-deforestation.png";
+import keepGoing6 from "@/assets/activities/06-keep-going.png";
+
+import elders7 from "@/assets/activities/07-elders.jpg";
+import family7 from "@/assets/activities/07-family.png";
+import monitors7 from "@/assets/activities/07-monitors.png";
+
+import backgroundRiver8 from "@/assets/activities/08-background-river.png";
+import amazonRiver8 from "@/assets/activities/08-amazon-river.png";
+import amazonRiverWide8 from "@/assets/activities/08-amazon-river-wide.png";
+
+import nileRiver09 from "@/assets/activities/09-nile-river.jpg";
+import yangtzeRiver09 from "@/assets/activities/09-yangtze-river.jpg";
+import mississippiRiver09 from "@/assets/activities/09-mississippi-river.jpg";
+
+import backgroundHouse13 from "@/assets/activities/13-background-house.png";
+
+import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
+import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
 
 import biodiversity1 from "@/assets/activities/biodiversity/1-forest.png";
 import biodiversity2 from "@/assets/activities/biodiversity/2-species.png";
@@ -24,6 +51,7 @@ import {
   ContentSectionList,
   SectionWithContent,
 } from "@/components/content/content";
+import { PolaroidCaptionStyle } from "@/components/polaroid";
 
 const aboutTheAmazonSections: SectionWithContent[] = [
   {
@@ -56,7 +84,10 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     },
     subContent: {
       type: "postcard",
-      image: fillInTheBlank1,
+      image: tropicalRainRiver1,
+      polaroid: {
+        image: frogInRain2,
+      },
     },
   },
   {
@@ -151,7 +182,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     },
     subContent: {
       type: "postcard",
-      image: antarctica,
+      image: antarctica3,
     },
   },
   {
@@ -161,6 +192,10 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       data: {
         text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, <b>we have to learn more about the Amazon!</b>",
       },
+    },
+    subContent: {
+      type: "illustration",
+      kind: "happy-sloth",
     },
   },
   {
@@ -175,30 +210,71 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     },
     subContent: {
       type: "polaroids",
-      images: [
+      polaroids: [
         {
-          image: antarctica,
+          image: biodiversityButterfly4,
           caption: "Biodiversity",
         },
         {
-          image: antarctica,
-          caption: "Biodiversity",
+          image: biodiversityRoraima4,
+          caption: "Indigenous people",
         },
         {
-          image: antarctica,
-          caption: "Biodiversity",
+          image: biodiversitySloth4,
+          caption: "Unique ecosystems",
         },
       ],
     },
   },
   {
+    type: "divider",
+    style: "dark",
+  },
+  {
     type: "regular",
-    background: humanActivityBackground,
+    backgroundOpacity: 0.5,
+    backgroundColor: "#0F100E",
+    background: backgroundDeforestation6,
+    textColorStyle: "light",
+    noNextButton: true,
     content: {
       type: "plain",
       data: {
+        size: "xl",
         text: "But some humans are permanently damaging rainforests, <b>specially the Amazon!</b>",
       },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: birds6,
+          caption: "Jump to biodiversity section",
+          navButton: {
+            target: "biodiversity",
+            alignment: "bottom-middle",
+            direction: "left",
+          },
+        },
+        {
+          image: keepGoing6,
+          caption: "Keep going",
+          navButton: {
+            target: "next",
+            alignment: "bottom-middle",
+            direction: "bottom",
+          },
+        },
+        {
+          image: deforestation6,
+          caption: "Jump to threats to the Amazon",
+          navButton: {
+            target: "threats",
+            alignment: "bottom-middle",
+            direction: "right",
+          },
+        },
+      ],
     },
   },
   {
@@ -207,13 +283,28 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "plain",
       data: {
         size: "md",
-        text: "Rainforest Foundation US (RFUS) partners with indigenous peoples in the Amazon.\n<strong>What does <u>indigenous</u> mean to you?</strong>",
+        text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
+        subText: "See the pictures from various Indigenous communities!",
       },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: elders7,
+        },
+        {
+          image: family7,
+        },
+        {
+          image: monitors7,
+        },
+      ],
     },
   },
   {
     type: "regular",
-    background: amazonLargestRiver,
+    background: backgroundRiver8,
     backgroundOpacity: 0.64,
     backgroundColor: "#FAF5EE",
     content: {
@@ -221,6 +312,24 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       data: {
         text: "The Amazon is the biggest tropical rainforest in the world! At its heart: <b>the Amazon River, the largest river on Earth, by far</b>",
       },
+    },
+    subContent: {
+      type: "polaroids",
+      polaroids: [
+        {
+          image: amazonRiver8,
+          caption:
+            "The Amazon River is huge, In fact, it has the most water of any river on Earth.",
+          captionStyle: PolaroidCaptionStyle.wrap,
+        },
+
+        {
+          image: amazonRiverWide8,
+          caption:
+            "At its widest, the Amazon river could hold all of Paris, France!",
+          captionStyle: PolaroidCaptionStyle.wrap,
+        },
+      ],
     },
   },
   {
@@ -233,17 +342,17 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     },
     subContent: {
       type: "polaroids",
-      images: [
+      polaroids: [
         {
-          image: antarctica,
+          image: nileRiver09,
           caption: "Nile River",
         },
         {
-          image: antarctica,
+          image: yangtzeRiver09,
           caption: "Yangtze river",
         },
         {
-          image: antarctica,
+          image: mississippiRiver09,
           caption: "Mississippi River",
         },
       ],
@@ -335,11 +444,16 @@ const aboutTheAmazonSections: SectionWithContent[] = [
   // Pending: Add the map activity here
   {
     type: "regular",
+    background: backgroundHouse13,
     content: {
       type: "plain",
       data: {
         text: "Now we know how big my home is, <b>but what does life in the Amazon actually look like?</b>",
       },
+    },
+    subContent: {
+      type: "illustration",
+      kind: "happy-sloth",
     },
   },
   {
@@ -404,55 +518,136 @@ const aboutTheAmazonSections: SectionWithContent[] = [
   {
     type: "wavy",
     content: {
-      type: "pick-the-option",
-      data: {
-        question: "Rainforests are forests that:",
-        options: [
-          {
-            text: "Stay green all year round, and get lots of rain!",
-            isCorrect: true,
+      type: "pager",
+      data: [
+        {
+          type: "pick-the-option",
+          data: {
+            question: "Rainforests are forests that:",
+            options: [
+              {
+                text: "Stay green all year round, and get lots of rain!",
+                isCorrect: true,
+              },
+              {
+                text: "Do not have a large variety of plants and animals.",
+                wrongAlertText:
+                  "Rainforest have a large variety of plants and animals.",
+                isCorrect: false,
+              },
+              {
+                text: "Exists on every continent.",
+                isCorrect: false,
+              },
+            ],
           },
-          {
-            text: "Do not have a large variety of plants and animals.",
-            isCorrect: false,
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            question: "What is the largest rainforest in the world?",
+            options: [
+              {
+                text: "The Amazon Rainforest",
+                isCorrect: true,
+              },
+              {
+                text: "The Congo Basin",
+                isCorrect: false,
+              },
+              {
+                text: "The Indonesian Archipelago",
+                isCorrect: false,
+              },
+            ],
           },
-          {
-            text: "exists on every continent",
-            isCorrect: false,
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            question:
+              "Along with ecosystems, cities, towns, and natural ecosystems, the Amazon is home 100s of indigenous communities, each with a unique culture and way of life.",
+            options: [
+              {
+                text: "True",
+                isCorrect: true,
+              },
+              {
+                text: "False",
+                isCorrect: false,
+              },
+            ],
           },
-        ],
-      },
+        },
+        {
+          type: "pick-the-option",
+          data: {
+            question:
+              "The Amazon is the largest rainforest in the world. It is home to plants and animals, cities and towns, and almost 400 unique indigenous communities!",
+            options: [
+              {
+                text: "True",
+                isCorrect: true,
+              },
+              {
+                text: "False",
+                isCorrect: false,
+              },
+            ],
+          },
+        },
+      ],
     },
   },
   {
     type: "regular",
+    background: backgroundHouse13,
     content: {
       type: "plain",
       data: {
         text: "So, we understand a bit about rainforests!\n<b>But, there's a lot more to learn...</b>",
       },
     },
-  },
-  {
-    type: "regular",
-    content: {
-      type: "plain",
-      data: {
-        text: "There are more types of plants and animals in the Amazon <b>than han anywhere on Earth...</b>",
-      },
+    subContent: {
+      type: "illustration",
+      kind: "waving-sloth",
     },
   },
   {
     type: "regular",
+    background: backgroundAmazon,
     content: {
       type: "plain",
       data: {
-        text: "...and the <b>400 indigenous communities that live here protect</b> this biodiversity!",
+        size: "lg",
+        textAlign: "center",
+        text: "There are more types of plants and animals in the Amazon <b>than anywhere else on Earth...</b>",
       },
+    },
+    subContent: {
+      type: "postcard",
+      image: biodiversityCollage21,
+    },
+  },
+  {
+    type: "regular",
+    background: backgroundAmazon,
+    content: {
+      type: "plain",
+      data: {
+        size: "lg",
+        textAlign: "center",
+        text: "...and the <b>400 Indigenous communities</b> that live here <b>protect</b> this biodiversity!",
+      },
+    },
+    subContent: {
+      type: "postcard",
+      image: familyOnBoat22,
     },
   },
   {
     type: "vignette",
+    name: "biodiversity",
     content: {
       title: "Biodiversity",
       subtitle: "(or “biological diversity) is...",
@@ -485,7 +680,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       title: "Biodiversity",
       subtitle: "(or “biological diversity) is...",
-      body: "...protected by indigenous peoples around the world!",
+      body: "...protected by Indigenous peoples around the world!",
       imageAlignment: "start",
       image: biodiversity4,
     },
@@ -495,10 +690,20 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        text: "So, just how biodiverse is the Amazon, and how much biodiversity do indigenous peoples really protect?",
+        text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
         caption: "These numbers give us a better picture...",
       },
     },
+    subContent: [
+      {
+        type: "illustration",
+        kind: "sitting-sloth",
+      },
+      {
+        type: "text",
+        text: "<b>These numbers give us a better picture...</b>",
+      },
+    ],
   },
   // TODO: Add a section with statistics about biodiversity in the Amazon
   {

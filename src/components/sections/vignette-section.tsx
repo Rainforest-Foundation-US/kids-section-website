@@ -6,13 +6,14 @@ import clsx from "@/utils/clsx";
 export interface VignetteSectionOptions {
   title: string;
   subtitle: string;
+  image: string | StaticImageData;
   body?: string;
   imageAlignment?: "start" | "middle" | "end";
-  image: string | StaticImageData;
 }
 
 interface VignetteSectionProps extends VignetteSectionOptions {
   number: number;
+  name?: string;
 }
 export function VignetteSection({
   imageAlignment = "middle",
@@ -22,7 +23,11 @@ export function VignetteSection({
     <>
       <div className="bg-neutral-dark-700 h-[120px]" />
 
-      <ActivitySection number={props.number} className="min-h-[720px]">
+      <ActivitySection
+        number={props.number}
+        name={props.name}
+        className="min-h-[720px]"
+      >
         <Image
           className={clsx(
             "bg-neutral-dark-800 absolute inset-0 block h-full w-full object-cover",

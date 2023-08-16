@@ -38,12 +38,12 @@ export function GoToButton({
     <button
       className={clsx(
         "shadow-green-shadow border-primary-100 flex h-20 w-20 items-center justify-center rounded-full border-2 ",
-        props.className,
         direction === "left" && "rotate-90",
         direction === "right" && "-rotate-90",
         direction === "top" && "rotate-180",
 
-        props.disabled === false && "bg-primary-500"
+        props.disabled === false && "bg-primary-500",
+        props.className
       )}
       onClick={props.onClick}
       disabled={props.disabled}
@@ -51,6 +51,22 @@ export function GoToButton({
       <IconRight />
     </button>
   );
+}
+
+interface GoToTargetSectionProps extends Omit<GoToButtonProps, "onClick"> {
+  target: "next" | string;
+}
+export function GoToTargetSection({
+  target,
+  ...props
+}: GoToTargetSectionProps) {
+  const { onGoNext, onGoToSection } = useHomeSectionNavigation();
+  const onClick = () => {
+    if (target === "next") onGoNext();
+    else onGoToSection(target);
+  };
+
+  return <GoToButton {...props} onClick={onClick} />;
 }
 
 export function HomeGoToSectionButton(props: { className?: string }) {

@@ -10,15 +10,20 @@ export interface RegularSectionProps {
   backgroundOpacity?: number;
   backgroundColor?: string;
   fullScreen?: boolean;
+  textColorStyle?: "dark" | "light";
   number: number;
+  name?: string;
 }
 export function RegularSection(props: RegularSectionProps) {
   return (
     <ActivitySection
       number={props.number}
+      name={props.name}
       className={clsx(
         "py-0",
-        props.fullScreen && "text-neutral-dark-700 max-h-[unset] min-h-screen"
+        props.textColorStyle === "dark" && "text-neutral-dark-700",
+        props.textColorStyle === "light" && "text-neutral-100",
+        props.fullScreen && "max-h-[unset] min-h-screen"
       )}
       style={{
         backgroundColor: props.backgroundColor,

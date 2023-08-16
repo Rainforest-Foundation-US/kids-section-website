@@ -1,24 +1,40 @@
 import clsx from "@/utils/clsx";
-import { truncateText } from "@/utils/truncateText";
+import { wrapText, truncateText } from "@/utils/truncateText";
 import { StaticImageData } from "next/image";
 import { useMemo } from "react";
 
-const MAX_POLAROID_LENGTH = 31;
+const MAX_POLAROID_LENGTH = 32; // Max chars in line - eye precision 😉.
+
+export enum PolaroidCaptionStyle {
+  wrap,
+  truncate,
+}
 
 interface PolaroidProps {
   className?: string;
   src: string | StaticImageData;
   caption?: string;
+  captionStyle?: PolaroidCaptionStyle;
   shrinkOnResponsive?: boolean;
   verticalAlign?: "top" | "center" | "bottom";
 }
 export function Polaroid(props: PolaroidProps) {
-  const captionFromProps = props.caption ?? "Fujifilm Instax Wide Format";
+  const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
 
-  const [caption, truncated] = useMemo(
-    () => truncateText(captionFromProps, MAX_POLAROID_LENGTH),
-    [captionFromProps]
-  );
+  const noCaption = !props.caption?.length;
+
+  const lines = useMemo(() => {
+    if (props.captionStyle === PolaroidCaptionStyle.wrap) {
+      return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
+    }
+
+    const [caption, truncated] = truncateText(
+      captionFromProps,
+      MAX_POLAROID_LENGTH
+    );
+
+    return [caption + (truncated ? "..." : "")];
+  }, [props.captionStyle, captionFromProps]);
 
   const style = {
     "--el-align": props.verticalAlign ?? "center",
@@ -38,10 +54,10 @@ export function Polaroid(props: PolaroidProps) {
     <svg
       className={clsx(
         "transition-all duration-75",
-        "box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        "border-1 shadow-app-lg shadow-shadow-gray box-content flex min-w-[272px] flex-col border-neutral-600 bg-neutral-100 p-2 lg:p-4",
         props.className
       )}
-      viewBox="0 0 140 132"
+      viewBox={`0 0 140 ${132 + (lines.length - 1) * 16}`}
     >
       {blurDataURL && (
         <image
@@ -51,7 +67,7 @@ export function Polaroid(props: PolaroidProps) {
           preserveAspectRatio="xMidYMax slice"
           href={blurDataURL}
           width={140}
-          height={110}
+          height={noCaption ? 132 : 110}
         />
       )}
       <image
@@ -61,13 +77,20 @@ export function Polaroid(props: PolaroidProps) {
         preserveAspectRatio="xMidYMax slice"
         href={imageSrc}
         width={140}
-        height={110}
+        height={noCaption ? 132 : 110}
       />
 
-      <text className="text-3xs" textAnchor="middle" x={70} y={127}>
-        {caption}
-        {truncated && "..."}
-      </text>
+      {lines.map((caption, i) => (
+        <text
+          key={i}
+          className="text-4xs"
+          textAnchor="middle"
+          x={70}
+          y={127 + 16 * i}
+        >
+          {caption}
+        </text>
+      ))}
     </svg>
   );
 }

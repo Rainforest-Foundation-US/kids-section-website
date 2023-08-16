@@ -60,16 +60,16 @@ export function ActivityHint({
               hintPositioning === "absolute" &&
                 props.hintPosition === "start" &&
                 "right-[100%]",
-              props.hintSize === "xs" && "w-[150px]",
-              props.hintSize === "sm" && "w-[200px]",
-              props.hintSize === "md" && "w-[280px]",
-              props.hintSize === "lg" && "w-[380px]",
-              props.hintSize === "xl" && "w-[600px]",
+              props.hintSize === "xs" && "min-w-[150px]",
+              props.hintSize === "sm" && "min-w-[200px]",
+              props.hintSize === "md" && "min-w-[280px]",
+              props.hintSize === "lg" && "min-w-[380px]",
+              props.hintSize === "xl" && "min-w-[600px]",
               props.status == "correct" && "bg-primary-600",
               props.status == "info" && "bg-primary-800",
               props.status == "incorrect" && "bg-error-700",
               textAlign === "left" && "text-left",
-              textAlign === "center" && "text-center",
+              textAlign === "center" && "text-center [text-wrap:balance]",
               textAlign === "right" && "text-right"
             )}
           >
