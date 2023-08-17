@@ -7,7 +7,7 @@ import {
   HomeParrotIllustration,
   HomeRightLeavesIllustration,
 } from "@/components/home-illustrations";
-import { Polaroid } from "@/components/polaroid";
+import { Polaroid, PolaroidCaptionStyle } from "@/components/polaroid";
 import clsx from "@/utils/clsx";
 import Head from "next/head";
 import Image from "next/image";
@@ -78,14 +78,14 @@ export default function Home() {
             alt=""
           />
 
-          <div className="relative z-30 flex flex-col-reverse md:mt-16 md:flex-row">
+          <div className="relative z-30 mt-8 flex flex-col-reverse md:mt-16 md:flex-row">
             <section className="relative z-10 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
               <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 text-center">
-                <p className="text-primary-600 text-xl font-medium">
+                <p className="text-primary-600 text-lg font-medium md:text-xl">
                   {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
-                <h1 className="text-neutral-dark-700 text-5xl font-normal leading-snug">
+                <h1 className="text-neutral-dark-700 text-3xl font-normal leading-snug md:text-5xl">
                   Discover the fascinating secrets of the Amazon
                 </h1>
 
@@ -107,7 +107,7 @@ export default function Home() {
               </div>
             </section>
 
-            <HomeChameleonIllustration className="block w-[25vw] min-w-[9rem] max-w-[21rem] md:absolute md:-translate-y-6" />
+            <HomeChameleonIllustration className="absolute hidden w-[25vw] min-w-[9rem] max-w-[21rem] -translate-y-6 md:block" />
           </div>
         </div>
 
@@ -141,8 +141,8 @@ export default function Home() {
           </div>
 
           <div className="relative z-20 -mt-[calc(542px_/_2)]">
-            <div className="relative mx-10 flex flex-1 flex-col items-center justify-center">
-              <div className="border-1 bg-secondary-100 shadow-app-lg shadow-shadow-gray relative flex aspect-video w-full max-w-[814px] flex-col border-neutral-600 p-2">
+            <div className="relative mx-2 flex flex-1 flex-col items-center justify-center md:mx-10">
+              <div className="border-1 bg-secondary-100 shadow-app-lg shadow-shadow-gray relative z-10 flex aspect-video w-full max-w-[814px] flex-col border-neutral-600 p-2">
                 <iframe
                   src="https://player.vimeo.com/video/854820194?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                   allow="autoplay; fullscreen; picture-in-picture"
@@ -157,14 +157,14 @@ export default function Home() {
               ></script>
             </div>
 
-            <HomeMonkeyIllustration className="absolute inset-y-0 right-0 my-auto block w-[25vw] min-w-[9rem] max-w-[21rem] translate-y-4" />
+            <HomeMonkeyIllustration className="absolute bottom-0 right-0 my-auto block w-[25vw] min-w-[9rem] max-w-[21rem] translate-y-[100%] md:inset-y-0 md:translate-y-4" />
           </div>
 
           <div className="relative z-30">
             <div className="relative flex flex-col-reverse md:flex-row">
               <section className="mx-2 flex flex-1 flex-col items-center justify-center space-y-8 md:mt-16">
                 <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 py-4 text-center">
-                  <h2 className="text-neutral-dark-700 text-5xl font-normal leading-snug">
+                  <h2 className="text-neutral-dark-700 text-3xl font-normal leading-snug md:text-5xl">
                     Kids from around the world are helping protect the Amazon
                   </h2>
 
@@ -181,7 +181,9 @@ export default function Home() {
                   >
                     Discover the Amazon!
                   </AppLink>
-                  <AppButton variant="secondary">Support our work</AppButton>
+                  <AppButton className="inline-block" variant="secondary">
+                    Support our work
+                  </AppButton>
                 </div>
               </section>
 
@@ -200,6 +202,9 @@ export default function Home() {
                       )}
                       src={polaroid.src}
                       caption={polaroid.caption}
+                      captionStyle={
+                        PolaroidCaptionStyle.wrapPreserveAspectRation
+                      }
                       verticalAlign={polaroid.verticalAlign}
                     />
                   </li>

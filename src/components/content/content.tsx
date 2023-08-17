@@ -238,7 +238,7 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
 
   if (subContent.type === "polaroids") {
     return (
-      <ul className="mt-12 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-16">
+      <ul className="mt-12 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-8">
         {subContent.polaroids.map((polaroid, i) => (
           <li
             key={i}

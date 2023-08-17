@@ -3,7 +3,7 @@ import { wrapText, truncateText } from "@/utils/truncateText";
 import { StaticImageData } from "next/image";
 import { useMemo } from "react";
 
-const MAX_POLAROID_LENGTH = 32; // Max chars in line - eye precision 😉.
+const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 
 export enum PolaroidCaptionStyle {
   wrap,
