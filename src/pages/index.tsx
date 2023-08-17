@@ -64,13 +64,13 @@ export default function Home() {
         <title>{"Kids' Corner - Rainforest Foundation US"}</title>
       </Head>
 
-      <main className="flex flex-col bg-secondary-100">
+      <main className="bg-secondary-100 flex flex-col">
         <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
           <NavBar />
 
           <Image
             placeholder="blur"
-            className="absolute top-0 left-0 right-0 block h-full w-full object-cover object-bottom"
+            className="absolute left-0 right-0 top-0 block h-full w-full object-cover object-bottom"
             src={firstBackground}
             height={1280}
             width={720}
@@ -80,21 +80,21 @@ export default function Home() {
 
           <div className="relative z-30 flex flex-col-reverse md:mt-16 md:flex-row">
             <section className="relative z-10 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
-              <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
-                <p className="font-medium text-primary-600 text-xl">
+              <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 text-center">
+                <p className="text-primary-600 text-xl font-medium">
                   {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
-                <h1 className="font-normal leading-snug text-neutral-dark-700 text-5xl">
+                <h1 className="text-neutral-dark-700 text-5xl font-normal leading-snug">
                   Discover the fascinating secrets of the Amazon
                 </h1>
 
-                <p className="font-medium text-neutral-dark-500 text-base">
+                <p className="text-neutral-dark-500 text-base font-medium">
                   And help us protect its animals, plants and communities.
                 </p>
               </header>
 
-              <div className="space-y-4 text-center xs:space-x-4">
+              <div className="xs:space-x-4 space-y-4 text-center">
                 <AppLink
                   className="inline-block"
                   variant="primary"
@@ -142,10 +142,19 @@ export default function Home() {
 
           <div className="relative z-20 -mt-[calc(542px_/_2)]">
             <div className="relative mx-10 flex flex-1 flex-col items-center justify-center">
-              {/* TODO: Replace with actual video */}
-              <div className="flex h-[542px] w-full max-w-[814px] flex-col border-1 border-neutral-600 bg-secondary-100 p-2 shadow-app-lg shadow-shadow-gray">
-                <p className="my-auto text-center">Video here</p>
+              <div className="border-1 bg-secondary-100 shadow-app-lg shadow-shadow-gray relative flex aspect-video w-full max-w-[814px] flex-col border-neutral-600 p-2">
+                <iframe
+                  src="https://player.vimeo.com/video/854820194?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  className="absolute inset-0 h-full w-full"
+                  title="Rainforest Foundation US-Kids'corner"
+                ></iframe>
               </div>
+
+              <script
+                src="https://player.vimeo.com/api/player.js"
+                async
+              ></script>
             </div>
 
             <HomeMonkeyIllustration className="absolute inset-y-0 right-0 my-auto block w-[25vw] min-w-[9rem] max-w-[21rem] translate-y-4" />
@@ -154,17 +163,17 @@ export default function Home() {
           <div className="relative z-30">
             <div className="relative flex flex-col-reverse md:flex-row">
               <section className="mx-2 flex flex-1 flex-col items-center justify-center space-y-8 md:mt-16">
-                <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
-                  <h2 className="font-normal leading-snug text-neutral-dark-700 text-5xl">
+                <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 py-4 text-center">
+                  <h2 className="text-neutral-dark-700 text-5xl font-normal leading-snug">
                     Kids from around the world are helping protect the Amazon
                   </h2>
 
-                  <p className="font-medium text-neutral-dark-500 text-base">
+                  <p className="text-neutral-dark-500 text-base font-medium">
                     What are you waiting for?
                   </p>
                 </header>
 
-                <div className="space-y-4 text-center xs:space-x-4">
+                <div className="xs:space-x-4 space-y-4 text-center">
                   <AppLink
                     className="inline-block"
                     variant="primary"
@@ -199,18 +208,18 @@ export default function Home() {
             </ul>
 
             <section className="z-30 mx-2 flex flex-1 flex-col items-center justify-center space-y-4">
-              <header className="max-w-[605px] space-y-4 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
+              <header className="bg-secondary-100 max-w-[605px] space-y-4 rounded-lg bg-opacity-0 text-center">
                 <HomeLastMonkeyIllustration
                   className="relative z-20 mx-auto -mt-4 block h-[372px] w-[314px] object-cover object-center"
                   aria-hidden
                 />
 
-                <h2 className="invisible font-normal leading-snug text-neutral-dark-700 text-4xl">
+                <h2 className="text-neutral-dark-700 invisible text-4xl font-normal leading-snug">
                   Teach the Amazon in class
                 </h2>
               </header>
 
-              <div className="invisible space-y-4 text-center xs:space-x-4 xs:space-y-0">
+              <div className="xs:space-x-4 xs:space-y-0 invisible space-y-4 text-center">
                 <AppButton variant="secondary">
                   Resources for educators
                 </AppButton>
@@ -218,8 +227,8 @@ export default function Home() {
             </section>
           </div>
 
-          <HomeLeftLeavesIllustration className="absolute left-0 bottom-[clamp(-5rem,_-6vw,_-2rem)] block w-[25vw] min-w-[9rem] max-w-[21rem]" />
-          <HomeRightLeavesIllustration className="absolute right-0 bottom-[clamp(-6.5rem,_-8vw,_-2.75rem)] z-20 block w-[25vw] min-w-[9rem] max-w-[21rem]" />
+          <HomeLeftLeavesIllustration className="absolute bottom-[clamp(-5rem,_-6vw,_-2rem)] left-0 block w-[25vw] min-w-[9rem] max-w-[21rem]" />
+          <HomeRightLeavesIllustration className="absolute bottom-[clamp(-6.5rem,_-8vw,_-2.75rem)] right-0 z-20 block w-[25vw] min-w-[9rem] max-w-[21rem]" />
         </div>
 
         <Footer />

@@ -7,6 +7,7 @@ const MAX_POLAROID_LENGTH = 32; // Max chars in line - eye precision 😉.
 
 export enum PolaroidCaptionStyle {
   wrap,
+  wrapPreserveAspectRation,
   truncate,
 }
 
@@ -24,7 +25,10 @@ export function Polaroid(props: PolaroidProps) {
   const noCaption = !props.caption?.length;
 
   const lines = useMemo(() => {
-    if (props.captionStyle === PolaroidCaptionStyle.wrap) {
+    if (
+      props.captionStyle === PolaroidCaptionStyle.wrap ||
+      props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRation
+    ) {
       return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
     }
 
@@ -50,6 +54,18 @@ export function Polaroid(props: PolaroidProps) {
     blurDataURL = props.src.blurDataURL;
   }
 
+  const shouldWrapPreserveAspectRation =
+    props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRation;
+
+  const textStartY = shouldWrapPreserveAspectRation
+    ? 127 - 16 * (lines.length - 1)
+    : 127;
+
+  const svgHeight = shouldWrapPreserveAspectRation
+    ? 132
+    : 132 + (lines.length - 1) * 16;
+  const imageHeight = textStartY - 17;
+
   return (
     <svg
       className={clsx(
@@ -57,7 +73,7 @@ export function Polaroid(props: PolaroidProps) {
         "border-1 shadow-app-lg shadow-shadow-gray box-content flex min-w-[272px] flex-col border-neutral-600 bg-neutral-100 p-2 lg:p-4",
         props.className
       )}
-      viewBox={`0 0 140 ${132 + (lines.length - 1) * 16}`}
+      viewBox={`0 0 140 ${svgHeight}`}
     >
       {blurDataURL && (
         <image
@@ -67,7 +83,7 @@ export function Polaroid(props: PolaroidProps) {
           preserveAspectRatio="xMidYMax slice"
           href={blurDataURL}
           width={140}
-          height={noCaption ? 132 : 110}
+          height={noCaption ? 132 : imageHeight}
         />
       )}
       <image
@@ -77,7 +93,7 @@ export function Polaroid(props: PolaroidProps) {
         preserveAspectRatio="xMidYMax slice"
         href={imageSrc}
         width={140}
-        height={noCaption ? 132 : 110}
+        height={noCaption ? 132 : imageHeight}
       />
 
       {lines.map((caption, i) => (
@@ -86,7 +102,7 @@ export function Polaroid(props: PolaroidProps) {
           className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
-          y={127 + 16 * i}
+          y={textStartY + 16 * i}
         >
           {caption}
         </text>

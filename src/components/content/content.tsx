@@ -278,7 +278,11 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
   }
 
   if (subContent.type === "plain") {
-    return <PlainTextContent {...subContent.data} />;
+    return (
+      <div className="mt-6">
+        <PlainTextContent {...subContent.data} />
+      </div>
+    );
   }
 
   return null;

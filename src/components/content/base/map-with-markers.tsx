@@ -169,7 +169,7 @@ export function MapWithMarkers(props: MapWithMarkersProps) {
       >
         <defs>
           <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
-            <feFlood flood-color="black" result="BLACK_FLOOD" />
+            <feFlood floodColor="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
               stdDeviation="0 50"
@@ -185,7 +185,7 @@ export function MapWithMarkers(props: MapWithMarkersProps) {
           </filter>
 
           <filter id="lg-vignette" x="0%" y="0%" width="100%" height="100%">
-            <feFlood flood-color="black" result="BLACK_FLOOD" />
+            <feFlood floodColor="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
               stdDeviation="50 200"

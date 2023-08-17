@@ -81,7 +81,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "md",
+        wideness: "md",
         textAlign: "left",
         text: "You might be wondering: <b>What is a rainforest?</b>",
       },
@@ -196,7 +196,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "md",
+        wideness: "md",
         textAlign: "center",
         text: "Why do you think there are <b>no rainforests in Antarctica?</b>",
       },
@@ -225,7 +225,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "xl",
+        wideness: "xl",
         text: "Rainforests are among <b>the oldest, most complex and interconnected communities of life</b> on Earth.",
       },
     },
@@ -261,7 +261,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "xl",
+        wideness: "xl",
         text: "But some humans are permanently damaging rainforests, <b>specially the Amazon!</b>",
       },
     },
@@ -303,7 +303,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "md",
+        wideness: "md",
         text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
         subText: "See the pictures from various Indigenous communities!",
       },
@@ -640,7 +640,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "lg",
+        wideness: "lg",
         textAlign: "center",
         text: "There are more types of plants and animals in the Amazon <b>than anywhere else on Earth...</b>",
       },
@@ -656,7 +656,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "lg",
+        wideness: "lg",
         textAlign: "center",
         text: "...and the <b>400 Indigenous communities</b> that live here <b>protect</b> this biodiversity!",
       },
@@ -827,7 +827,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "md",
+        wideness: "md",
         text: "What do you think happens to animals \n <b> when rainforest disappears?</b>",
       },
     },
@@ -859,7 +859,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "lg",
+        wideness: "lg",
         textAlign: "center",
         text: "Just as biodiversity keeps the Amazon healthy, the rainforest keeps our planet healthy!",
       },
@@ -922,7 +922,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "2xl",
+        wideness: "2xl",
         text: "I'm not sure what <q>climate change</q> and <q>deforestation</q> are. <b>Let's take a deeper look!</b>",
       },
     },
@@ -952,7 +952,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "lg",
+        wideness: "lg",
         text: "What is climate change?",
         subText:
           "When we burn fossil fuels (like oil) we send greenhouse gasses (like carbon dioxide) into the air. These gasses heat out planet.",
@@ -987,7 +987,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "xl",
+        wideness: "xl",
         text: "Climate change has all kinds of negative effects, including causing more dangerous storms, and making it harder to grow food!",
       },
     },
@@ -1001,6 +1001,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
         {
           image: desert36,
           caption: "The hotter the planet is harder to live on!",
+          captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRation,
         },
         {
           image: snowstorms36,
@@ -1021,24 +1022,34 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "xl",
+        wideness: "xl",
         text: "<b>The rainforest is a carbon sink</b>. It absorbs greenhouse gasses (GHGs) we send into the air, and Earth heats up less)",
       },
     },
-    subContent: {
-      type: "polaroids",
-      polaroids: [
-        {
-          image: industryPollution35,
+    subContent: [
+      {
+        type: "polaroids",
+        polaroids: [
+          {
+            image: industryPollution35,
+          },
+          {
+            image: rainforest37,
+          },
+          {
+            image: earth37,
+          },
+        ],
+      },
+      {
+        type: "plain",
+        data: {
+          wideness: "lg",
+          text: "<b>Rainforest</b> reduces climate change (<b>Biodiversity</b> and <b>Indigenous</b> people keep the rainforest healthy!)",
+          textSize: "md",
         },
-        {
-          image: rainforest37,
-        },
-        {
-          image: earth37,
-        },
-      ],
-    },
+      },
+    ],
   },
   {
     type: "wavy",
@@ -1049,7 +1060,7 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     content: {
       type: "plain",
       data: {
-        size: "md",
+        wideness: "md",
         text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
       },
     },
