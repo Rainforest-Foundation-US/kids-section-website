@@ -4,6 +4,7 @@ import invariant from "tiny-invariant";
 import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
 import { CommonActivityOptions } from "./common";
+import { ActivityHintStatus } from "@/components/activity-hint";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
@@ -239,10 +240,10 @@ export function FillInTheBlankActivity({
       }
 
       if (option.isValid) {
-        onHint(null, "correct");
+        onHint(null, ActivityHintStatus.CORRECT);
         updatedAnswers[option.blankId] = option.id;
       } else {
-        onHint(null, "incorrect");
+        onHint(null, ActivityHintStatus.INCORRECT);
         // TODO: Do failure animation
         delete updatedAnswers[option.blankId];
       }

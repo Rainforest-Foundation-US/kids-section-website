@@ -1,3 +1,4 @@
+import { ActivityHintStatus } from "@/components/activity-hint";
 import clsx from "@/utils/clsx";
 import Image, { StaticImageData } from "next/image";
 import { useCallback, useMemo, useState } from "react";
@@ -75,9 +76,9 @@ export function PickTheImageActivity({
   const onSelectOption = useCallback(
     (option: Option) => {
       if (option.isCorrect) {
-        onHint(null, "correct");
+        onHint(null, ActivityHintStatus.CORRECT);
       } else {
-        onHint(null, "incorrect");
+        onHint(null, ActivityHintStatus.INCORRECT);
       }
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
