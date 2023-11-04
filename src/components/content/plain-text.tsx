@@ -29,7 +29,9 @@ export function PlainTextContent({
         textAlign === "right" && "text-right"
       )}
     >
-      {props.caption && <p className="text-primary-600">{props.caption}</p>}
+      {props.caption && (
+        <p className="text-primary-700 text-xl font-medium">{props.caption}</p>
+      )}
       <p
         className={clsx(
           "primary-strong whitespace-pre-line leading-snug",

@@ -3,9 +3,10 @@ import { useCallback } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
 
 const hintAtom = atom("");
-const hintStatusAtom = atom<ActivityHintStatus>("info");
+const hintStatusAtom = atom<ActivityHintStatus>(ActivityHintStatus.INFO);
 
 const incorrectHints = ["Woops!\nTry again!"];
+const keepGoingHints = ["You're doing great!\nCheck all valid answers!"];
 const correctHints = ["That’s perfect!\nKeep it up!"];
 
 export const useSetHint = () => {
@@ -14,9 +15,12 @@ export const useSetHint = () => {
 
   return useCallback(
     (hint: string | null, status: ActivityHintStatus) => {
-      if (!hint && status === "correct") {
+      if (!hint && status === ActivityHintStatus.KEEP_GOING) {
+        hint =
+          keepGoingHints[Math.floor(Math.random() * keepGoingHints.length)];
+      } else if (!hint && status === ActivityHintStatus.CORRECT) {
         hint = correctHints[Math.floor(Math.random() * correctHints.length)];
-      } else if (!hint && status === "incorrect") {
+      } else if (!hint && status === ActivityHintStatus.INCORRECT) {
         hint =
           incorrectHints[Math.floor(Math.random() * incorrectHints.length)];
       }
@@ -34,14 +38,13 @@ export const useResetHint = () => {
 
   return useCallback(() => {
     setHint("");
-    setHintStatus("info");
+    setHintStatus(ActivityHintStatus.INFO);
   }, [setHint, setHintStatus]);
 };
 
 export function ControlledActivityHint() {
   const hint = useAtomValue(hintAtom);
   const hintStatus = useAtomValue(hintStatusAtom);
-  const setHint = useSetHint();
 
   return (
     <ActivityHint

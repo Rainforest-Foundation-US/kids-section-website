@@ -142,13 +142,15 @@ export default function Home() {
 
           <div className="relative z-20 -mt-[calc(542px_/_2)]">
             <div className="relative mx-2 flex flex-1 flex-col items-center justify-center md:mx-10">
-              <div className="border-1 bg-secondary-100 shadow-app-lg shadow-shadow-gray relative z-10 flex aspect-video w-full max-w-[814px] flex-col border-neutral-600 p-2">
-                <iframe
-                  src="https://player.vimeo.com/video/854820194?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  className="absolute inset-0 h-full w-full"
-                  title="Rainforest Foundation US-Kids'corner"
-                ></iframe>
+              <div className="border-1 relative z-10 w-full max-w-[814px] border-neutral-600 bg-neutral-100 p-2 lg:p-4">
+                <div className="shadow-app-lg shadow-shadow-gray relative aspect-video w-full flex-col">
+                  <iframe
+                    src="https://player.vimeo.com/video/854820194?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    className="absolute inset-0 h-full w-full"
+                    title="Rainforest Foundation US-Kids'corner"
+                  ></iframe>
+                </div>
               </div>
 
               <script

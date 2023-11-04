@@ -2,7 +2,27 @@ import { RoundSlothIllustration } from "@/components/activities-illustrations";
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 
-export type ActivityHintStatus = "info" | "correct" | "incorrect";
+export enum ActivityHintStatus {
+  /**
+   * Used for multiple-answer questions for every correct answer but the last one.
+   */
+  KEEP_GOING = "keep-going",
+
+  /**
+   * Used for hints.
+   */
+  INFO = "info",
+
+  /**
+   * Used when the user answered correctly.
+   */
+  CORRECT = "correct",
+
+  /**
+   * Used when the user picked the wrong option.
+   */
+  INCORRECT = "incorrect",
+}
 
 interface ActivityHintProps {
   hint: string;
@@ -65,9 +85,11 @@ export function ActivityHint({
               props.hintSize === "md" && "min-w-[280px]",
               props.hintSize === "lg" && "min-w-[380px]",
               props.hintSize === "xl" && "min-w-[600px]",
-              props.status == "correct" && "bg-primary-600",
-              props.status == "info" && "bg-primary-800",
-              props.status == "incorrect" && "bg-error-700",
+              props.status === ActivityHintStatus.CORRECT && "bg-primary-600",
+              props.status === ActivityHintStatus.KEEP_GOING &&
+                "bg-primary-600",
+              props.status === ActivityHintStatus.INFO && "bg-primary-800",
+              props.status === ActivityHintStatus.INCORRECT && "bg-error-700",
               textAlign === "left" && "text-left",
               textAlign === "center" && "text-center [text-wrap:balance]",
               textAlign === "right" && "text-right"

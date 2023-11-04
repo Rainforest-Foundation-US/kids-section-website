@@ -48,6 +48,7 @@ import {
   PolymorphicIllustration,
   PolymorphicIllustrationOptions,
 } from "./polymorphic-illustration";
+import { toArrayMaybe } from "@/utils/toArray";
 
 type PreContent =
   | {
@@ -127,6 +128,10 @@ type SubContent =
   | PlainContentData;
 
 export type Content = SingleContent | PagerData;
+
+export type PagerContent = Content & {
+  subContent?: SubContent | SubContent[];
+};
 
 export type DividerStyle = "dark";
 
@@ -355,7 +360,7 @@ function ContentSection(props: {
             <PolymorphicContent content={props.section.content} />
 
             {props.section.subContent &&
-              subContentArray?.map((subContent, i) => (
+              toArrayMaybe(props.section.subContent)?.map((subContent, i) => (
                 <PolymorphicSubContent key={i} subContent={subContent} />
               ))}
 
@@ -453,7 +458,7 @@ export function ContentSectionList(props: { sections: SectionWithContent[] }) {
 }
 
 export function ContentPager(props: {
-  contentList: Content[];
+  contentList: PagerContent[];
   initialIndex?: number;
   enableGoToNextSection?: boolean;
 }) {
@@ -497,10 +502,20 @@ export function ContentPager(props: {
             className="mb-4"
           >
             <PolymorphicContent content={content} />
+
+            {content.subContent &&
+              toArrayMaybe(content.subContent)?.map((subContent, i) => (
+                <PolymorphicSubContent key={i} subContent={subContent} />
+              ))}
           </motion.div>
         </AnimatePresence>
 
-        <div className="flex flex-row space-x-2">
+        <div
+          className={clsx(
+            "flex flex-row space-x-2",
+            content.subContent && "items-center justify-center"
+          )}
+        >
           {index > 0 && (
             <GoToButton
               className="bg-neutral-100"

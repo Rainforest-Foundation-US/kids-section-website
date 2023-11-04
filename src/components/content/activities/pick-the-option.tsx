@@ -1,3 +1,4 @@
+import { ActivityHintStatus } from "@/components/activity-hint";
 import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
@@ -60,23 +61,34 @@ export function PickTheOptionActivity({
     Record<string, boolean>
   >({});
 
-  const allCorrectOptionsSelected = useMemo(() => {
-    return localOptions
-      .filter((option) => option.isCorrect)
-      .every((option) => selectedOptions[option.id]);
-  }, [localOptions, selectedOptions]);
+  const correctOptions = useMemo(
+    () => localOptions.filter((option) => option.isCorrect),
+    [localOptions]
+  );
+  const missingCorrectOptions = useMemo(
+    () =>
+      correctOptions.length -
+      correctOptions.filter((option) => selectedOptions[option.id]).length,
+    [correctOptions, selectedOptions]
+  );
+
+  const allCorrectOptionsSelected = missingCorrectOptions === 0;
 
   const onSelectOption = useCallback(
     (option: Option) => {
       if (option.isCorrect) {
-        onHint(null, "correct");
+        if (missingCorrectOptions === 1) {
+          onHint(null, ActivityHintStatus.CORRECT);
+        } else {
+          onHint(null, ActivityHintStatus.KEEP_GOING);
+        }
       } else {
-        onHint(option.wrongAlertText ?? null, "incorrect");
+        onHint(option.wrongAlertText ?? null, ActivityHintStatus.INCORRECT);
       }
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [onHint]
+    [missingCorrectOptions, onHint]
   );
 
   return (
