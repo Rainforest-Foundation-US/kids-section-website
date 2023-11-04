@@ -237,17 +237,7 @@ const contentFirstPart: PagerContent[] = [
   },
 ];
 
-const contentSecondPart: PagerContent[] = [
-  // {
-  //   type: "plain",
-  //   data: {
-  //     textAlign: "left",
-  //     text: "Despite the early hour, the market was hectic. There were vendors like us, preparing stalls to sell all kinds of goodies - tucupí, açaí with fariña, zapote. There were also passers-by, and church-goers, and kids playing football in the park. Lots of people, hurrying about.",
-  //   },
-  // },
-];
-
-const pageContent: PagerContent[] = [...contentFirstPart, ...contentSecondPart];
+const pageContent: PagerContent[] = [...contentFirstPart];
 
 export default function NarrativesRoute() {
   return (
