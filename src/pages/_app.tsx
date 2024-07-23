@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Poppins } from "@next/font/google";
+import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { Provider } from "jotai";
 
