@@ -34,7 +34,7 @@ export function Polaroid(props: PolaroidProps) {
 
     const [caption, truncated] = truncateText(
       captionFromProps,
-      MAX_POLAROID_LENGTH
+      MAX_POLAROID_LENGTH,
     );
 
     return [caption + (truncated ? "..." : "")];
@@ -70,8 +70,8 @@ export function Polaroid(props: PolaroidProps) {
     <svg
       className={clsx(
         "transition-all duration-75",
-        "border-1 shadow-app-lg shadow-shadow-gray box-content flex min-w-[272px] flex-col border-neutral-600 bg-neutral-100 p-2 lg:p-4",
-        props.className
+        "box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        props.className,
       )}
       viewBox={`0 0 140 ${svgHeight}`}
     >

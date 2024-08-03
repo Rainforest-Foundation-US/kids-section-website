@@ -26,17 +26,17 @@ export function PlainTextContent({
         wideness === "2xl" && "max-w-[70rem]",
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center",
-        textAlign === "right" && "text-right"
+        textAlign === "right" && "text-right",
       )}
     >
       {props.caption && (
-        <p className="text-primary-700 text-xl font-medium">{props.caption}</p>
+        <p className="text-xl font-medium text-primary-700">{props.caption}</p>
       )}
       <p
         className={clsx(
           "primary-strong whitespace-pre-line leading-snug",
           textSize === "md" && "text-2xl",
-          textSize === "base" && "text-4xl"
+          textSize === "base" && "text-4xl",
         )}
         dangerouslySetInnerHTML={{ __html: props.text }}
       />

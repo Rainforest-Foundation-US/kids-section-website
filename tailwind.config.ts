@@ -29,7 +29,7 @@ function maxLinesPlugin({ matchUtilities, theme }: PluginAPI) {
     {
       values: theme("fontSize"),
       type: ["absolute-size", "relative-size", "length", "percentage"],
-    }
+    },
   );
 
   matchUtilities(
@@ -48,7 +48,7 @@ function maxLinesPlugin({ matchUtilities, theme }: PluginAPI) {
     {
       values: theme("maxLines"),
       type: ["length"],
-    }
+    },
   );
 }
 
@@ -69,7 +69,7 @@ function dashedBordersPlugin({ matchUtilities, theme }: PluginAPI) {
     {
       values: theme("borderRadius"),
       type: ["length"],
-    }
+    },
   );
 }
 

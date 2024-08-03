@@ -140,14 +140,14 @@ export default function QAndARoute() {
         <title>{"Q&A - Kids' Corner - Rainforest Foundation US"}</title>
       </Head>
 
-      <main className="bg-secondary-100 overflow-hidden overflow-y-auto">
+      <main className="overflow-hidden overflow-y-auto bg-secondary-100">
         <RegularSection number={1} fullScreen textColorStyle="dark">
           <NavBar />
 
           <div className="relative z-10 mx-6 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
             <div>
               <nav>
-                <h1 className="text-primary-800 mb-4 text-lg">
+                <h1 className="mb-4 text-lg text-primary-800">
                   What’s your question?
                 </h1>
 
@@ -194,12 +194,12 @@ export default function QAndARoute() {
                   </span>
 
                   <section className="space-y-6">
-                    <h2 className="text-neutral-dark-800 whitespace-pre-line text-3xl font-bold">
+                    <h2 className="whitespace-pre-line text-3xl font-bold text-neutral-dark-800">
                       {activeQuestion.answer}
                     </h2>
 
                     <p
-                      className="text-neutral-dark-700 whitespace-pre-line"
+                      className="whitespace-pre-line text-neutral-dark-700"
                       dangerouslySetInnerHTML={{
                         __html: activeQuestion.description,
                       }}

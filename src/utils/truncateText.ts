@@ -3,7 +3,7 @@
  */
 export function truncateText(
   text: string,
-  maxLineLength: number
+  maxLineLength: number,
 ): [string, boolean] {
   if (text.length <= maxLineLength) {
     return [text, false];

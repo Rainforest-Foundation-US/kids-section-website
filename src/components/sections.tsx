@@ -16,7 +16,7 @@ const HomeSectionContext = createContext<
 type HomeSectionDispatchFn = (
   ref: React.RefObject<HTMLDivElement>,
   action: "add" | "remove",
-  sectionNumber: number
+  sectionNumber: number,
 ) => void;
 const HomeSectionDispatchContext = createContext<
   HomeSectionDispatchFn | undefined
@@ -33,7 +33,7 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
   const observer = useRef<IntersectionObserver | null>();
 
   const [sections, setSections] = useState<React.RefObject<HTMLDivElement>[]>(
-    []
+    [],
   );
 
   const dispatch: HomeSectionDispatchFn = useCallback(
@@ -57,7 +57,7 @@ export function HomeSectionsContainer(props: { children: React.ReactNode }) {
         return newSections;
       });
     },
-    []
+    [],
   );
 
   return (
@@ -74,13 +74,13 @@ export function useHomeSectionNavigation() {
 
   if (context === null) {
     throw new Error(
-      "useHomeSectionNavigation must be used within ActivitySection"
+      "useHomeSectionNavigation must be used within ActivitySection",
     );
   }
 
   const focusOnSection = useEvent((sectionId: number | string) => {
     const section = document.querySelector(
-      `[data-section-number="${sectionId}"], [data-section-name="${sectionId}"]`
+      `[data-section-number="${sectionId}"], [data-section-name="${sectionId}"]`,
     );
 
     if (!section) return;
@@ -91,7 +91,7 @@ export function useHomeSectionNavigation() {
   const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
     (sectionId) => {
       focusOnSection(sectionId);
-    }
+    },
   );
 
   const onGoNext: HomeSectionNavigationValue["onGoNext"] = useEvent(() => {
@@ -132,7 +132,7 @@ export function ActivitySection(props: {
         ref={ref}
         className={clsx(
           "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
-          props.className
+          props.className,
         )}
         style={props.style}
       >
@@ -177,7 +177,7 @@ export function ActivitySectionDivider({
         position === "top" &&
           (variant === "light" || variant === "dark"
             ? "top-0 h-[318px]"
-            : "top-0 h-[720px] -translate-y-[50%]")
+            : "top-0 h-[720px] -translate-y-[50%]"),
       )}
     />
   );

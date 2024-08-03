@@ -37,13 +37,13 @@ export function GoToButton({
   return (
     <button
       className={clsx(
-        "shadow-green-shadow border-primary-100 flex h-20 w-20 items-center justify-center rounded-full border-2 ",
+        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100",
         direction === "left" && "rotate-90",
         direction === "right" && "-rotate-90",
         direction === "top" && "rotate-180",
 
         props.disabled === false && "bg-primary-500",
-        props.className
+        props.className,
       )}
       onClick={props.onClick}
       disabled={props.disabled}
@@ -75,8 +75,8 @@ export function HomeGoToSectionButton(props: { className?: string }) {
   return (
     <button
       className={clsx(
-        "shadow-green-shadow border-primary-100 bg-primary-500 flex h-20 w-20 items-center justify-center rounded-full border-2",
-        props.className
+        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500",
+        props.className,
       )}
       onClick={onGoNext}
     >
@@ -98,10 +98,10 @@ export function NavBarLink(props: {
           "transition-all duration-75 ease-in-out",
           "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-[-0.9rem] after:h-[2px]",
           isActive
-            ? "text-primary-600 after:bg-primary-600 after:scale-x-100"
+            ? "text-primary-600 after:scale-x-100 after:bg-primary-600"
             : "text-neutral-dark-500 after:scale-x-0 after:bg-transparent",
           "duration-md px-4 py-4 text-sm transition-all",
-          props.className
+          props.className,
         )
       }
       href={props.href}
@@ -122,7 +122,7 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
   return (
     <button
       className={clsx(
-        "border-1 shadow-app-lg active:shadow-app-sm rounded-lg px-8 py-4 text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1",
+        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
 
         // Primary
         props.variant === "primary" &&
@@ -132,13 +132,13 @@ export function AppButton({ size = "medium", ...props }: AppButtonProps) {
 
         // Secondary
         props.variant === "secondary" &&
-          "bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray border-neutral-600",
+          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
         props.variant === "secondary" &&
-          "active:bg-secondary-100 hover:bg-neutral-100",
+          "hover:bg-neutral-100 active:bg-secondary-100",
 
         props.variant === "text" &&
           "border-transparent text-neutral-100 hover:text-neutral-800",
-        props.className
+        props.className,
       )}
       onClick={props.onClick}
     >
@@ -162,7 +162,7 @@ export function AppLink({ size = "medium", ...props }: AppLinkProps) {
     <Component
       href={props.href}
       className={clsx(
-        "border-1 shadow-app-lg active:shadow-app-sm rounded-lg px-8 py-4 text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1",
+        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
 
         // Primary
         props.variant === "primary" &&
@@ -172,13 +172,13 @@ export function AppLink({ size = "medium", ...props }: AppLinkProps) {
 
         // Secondary
         props.variant === "secondary" &&
-          "bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray border-neutral-600",
+          "border-neutral-600 bg-secondary-100 text-neutral-dark-600 shadow-shadow-gray",
         props.variant === "secondary" &&
-          "active:bg-secondary-100 hover:bg-neutral-100",
+          "hover:bg-neutral-100 active:bg-secondary-100",
 
         props.variant === "text" &&
           "border-transparent text-neutral-100 hover:text-neutral-800",
-        props.className
+        props.className,
       )}
       onClick={props.onClick}
     >

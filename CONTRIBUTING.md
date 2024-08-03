@@ -14,7 +14,7 @@ If you encounter any bugs in the code, or want to request a new feature or enhan
 
 We welcome your pull requests for bug fixes. To implement something new, please create an issue first so we can discuss it together.
 
-***Creating a Pull Request***
+**_Creating a Pull Request_**
 Please follow [best practices](https://github.com/trein/dev-best-practices/wiki/Git-Commit-Best-Practices) for creating git commits.
 
 When your code is ready to be submitted, [submit a pull request](https://help.github.com/articles/creating-a-pull-request/) to begin the code review process.

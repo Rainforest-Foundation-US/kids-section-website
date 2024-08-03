@@ -21,7 +21,7 @@ export function VignetteSection({
 }: VignetteSectionProps) {
   return (
     <>
-      <div className="bg-neutral-dark-700 h-[120px]" />
+      <div className="h-[120px] bg-neutral-dark-700" />
 
       <ActivitySection
         number={props.number}
@@ -30,9 +30,9 @@ export function VignetteSection({
       >
         <Image
           className={clsx(
-            "bg-neutral-dark-800 absolute inset-0 block h-full w-full object-cover",
+            "absolute inset-0 block h-full w-full bg-neutral-dark-800 object-cover",
             imageAlignment === "start" && "object-left-top",
-            imageAlignment === "end" && "object-right-bottom"
+            imageAlignment === "end" && "object-right-bottom",
           )}
           src={props.image}
           height={1280}
@@ -62,12 +62,12 @@ export function VignetteSection({
             {props.title}
           </p>
 
-          <p className="text-secondary-100 my-2 text-base">{props.subtitle}</p>
+          <p className="my-2 text-base text-secondary-100">{props.subtitle}</p>
 
           {props.body && (
             <>
               <div className="my-2 h-1 w-8 bg-neutral-100" />
-              <p className="text-secondary-100 my-2 max-w-xl text-base">
+              <p className="my-2 max-w-xl text-base text-secondary-100">
                 {props.body}
               </p>
             </>

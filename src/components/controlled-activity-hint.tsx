@@ -28,7 +28,7 @@ export const useSetHint = () => {
       setHint(hint ?? "");
       setHintStatus(status);
     },
-    [setHint, setHintStatus]
+    [setHint, setHintStatus],
   );
 };
 
