@@ -8,7 +8,7 @@ type Props = {
 
 export function QANav({ activeQuestionI, itemClick }: Props) {
   return (
-    <nav className="lg:h-[calc(100vh-124px)] h-full lg:overflow-auto overflow-hidden">
+    <nav className={`lg:h-[calc(100vh-theme(height.header))] h-full lg:overflow-auto overflow-hidden`}>
       <h1 className="mb-4 text-lg text-primary-800">What’s your question?</h1>
 
       <ul className="space-y-4 lg:max-w-xs">
