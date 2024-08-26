@@ -193,6 +193,9 @@ export default {
         "app-md": "2px 2px 0px var(--tw-shadow-color)",
         "app-lg": "6px 6px 0px var(--tw-shadow-color)",
       },
+      height: {
+        "header": "124px",
+      },
     },
   },
   plugins: [
