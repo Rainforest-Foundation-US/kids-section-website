@@ -7,7 +7,7 @@ export function wrapTextToLength(
   text: string,
   maxLength: number,
   granularity: "word" | "sentence" = "word",
-  lang = "en"
+  lang = "en",
 ): string[] {
   if (text.length <= maxLength) {
     return [text];

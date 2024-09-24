@@ -44,7 +44,7 @@ interface ParsedBlank {
 
 function parseQuestion(
   question: StringifiedQuestion,
-  numberToOptions: NumberToOptions
+  numberToOptions: NumberToOptions,
 ) {
   const elements: (ParsedSentence | ParsedBlank)[] = [];
   const allOptions: ParsedBlankOption[] = [];
@@ -64,7 +64,7 @@ function parseQuestion(
           sentence +
           '" in question: "' +
           question +
-          '".'
+          '".',
       );
     }
 
@@ -84,7 +84,7 @@ function parseQuestion(
           question +
           '" is out of range for the number of options provided (1 - ' +
           numberToOptions[i].options.length +
-          ")."
+          ").",
       );
     }
 
@@ -95,11 +95,11 @@ function parseQuestion(
         text: option,
         isValid: j === numberToOptions[i].correctOptionPosition - 1,
         blankId: blankId,
-      })
+      }),
     );
 
     const validOptionId = options.find(
-      (_, j) => j === numberToOptions[i].correctOptionPosition - 1
+      (_, j) => j === numberToOptions[i].correctOptionPosition - 1,
     )?.id;
 
     invariant(validOptionId, "validOptionId should be defined");
@@ -117,11 +117,11 @@ function parseQuestion(
 
 function useSyncParseQuestions(
   question: StringifiedQuestion,
-  numberToOptions: NumberToOptions
+  numberToOptions: NumberToOptions,
 ) {
   const parsedQuestion = useMemo(
     () => parseQuestion(question, numberToOptions),
-    [numberToOptions, question]
+    [numberToOptions, question],
   );
 
   // blank.id -> option.id
@@ -136,12 +136,12 @@ interface FillInTheBlankActivityOptionProps {
   onClick: () => void;
 }
 export function FillInTheBlankActivityOption(
-  props: FillInTheBlankActivityOptionProps
+  props: FillInTheBlankActivityOptionProps,
 ) {
   const [draggableProps, isDragging] = useDraggable(
     "blank-" + props.option.blankId,
     props.option,
-    props.onClick
+    props.onClick,
   );
 
   return (
@@ -151,7 +151,7 @@ export function FillInTheBlankActivityOption(
         props.isOddI ? "rotate-6" : "-rotate-6",
         isDragging ? "cursor-grabbing" : "cursor-grab",
         isDragging ? "opacity-50" : "opacity-100",
-        "border-1 bg-secondary-100 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg border-neutral-600 px-4 py-4 text-base font-medium transition-all duration-75 hover:bg-neutral-100 lg:px-8"
+        "inline-block rounded-lg border-1 border-neutral-600 bg-secondary-100 px-4 py-4 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 hover:bg-neutral-100 lg:px-8",
       )}
       tabIndex={0}
       onClick={props.onClick}
@@ -183,12 +183,12 @@ export function FillInTheBlankActivityDropZone({
           await animate(
             scope.current,
             { transform: "translateX(-8px)" },
-            options
+            options,
           );
           await animate(
             scope.current,
             { transform: "translateX(8px)" },
-            options
+            options,
           );
           await animate(scope.current, { transform: "translateY(0)" }, options);
           return;
@@ -196,8 +196,8 @@ export function FillInTheBlankActivityDropZone({
 
         onDrop(option);
       },
-      [animate, blankId, onDrop, scope]
-    )
+      [animate, blankId, onDrop, scope],
+    ),
   );
 
   return (
@@ -207,7 +207,7 @@ export function FillInTheBlankActivityDropZone({
         className={clsx(
           props.selectedOption && "bg-secondary-100 shadow-shadow-gray",
           !props.selectedOption && "dashed-border-lg",
-          "shadow-app-lg active:shadow-app-sm mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium transition-all duration-75 active:translate-x-1 active:translate-y-1"
+          "mx-2 inline-block rounded-lg px-8 py-4 align-middle text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
         )}
         onClick={props.onClick}
       >
@@ -250,7 +250,7 @@ export function FillInTheBlankActivity({
 
       setAnswers(updatedAnswers);
     },
-    [answers, onHint, setAnswers]
+    [answers, onHint, setAnswers],
   );
 
   const getSelectedOption = useCallback(
@@ -266,7 +266,7 @@ export function FillInTheBlankActivity({
 
       return null;
     },
-    [answers, allOptions]
+    [answers, allOptions],
   );
 
   const onDeselectOption = useCallback(
@@ -278,22 +278,22 @@ export function FillInTheBlankActivity({
 
       setAnswers(nextAnswers);
     },
-    [answers, setAnswers]
+    [answers, setAnswers],
   );
 
   return (
     <div className="text-center">
-      <p className="text-primary-600 text-xl font-medium leading-snug">
+      <p className="text-xl font-medium leading-snug text-primary-600">
         Click on the box with the right answer
       </p>
 
-      <p className="text-neutral-dark-700 mb-2 text-4xl leading-snug">
+      <p className="mb-2 text-4xl leading-snug text-neutral-dark-700">
         {props.preText}
       </p>
 
       <div className="flex flex-col items-center space-y-9">
         <div>
-          <p className="text-neutral-dark-700 max-w-3xl select-none text-center text-3xl font-bold leading-loose md:text-4xl">
+          <p className="max-w-3xl select-none text-center text-3xl font-bold leading-loose text-neutral-dark-700 md:text-4xl">
             {questions.map((blank) => {
               if ("text" in blank) {
                 return <span key={blank.id}>{blank.text}</span>;
@@ -312,7 +312,7 @@ export function FillInTheBlankActivity({
           </p>
 
           {props.subText && (
-            <p className="text-neutral-dark-700 mt-2 text-4xl leading-snug">
+            <p className="mt-2 text-4xl leading-snug text-neutral-dark-700">
               {props.subText}
             </p>
           )}

@@ -22,11 +22,11 @@ export function NavBar() {
         setExpanded(false);
       }
     },
-    [toggleExpanded]
+    [toggleExpanded],
   );
 
   return (
-    <header className="relative z-50 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pt-6 pb-2">
+    <header className="relative z-50 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pb-2 pt-6">
       <Link href="/">
         <Image
           src="/large-logo.png"
@@ -70,7 +70,7 @@ export function NavBar() {
             expanded
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none translate-y-[-100vh] opacity-0 transition-none",
-            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:left-auto xs:bottom-auto xs:right-0 xs:p-12"
+            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:bottom-auto xs:left-auto xs:right-0 xs:p-12",
           )}
           aria-hidden={!expanded}
         >

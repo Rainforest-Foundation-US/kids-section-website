@@ -53,7 +53,7 @@ export function ActivityHint({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       className={clsx(
-        "shadow-app-lg shadow-shadow-gray whitespace-pre rounded-3xl border-4 border-neutral-100 p-4 italic text-neutral-100",
+        "whitespace-pre rounded-3xl border-4 border-neutral-100 p-4 italic text-neutral-100 shadow-app-lg shadow-shadow-gray",
         hintPositioning === "absolute" && "absolute m-6",
         hintPositioning === "absolute" &&
           props.hintPosition === "center" &&
@@ -75,7 +75,7 @@ export function ActivityHint({
         props.status === ActivityHintStatus.INCORRECT && "bg-error-700",
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center [text-wrap:balance]",
-        textAlign === "right" && "text-right"
+        textAlign === "right" && "text-right",
       )}
     >
       {props.hint}
@@ -94,7 +94,7 @@ export function ActivityHint({
           "flex-row-reverse space-x-4",
         hintPositioning === "relative" &&
           props.hintPosition === "end" &&
-          "flex-row space-x-4"
+          "flex-row space-x-4",
       )}
     >
       {!props.noSloth && (

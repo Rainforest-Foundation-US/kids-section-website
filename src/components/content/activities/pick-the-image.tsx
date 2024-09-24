@@ -30,12 +30,12 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
     <button
       disabled={props.disabled}
       className={clsx(
-        "border-1 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg p-3 text-base font-medium transition-all duration-75",
+        "inline-block rounded-lg border-1 p-3 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75",
         props.isSelected
           ? props.option.isCorrect
-            ? "border-primary-500 bg-primary-100 hover:border-primary-600 hover:outline-primary-600 outline-primary-500 outline outline-2"
+            ? "border-primary-500 bg-primary-100 outline outline-2 outline-primary-500 hover:border-primary-600 hover:outline-primary-600"
             : "border-error-500 bg-error-100 hover:border-error-600"
-          : "border-neutral-600 bg-neutral-100 bg-opacity-80 hover:border-neutral-500"
+          : "border-neutral-600 bg-neutral-100 bg-opacity-80 hover:border-neutral-500",
       )}
       onClick={props.onClick}
     >
@@ -83,7 +83,7 @@ export function PickTheImageActivity({
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [onHint]
+    [onHint],
   );
 
   return (
@@ -95,7 +95,7 @@ export function PickTheImageActivity({
       <ul
         className={clsx(
           "flex justify-center gap-x-4 gap-y-8",
-          props.wrap ? "flex-row flex-wrap" : "flex-col items-center"
+          props.wrap ? "flex-row flex-wrap" : "flex-col items-center",
         )}
       >
         {localOptions.map((option, i) => {
@@ -105,7 +105,7 @@ export function PickTheImageActivity({
               key={option.id}
               className={clsx(
                 props.rotateOptions &&
-                  (isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]")
+                  (isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]"),
               )}
             >
               <PickTheImageOption

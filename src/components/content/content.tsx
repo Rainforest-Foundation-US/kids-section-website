@@ -223,7 +223,7 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
       <div className="relative">
         <Image
           placeholder="blur"
-          className="bg-secondary-100 shadow-app-lg shadow-shadow-gray mt-12 flex w-full max-w-[814px] -rotate-[4deg] flex-col object-contain p-2 lg:p-4"
+          className="mt-12 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
           src={subContent.image}
           aria-hidden
           alt=""
@@ -249,7 +249,7 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
             key={i}
             className={clsx(
               i % 2 === 0 ? "-rotate-[6.5deg]" : "rotate-[6.5deg]",
-              "transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105"
+              "transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105",
             )}
           >
             <Polaroid
@@ -323,7 +323,7 @@ function ContentSection(props: {
             variant={
               props.previousSectionType === "wavy"
                 ? "light"
-                : props.previousDividerStyle ?? "default"
+                : (props.previousDividerStyle ?? "default")
             }
           />
         )}
@@ -350,7 +350,7 @@ function ContentSection(props: {
                 : "",
               sectionAlign === "center" && "items-center",
               sectionAlign === "right" && "items-end",
-              sectionAlign === "left" && "items-start"
+              sectionAlign === "left" && "items-start",
             )}
           >
             {props.section.preContent && (
@@ -369,7 +369,7 @@ function ContentSection(props: {
                 <HomeGoToSectionButton
                   className={clsx(
                     "relative z-10 mt-4",
-                    lastSubContent?.type === "postcard" && "-translate-y-40"
+                    lastSubContent?.type === "postcard" && "-translate-y-40",
                   )}
                 />
               )}
@@ -382,7 +382,7 @@ function ContentSection(props: {
       return (
         <>
           {props.previousDividerStyle === "dark" && (
-            <div className="bg-neutral-dark-700 z-10 h-[120px]" />
+            <div className="z-10 h-[120px] bg-neutral-dark-700" />
           )}
 
           <RegularSection
@@ -490,7 +490,7 @@ export function ContentPager(props: {
       <div
         className={clsx(
           "flex flex-col",
-          content.type !== "plain" && "items-center"
+          content.type !== "plain" && "items-center",
         )}
       >
         <AnimatePresence mode="popLayout">
@@ -513,7 +513,7 @@ export function ContentPager(props: {
         <div
           className={clsx(
             "flex flex-row space-x-2",
-            content.subContent && "items-center justify-center"
+            content.subContent && "items-center justify-center",
           )}
         >
           {index > 0 && (

@@ -29,12 +29,12 @@ export function PickTheOptionOption(props: PickTheOptionOptionProps) {
     <button
       disabled={props.disabled}
       className={clsx(
-        "border-1 text-neutral-dark-600 shadow-app-lg shadow-shadow-gray inline-block rounded-lg px-4 py-4 text-base font-medium transition-all duration-75 lg:px-8",
+        "inline-block rounded-lg border-1 px-4 py-4 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75 lg:px-8",
         props.isSelected
           ? props.option.isCorrect
             ? "border-primary-500 bg-primary-100 hover:border-primary-600"
             : "border-error-500 bg-error-100 hover:border-error-600"
-          : "border-neutral-100 bg-neutral-100 hover:border-neutral-500"
+          : "border-neutral-100 bg-neutral-100 hover:border-neutral-500",
       )}
       onClick={props.onClick}
     >
@@ -63,13 +63,13 @@ export function PickTheOptionActivity({
 
   const correctOptions = useMemo(
     () => localOptions.filter((option) => option.isCorrect),
-    [localOptions]
+    [localOptions],
   );
   const missingCorrectOptions = useMemo(
     () =>
       correctOptions.length -
       correctOptions.filter((option) => selectedOptions[option.id]).length,
-    [correctOptions, selectedOptions]
+    [correctOptions, selectedOptions],
   );
 
   const allCorrectOptionsSelected = missingCorrectOptions === 0;
@@ -88,7 +88,7 @@ export function PickTheOptionActivity({
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [missingCorrectOptions, onHint]
+    [missingCorrectOptions, onHint],
   );
 
   return (
@@ -103,7 +103,7 @@ export function PickTheOptionActivity({
       <ul
         className={clsx(
           "flex justify-center gap-4",
-          props.wrap ? "flex-row flex-wrap" : "flex-col items-center"
+          props.wrap ? "flex-row flex-wrap" : "flex-col items-center",
         )}
       >
         {localOptions.map((option, i) => {
@@ -113,7 +113,7 @@ export function PickTheOptionActivity({
               key={option.id}
               className={clsx(
                 props.rotateOptions &&
-                  (isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]")
+                  (isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]"),
               )}
             >
               <PickTheOptionOption
