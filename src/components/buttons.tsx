@@ -114,16 +114,26 @@ export function NavBarLink(props: {
 interface AppButtonProps {
   className?: string;
   variant: "primary" | "secondary" | "text";
-  size?: "medium" | "large";
+  size?: "small" | "medium" | "large";
   children?: React.ReactNode;
   onClick?: () => void;
 }
-export function AppButton({ size = "medium", ...props }: AppButtonProps) {
+export function AppButton({ size = "large", ...props }: AppButtonProps) {
+  let padding;
+
+  if (size === "small") {
+    padding = "px-4 py-2";
+  } else if (size === "medium") {
+    padding = "px-6 py-3";
+  } else {
+    padding = "px-8 py-4";
+  }
+
   return (
     <button
       className={clsx(
-        "rounded-lg border-1 px-8 py-4 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
-
+        "rounded-lg border-1 text-base font-medium shadow-app-lg transition-all duration-75 active:translate-x-1 active:translate-y-1 active:shadow-app-sm",
+        padding,
         // Primary
         props.variant === "primary" &&
           "border-primary-600 bg-primary-500 text-primary-800 shadow-shadow-green",

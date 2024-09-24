@@ -57,7 +57,6 @@ function dashedBordersPlugin({ matchUtilities, theme }: PluginAPI) {
     {
       "dashed-border": (value) => {
         const offset = 12;
-        const intValue = parseInt(value, 10);
 
         let className = `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='${value}' ry='${value}' stroke='black' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='${offset}' stroke-linecap='square'/%3e%3c/svg%3e")`;
 
@@ -192,6 +191,9 @@ export default {
         "app-sm": "2px 2px 0px var(--tw-shadow-color)",
         "app-md": "2px 2px 0px var(--tw-shadow-color)",
         "app-lg": "6px 6px 0px var(--tw-shadow-color)",
+      },
+      height: {
+        header: "124px",
       },
     },
   },

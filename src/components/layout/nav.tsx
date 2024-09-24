@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AppLink, NavBarLink } from "../buttons";
+import { AppButton, AppLink, NavBarLink } from "../buttons";
 import { IconMenu } from "../icons/icons";
 import { useCallback, useState } from "react";
 import clsx from "@/utils/clsx";
@@ -42,7 +42,7 @@ export function NavBar() {
         aria-label="Main menu"
         className="flex flex-row items-center space-x-2"
       >
-        <ul className="hidden flex-row space-x-1 md:flex">
+        <ul className="hidden flex-row items-center space-x-1 lg:flex">
           <li>
             <NavBarLink href="/">Home</NavBarLink>
           </li>
@@ -55,12 +55,21 @@ export function NavBar() {
           <li>
             <NavBarLink href="/q-and-a">Q&A</NavBarLink>
           </li>
+
+          <li>
+            <NavBarLink href="https://rainforestfoundation.org/">
+              <AppButton variant="primary" size="small">
+                Donate now
+              </AppButton>
+            </NavBarLink>
+          </li>
         </ul>
 
         <button
           aria-expanded={expanded}
           onKeyDown={onKeyDown}
           onClick={toggleExpanded}
+          className="lg:hidden"
         >
           <IconMenu />
         </button>
@@ -70,54 +79,32 @@ export function NavBar() {
             expanded
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none translate-y-[-100vh] opacity-0 transition-none",
-            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:bottom-auto xs:left-auto xs:right-0 xs:p-12",
+            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:bottom-auto xs:left-auto xs:right-0 xs:p-12 lg:hidden",
           )}
           aria-hidden={!expanded}
         >
-          <li className="flex justify-center">
-            <AppLink href="https://rainforestfoundation.org/" variant="text">
-              Main website
-            </AppLink>
-          </li>
           <li>
             <AppLink href="/" variant="text" className="block w-full">
-              {"Kids' Corner"}
+              Home
             </AppLink>
           </li>
           <li>
             <AppLink
-              href="https://rainforestfoundation.org/our-work/"
+              href="/about-the-amazon"
               variant="text"
               className="block w-full"
             >
-              Our work
+              About the Amazon
             </AppLink>
           </li>
           <li>
-            <AppLink
-              href="https://rainforestfoundation.org/about/"
-              variant="text"
-              className="block w-full"
-            >
-              About us
+            <AppLink href="/narratives" variant="text" className="block w-full">
+              Narratives
             </AppLink>
           </li>
           <li>
-            <AppLink
-              href="https://rainforestfoundation.org/news/"
-              variant="text"
-              className="block w-full"
-            >
-              News
-            </AppLink>
-          </li>
-          <li>
-            <AppLink
-              href="https://rainforestfoundation.org/engage/"
-              variant="text"
-              className="block w-full"
-            >
-              Take action
+            <AppLink href="/q-and-a" variant="text" className="block w-full">
+              Q&A
             </AppLink>
           </li>
           <li>
