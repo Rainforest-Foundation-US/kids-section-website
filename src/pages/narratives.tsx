@@ -246,7 +246,7 @@ export default function NarrativesRoute() {
         <title>{"Narratives - Kids' Corner - Rainforest Foundation US"}</title>
       </Head>
 
-      <main className="bg-secondary-100 overflow-hidden overflow-y-auto">
+      <main className="overflow-hidden overflow-y-auto bg-secondary-100">
         <RegularSection number={1} fullScreen textColorStyle="dark">
           <NavBar />
 

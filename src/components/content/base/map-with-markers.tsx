@@ -45,7 +45,7 @@ function MapAnnotation(props: Marker) {
   const textRef = useRef<SVGTextElement>(null);
   const markerLines = useMemo(
     () => wrapTextToLength(props.text, 17),
-    [props.text]
+    [props.text],
   );
 
   const [bbox, setBbox] = useState<{
@@ -211,9 +211,9 @@ export function MapWithMarkers(props: MapWithMarkersProps) {
                     geography={geo}
                     className={clsx(
                       highlightedCountries.includes(getCountryCode(geo))
-                        ? "fill-primary-300 focus:stroke-primary-600 stroke-neutral-100 stroke-[0.5px] opacity-100 transition-all duration-150 hover:z-10 focus:stroke-[1px]"
+                        ? "fill-primary-300 stroke-neutral-100 stroke-[0.5px] opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-[1px]"
                         : "fill-neutral-100 opacity-50",
-                      "focus-visible::stroke-primary-600 outline-none"
+                      "focus-visible::stroke-primary-600 outline-none",
                     )}
                     tabIndex={
                       highlightedCountries.includes(getCountryCode(geo))

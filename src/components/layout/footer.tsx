@@ -43,72 +43,72 @@ export function Footer() {
               href="https://www.facebook.com/RainforestUS"
               className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
             >
-              <FacebookIcon className="mt-1 ml-2 inline" />
+              <FacebookIcon className="ml-2 mt-1 inline" />
             </a>
             <a
               href="https://twitter.com/RainforestUS"
               className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
             >
-              <TwitterIcon className="mt-1 ml-2 inline" />
+              <TwitterIcon className="ml-2 mt-1 inline" />
             </a>
             <a
               href="https://www.youtube.com/channel/UC9rUHT4FkKXfNSeVmpr2zYw"
               className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
             >
-              <YoutubeIcon className="mt-1 ml-2 inline" />
+              <YoutubeIcon className="ml-2 mt-1 inline" />
             </a>
             <a
               href="https://www.instagram.com/rainforestUS/"
               className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
             >
-              <InstagramIcon className="mt-1 ml-1 inline" />
+              <InstagramIcon className="ml-1 mt-1 inline" />
             </a>
             <a
               href="https://www.linkedin.com/company/rainforestus"
               className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
             >
-              <LinkedinIcon className="mt-1 ml-2 inline" />
+              <LinkedinIcon className="ml-2 mt-1 inline" />
             </a>
           </div>
         </div>
 
-        <div className="-mx-4 mt-8 mb-6 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
+        <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
           <a
             href="https://rainforestfoundation.org/"
-            className="cursor-pointer text-neutral-100 text-base"
+            className="cursor-pointer text-base text-neutral-100"
           >
             Foundation Main website
           </a>
-          <Link href="/" className="cursor-pointer text-neutral-100	text-base">
+          <Link href="/" className="cursor-pointer text-base text-neutral-100">
             Kids corner
           </Link>
           <Link
             href="/about-the-amazon"
-            className="cursor-pointer text-neutral-100 text-base"
+            className="cursor-pointer text-base text-neutral-100"
           >
             About the amazon
           </Link>
           <Link
             href="/narratives"
-            className="cursor-pointer text-neutral-100 text-base"
+            className="cursor-pointer text-base text-neutral-100"
           >
             Narratives
           </Link>
           <Link
             href="/q-and-a"
-            className="cursor-pointer text-neutral-100 text-base"
+            className="cursor-pointer text-base text-neutral-100"
           >
             Q&A
           </Link>
           {/* TODO: Add link to resources for educators page */}
-          <Link href="/" className="cursor-pointer text-neutral-100 text-base">
+          <Link href="/" className="cursor-pointer text-base text-neutral-100">
             Resources for educatorss
           </Link>
         </div>
-        <div className="font-semibold text-neutral-100 text-xl">
+        <div className="text-xl font-semibold text-neutral-100">
           Land acknowledgment
         </div>
-        <div className="pt-2 text-neutral-dark-100 text-base">
+        <div className="pt-2 text-base text-neutral-dark-100">
           We at Rainforest Foundation US recognize and honor the original
           peoples of the land on which our headquarters is based in Brooklyn,
           New York: The Ramapough Munsee Lenape, who have cared for these lands
@@ -116,7 +116,7 @@ export function Footer() {
           people’s permission to be here as their guests and ask their blessing
           for the good continuation of our work.
         </div>
-        <div className="pt-8 pb-10 text-neutral-dark-100 text-base">
+        <div className="pb-10 pt-8 text-base text-neutral-dark-100">
           RAINFOREST FOUNDATION US IS A 501 (C) (3) NOT FOR PROFIT
           ORGANIZATIONTAX ID: 95-1622945 | PRIVACY POLICY
         </div>

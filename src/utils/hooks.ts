@@ -59,7 +59,7 @@ interface UseMeasureProps {
   onResize?: (a: Measure) => void;
 }
 export function useMeasure<E extends HTMLElement = HTMLElement>(
-  props?: UseMeasureProps
+  props?: UseMeasureProps,
 ) {
   const ref = useRef<E>(null);
   const [bounds, setBounds] = useState<Measure>(defaultValue);
@@ -71,7 +71,7 @@ export function useMeasure<E extends HTMLElement = HTMLElement>(
       if (onResize) onResize(newBounds);
       else setBounds(newBounds);
     },
-    [setBounds, onResize]
+    [setBounds, onResize],
   );
 
   const registerObserver = useCallback(
@@ -102,7 +102,7 @@ export function useMeasure<E extends HTMLElement = HTMLElement>(
       observer.observe(element);
       return () => observer.disconnect();
     },
-    [set]
+    [set],
   );
 
   useEffect(() => {
@@ -120,13 +120,13 @@ export function useMeasure<E extends HTMLElement = HTMLElement>(
 
 export function useOnBreakpointMatches(
   breakpoint: keyof typeof screenBreakpoints,
-  callback: (event: MediaQueryListEvent | MediaQueryList) => void
+  callback: (event: MediaQueryListEvent | MediaQueryList) => void,
 ) {
   const eventCallback = useEvent(callback);
 
   useEffect(() => {
     const query = window.matchMedia(
-      `(min-width: ${screenBreakpoints[breakpoint]})`
+      `(min-width: ${screenBreakpoints[breakpoint]})`,
     );
 
     query.addEventListener("change", eventCallback);
@@ -137,7 +137,7 @@ export function useOnBreakpointMatches(
 }
 
 export function useMatchesBreakpoint(
-  breakpoint: keyof typeof screenBreakpoints
+  breakpoint: keyof typeof screenBreakpoints,
 ) {
   const [matches, setMatches] = useState(false);
 

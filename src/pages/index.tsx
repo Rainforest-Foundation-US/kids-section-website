@@ -64,7 +64,7 @@ export default function Home() {
         <title>{"Kids' Corner - Rainforest Foundation US"}</title>
       </Head>
 
-      <main className="bg-secondary-100 flex flex-col">
+      <main className="flex flex-col bg-secondary-100">
         <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
           <NavBar />
 
@@ -80,21 +80,21 @@ export default function Home() {
 
           <div className="relative z-30 mt-8 flex flex-col-reverse md:mt-16 md:flex-row">
             <section className="relative z-10 flex flex-1 flex-col items-center justify-center space-y-8 px-2">
-              <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 text-center">
-                <p className="text-primary-600 text-lg font-medium md:text-xl">
+              <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
+                <p className="text-lg font-medium text-primary-600 md:text-xl">
                   {"Welcome to the RFUS Kids' Corner!"}
                 </p>
 
-                <h1 className="text-neutral-dark-700 text-3xl font-normal leading-snug md:text-5xl">
+                <h1 className="text-3xl font-normal leading-snug text-neutral-dark-700 md:text-5xl">
                   Discover the fascinating secrets of the Amazon
                 </h1>
 
-                <p className="text-neutral-dark-500 text-base font-medium">
+                <p className="text-base font-medium text-neutral-dark-500">
                   And help us protect its animals, plants and communities.
                 </p>
               </header>
 
-              <div className="xs:space-x-4 space-y-4 text-center">
+              <div className="space-y-4 text-center xs:space-x-4">
                 <AppLink
                   className="inline-block"
                   variant="primary"
@@ -116,7 +116,7 @@ export default function Home() {
             <div
               className={clsx(
                 "absolute inset-x-0 -mt-[360px] block h-[640px] w-full object-cover object-center",
-                styles.firstDivider
+                styles.firstDivider,
               )}
             />
 
@@ -135,15 +135,15 @@ export default function Home() {
             <div
               className={clsx(
                 "absolute inset-x-0 bottom-0 -mb-[160px] block h-[640px] w-full object-cover object-center",
-                styles.secondDivider
+                styles.secondDivider,
               )}
             />
           </div>
 
           <div className="relative z-20 -mt-[calc(542px_/_2)]">
             <div className="relative mx-2 flex flex-1 flex-col items-center justify-center md:mx-10">
-              <div className="border-1 relative z-10 w-full max-w-[814px] border-neutral-600 bg-neutral-100 p-2 lg:p-4">
-                <div className="shadow-app-lg shadow-shadow-gray relative aspect-video w-full flex-col">
+              <div className="relative z-10 w-full max-w-[814px] border-1 border-neutral-600 bg-neutral-100 p-2 lg:p-4">
+                <div className="relative aspect-video w-full flex-col shadow-app-lg shadow-shadow-gray">
                   <iframe
                     src="https://player.vimeo.com/video/854820194?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                     allow="autoplay; fullscreen; picture-in-picture"
@@ -165,17 +165,17 @@ export default function Home() {
           <div className="relative z-30">
             <div className="relative flex flex-col-reverse md:flex-row">
               <section className="mx-2 flex flex-1 flex-col items-center justify-center space-y-8 md:mt-16">
-                <header className="bg-secondary-100 max-w-[605px] space-y-2 rounded-lg bg-opacity-0 py-4 text-center">
-                  <h2 className="text-neutral-dark-700 text-3xl font-normal leading-snug md:text-5xl">
+                <header className="max-w-[605px] space-y-2 rounded-lg bg-secondary-100 bg-opacity-0 py-4 text-center">
+                  <h2 className="text-3xl font-normal leading-snug text-neutral-dark-700 md:text-5xl">
                     Kids from around the world are helping protect the Amazon
                   </h2>
 
-                  <p className="text-neutral-dark-500 text-base font-medium">
+                  <p className="text-base font-medium text-neutral-dark-500">
                     What are you waiting for?
                   </p>
                 </header>
 
-                <div className="xs:space-x-4 space-y-4 text-center">
+                <div className="space-y-4 text-center xs:space-x-4">
                   <AppLink
                     className="inline-block"
                     variant="primary"
@@ -200,7 +200,7 @@ export default function Home() {
                     <Polaroid
                       className={clsx(
                         isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
-                        "relative w-[18rem] hover:z-10 hover:rotate-0 hover:scale-105"
+                        "relative w-[18rem] hover:z-10 hover:rotate-0 hover:scale-105",
                       )}
                       src={polaroid.src}
                       caption={polaroid.caption}
@@ -215,18 +215,18 @@ export default function Home() {
             </ul>
 
             <section className="z-30 mx-2 flex flex-1 flex-col items-center justify-center space-y-4">
-              <header className="bg-secondary-100 max-w-[605px] space-y-4 rounded-lg bg-opacity-0 text-center">
+              <header className="max-w-[605px] space-y-4 rounded-lg bg-secondary-100 bg-opacity-0 text-center">
                 <HomeLastMonkeyIllustration
                   className="relative z-20 mx-auto -mt-4 block h-[372px] w-[314px] object-cover object-center"
                   aria-hidden
                 />
 
-                <h2 className="text-neutral-dark-700 invisible text-4xl font-normal leading-snug">
+                <h2 className="invisible text-4xl font-normal leading-snug text-neutral-dark-700">
                   Teach the Amazon in class
                 </h2>
               </header>
 
-              <div className="xs:space-x-4 xs:space-y-0 invisible space-y-4 text-center">
+              <div className="invisible space-y-4 text-center xs:space-x-4 xs:space-y-0">
                 <AppButton variant="secondary">
                   Resources for educators
                 </AppButton>

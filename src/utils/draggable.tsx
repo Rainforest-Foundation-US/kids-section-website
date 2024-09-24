@@ -34,7 +34,7 @@ function deserialize<T>(value: string) {
 export function useDraggable<T>(
   targetAreaId: string,
   value: T,
-  onKeyboardDrop: (value: T) => void
+  onKeyboardDrop: (value: T) => void,
 ) {
   const draggableRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -47,13 +47,13 @@ export function useDraggable<T>(
           serialize({
             targetAreaId,
             value,
-          })
+          }),
       );
       event.dataTransfer.effectAllowed = "copy";
 
       setIsDragging(true);
     },
-    [targetAreaId, value]
+    [targetAreaId, value],
   );
 
   const handleDragEnd = useCallback(() => {
@@ -70,7 +70,7 @@ export function useDraggable<T>(
         onKeyboardDrop(value);
       }
     },
-    [onKeyboardDrop, value]
+    [onKeyboardDrop, value],
   );
 
   const props = {
@@ -86,7 +86,7 @@ export function useDraggable<T>(
 
 export function useDroppable<V, T extends HTMLElement = HTMLDivElement>(
   areaId: string,
-  onDrop: (value: V, target: T) => void
+  onDrop: (value: V, target: T) => void,
 ) {
   const droppableRef = useRef<T>(null);
 
@@ -117,7 +117,7 @@ export function useDroppable<V, T extends HTMLElement = HTMLDivElement>(
         throw err;
       }
     },
-    [areaId, onDrop]
+    [areaId, onDrop],
   );
 
   const props = {

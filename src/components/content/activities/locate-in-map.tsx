@@ -27,7 +27,7 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
           props.questionPosition === "left" &&
             "absolute inset-y-0 my-auto max-h-[200px] -translate-y-10 flex-row",
           (props.questionPosition === "top" || !props.questionPosition) &&
-            "relative mx-auto max-w-[500px] translate-y-10 flex-col text-center"
+            "relative mx-auto max-w-[500px] translate-y-10 flex-col text-center",
         )}
       >
         {props.questionIllustration && (
@@ -36,8 +36,8 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
 
         <p
           className={clsx(
-            "text-neutral-dark-700 z-10 text-3xl font-normal leading-relaxed",
-            props.questionPosition === "left" && "max-w-[250px]"
+            "z-10 text-3xl font-normal leading-relaxed text-neutral-dark-700",
+            props.questionPosition === "left" && "max-w-[250px]",
           )}
           dangerouslySetInnerHTML={{ __html: props.question }}
         />

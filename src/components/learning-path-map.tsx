@@ -86,7 +86,7 @@ export function LearningPath() {
       role="menu"
       className="overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray"
     >
-      <div className="flex items-center justify-between p-6 text-neutral-dark-500 text-xl">
+      <div className="flex items-center justify-between p-6 text-xl text-neutral-dark-500">
         <p>Learning Path</p>
 
         <button type="button" onClick={collapse}>
@@ -112,7 +112,7 @@ export function LearningPath() {
                       activeSection === section.id
                         ? "text-primary-600"
                         : "text-neutral-dark-300",
-                      "font-medium text-base"
+                      "text-base font-medium",
                     )}
                   >
                     <span
@@ -120,7 +120,7 @@ export function LearningPath() {
                         activeSection === section.id
                           ? "bg-primary-600"
                           : "bg-neutral-500",
-                        "mb-1 mr-2 inline-block h-8 w-8 rounded-full p-1 text-center align-middle text-neutral-100"
+                        "mb-1 mr-2 inline-block h-8 w-8 rounded-full p-1 text-center align-middle text-neutral-100",
                       )}
                     >
                       {section.number}
@@ -129,7 +129,7 @@ export function LearningPath() {
                   </p>
 
                   <div className="relative ml-1">
-                    <div className="absolute top-2 bottom-2 w-[1px] translate-x-3 bg-neutral-500" />
+                    <div className="absolute bottom-2 top-2 w-[1px] translate-x-3 bg-neutral-500" />
 
                     <ul className="space-y-2">
                       {section.activities.map((activity) => (
@@ -143,7 +143,7 @@ export function LearningPath() {
                             className={clsx(
                               activeActivity === activity.id
                                 ? "text-primary-600"
-                                : "text-neutral-dark-300"
+                                : "text-neutral-dark-300",
                             )}
                           >
                             {activity.title}
