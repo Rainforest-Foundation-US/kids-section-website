@@ -819,6 +819,26 @@ const aboutTheAmazonSections: SectionWithContent[] = [
     },
   },
   {
+    type: "regular",
+    background: secondBackground,
+    content: {
+      type: "memory-game",
+      data: {
+        cards: [
+          { image: frogInRain2 },
+          { image: elders7 },
+          { image: family7 },
+          { image: amazonRiver8 },
+          { image: nileRiver09 },
+          { image: desert36 },
+          { image: flood36 },
+          { image: monitors7 },
+          { image: yangtzeRiver09 },
+        ],
+      },
+    },
+  },
+  {
     type: "wavy",
     preContent: {
       type: "emoji",
