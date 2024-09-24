@@ -13,6 +13,16 @@ import backgroundAmazon from "@/assets/activities/background-amazon.png";
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
 import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
 
+import caiman from "@/assets/activities/memory-game/caiman.png";
+import capybaras from "@/assets/activities/memory-game/capybaras.png";
+import collaredPeccary from "@/assets/activities/memory-game/collared-peccary.png";
+import giantAnteater from "@/assets/activities/memory-game/giant-anteater.png";
+import jaguar from "@/assets/activities/memory-game/jaguar.png";
+import macaw from "@/assets/activities/memory-game/macaw.png";
+import pinkDolphin from "@/assets/activities/memory-game/pink-dolphin.png";
+import coati from "@/assets/activities/memory-game/coati.png";
+import toucans from "@/assets/activities/memory-game/toucans.png";
+
 import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
 
 import biodiversityButterfly4 from "@/assets/activities/04-biodiversity-butterfly.jpeg";
@@ -825,15 +835,15 @@ const aboutTheAmazonSections: SectionWithContent[] = [
       type: "memory-game",
       data: {
         cards: [
-          { image: frogInRain2 },
-          { image: elders7 },
-          { image: family7 },
-          { image: amazonRiver8 },
-          { image: nileRiver09 },
-          { image: desert36 },
-          { image: flood36 },
-          { image: monitors7 },
-          { image: yangtzeRiver09 },
+          { image: caiman, altText: "Caiman" },
+          { image: capybaras, altText: "Capybaras" },
+          { image: collaredPeccary, altText: "Collared Peccary" },
+          { image: giantAnteater, altText: "Giant anteater" },
+          { image: jaguar, altText: "Jaguar" },
+          { image: macaw, altText: "Macaw" },
+          { image: pinkDolphin, altText: "Pink Dolphin" },
+          { image: coati, altText: "Coati" },
+          { image: toucans, altText: "Toucans" },
         ],
       },
     },

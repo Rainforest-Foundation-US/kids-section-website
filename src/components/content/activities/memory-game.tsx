@@ -3,12 +3,13 @@ import Image, { StaticImageData } from "next/image";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
 
-import earth37 from "@/assets/activities/card-back.png";
+import cardBack from "@/assets/activities/memory-game/card-back.png";
 import clsx from "@/utils/clsx";
 
 interface MemoryCard {
   id?: string;
   image: StaticImageData;
+  altText: string;
   matched?: boolean;
 }
 
@@ -120,20 +121,20 @@ function Card({
 
   return (
     <div className="relative even:mt-3">
-      <div>
+      <div className="cursor-pointer">
         <Image
           src={card.image}
-          alt="alt card"
+          alt={card.altText}
           className={clsx(
-            "absolute block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 shadow-app-lg shadow-shadow-green transition-all duration-200 ease-in [transform:rotateY(90deg)]",
+            "absolute block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 object-cover shadow-app-lg shadow-shadow-green transition-all duration-200 ease-in [transform:rotateY(90deg)]",
             flipped && "delay-200 [transform:rotateY(0deg)]",
           )}
-        />
+        ></Image>
         <Image
-          src={earth37}
-          alt="alt card"
+          src={cardBack}
+          alt="Memory card back side"
           className={clsx(
-            "block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 shadow-app-lg shadow-shadow-green transition-all delay-200 duration-200 ease-in",
+            "block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 object-cover shadow-app-lg shadow-shadow-green transition-all delay-200 duration-200 ease-in",
             flipped && "delay-0 [transform:rotateY(90deg)]",
           )}
           onClick={handleClick}
