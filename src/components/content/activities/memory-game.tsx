@@ -25,6 +25,9 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   const [localCards, setLocalCards] = React.useState<MemoryCard[]>([]);
   const [choiceOne, setChoiceOne] = React.useState<MemoryCard | null>(null);
   const [choiceTwo, setChoiceTwo] = React.useState<MemoryCard | null>(null);
+
+  // It disables clicking on the cards. This is done to prevent the user from opening additional (3 or more) cards at the same time while
+  // the animation for the first 2 cards is still running.
   const [disabled, setDisabled] = React.useState(false);
 
   React.useEffect(() => {
@@ -63,6 +66,11 @@ export function MemoryGame(props: MemoryGameActivityProps) {
     [props.cards],
   );
 
+  React.useEffect(() => {
+    // It starts the game
+    shuffleCards();
+  }, [shuffleCards]);
+
   function handleChoice(card: MemoryCard) {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   }
@@ -72,10 +80,6 @@ export function MemoryGame(props: MemoryGameActivityProps) {
     setChoiceTwo(null);
     setDisabled(false);
   }
-
-  React.useEffect(() => {
-    shuffleCards();
-  }, [shuffleCards]);
 
   return (
     <div>
@@ -88,6 +92,7 @@ export function MemoryGame(props: MemoryGameActivityProps) {
           <Card
             key={card.id}
             card={card}
+            // We show the face of the card if it's chosen in the current turn, or it's already matched with it's pair card.
             flipped={Boolean(
               card.id === choiceOne?.id ||
                 card.id === choiceTwo?.id ||
@@ -102,17 +107,14 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   );
 }
 
-function Card({
-  card,
-  flipped,
-  disabled,
-  handleChoice,
-}: {
+interface CardProps {
   card: MemoryCard;
   flipped: boolean;
   disabled: boolean;
   handleChoice: (card: MemoryCard) => void;
-}) {
+}
+
+function Card({ card, flipped, disabled, handleChoice }: CardProps) {
   function handleClick() {
     if (disabled) return;
 
@@ -132,7 +134,7 @@ function Card({
         ></Image>
         <Image
           src={cardBack}
-          alt="Memory card back side"
+          alt="Card back side"
           className={clsx(
             "block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 object-cover shadow-app-lg shadow-shadow-green transition-all delay-200 duration-200 ease-in",
             flipped && "delay-0 [transform:rotateY(90deg)]",
