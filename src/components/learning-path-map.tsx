@@ -1,17 +1,50 @@
-import Image from "next/image";
-import { IconChevronUp, IconHeart } from "./icons/icons";
-import { useState } from "react";
+import tailwindConfig from "tailwind.config";
+import { IconChevronUp, MapIcon } from "./icons/icons";
 import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
-import { AppButton } from "./buttons";
+import React from "react";
 
 const AnimatedIconChevronUp = animated(IconChevronUp);
 
 export function LearningPath() {
   const [containerRef, size] = useMeasure<HTMLDivElement>();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.scrollY > parseInt(tailwindConfig.theme.extend.height.header)
+      ) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Add the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const learningPathStyle = useSpring({
+    from: {
+      width: 289,
+      height: "auto",
+      display: "block",
+    },
+    to: {
+      width: isCollapsed ? 64 : 289,
+      height: isCollapsed ? 64 : "auto",
+      display: isCollapsed ? "flex" : "block",
+    },
+    config: config.stiff,
+  });
   const containerStyles = useSpring({
     from: {
       height: 0,
@@ -22,9 +55,7 @@ export function LearningPath() {
     config: config.stiff,
   });
   const chevronStyles = useSpring({
-    transform: isCollapsed
-      ? "rotateY(180deg) rotateX(180deg)"
-      : "rotateY(0deg) rotateX(0deg)",
+    transform: "rotateY(0deg) rotateX(0deg)",
     config: config.stiff,
   });
 
@@ -35,63 +66,55 @@ export function LearningPath() {
   const learningPath = [
     {
       id: "0",
-      number: 1,
-      title: "Defining Amazonia",
-      activities: [
-        {
-          id: "0",
-          title: "General definition",
-        },
-        {
-          id: "1",
-          title: "Visualize the Amazon",
-        },
-        {
-          id: "2",
-          title: "Biodiversity",
-        },
-        {
-          id: "3",
-          title: "Global climate",
-        },
-        {
-          id: "4",
-          title: "Threats",
-        },
-        {
-          id: "5",
-          title: "IPs",
-        },
-      ],
+      title: "General definition",
     },
     {
       id: "1",
-      number: 2,
-      title: "Narratives",
-      activities: [],
+      title: "Visualize the Amazon",
     },
     {
       id: "2",
-      number: 3,
-      title: "Q&A",
-      activities: [],
+      title: "Biodiversity",
+    },
+    {
+      id: "3",
+      title: "Global climate",
+    },
+    {
+      id: "4",
+      title: "Threats",
+    },
+    {
+      id: "5",
+      title: "IPs",
     },
   ];
 
-  const activeSection = learningPath[0].id;
-  const activeActivity = null; // learningPath[0].activities[0].id;
+  const activeActivity = learningPath[0].id;
 
   return (
-    <div
+    <animated.div
       role="menu"
-      className="overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray"
+      className={clsx(
+        "fixed right-10 overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray",
+        isScrolled ? "top-[10px]" : "top-[110px]",
+      )}
+      style={learningPathStyle}
     >
-      <div className="flex items-center justify-between p-6 text-xl text-neutral-dark-500">
-        <p>Learning Path</p>
+      <div className="cursor-pointer items-center" onClick={collapse}>
+        {isCollapsed ? (
+          <div className="flex justify-center p-[18px]">
+            <MapIcon />
+          </div>
+        ) : (
+          <div className="flex justify-between p-6 text-xl text-neutral-dark-500">
+            <p>Learning Path</p>
 
-        <button type="button" onClick={collapse}>
-          <AnimatedIconChevronUp style={chevronStyles} className="" />
-        </button>
+            <button type="button">
+              <AnimatedIconChevronUp style={chevronStyles} />
+            </button>
+          </div>
+        )}
       </div>
 
       <animated.div
@@ -103,65 +126,34 @@ export function LearningPath() {
         <div ref={containerRef}>
           <div className="border-b-1 border-neutral-600" />
 
-          <div className="space-y-7 p-9 pt-6">
-            <ol className="space-y-7">
-              {learningPath.map((section) => (
-                <li key={section.id}>
-                  <p
-                    className={clsx(
-                      activeSection === section.id
-                        ? "text-primary-600"
-                        : "text-neutral-dark-300",
-                      "text-base font-medium",
-                    )}
+          <div className="space-y-7 p-6">
+            <div className="relative ml-1">
+              <div className="absolute bottom-2 top-2 w-[1px] translate-x-3 bg-neutral-500" />
+
+              <ul className="space-y-2">
+                {learningPath.map((activity) => (
+                  <li
+                    key={activity.id}
+                    className="flex cursor-pointer flex-row items-center space-x-6 pl-2"
                   >
-                    <span
+                    <span className="block h-2 w-2 rounded-full bg-neutral-500" />
+
+                    <p
                       className={clsx(
-                        activeSection === section.id
-                          ? "bg-primary-600"
-                          : "bg-neutral-500",
-                        "mb-1 mr-2 inline-block h-8 w-8 rounded-full p-1 text-center align-middle text-neutral-100",
+                        activeActivity === activity.id
+                          ? "text-primary-600"
+                          : "text-neutral-dark-300",
                       )}
                     >
-                      {section.number}
-                    </span>
-                    {section.title}
-                  </p>
-
-                  <div className="relative ml-1">
-                    <div className="absolute bottom-2 top-2 w-[1px] translate-x-3 bg-neutral-500" />
-
-                    <ul className="space-y-2">
-                      {section.activities.map((activity) => (
-                        <li
-                          key={activity.id}
-                          className="flex flex-row items-center space-x-6 pl-2"
-                        >
-                          <span className="block h-2 w-2 rounded-full bg-neutral-500" />
-
-                          <p
-                            className={clsx(
-                              activeActivity === activity.id
-                                ? "text-primary-600"
-                                : "text-neutral-dark-300",
-                            )}
-                          >
-                            {activity.title}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <AppButton variant="secondary" className="w-full">
-              <IconHeart className="mr-2 inline" /> How to help?
-            </AppButton>
+                      {activity.title}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </animated.div>
-    </div>
+    </animated.div>
   );
 }

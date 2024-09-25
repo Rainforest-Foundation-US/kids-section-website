@@ -242,3 +242,50 @@ export function LinkedinIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function MapIcon(props: IconProps) {
+  return (
+    <svg
+      width="25"
+      height="24"
+      viewBox="0 0 25 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <g clip-path="url(#clip0_1537_2153)">
+        <path
+          d="M1.5 6V22L8.5 18L16.5 22L23.5 18V2L16.5 6L8.5 2L1.5 6Z"
+          stroke="#5A9A36"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M8.5 2V18"
+          stroke="#5A9A36"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M16.5 6V22"
+          stroke="#5A9A36"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1537_2153">
+          <rect
+            width="24"
+            height="24"
+            fill="white"
+            transform="translate(0.5)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}

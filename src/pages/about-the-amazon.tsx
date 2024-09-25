@@ -1082,7 +1082,7 @@ export default function Home() {
             <NavBar />
           </div>
 
-          <aside className="absolute right-10 top-[8rem] z-20 w-[289px]">
+          <aside className="absolute top-[8rem] z-20">
             <LearningPath />
           </aside>
 
