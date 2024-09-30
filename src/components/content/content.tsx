@@ -27,6 +27,10 @@ import {
 } from "../sections/vignette-section";
 import { WavySection } from "../sections/wavy-section";
 import {
+  MemoryGame,
+  MemoryGameActivityOptions,
+} from "./activities/memory-game";
+import {
   FillInTheBlankActivity,
   FillInTheBlankActivityOptions,
 } from "./activities/fill-in-the-blank";
@@ -84,12 +88,18 @@ type PickTheImageActivityData = {
   data: PickTheImageActivityOptions;
 };
 
+type MemoryGameActivityData = {
+  type: "memory-game";
+  data: MemoryGameActivityOptions;
+};
+
 type SingleContent =
   | PlainContentData
   | FillInTheBlankActivityData
   | LocateInMapActivityData
   | PickTheOptionActivityData
-  | PickTheImageActivityData;
+  | PickTheImageActivityData
+  | MemoryGameActivityData;
 
 type PagerData = {
   type: "pager";
@@ -208,6 +218,10 @@ function PolymorphicContent({ content }: { content: Content }) {
 
   if (content.type === "pick-the-image") {
     return <PickTheImageActivity onHint={setHint} {...content.data} />;
+  }
+
+  if (content.type === "memory-game") {
+    return <MemoryGame onHint={setHint} {...content.data} />;
   }
 
   if (content.type === "pager") {
