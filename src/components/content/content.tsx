@@ -158,7 +158,7 @@ export type SectionWithContent =
     }
   | {
       type: "vignette";
-      name?: string;
+      name: string;
       content: VignetteSectionOptions;
     }
   | {
