@@ -16,6 +16,9 @@
 /build
 .dist
 
+# Sanity
+.sanity
+
 # misc
 .DS_Store
 *.pem
