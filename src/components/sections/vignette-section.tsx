@@ -6,7 +6,10 @@ import clsx from "@/utils/clsx";
 export interface VignetteSectionOptions {
   title: string;
   subtitle: string;
-  image: string | StaticImageData;
+  image: {
+    data: string | StaticImageData;
+    alt: string;
+  };
   body?: string;
   imageAlignment?: "start" | "middle" | "end";
 }
@@ -34,11 +37,11 @@ export function VignetteSection({
             imageAlignment === "start" && "object-left-top",
             imageAlignment === "end" && "object-right-bottom",
           )}
-          src={props.image}
+          src={props.image.data}
           height={1280}
           width={720}
+          alt={props.image.alt}
           aria-hidden
-          alt=""
         />
 
         <div
