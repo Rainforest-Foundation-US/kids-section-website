@@ -1,3 +1,6 @@
+import { useMemo, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "framer-motion";
+import { Tooltip } from "react-tooltip";
 import {
   ComposableMap,
   Geographies,
@@ -7,8 +10,6 @@ import {
 import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
 import { wrapTextToLength } from "@/utils/wrapTextToLength";
-import { useMemo, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "framer-motion";
 
 export interface MapWithMarkersOptions {
   /**
@@ -16,8 +17,11 @@ export interface MapWithMarkersOptions {
    */
   center: [number, number];
   scale: number;
-  countries: string[];
-  markers: Marker[];
+  highlightedCountries?: string[];
+  errorCountries?: string[];
+  hintedCountries?: string[];
+  markers?: Marker[];
+  onSelectCountry?: (country: string) => void;
 }
 
 const countryCodeKey = "ADM0_ISO";
@@ -29,10 +33,12 @@ function getCountryCode(geo: any) {
 const mapAnnotationPadding = 10;
 const mapAnnotationOffset = 5;
 
-interface Marker {
+export interface Marker {
   position: [number, number];
-  text: string;
-  orientation:
+  text?: string;
+  // TODO: remove this prop and find a better solution for the hovering markers
+  hoverText?: string;
+  orientation?:
     | "top-right"
     | "top-left"
     | "bottom-right"
@@ -44,7 +50,7 @@ interface Marker {
 function MapAnnotation(props: Marker) {
   const textRef = useRef<SVGTextElement>(null);
   const markerLines = useMemo(
-    () => wrapTextToLength(props.text, 17),
+    () => wrapTextToLength(props?.text ?? "", 17),
     [props.text],
   );
 
@@ -106,42 +112,52 @@ function MapAnnotation(props: Marker) {
       break;
   }
 
+  /* TODO:  find a better solution for the hovering markers */
+  const hoverProps = props.hoverText
+    ? {
+        "data-tooltip-id": "marker-tooltip",
+        "data-tooltip-content": props?.hoverText,
+      }
+    : {};
   return (
     <Marker
       key={props.position[0] + "-" + props.position[1]}
       coordinates={props.position}
+      {...hoverProps}
     >
-      <g transform={`translate(${groupPosition[0]}, ${groupPosition[1]})`}>
-        <rect
-          rx={4}
-          x={4}
-          y={4}
-          width={bbox.width}
-          height={bbox.height}
-          className="fill-shadow-gray"
-        />
+      {props.text && (
+        <g transform={`translate(${groupPosition[0]}, ${groupPosition[1]})`}>
+          <rect
+            rx={4}
+            x={4}
+            y={4}
+            width={bbox.width}
+            height={bbox.height}
+            className="fill-shadow-gray"
+          />
 
-        <rect
-          rx={4}
-          x={0}
-          y={0}
-          width={bbox.width}
-          height={bbox.height}
-          className="fill-secondary-100 stroke-neutral-600 stroke-[0.5px]"
-        />
+          <rect
+            rx={4}
+            x={0}
+            y={0}
+            width={bbox.width}
+            height={bbox.height}
+            className="fill-secondary-100 stroke-neutral-600 stroke-[0.5px]"
+          />
 
-        <text
-          ref={textRef}
-          className="text-3xs font-semibold"
-          y={mapAnnotationPadding}
-        >
-          {markerLines.map((text, l) => (
-            <tspan x={mapAnnotationPadding} dy="1.25em" key={l}>
-              {text}
-            </tspan>
-          ))}
-        </text>
-      </g>
+          <text
+            ref={textRef}
+            className="text-3xs font-semibold"
+            y={mapAnnotationPadding}
+          >
+            {markerLines.map((text, l) => (
+              <tspan x={mapAnnotationPadding} dy="1.25em" key={l}>
+                {text}
+              </tspan>
+            ))}
+          </text>
+        </g>
+      )}
 
       <circle r={4} cx={3} cy={3} fill="#00000018" />
       <circle r={4} cx={2} cy={2} fill="#00000025" />
@@ -152,20 +168,25 @@ function MapAnnotation(props: Marker) {
 }
 
 type MapWithMarkersProps = MapWithMarkersOptions;
-export function MapWithMarkers(props: MapWithMarkersProps) {
-  const highlightedCountries = props.countries;
-
-  const markers = props.markers;
-
+export function MapWithMarkers({
+  center,
+  scale,
+  markers,
+  highlightedCountries,
+  hintedCountries,
+  errorCountries,
+  onSelectCountry,
+}: MapWithMarkersProps) {
   return (
     <div className="relative mx-auto w-full max-w-6xl">
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{
-          center: props.center,
-          scale: props.scale,
+          center,
+          scale,
         }}
         className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
+        data-tip=""
       >
         <defs>
           <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
@@ -204,38 +225,57 @@ export function MapWithMarkers(props: MapWithMarkersProps) {
         <g>
           <Geographies geography={countriesTopoJSON}>
             {({ geographies }) =>
-              geographies.map((geo) => (
-                <>
+              geographies.map((geo) => {
+                const isHighlightedCountry = highlightedCountries?.includes(
+                  getCountryCode(geo),
+                );
+                const isErrorCountry = errorCountries?.includes(
+                  getCountryCode(geo),
+                );
+                const isHintedCountry = hintedCountries?.includes(
+                  getCountryCode(geo),
+                );
+
+                return (
                   <Geography
                     key={geo.rsmKey}
+                    onClick={() => {
+                      onSelectCountry?.(getCountryCode(geo));
+                    }}
                     geography={geo}
                     className={clsx(
-                      highlightedCountries.includes(getCountryCode(geo))
-                        ? "fill-primary-300 stroke-neutral-100 stroke-[0.5px] opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-[1px]"
-                        : "fill-neutral-100 opacity-50",
-                      "focus-visible::stroke-primary-600 outline-none",
+                      "focus-visible::stroke-primary-600 fill-neutral-100 stroke-neutral-600 stroke-[0.5px] opacity-50 outline-none",
+                      isHighlightedCountry &&
+                        "fill-primary-300 opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-1",
+                      isErrorCountry &&
+                        "fill-error-500 opacity-100 transition-all duration-150 hover:z-10",
+                      isHintedCountry && "stroke-primary-400 stroke-1",
                     )}
                     tabIndex={
-                      highlightedCountries.includes(getCountryCode(geo))
+                      highlightedCountries?.includes(getCountryCode(geo))
                         ? 0
                         : -1
                     }
                   />
-                </>
-              ))
+                );
+              })
             }
           </Geographies>
         </g>
 
-        {markers.map((marker) => (
+        {markers?.map((marker) => (
           <MapAnnotation
             orientation={marker.orientation}
             key={marker.position[0] + "-" + marker.position[1]}
             position={marker.position}
             text={marker.text}
+            hoverText={marker.hoverText}
           />
         ))}
       </ComposableMap>
+
+      {/* TODO:  find a better solution for the hovering markers */}
+      <Tooltip id="marker-tooltip" />
     </div>
   );
 }

@@ -31,6 +31,10 @@ import {
   MemoryGameActivityOptions,
 } from "./activities/memory-game";
 import {
+  SelectCountriesWithRainforestActivity,
+  SelectCountriesWithRainforestActivityOptions,
+} from "./activities/select-countries-with-rainforest";
+import {
   FillInTheBlankActivity,
   FillInTheBlankActivityOptions,
 } from "./activities/fill-in-the-blank";
@@ -78,6 +82,11 @@ type LocateInMapActivityData = {
   data: LocateInMapActivityOptions;
 };
 
+type SelectCountriesWithRainforestActivityData = {
+  type: "select-countries-with-rainforest";
+  data: SelectCountriesWithRainforestActivityOptions;
+};
+
 type PickTheOptionActivityData = {
   type: "pick-the-option";
   data: PickTheOptionActivityOptions;
@@ -99,7 +108,8 @@ type SingleContent =
   | LocateInMapActivityData
   | PickTheOptionActivityData
   | PickTheImageActivityData
-  | MemoryGameActivityData;
+  | MemoryGameActivityData
+  | SelectCountriesWithRainforestActivityData;
 
 type PagerData = {
   type: "pager";
@@ -210,6 +220,15 @@ function PolymorphicContent({ content }: { content: Content }) {
 
   if (content.type === "locate-in-map") {
     return <LocateInMapActivity onHint={setHint} {...content.data} />;
+  }
+
+  if (content.type === "select-countries-with-rainforest") {
+    return (
+      <SelectCountriesWithRainforestActivity
+        onHint={setHint}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "pick-the-option") {
@@ -358,7 +377,9 @@ function ContentSection(props: {
           <div
             className={clsx(
               "flex flex-col",
-              props.section.content.type === "locate-in-map" && "w-full",
+              ["locate-in-map", "select-countries-with-rainforest"].includes(
+                props.section.content.type,
+              ) && "w-full",
               props.section.layout === "space-between"
                 ? "flex-1 justify-between py-8"
                 : "",

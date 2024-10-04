@@ -159,7 +159,7 @@ export function useGetAboutTheAmazonContent() {
           question: "The three most important rainforests are:",
           center: [0, 20],
           scale: 145,
-          countries: [
+          highlightedCountries: [
             "USA",
             "VEN",
             "COL",
@@ -405,7 +405,7 @@ export function useGetAboutTheAmazonContent() {
           questionIllustration: "sitting-sloth",
           center: [-88, -20],
           scale: 280,
-          countries: [
+          highlightedCountries: [
             "VEN",
             "COL",
             "BRA",
@@ -420,7 +420,6 @@ export function useGetAboutTheAmazonContent() {
             "CAF",
             "IDN",
           ],
-          markers: [],
         },
       },
     },
@@ -437,7 +436,7 @@ export function useGetAboutTheAmazonContent() {
           questionIllustration: "sitting-sloth",
           center: [-88, -20],
           scale: 280,
-          countries: [
+          highlightedCountries: [
             "VEN",
             "COL",
             "BRA",
@@ -452,7 +451,6 @@ export function useGetAboutTheAmazonContent() {
             "CAF",
             "IDN",
           ],
-          markers: [],
         },
       },
     },
@@ -475,7 +473,22 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    // Pending: Add the map activity here
+    {
+      type: "regular",
+      background: null,
+      backgroundColor: "#F0F4EF",
+      content: {
+        type: "select-countries-with-rainforest",
+        data: {
+          question:
+            "Select the countries with <b>Amazon Rainforest</b> in them",
+          questionPosition: "left",
+          questionIllustration: "happy-sloth",
+          center: [-88, -20],
+          scale: 280,
+        },
+      },
+    },
     {
       type: "regular",
       background: backgroundHouse13,

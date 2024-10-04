@@ -44,7 +44,7 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
       </div>
 
       <MapWithMarkers
-        countries={props.countries}
+        highlightedCountries={props.highlightedCountries}
         markers={props.markers}
         center={props.center}
         scale={props.scale}
