@@ -79,9 +79,6 @@ export function Footer() {
           >
             Foundation Main website
           </a>
-          <Link href="/" className="cursor-pointer text-base text-neutral-100">
-            Kids corner
-          </Link>
           <Link
             href="/about-the-amazon"
             className="cursor-pointer text-base text-neutral-100"
@@ -98,11 +95,14 @@ export function Footer() {
             href="/q-and-a"
             className="cursor-pointer text-base text-neutral-100"
           >
-            Q&A
+            Questions and Answers
           </Link>
           {/* TODO: Add link to resources for educators page */}
           <Link href="/" className="cursor-pointer text-base text-neutral-100">
-            Resources for educatorss
+            Resources for educators
+          </Link>
+          <Link href="/" className="cursor-pointer text-base text-neutral-100">
+            Credits
           </Link>
         </div>
         <div className="text-xl font-semibold text-neutral-100">
