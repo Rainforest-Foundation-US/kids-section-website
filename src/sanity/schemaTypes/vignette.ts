@@ -43,7 +43,7 @@ export const VignetteSchemaType = defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
+          description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.picture as any)?.asset?._ref && !alt) {
@@ -55,7 +55,6 @@ export const VignetteSchemaType = defineType({
         },
       ],
       options: {
-        hotspot: true,
         aiAssist: {
           imageDescriptionField: "alt",
         },
