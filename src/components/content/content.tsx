@@ -57,6 +57,7 @@ import {
   PolymorphicIllustrationOptions,
 } from "./polymorphic-illustration";
 import { toArrayMaybe } from "@/utils/toArray";
+import { isDefined } from "@/utils/isDefined";
 
 type PreContent =
   | {
@@ -462,32 +463,36 @@ function ContentSection(props: {
   return null;
 }
 
-export function ContentSectionList(props: { sections: SectionWithContent[] }) {
+export function ContentSectionList(props: {
+  sections: (SectionWithContent | undefined)[];
+}) {
   return (
     <>
-      {props.sections.map((section, i) => {
-        const previousSection = props.sections[i - 1];
-        const nextSection = props.sections[i + 1];
+      {props.sections
+        .filter(isDefined)
+        .map((section: SectionWithContent, i) => {
+          const previousSection = props.sections[i - 1];
+          const nextSection = props.sections[i + 1];
 
-        return (
-          <ContentSection
-            key={i}
-            number={i}
-            name={section.name}
-            section={section}
-            previousSectionType={previousSection?.type}
-            nextSectionType={nextSection?.type}
-            previousDividerStyle={
-              previousSection?.type === "divider"
-                ? previousSection.style
-                : undefined
-            }
-            nextDividerStyle={
-              nextSection?.type === "divider" ? nextSection.style : undefined
-            }
-          />
-        );
-      })}
+          return (
+            <ContentSection
+              key={i}
+              number={i}
+              name={section.name}
+              section={section}
+              previousSectionType={previousSection?.type}
+              nextSectionType={nextSection?.type}
+              previousDividerStyle={
+                previousSection?.type === "divider"
+                  ? previousSection.style
+                  : undefined
+              }
+              nextDividerStyle={
+                nextSection?.type === "divider" ? nextSection.style : undefined
+              }
+            />
+          );
+        })}
     </>
   );
 }

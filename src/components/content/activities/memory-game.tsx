@@ -1,27 +1,32 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import { v4 as uuid } from "uuid";
+import sampleSize from "lodash/sampleSize";
 import { CommonActivityOptions } from "./common";
 
-import cardBack from "@/assets/activities/memory-game/card-back.png";
 import clsx from "@/utils/clsx";
 
 interface MemoryCard {
   id?: string;
   image: StaticImageData;
-  altText: string;
+  text: string;
   matched?: boolean;
 }
 
 export interface MemoryGameActivityOptions {
   cards: MemoryCard[];
+  backCardImage: StaticImageData;
+  backCardImageAlt: string;
 }
 
 type MemoryGameActivityProps = React.PropsWithChildren<
   MemoryGameActivityOptions & CommonActivityOptions
 >;
 
+const MAX_UNIQUE_CARDS_IN_THE_GAME = 9;
+
 export function MemoryGame(props: MemoryGameActivityProps) {
+  const [, setCardsLeft] = React.useState(MAX_UNIQUE_CARDS_IN_THE_GAME);
   const [localCards, setLocalCards] = React.useState<MemoryCard[]>([]);
   const [choiceOne, setChoiceOne] = React.useState<MemoryCard | null>(null);
   const [choiceTwo, setChoiceTwo] = React.useState<MemoryCard | null>(null);
@@ -44,24 +49,30 @@ export function MemoryGame(props: MemoryGameActivityProps) {
             return card;
           });
         });
+        setCardsLeft((prev) => prev - 1);
         resetTurn();
       } else {
         setTimeout(() => {
           resetTurn();
-        }, 1000);
+        }, 2000);
       }
     }
   }, [choiceOne, choiceTwo]);
 
   const shuffleCards = React.useCallback(
     function shuffleCards() {
-      const shuffledCards = [...props.cards, ...props.cards]
+      const randomlyPickedCards = sampleSize(
+        props.cards,
+        MAX_UNIQUE_CARDS_IN_THE_GAME,
+      );
+      const shuffledCards = [...randomlyPickedCards, ...randomlyPickedCards]
         .sort(() => Math.random() - 0.5)
         .map((card) => ({ ...card, id: uuid(), matched: false }));
 
       setChoiceOne(null);
       setChoiceOne(null);
       setLocalCards(shuffledCards);
+      setCardsLeft(MAX_UNIQUE_CARDS_IN_THE_GAME);
     },
     [props.cards],
   );
@@ -87,10 +98,13 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         Memory Game
       </h1>
 
-      <div className="mx-auto mt-10 grid max-w-full grid-cols-6 gap-5 lg:px-12 xl:max-w-[80%]">
-        {localCards.map((card) => (
+      <div className="mx-auto mt-7 grid max-w-full grid-cols-6 gap-5 lg:px-12 xl:max-w-[80%]">
+        {localCards.map((card, index) => (
           <Card
             key={card.id}
+            index={index}
+            backCardImage={props.backCardImage}
+            backCardImageAlt={props.backCardImageAlt}
             card={card}
             // We show the face of the card if it's chosen in the current turn, or it's already matched with it's pair card.
             flipped={Boolean(
@@ -108,38 +122,77 @@ export function MemoryGame(props: MemoryGameActivityProps) {
 }
 
 interface CardProps {
+  index: number;
   card: MemoryCard;
+  backCardImage: StaticImageData;
+  backCardImageAlt: string;
   flipped: boolean;
   disabled: boolean;
   handleChoice: (card: MemoryCard) => void;
 }
 
-function Card({ card, flipped, disabled, handleChoice }: CardProps) {
+function Card({
+  index,
+  card,
+  flipped,
+  disabled,
+  backCardImage,
+  backCardImageAlt,
+  handleChoice,
+}: CardProps) {
+  const [shouldRenderText, setShouldRenderText] = React.useState(false);
+
+  React.useEffect(() => {
+    if (flipped) {
+      setTimeout(() => {
+        setShouldRenderText(true);
+      }, 350);
+    } else {
+      setShouldRenderText(false);
+    }
+  }, [flipped]);
+
   function handleClick() {
     if (disabled) return;
 
     handleChoice(card);
   }
 
+  const textPositionClass = index % 2 === 0 ? "bottom-6" : "bottom-2";
+
   return (
-    <div className="relative even:mt-3">
+    <div className="relative even:pt-3">
       <div className="cursor-pointer">
         <Image
           src={card.image}
-          alt={card.altText}
+          alt={card.text}
           className={clsx(
             "absolute block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 object-cover shadow-app-lg shadow-shadow-green transition-all duration-200 ease-in [transform:rotateY(90deg)]",
             flipped && "delay-200 [transform:rotateY(0deg)]",
           )}
-        ></Image>
+          draggable={false}
+        />
+
+        {shouldRenderText && (
+          <div
+            className={clsx(
+              "pointer-events-none absolute left-1 rounded-sm bg-neutral-dark-800 bg-opacity-40 px-1 text-neutral-100",
+              textPositionClass,
+            )}
+          >
+            <p>{card.text}</p>
+          </div>
+        )}
+
         <Image
-          src={cardBack}
-          alt="Card back side"
+          src={backCardImage}
+          alt={backCardImageAlt}
           className={clsx(
             "block aspect-square w-full rounded-lg border-2 border-solid border-secondary-100 object-cover shadow-app-lg shadow-shadow-green transition-all delay-200 duration-200 ease-in",
             flipped && "delay-0 [transform:rotateY(90deg)]",
           )}
           onClick={handleClick}
+          draggable={false}
         />
       </div>
     </div>

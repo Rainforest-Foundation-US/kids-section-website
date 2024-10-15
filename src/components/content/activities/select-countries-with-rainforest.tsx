@@ -80,7 +80,6 @@ export function SelectCountriesWithRainforestActivity({
   );
 
   function onSelectCountry(answer: string) {
-    console.log({ answer });
     if (correctCountriesLeft.length === 0) {
       return;
     }

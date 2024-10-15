@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { getVignettes } from "@/sanity/lib/queries";
+import { getMemoryGame } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
 
@@ -13,16 +14,6 @@ import backgroundAmazon from "@/assets/activities/background-amazon.png";
 
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
 import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
-
-import caiman from "@/assets/activities/memory-game/caiman.png";
-import capybaras from "@/assets/activities/memory-game/capybaras.png";
-import collaredPeccary from "@/assets/activities/memory-game/collared-peccary.png";
-import giantAnteater from "@/assets/activities/memory-game/giant-anteater.png";
-import jaguar from "@/assets/activities/memory-game/jaguar.png";
-import macaw from "@/assets/activities/memory-game/macaw.png";
-import pinkDolphin from "@/assets/activities/memory-game/pink-dolphin.png";
-import coati from "@/assets/activities/memory-game/coati.png";
-import toucans from "@/assets/activities/memory-game/toucans.png";
 
 import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
 
@@ -74,20 +65,25 @@ import climateChangeWildfires34 from "@/assets/activities/34-climate-change-wild
 import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jpg";
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
+import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
 
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
+  const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
 
   React.useEffect(() => {
     async function getData() {
       const vignettesFromServer = await getVignettes();
+      const memoryGameFromServer = await getMemoryGame();
+
       setVignettes(vignettesFromServer);
+      setMemoryGame(memoryGameFromServer?.[0]);
     }
 
     getData();
   }, []);
 
-  const aboutTheAmazonSections: SectionWithContent[] = [
+  const aboutTheAmazonSections: (SectionWithContent | undefined)[] = [
     {
       type: "regular",
       align: "left",
@@ -818,23 +814,23 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    {
+    memoryGame && {
       type: "regular",
-      background: secondBackground,
+      background: memoryGame.backgroundImage,
       content: {
         type: "memory-game",
         data: {
-          cards: [
-            { image: caiman, altText: "Caiman" },
-            { image: capybaras, altText: "Capybaras" },
-            { image: collaredPeccary, altText: "Collared Peccary" },
-            { image: giantAnteater, altText: "Giant anteater" },
-            { image: jaguar, altText: "Jaguar" },
-            { image: macaw, altText: "Macaw" },
-            { image: pinkDolphin, altText: "Pink Dolphin" },
-            { image: coati, altText: "Coati" },
-            { image: toucans, altText: "Toucans" },
-          ],
+          cards:
+            memoryGame.cards.map(({ src, height, width, description }) => ({
+              image: {
+                src,
+                height,
+                width,
+              },
+              text: description,
+            })) ?? [],
+          backCardImage: memoryGame.backCardImage,
+          backCardImageAlt: memoryGame.backCardImageAlt,
         },
       },
     },
