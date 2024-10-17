@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\""
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate --path=src/sanity/extract.json"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.4",

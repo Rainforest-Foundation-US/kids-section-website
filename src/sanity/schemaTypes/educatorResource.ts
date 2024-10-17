@@ -1,7 +1,7 @@
 import { defineType } from "sanity";
 import { DocumentPdfIcon } from "@sanity/icons";
 
-export const educatorResource = defineType({
+export const EducatorResource = defineType({
   name: "educatorResource",
   title: "Educator Resource",
   type: "file",
