@@ -64,8 +64,6 @@ export function Footer() {
     getEducatorResources().then(setResources);
   }, []);
 
-  console.log(resources);
-
   return (
     <footer className="relative z-10 bg-neutral-dark-700 py-10">
       <div className="mx-6 max-w-5xl lg:mx-auto">
