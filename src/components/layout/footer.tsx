@@ -8,6 +8,9 @@ import {
 } from "../icons/icons";
 import Link from "next/link";
 import { VercelLogo } from "../icons/vercel";
+import { getEducatorResources } from "@/sanity/lib/queries";
+import { useEffect, useState } from "react";
+import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
 
 export function VercelSponsorshipBanner() {
   return (
@@ -26,7 +29,43 @@ export function VercelSponsorshipBanner() {
   );
 }
 
+function DownloadResourcesLink({
+  resources,
+}: {
+  resources: EducatorResource[];
+}) {
+  const onClick = () => {
+    resources.forEach((resource, index) => {
+      setTimeout(() => {
+        const link = document.createElement("a");
+        link.href = resource.link;
+        link.download = resource.title;
+        document.body.appendChild(link); // Append to body to make it work in Firefox
+        link.click();
+        document.body.removeChild(link);
+      }, 200 * index);
+    });
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className="cursor-pointer text-base text-neutral-100"
+    >
+      Resources for educators
+    </button>
+  );
+}
+
 export function Footer() {
+  const [resources, setResources] = useState<EducatorResource[]>([]);
+
+  useEffect(() => {
+    getEducatorResources().then(setResources);
+  }, []);
+
+  console.log(resources);
+
   return (
     <footer className="relative z-10 bg-neutral-dark-700 py-10">
       <div className="mx-6 max-w-5xl lg:mx-auto">
@@ -98,9 +137,7 @@ export function Footer() {
             Questions and Answers
           </Link>
           {/* TODO: Add link to resources for educators page */}
-          <Link href="/" className="cursor-pointer text-base text-neutral-100">
-            Resources for educators
-          </Link>
+          <DownloadResourcesLink resources={resources} />
           <Link href="/" className="cursor-pointer text-base text-neutral-100">
             Credits
           </Link>

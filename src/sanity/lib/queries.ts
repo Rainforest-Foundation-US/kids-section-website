@@ -1,6 +1,7 @@
 import { groq } from "next-sanity";
 
 import { client } from "./client";
+import { EducatorResource } from "../schemaTypes/educatorResource";
 
 export async function getVignettes() {
   const vignettes = await client.fetch(
@@ -40,4 +41,16 @@ export async function getMemoryGame() {
   );
 
   return memoryGame;
+}
+
+export async function getEducatorResources() {
+  const educatorResources = await client.fetch<EducatorResource[]>(
+    groq`*[_type == "educatorResource"]{
+      title,
+      description,
+      "link": link.asset->url,
+    }`,
+  );
+
+  return educatorResources;
 }
