@@ -50,7 +50,7 @@ function DownloadResourcesLink({
   return (
     <button
       onClick={onClick}
-      className="cursor-pointer text-base text-neutral-100"
+      className="cursor-pointer text-left text-base text-neutral-100"
     >
       Resources for educators
     </button>
@@ -109,7 +109,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
+        <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap children:mx-4 children:mb-2 md:flex-row">
           <a
             href="https://rainforestfoundation.org/"
             className="cursor-pointer text-base text-neutral-100"
