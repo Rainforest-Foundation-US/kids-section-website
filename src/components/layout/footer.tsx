@@ -8,6 +8,9 @@ import {
 } from "../icons/icons";
 import Link from "next/link";
 import { VercelLogo } from "../icons/vercel";
+import { getEducatorResources } from "@/sanity/lib/queries";
+import { useEffect, useState } from "react";
+import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
 
 export function VercelSponsorshipBanner() {
   return (
@@ -26,7 +29,41 @@ export function VercelSponsorshipBanner() {
   );
 }
 
+function DownloadResourcesLink({
+  resources,
+}: {
+  resources: EducatorResource[];
+}) {
+  const onClick = () => {
+    resources.forEach((resource, index) => {
+      setTimeout(() => {
+        const link = document.createElement("a");
+        link.href = resource.link;
+        link.download = resource.title;
+        document.body.appendChild(link); // Append to body to make it work in Firefox
+        link.click();
+        document.body.removeChild(link);
+      }, 200 * index);
+    });
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className="cursor-pointer text-left text-base text-neutral-100"
+    >
+      Resources for educators
+    </button>
+  );
+}
+
 export function Footer() {
+  const [resources, setResources] = useState<EducatorResource[]>([]);
+
+  useEffect(() => {
+    getEducatorResources().then(setResources);
+  }, []);
+
   return (
     <footer className="relative z-10 bg-neutral-dark-700 py-10">
       <div className="mx-6 max-w-5xl lg:mx-auto">
@@ -72,16 +109,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap justify-between children:mx-4 children:mb-2 md:flex-row">
+        <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap children:mx-4 children:mb-2 md:flex-row">
           <a
             href="https://rainforestfoundation.org/"
             className="cursor-pointer text-base text-neutral-100"
           >
             Foundation Main website
           </a>
-          <Link href="/" className="cursor-pointer text-base text-neutral-100">
-            Kids corner
-          </Link>
           <Link
             href="/about-the-amazon"
             className="cursor-pointer text-base text-neutral-100"
@@ -98,11 +132,12 @@ export function Footer() {
             href="/q-and-a"
             className="cursor-pointer text-base text-neutral-100"
           >
-            Q&A
+            Questions and Answers
           </Link>
           {/* TODO: Add link to resources for educators page */}
+          <DownloadResourcesLink resources={resources} />
           <Link href="/" className="cursor-pointer text-base text-neutral-100">
-            Resources for educatorss
+            Credits
           </Link>
         </div>
         <div className="text-xl font-semibold text-neutral-100">
