@@ -1096,7 +1096,12 @@ export function useGetAboutTheAmazonContent() {
       content: {
         type: "pick-the-image",
         data: {
+          leftSideContent: {
+            type: "sloth",
+            text: "Hint, there is more than one right answer!",
+          },
           wrap: true,
+          wideness: "xl",
           question:
             "Select the images that contain threats to the Amazon Rainforest.",
           options: [
@@ -1105,55 +1110,55 @@ export function useGetAboutTheAmazonContent() {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
-              reason: "",
+              reason: "This is Correct",
             },
             {
               imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
+              isCorrect: false,
               alt: "",
-              reason: "",
+              reason: "This is InCorrect",
             },
           ],
         },
