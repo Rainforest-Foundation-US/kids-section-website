@@ -512,46 +512,55 @@ export function useGetAboutTheAmazonContent() {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
           ],
         },
@@ -1079,6 +1088,74 @@ export function useGetAboutTheAmazonContent() {
         data: {
           wideness: "md",
           text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
+        },
+      },
+    },
+    {
+      type: "regular",
+      content: {
+        type: "pick-the-image",
+        data: {
+          wrap: true,
+          question:
+            "Select the images that contain threats to the Amazon Rainforest.",
+          options: [
+            // TODO: Use correct options + images
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "",
+            },
+          ],
         },
       },
     },

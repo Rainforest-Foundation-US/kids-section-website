@@ -17,6 +17,7 @@ interface Option {
   imageSrc: string | StaticImageData;
   alt: string;
   isCorrect: boolean;
+  reason: string;
 }
 
 interface PickTheImageOptionProps {
@@ -28,6 +29,8 @@ interface PickTheImageOptionProps {
 export function PickTheImageOption(props: PickTheImageOptionProps) {
   return (
     <button
+      type="button"
+      title={props.option.alt}
       disabled={props.disabled}
       className={clsx(
         "inline-block rounded-lg border-1 p-3 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75",
