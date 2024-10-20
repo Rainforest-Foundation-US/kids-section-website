@@ -25,7 +25,7 @@ export function PolymorphicLeftSideContent({
         {leftSideContent.text && (
           <p
             className={clsx(
-              "text-white lg:max-w-46 bg-primary-900 mt-2 max-h-36 text-wrap rounded-3xl border-8 border-neutral-100 p-4 text-center text-xl font-medium leading-8 text-neutral-100 lg:max-h-full",
+              "text-white mt-2 max-h-36 text-wrap rounded-3xl border-8 border-neutral-100 bg-primary-900 p-4 text-center text-xl font-medium leading-8 text-neutral-100 lg:max-h-full lg:max-w-46",
               recentOptionSelect &&
                 !recentOptionSelect.isCorrect &&
                 "bg-error-700",
@@ -55,7 +55,7 @@ interface Option {
   imageSrc: string | StaticImageData;
   alt: string;
   isCorrect: boolean;
-  reason: string;
+  reason?: string;
 }
 
 interface PickTheImageOptionProps {
@@ -135,7 +135,7 @@ export function PickTheImageActivity({
   return (
     <div
       className={clsx(
-        "relative flex max-w-4xl flex-col items-center space-y-6",
+        "max-w-4xl relative flex flex-col items-center space-y-6",
         wideness === "sm" && "max-w-[20rem]",
         wideness === "md" && "max-w-[30rem]",
         wideness === "lg" && "max-w-[40rem]",
