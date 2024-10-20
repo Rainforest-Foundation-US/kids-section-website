@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getVignettes } from "@/sanity/lib/queries";
+import { getPickImageGame, getVignettes } from "@/sanity/lib/queries";
 import { getMemoryGame } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -66,18 +66,22 @@ import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jp
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
+import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
+  const [pickImageGame, setPickImageGame] = React.useState<PickImageGameData>();
 
   React.useEffect(() => {
     async function getData() {
       const vignettesFromServer = await getVignettes();
       const memoryGameFromServer = await getMemoryGame();
+      const pickImageGameFromServer = await getPickImageGame();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer?.[0]);
+      setPickImageGame(pickImageGameFromServer?.[0]);
     }
 
     getData();

@@ -54,3 +54,23 @@ export async function getEducatorResources() {
 
   return educatorResources;
 }
+
+export async function getPickImageGame() {
+  const pickImageGame = await client.fetch(
+    groq`*[_type == "pickImageGame"]{
+      question,
+      "backgroundImage": backgroundImage.asset->url,
+      leftSideContent->{
+        hint
+      },
+      options[]{
+        "src": option.image.asset->url,
+        alt,
+        isCorrect,
+        reason,
+      },
+    }`,
+  );
+
+  return pickImageGame;
+}
