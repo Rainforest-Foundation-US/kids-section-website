@@ -75,3 +75,18 @@ export async function getPickImageGame() {
 
   return pickImageGame;
 }
+
+export async function getFaqs() {
+  const faqs = await client.fetch(
+    groq`*[_type == "faq"]{
+      entries[]{
+        question,
+        hint,
+        answer,
+        description
+      }
+    }`,
+  );
+
+  return faqs;
+}

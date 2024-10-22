@@ -1,6 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 import { useIsomorphicLayoutEffect } from "framer-motion";
-import { Tooltip } from "react-tooltip";
+
 import {
   ComposableMap,
   Geographies,
@@ -10,6 +11,7 @@ import {
 import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
 import { wrapTextToLength } from "@/utils/wrapTextToLength";
+import { Tooltip } from "react-tooltip";
 
 export interface MapWithMarkersOptions {
   /**
@@ -36,8 +38,7 @@ const mapAnnotationOffset = 5;
 export interface Marker {
   position: [number, number];
   text?: string;
-  // TODO: remove this prop and find a better solution for the hovering markers
-  hoverText?: string;
+  tooltipText?: string;
   orientation?:
     | "top-right"
     | "top-left"
@@ -48,13 +49,13 @@ export interface Marker {
 }
 
 function MapAnnotation(props: Marker) {
-  const textRef = useRef<SVGTextElement>(null);
-  const markerLines = useMemo(
+  const textRef = React.useRef<SVGTextElement>(null);
+  const markerLines = React.useMemo(
     () => wrapTextToLength(props?.text ?? "", 17),
     [props.text],
   );
 
-  const [bbox, setBbox] = useState<{
+  const [bbox, setBbox] = React.useState<{
     width: number;
     height: number;
   }>({
@@ -112,58 +113,70 @@ function MapAnnotation(props: Marker) {
       break;
   }
 
-  /* TODO:  find a better solution for the hovering markers */
-  const hoverProps = props.hoverText
+  const tooltipProps = props.tooltipText
     ? {
-        "data-tooltip-id": "marker-tooltip",
-        "data-tooltip-content": props?.hoverText,
+        "data-tooltip-id": props.tooltipText,
+        "data-tooltip-html": ReactDOMServer.renderToStaticMarkup(
+          <div>
+            <div className="text-lg font-bold">{props.tooltipText}</div>
+            <hr className="border-gray-300 my-2" />
+            <div className="text-gray-200 text-sm">
+              This is a description with some extra information. You can add
+              more content here.
+            </div>
+          </div>,
+        ),
       }
     : {};
+
   return (
-    <Marker
-      key={props.position[0] + "-" + props.position[1]}
-      coordinates={props.position}
-      {...hoverProps}
-    >
-      {props.text && (
-        <g transform={`translate(${groupPosition[0]}, ${groupPosition[1]})`}>
-          <rect
-            rx={4}
-            x={4}
-            y={4}
-            width={bbox.width}
-            height={bbox.height}
-            className="fill-shadow-gray"
-          />
+    <>
+      <Marker
+        key={props.position[0] + "-" + props.position[1]}
+        coordinates={props.position}
+        className="outline-none"
+        {...tooltipProps}
+      >
+        {props.text && (
+          <g transform={`translate(${groupPosition[0]}, ${groupPosition[1]})`}>
+            <rect
+              rx={4}
+              x={4}
+              y={4}
+              width={bbox.width}
+              height={bbox.height}
+              className="fill-shadow-gray"
+            />
 
-          <rect
-            rx={4}
-            x={0}
-            y={0}
-            width={bbox.width}
-            height={bbox.height}
-            className="fill-secondary-100 stroke-neutral-600 stroke-[0.5px]"
-          />
+            <rect
+              rx={4}
+              x={0}
+              y={0}
+              width={bbox.width}
+              height={bbox.height}
+              className="fill-secondary-100 stroke-neutral-600 stroke-[0.5px]"
+            />
 
-          <text
-            ref={textRef}
-            className="text-3xs font-semibold"
-            y={mapAnnotationPadding}
-          >
-            {markerLines.map((text, l) => (
-              <tspan x={mapAnnotationPadding} dy="1.25em" key={l}>
-                {text}
-              </tspan>
-            ))}
-          </text>
-        </g>
-      )}
+            <text
+              ref={textRef}
+              className="text-3xs font-semibold"
+              y={mapAnnotationPadding}
+            >
+              {markerLines.map((text, l) => (
+                <tspan x={mapAnnotationPadding} dy="1.25em" key={l}>
+                  {text}
+                </tspan>
+              ))}
+            </text>
+          </g>
+        )}
 
-      <circle r={4} cx={3} cy={3} fill="#00000018" />
-      <circle r={4} cx={2} cy={2} fill="#00000025" />
-      <circle r={5} fill="#FFF" />
-      <circle r={3} fill="#000" />
-    </Marker>
+        <circle r={4} cx={3} cy={3} fill="#00000018" />
+        <circle r={4} cx={2} cy={2} fill="#00000025" />
+        <circle r={5} fill="#FFF" />
+        <circle r={3} fill="#000" />
+      </Marker>
+    </>
   );
 }
 
@@ -269,13 +282,24 @@ export function MapWithMarkers({
             key={marker.position[0] + "-" + marker.position[1]}
             position={marker.position}
             text={marker.text}
-            hoverText={marker.hoverText}
+            tooltipText={marker.tooltipText}
           />
         ))}
       </ComposableMap>
 
-      {/* TODO:  find a better solution for the hovering markers */}
-      <Tooltip id="marker-tooltip" />
+      {markers?.map((marker) =>
+        marker.tooltipText ? (
+          <Tooltip
+            key={marker.tooltipText}
+            id={marker.tooltipText}
+            className="!w-48 !rounded-md !bg-neutral-100 !text-primary-700"
+            defaultIsOpen
+            globalCloseEvents={{
+              clickOutsideAnchor: true,
+            }}
+          />
+        ) : null,
+      )}
     </div>
   );
 }

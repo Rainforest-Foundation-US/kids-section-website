@@ -3,6 +3,7 @@ import { VignetteSchemaType } from "./vignette";
 import { MemoryGameSchemaType } from "./memoryGame";
 import { EducatorResource } from "./educatorResource";
 import { PickImageGameSchemaType } from "./pickImageGame";
+import { FaqSchemaType } from "./faq";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -10,5 +11,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     MemoryGameSchemaType,
     EducatorResource,
     PickImageGameSchemaType,
+    FaqSchemaType,
   ],
 };
