@@ -1,12 +1,13 @@
 import { QAndAButton } from "./buttons";
-import { qAndAContent } from "./constants";
+import { QAndAQuestion } from "./useGetContent";
 
 type Props = {
   activeQuestionI: number;
+  qAndAContent: QAndAQuestion[];
   itemClick: (index: number) => void;
 };
 
-export function QANav({ activeQuestionI, itemClick }: Props) {
+export function QANav({ activeQuestionI, qAndAContent, itemClick }: Props) {
   return (
     <nav
       className={`h-full overflow-hidden lg:h-[calc(100vh-theme(height.header))] lg:overflow-auto`}

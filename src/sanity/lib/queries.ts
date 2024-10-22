@@ -54,3 +54,18 @@ export async function getEducatorResources() {
 
   return educatorResources;
 }
+
+export async function getFaqs() {
+  const faqs = await client.fetch(
+    groq`*[_type == "faq"]{
+      entries[]{
+        question,
+        hint,
+        answer,
+        description
+      }
+    }`,
+  );
+
+  return faqs;
+}

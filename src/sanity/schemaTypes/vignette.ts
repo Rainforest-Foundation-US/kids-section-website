@@ -1,11 +1,11 @@
 import { VignetteSectionOptions } from "@/components/sections/vignette-section";
-import { ComponentIcon } from "@sanity/icons";
+import { ThLargeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const VignetteSchemaType = defineType({
   name: "vignette",
   title: "Vignette",
-  icon: ComponentIcon,
+  icon: ThLargeIcon,
   type: "document",
   fields: [
     defineField({
