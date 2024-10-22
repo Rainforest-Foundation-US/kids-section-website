@@ -4,14 +4,16 @@ import { Footer } from "@/components/layout/footer";
 import { NavBar } from "@/components/layout/nav";
 import { RegularSection } from "@/components/sections/regular-section";
 import { QANav } from "@/components/q-and-a/nav";
-import { qAndAContent } from "@/components/q-and-a/constants";
+import { useGetQAndAContent } from "@/components/q-and-a/useGetContent";
 import Head from "next/head";
 import { useRef, useState } from "react";
+import { PortableText } from "@portabletext/react";
 
 export default function QAndARoute() {
   const mainRef = useRef<HTMLDivElement>(null);
   const [activeQuestionI, setActiveQuestionI] = useState(0);
 
+  const qAndAContent = useGetQAndAContent();
   const activeQuestion = qAndAContent[activeQuestionI] ?? null;
 
   const navClick = (index: number) => {
@@ -34,7 +36,11 @@ export default function QAndARoute() {
           <NavBar />
 
           <div className="relative z-10 mx-6 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
-            <QANav activeQuestionI={activeQuestionI} itemClick={navClick} />
+            <QANav
+              activeQuestionI={activeQuestionI}
+              qAndAContent={qAndAContent}
+              itemClick={navClick}
+            />
 
             <div
               className="flex flex-1 flex-col justify-around space-y-6 pt-6 lg:flex-row lg:space-y-0"
@@ -61,12 +67,7 @@ export default function QAndARoute() {
                       {activeQuestion.answer}
                     </h2>
 
-                    <p
-                      className="whitespace-pre-line text-neutral-dark-700"
-                      dangerouslySetInnerHTML={{
-                        __html: activeQuestion.description,
-                      }}
-                    ></p>
+                    <PortableText value={activeQuestion.description} />
                   </section>
                 </>
               )}
