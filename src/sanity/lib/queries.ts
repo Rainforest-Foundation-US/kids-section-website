@@ -3,19 +3,44 @@ import { groq } from "next-sanity";
 import { client } from "./client";
 import { EducatorResource } from "../schemaTypes/educatorResource";
 
+export async function getHomePage() {
+  const homePage = await client.fetch(
+    groq`*[_type == "home"][0]{
+      welcomeMessage,
+      title,
+      subtitle,
+      discoverTheAmazonButtonLabel,
+      supportButtonLabel,
+      supportLinkUrl,
+      videoUrl,
+      description,
+      descriptionSubtitle,
+      polaroids[]->{
+        _id,
+        caption,
+        captionStyle,
+        image,
+        description,
+        imageAlignment
+      }
+    }`,
+  );
+
+  return homePage;
+}
 export async function getVignettes() {
   const vignettes = await client.fetch(
     groq`*[_type == "vignette"]{
-          name,
-          title,
-          subtitle,
-          "image": image{
-              alt,
-              "data": asset->url
-          },
-          imageAlignment,
-          body
-      }`,
+      name,
+      title,
+      subtitle,
+      "image": image{
+          alt,
+          "data": asset->url
+      },
+      imageAlignment,
+      body
+    }`,
   );
 
   return vignettes;
@@ -23,7 +48,7 @@ export async function getVignettes() {
 
 export async function getMemoryGame() {
   const memoryGame = await client.fetch(
-    groq`*[_type == "memoryGame"]{
+    groq`*[_type == "memoryGame"][0]{
       "backgroundImage": backgroundImage.asset->url,
       cards[]{
         "src": asset->url,
@@ -57,7 +82,7 @@ export async function getEducatorResources() {
 
 export async function getFaqs() {
   const faqs = await client.fetch(
-    groq`*[_type == "faq"]{
+    groq`*[_type == "faq"][0]{
       entries[]{
         question,
         hint,

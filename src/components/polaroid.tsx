@@ -6,9 +6,9 @@ import { useMemo } from "react";
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 
 export enum PolaroidCaptionStyle {
-  wrap,
-  wrapPreserveAspectRatio,
-  truncate,
+  wrap = "wrap",
+  wrapPreserveAspectRatio = "wrapPreserveAspectRatio",
+  truncate = "truncate",
 }
 
 interface PolaroidProps {
