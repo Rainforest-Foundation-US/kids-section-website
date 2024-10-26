@@ -4,6 +4,8 @@ import { MemoryGameSchemaType } from "./memoryGame";
 import { EducatorResource } from "./educatorResource";
 import { PickImageGameSchemaType } from "./pickImageGame";
 import { FaqSchemaType } from "./faq";
+import { PolaroidSchemaType } from "./polaroid";
+import { HomePageSchemaType } from "./home";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -12,5 +14,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     EducatorResource,
     PickImageGameSchemaType,
     FaqSchemaType,
+    PolaroidSchemaType,
+    HomePageSchemaType,
   ],
 };

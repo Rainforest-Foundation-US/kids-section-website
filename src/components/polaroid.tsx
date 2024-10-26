@@ -6,9 +6,9 @@ import { useMemo } from "react";
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 
 export enum PolaroidCaptionStyle {
-  wrap,
-  wrapPreserveAspectRation,
-  truncate,
+  wrap = "wrap",
+  wrapPreserveAspectRatio = "wrapPreserveAspectRatio",
+  truncate = "truncate",
 }
 
 interface PolaroidProps {
@@ -16,9 +16,9 @@ interface PolaroidProps {
   src: string | StaticImageData;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
-  shrinkOnResponsive?: boolean;
   verticalAlign?: "top" | "center" | "bottom";
 }
+
 export function Polaroid(props: PolaroidProps) {
   const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
 
@@ -27,7 +27,7 @@ export function Polaroid(props: PolaroidProps) {
   const lines = useMemo(() => {
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
-      props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRation
+      props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
     ) {
       return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
     }
@@ -54,14 +54,14 @@ export function Polaroid(props: PolaroidProps) {
     blurDataURL = props.src.blurDataURL;
   }
 
-  const shouldWrapPreserveAspectRation =
-    props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRation;
+  const shouldWrapPreserveAspectRatio =
+    props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
 
-  const textStartY = shouldWrapPreserveAspectRation
+  const textStartY = shouldWrapPreserveAspectRatio
     ? 127 - 16 * (lines.length - 1)
     : 127;
 
-  const svgHeight = shouldWrapPreserveAspectRation
+  const svgHeight = shouldWrapPreserveAspectRatio
     ? 132
     : 132 + (lines.length - 1) * 16;
   const imageHeight = textStartY - 17;

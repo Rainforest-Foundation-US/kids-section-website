@@ -81,6 +81,7 @@ export function useGetAboutTheAmazonContent() {
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer?.[0]);
+      setMemoryGame(memoryGameFromServer);
       setPickImageGame(pickImageGameFromServer?.[0]);
     }
 
@@ -1031,7 +1032,7 @@ export function useGetAboutTheAmazonContent() {
           {
             image: desert36,
             caption: "The hotter the planet is harder to live on!",
-            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRation,
+            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRatio,
           },
           {
             image: snowstorms36,
