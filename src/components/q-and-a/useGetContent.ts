@@ -15,7 +15,7 @@ export function useGetQAndAContent(): QAndAQuestion[] {
   React.useEffect(() => {
     async function getData() {
       const faqsFromServer = await getFaqs();
-      setFaqs(faqsFromServer[0].entries);
+      setFaqs(faqsFromServer);
     }
 
     getData();

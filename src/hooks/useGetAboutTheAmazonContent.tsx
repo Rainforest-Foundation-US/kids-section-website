@@ -77,7 +77,7 @@ export function useGetAboutTheAmazonContent() {
       const memoryGameFromServer = await getMemoryGame();
 
       setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer?.[0]);
+      setMemoryGame(memoryGameFromServer);
     }
 
     getData();

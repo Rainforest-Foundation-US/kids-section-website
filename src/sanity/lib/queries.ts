@@ -48,7 +48,7 @@ export async function getVignettes() {
 
 export async function getMemoryGame() {
   const memoryGame = await client.fetch(
-    groq`*[_type == "memoryGame"]{
+    groq`*[_type == "memoryGame"][0]{
       "backgroundImage": backgroundImage.asset->url,
       cards[]{
         "src": asset->url,
@@ -82,7 +82,7 @@ export async function getEducatorResources() {
 
 export async function getFaqs() {
   const faqs = await client.fetch(
-    groq`*[_type == "faq"]{
+    groq`*[_type == "faq"][0]{
       entries[]{
         question,
         hint,
