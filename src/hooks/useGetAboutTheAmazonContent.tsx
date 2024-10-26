@@ -895,11 +895,9 @@ export function useGetAboutTheAmazonContent() {
           text: "I see! People around the world need a healthy rainforest, just as much as my friends and I do!",
         },
       },
-      // TODO: Replace with sad-sloth
-
       subContent: {
         type: "illustration",
-        kind: "sitting-sloth",
+        kind: "sad-sloth",
       },
     },
     {

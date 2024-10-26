@@ -2,6 +2,7 @@ import clsx from "@/utils/clsx";
 import { wrapText, truncateText } from "@/utils/truncateText";
 import { StaticImageData } from "next/image";
 import { useMemo } from "react";
+import { RoundSlothIllustration } from "./activities-illustrations";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 
@@ -74,8 +75,11 @@ export function Polaroid(props: PolaroidProps) {
         props.className,
       )}
       viewBox={`0 0 140 ${svgHeight}`}
+      onClick={() => {
+        console.log("flip it");
+      }}
     >
-      {blurDataURL && (
+      {/* {blurDataURL && (
         <image
           x="0"
           y="0"
@@ -85,8 +89,8 @@ export function Polaroid(props: PolaroidProps) {
           width={140}
           height={noCaption ? 132 : imageHeight}
         />
-      )}
-      <image
+      )} */}
+      {/* <image
         x="0"
         y="0"
         style={style}
@@ -94,9 +98,33 @@ export function Polaroid(props: PolaroidProps) {
         href={imageSrc}
         width={140}
         height={noCaption ? 132 : imageHeight}
-      />
+      /> */}
 
-      {lines.map((caption, i) => (
+      <RoundSlothIllustration height={32} width={32} x={10} y={40} />
+
+      <text
+        className="text-md text-primary-400 [text-shadow:none]"
+        textAnchor="middle"
+        x={70}
+        y={32}
+      >
+        Title
+      </text>
+      <text
+        className="w-48 text-wrap text-4xs text-primary-400 [text-shadow:none]"
+        textAnchor="middle"
+        x={70}
+        y={48}
+      >
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book. It has survived not only five
+        centuries, but also the leap into electronic typesetting, remaining
+        essentially unchanged.
+      </text>
+
+      {/* {lines.map((caption, i) => (
         <text
           key={i}
           className="text-4xs [text-shadow:none]"
@@ -106,7 +134,7 @@ export function Polaroid(props: PolaroidProps) {
         >
           {caption}
         </text>
-      ))}
+      ))} */}
     </svg>
   );
 }
