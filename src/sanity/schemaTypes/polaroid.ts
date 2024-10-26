@@ -1,5 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { ImageIcon } from "@sanity/icons";
+import { PolaroidCaptionStyle } from "@/components/polaroid";
+import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 
 export const PolaroidSchemaType = defineType({
   name: "polaroid",
@@ -27,7 +29,6 @@ export const PolaroidSchemaType = defineType({
           { title: "Truncate", value: "truncate" },
         ],
       },
-      initialValue: "wrap",
     }),
     defineField({
       name: "image",
@@ -83,3 +84,12 @@ export const PolaroidSchemaType = defineType({
     },
   },
 });
+
+export interface PolaroidData {
+  _id: string;
+  image: SanityImageObject;
+  description?: string;
+  imageAlignment: "top" | "center" | "bottom";
+  caption: string;
+  captionStyle?: PolaroidCaptionStyle;
+}
