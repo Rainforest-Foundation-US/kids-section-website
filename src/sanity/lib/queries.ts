@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 
 import { client } from "./client";
 import { EducatorResource } from "../schemaTypes/educatorResource";
+import { PickImageGameData } from "../schemaTypes/pickImageGame";
 
 export async function getHomePage() {
   const homePage = await client.fetch(
@@ -78,6 +79,26 @@ export async function getEducatorResources() {
   );
 
   return educatorResources;
+}
+
+export async function getPickImageGame() {
+  const pickImageGame = await client.fetch<PickImageGameData[]>(
+    groq`*[_type == "pickImageGame"]{
+      question,
+      "backgroundImage": backgroundImage.asset->url,
+      leftSideContent->{
+        hint
+      },
+      options[]{
+        "src": option.image.asset->url,
+        alt,
+        isCorrect,
+        reason,
+      },
+    }`,
+  );
+
+  return pickImageGame;
 }
 
 export async function getFaqs() {
