@@ -80,7 +80,6 @@ export function useGetAboutTheAmazonContent() {
       const pickImageGameFromServer = await getPickImageGame();
 
       setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer?.[0]);
       setMemoryGame(memoryGameFromServer);
       setPickImageGame(pickImageGameFromServer?.[0]);
     }
