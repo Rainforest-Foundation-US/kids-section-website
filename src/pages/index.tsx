@@ -205,7 +205,7 @@ export default function Home() {
                       src={polaroid.src}
                       caption={polaroid.caption}
                       captionStyle={
-                        PolaroidCaptionStyle.wrapPreserveAspectRation
+                        PolaroidCaptionStyle.wrapPreserveAspectRatio
                       }
                       verticalAlign={polaroid.verticalAlign}
                     />
