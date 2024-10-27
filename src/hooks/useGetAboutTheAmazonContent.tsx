@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getVignettes } from "@/sanity/lib/queries";
+import { getPickImageGame, getVignettes } from "@/sanity/lib/queries";
 import { getMemoryGame } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -66,18 +66,22 @@ import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jp
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
+import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
+  const [pickImageGame, setPickImageGame] = React.useState<PickImageGameData>();
 
   React.useEffect(() => {
     async function getData() {
       const vignettesFromServer = await getVignettes();
       const memoryGameFromServer = await getMemoryGame();
+      const pickImageGameFromServer = await getPickImageGame();
 
       setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer?.[0]);
+      setMemoryGame(memoryGameFromServer);
+      setPickImageGame(pickImageGameFromServer?.[0]);
     }
 
     getData();
@@ -512,46 +516,55 @@ export function useGetAboutTheAmazonContent() {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
           ],
         },
@@ -1016,7 +1029,7 @@ export function useGetAboutTheAmazonContent() {
           {
             image: desert36,
             caption: "The hotter the planet is harder to live on!",
-            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRation,
+            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRatio,
           },
           {
             image: snowstorms36,
@@ -1077,6 +1090,79 @@ export function useGetAboutTheAmazonContent() {
         data: {
           wideness: "md",
           text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
+        },
+      },
+    },
+    {
+      type: "regular",
+      content: {
+        type: "pick-the-image",
+        data: {
+          leftSideContent: {
+            type: "sloth",
+            text: "Hint, there is more than one right answer!",
+          },
+          wrap: true,
+          wideness: "xl",
+          question:
+            "Select the images that contain threats to the Amazon Rainforest.",
+          options: [
+            // TODO: Use correct options + images
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: false,
+              alt: "",
+              reason: "This is InCorrect",
+            },
+          ],
         },
       },
     },

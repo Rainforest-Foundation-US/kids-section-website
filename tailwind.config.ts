@@ -135,6 +135,7 @@ export default {
         600: "#5A9A36",
         700: "#066406",
         800: "#002900",
+        900: "#17260D",
       },
       secondary: {
         100: "#FAF5EE",
@@ -182,6 +183,9 @@ export default {
       2: 2,
       3: 3,
       4: 4,
+    },
+    maxWidth: {
+      46: "11.5rem",
     },
     extend: {
       borderWidth: {
