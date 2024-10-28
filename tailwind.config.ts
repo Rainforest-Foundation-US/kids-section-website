@@ -184,9 +184,6 @@ export default {
       3: 3,
       4: 4,
     },
-    maxWidth: {
-      46: "11.5rem",
-    },
     extend: {
       borderWidth: {
         1: "1px",
