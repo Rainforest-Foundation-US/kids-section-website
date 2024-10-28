@@ -1,10 +1,13 @@
 import clsx from "@/utils/clsx";
 import { wrapText, truncateText } from "@/utils/truncateText";
+import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import { useMemo } from "react";
-import { RoundSlothIllustration } from "./activities-illustrations";
+import React from "react";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
+const DEFAULT_POLAROID_HEIGHT = 132;
+const DEFAULT_POLAROID_WIDTH = 140;
 
 export enum PolaroidCaptionStyle {
   wrap = "wrap",
@@ -18,6 +21,7 @@ interface PolaroidProps {
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
   verticalAlign?: "top" | "center" | "bottom";
+  isFlipped?: boolean;
 }
 
 export function Polaroid(props: PolaroidProps) {
@@ -63,68 +67,43 @@ export function Polaroid(props: PolaroidProps) {
     : 127;
 
   const svgHeight = shouldWrapPreserveAspectRatio
-    ? 132
-    : 132 + (lines.length - 1) * 16;
+    ? DEFAULT_POLAROID_HEIGHT
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
   const imageHeight = textStartY - 17;
 
   return (
-    <svg
+    <motion.svg
       className={clsx(
-        "transition-all duration-75",
-        "box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        "absolute box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
         props.className,
       )}
-      viewBox={`0 0 140 ${svgHeight}`}
-      onClick={() => {
-        console.log("flip it");
+      style={{
+        backfaceVisibility: "hidden",
       }}
+      viewBox={`0 0 ${DEFAULT_POLAROID_WIDTH} ${svgHeight}`}
     >
-      {/* {blurDataURL && (
+      {blurDataURL && (
         <image
           x="0"
           y="0"
           style={style}
           preserveAspectRatio="xMidYMax slice"
           href={blurDataURL}
-          width={140}
-          height={noCaption ? 132 : imageHeight}
+          width={DEFAULT_POLAROID_WIDTH}
+          height={noCaption ? DEFAULT_POLAROID_HEIGHT : imageHeight}
         />
-      )} */}
-      {/* <image
+      )}
+      <image
         x="0"
         y="0"
         style={style}
         preserveAspectRatio="xMidYMax slice"
         href={imageSrc}
-        width={140}
-        height={noCaption ? 132 : imageHeight}
-      /> */}
+        width={DEFAULT_POLAROID_WIDTH}
+        height={noCaption ? DEFAULT_POLAROID_HEIGHT : imageHeight}
+      />
 
-      <RoundSlothIllustration height={32} width={32} x={10} y={40} />
-
-      <text
-        className="text-md text-primary-400 [text-shadow:none]"
-        textAnchor="middle"
-        x={70}
-        y={32}
-      >
-        Title
-      </text>
-      <text
-        className="w-48 text-wrap text-4xs text-primary-400 [text-shadow:none]"
-        textAnchor="middle"
-        x={70}
-        y={48}
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged.
-      </text>
-
-      {/* {lines.map((caption, i) => (
+      {lines.map((caption, i) => (
         <text
           key={i}
           className="text-4xs [text-shadow:none]"
@@ -134,7 +113,90 @@ export function Polaroid(props: PolaroidProps) {
         >
           {caption}
         </text>
-      ))} */}
-    </svg>
+      ))}
+    </motion.svg>
+  );
+}
+
+export function PolaroidBack(props: PolaroidProps) {
+  const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
+
+  const noCaption = !props.caption?.length;
+
+  const lines = useMemo(() => {
+    if (
+      props.captionStyle === PolaroidCaptionStyle.wrap ||
+      props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
+    ) {
+      return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
+    }
+
+    const [caption, truncated] = truncateText(
+      captionFromProps,
+      MAX_POLAROID_LENGTH,
+    );
+
+    return [caption + (truncated ? "..." : "")];
+  }, [props.captionStyle, captionFromProps]);
+
+  const shouldWrapPreserveAspectRatio =
+    props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
+
+  const textStartY = shouldWrapPreserveAspectRatio
+    ? 127 - 16 * (lines.length - 1)
+    : 127;
+
+  const svgHeight = shouldWrapPreserveAspectRatio
+    ? DEFAULT_POLAROID_HEIGHT
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
+  const imageHeight = textStartY - 17;
+
+  return (
+    <motion.svg
+      className={clsx(
+        "absolute box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        props.className,
+      )}
+      style={{
+        backfaceVisibility: "hidden",
+        transform: "rotateY(180deg)", // Rotate the back side
+      }}
+      viewBox={`0 0 ${DEFAULT_POLAROID_WIDTH} ${svgHeight}`}
+    >
+      <svg>
+        <rect
+          className="fill-primary-400 p-2"
+          width={DEFAULT_POLAROID_WIDTH}
+          height={noCaption ? DEFAULT_POLAROID_HEIGHT : imageHeight}
+        />
+        {wrapText(
+          `Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s`,
+          MAX_POLAROID_LENGTH + 4,
+        ).map((caption, i) => (
+          <text
+            key={i}
+            className="text-6xs fill-neutral-100 [text-shadow:none]"
+            x={3}
+            y={10 + 12 * i}
+          >
+            {caption}
+          </text>
+        ))}
+      </svg>
+
+      {lines.map((caption, i) => (
+        <text
+          key={i}
+          className="text-4xs [text-shadow:none]"
+          textAnchor="middle"
+          x={70}
+          y={textStartY + 16 * i}
+        >
+          {caption}
+        </text>
+      ))}
+    </motion.svg>
   );
 }

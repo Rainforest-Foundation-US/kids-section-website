@@ -62,7 +62,7 @@ export async function getMemoryGame() {
         "height": asset->metadata.dimensions.height,
         "width": asset->metadata.dimensions.width,
       },
-      "backCardImageAlt": backCard.asset->alt,
+      "backCardImageAlt": backCard.alt,
     }`,
   );
 

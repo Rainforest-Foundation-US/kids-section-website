@@ -18,7 +18,7 @@ import {
   useResetHint,
   useSetHint,
 } from "../controlled-activity-hint";
-import { Polaroid, PolaroidCaptionStyle } from "../polaroid";
+import { Polaroid, PolaroidBack, PolaroidCaptionStyle } from "../polaroid";
 import { ActivitySectionDivider } from "../sections";
 import { RegularSection } from "../sections/regular-section";
 import {
@@ -252,6 +252,8 @@ function PolymorphicContent({ content }: { content: Content }) {
 }
 
 function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   if (subContent.type === "postcard") {
     return (
       <div className="relative">
@@ -284,24 +286,48 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
             className={clsx(
               i % 2 === 0 ? "-rotate-[6.5deg]" : "rotate-[6.5deg]",
               "transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105",
+              "flex cursor-pointer",
             )}
+            style={{ perspective: "1000px" }}
+            onClick={() => setIsFlipped(!isFlipped)}
           >
-            <Polaroid
-              className="w-[16rem] lg:w-[18rem]"
-              src={polaroid.image}
-              caption={polaroid.caption}
-              captionStyle={polaroid.captionStyle}
-            />
+            <motion.div
+              animate={{ rotateY: isFlipped ? 180 : 0 }}
+              className="relative h-full w-[16rem] lg:w-[18rem]"
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+            >
+              <Polaroid
+                className="w-[16rem] lg:w-[18rem]"
+                src={polaroid.image}
+                caption={polaroid.caption}
+                captionStyle={polaroid.captionStyle}
+                isFlipped={isFlipped}
+              />
 
-            {polaroid.navButton && (
-              <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
-                <GoToTargetSection
-                  direction={polaroid.navButton.direction}
-                  target={polaroid.navButton.target}
-                  disabled={false}
-                />
-              </div>
-            )}
+              <PolaroidBack
+                className="w-[16rem] lg:w-[18rem]"
+                src={polaroid.image}
+                caption={polaroid.caption}
+                captionStyle={polaroid.captionStyle}
+                isFlipped={isFlipped}
+              />
+
+              {polaroid.navButton && (
+                <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
+                  <GoToTargetSection
+                    direction={polaroid.navButton.direction}
+                    target={polaroid.navButton.target}
+                    disabled={false}
+                  />
+                </div>
+              )}
+            </motion.div>
           </li>
         ))}
       </ul>
