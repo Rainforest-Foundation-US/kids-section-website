@@ -21,10 +21,37 @@ interface PolaroidProps {
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
   verticalAlign?: "top" | "center" | "bottom";
+  description?: string;
   isFlipped?: boolean;
 }
 
-export function Polaroid(props: PolaroidProps) {
+export function Polaroid({ isFlipped, ...rest }: PolaroidProps) {
+  if (rest.description) {
+    return (
+      <motion.div
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <PolaroidFront {...rest} />
+
+        <PolaroidBack {...rest} />
+
+        {/* Invisible back side in order to make the parent div grow to the SVG size. Absolute SVGs cannot achieve this. */}
+        <PolaroidBack className="invisible relative" {...rest} />
+      </motion.div>
+    );
+  }
+
+  return <PolaroidFront className="relative" {...rest} />;
+}
+
+function PolaroidFront(props: PolaroidProps) {
   const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
 
   const noCaption = !props.caption?.length;
@@ -74,7 +101,7 @@ export function Polaroid(props: PolaroidProps) {
   return (
     <motion.svg
       className={clsx(
-        "absolute box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        "absolute box-content h-auto w-full border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
         props.className,
       )}
       style={{
@@ -118,7 +145,7 @@ export function Polaroid(props: PolaroidProps) {
   );
 }
 
-export function PolaroidBack(props: PolaroidProps) {
+function PolaroidBack(props: PolaroidProps) {
   const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
 
   const noCaption = !props.caption?.length;
@@ -154,7 +181,7 @@ export function PolaroidBack(props: PolaroidProps) {
   return (
     <motion.svg
       className={clsx(
-        "absolute box-content flex min-w-[272px] flex-col border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
+        "absolute box-content h-auto w-full border-1 border-neutral-600 bg-neutral-100 p-2 shadow-app-lg shadow-shadow-gray lg:p-4",
         props.className,
       )}
       style={{
@@ -163,28 +190,25 @@ export function PolaroidBack(props: PolaroidProps) {
       }}
       viewBox={`0 0 ${DEFAULT_POLAROID_WIDTH} ${svgHeight}`}
     >
-      <svg>
+      <g>
         <rect
           className="fill-primary-400 p-2"
           width={DEFAULT_POLAROID_WIDTH}
           height={noCaption ? DEFAULT_POLAROID_HEIGHT : imageHeight}
         />
-        {wrapText(
-          `Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s`,
-          MAX_POLAROID_LENGTH + 4,
-        ).map((caption, i) => (
-          <text
-            key={i}
-            className="text-6xs fill-neutral-100 [text-shadow:none]"
-            x={3}
-            y={10 + 12 * i}
-          >
-            {caption}
-          </text>
-        ))}
-      </svg>
+        {wrapText(props.description ?? "", MAX_POLAROID_LENGTH + 4).map(
+          (caption, i) => (
+            <text
+              key={i}
+              className="fill-neutral-100 text-6xs [text-shadow:none]"
+              x={3}
+              y={10 + 12 * i}
+            >
+              {caption}
+            </text>
+          ),
+        )}
+      </g>
 
       {lines.map((caption, i) => (
         <text
