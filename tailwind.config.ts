@@ -90,6 +90,8 @@ export default {
       sans: ["var(--app-font)"],
     },
     fontSize: {
+      "6xs": ["0.45rem", { lineHeight: "1rem" }],
+      "5xs": ["0.5rem", { lineHeight: "1rem" }],
       "4xs": ["0.55rem", { lineHeight: "1rem" }],
       "3xs": ["0.6rem", { lineHeight: "1rem" }],
       "2xs": ["0.65rem", { lineHeight: "1rem" }],

@@ -135,7 +135,7 @@ export function PickTheImageActivity({
   return (
     <div
       className={clsx(
-        "max-w-4xl relative flex flex-col items-center space-y-6",
+        "relative flex max-w-4xl flex-col items-center space-y-6",
         wideness === "sm" && "max-w-[20rem]",
         wideness === "md" && "max-w-[30rem]",
         wideness === "lg" && "max-w-[40rem]",

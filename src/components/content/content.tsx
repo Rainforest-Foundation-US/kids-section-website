@@ -252,12 +252,14 @@ function PolymorphicContent({ content }: { content: Content }) {
 }
 
 function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
+  const [isFlipped, setIsFlipped] = useState(-1);
+
   if (subContent.type === "postcard") {
     return (
       <div className="relative">
         <Image
           placeholder="blur"
-          className="mt-12 flex w-full max-w-[814px] -rotate-[4deg] flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
+          className="mt-12 flex w-full max-w-[814px] -rotate-[4deg] scale-100 cursor-pointer flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray transition-all duration-150 hover:rotate-0 hover:scale-105 lg:p-4"
           src={subContent.image}
           aria-hidden
           alt=""
@@ -265,7 +267,7 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
 
         {subContent.polaroid && (
           <Polaroid
-            className="absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] hover:z-10 hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]"
+            className="absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]"
             src={subContent.polaroid.image}
             caption={subContent.polaroid.caption}
             captionStyle={subContent.polaroid.captionStyle}
@@ -283,14 +285,24 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
             key={i}
             className={clsx(
               i % 2 === 0 ? "-rotate-[6.5deg]" : "rotate-[6.5deg]",
-              "transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105",
+              "flex w-64 cursor-pointer transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105 lg:w-72 xl:w-96",
             )}
+            style={{ perspective: "1000px" }}
+            onClick={() =>
+              setIsFlipped((prev) => {
+                if (i === prev) {
+                  return -1;
+                }
+
+                return i;
+              })
+            }
           >
             <Polaroid
-              className="w-[16rem] lg:w-[18rem]"
               src={polaroid.image}
               caption={polaroid.caption}
               captionStyle={polaroid.captionStyle}
+              isFlipped={isFlipped === i}
             />
 
             {polaroid.navButton && (
