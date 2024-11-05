@@ -145,7 +145,10 @@ const contentFirstPart: PagerContent[] = [
     },
     subContent: {
       type: "postcard",
-      image: indigenousCommunity,
+      postcard: {
+        image: indigenousCommunity,
+        alt: "Indigenous community",
+      },
     },
   },
   {
