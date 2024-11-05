@@ -1,6 +1,6 @@
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import { useState } from "react";
 import {
   RoundSlothIllustration,
@@ -58,6 +58,7 @@ import {
 } from "./polymorphic-illustration";
 import { toArrayMaybe } from "@/utils/toArray";
 import { isDefined } from "@/utils/isDefined";
+import { Postcard } from "../postcard";
 
 type PreContent =
   | {
@@ -130,10 +131,16 @@ type PolaroidData = {
   captionStyle?: PolaroidCaptionStyle;
 };
 
+type PostcardData = {
+  image: string | StaticImageData;
+  alt: string;
+  description?: string;
+};
+
 type SubContent =
   | {
       type: "postcard";
-      image: string | StaticImageData;
+      postcard: PostcardData;
       polaroid?: PolaroidData;
     }
   | {
@@ -253,21 +260,24 @@ function PolymorphicContent({ content }: { content: Content }) {
 
 function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
   const [isFlipped, setIsFlipped] = useState(-1);
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   if (subContent.type === "postcard") {
     return (
-      <div className="relative">
-        <Image
-          placeholder="blur"
-          className="mt-12 flex w-full max-w-[814px] -rotate-[4deg] scale-100 cursor-pointer flex-col bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray transition-all duration-150 hover:rotate-0 hover:scale-105 lg:p-4"
-          src={subContent.image}
-          aria-hidden
-          alt=""
-        />
+      <div className="relative mt-12">
+        <div
+          onMouseEnter={() => setIsMouseOver(true)}
+          onMouseLeave={() => setIsMouseOver(false)}
+        >
+          <Postcard {...subContent.postcard} />
+        </div>
 
         {subContent.polaroid && (
           <Polaroid
-            className="absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]"
+            className={clsx(
+              "absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] transition-all duration-150 hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]",
+              isMouseOver && "right-[-50%] lg:right-[-40%] xl:right-[-25%]",
+            )}
             src={subContent.polaroid.image}
             caption={subContent.polaroid.caption}
             captionStyle={subContent.polaroid.captionStyle}
@@ -354,14 +364,6 @@ function ContentSection(props: {
     "center";
 
   if (props.section.type === "regular" || props.section.type === "wavy") {
-    const subContentArray = props.section.subContent
-      ? Array.isArray(props.section.subContent)
-        ? props.section.subContent
-        : [props.section.subContent]
-      : undefined;
-
-    const lastSubContent = subContentArray?.[subContentArray.length - 1];
-
     const children = (
       <>
         {props.section.type === "regular" && props.number !== 0 && (
@@ -414,12 +416,7 @@ function ContentSection(props: {
 
             {!props.section.noNextButton &&
               props.section.content.type !== "pager" && (
-                <HomeGoToSectionButton
-                  className={clsx(
-                    "relative z-10 mt-4",
-                    lastSubContent?.type === "postcard" && "-translate-y-40",
-                  )}
-                />
+                <HomeGoToSectionButton className={clsx("relative z-10 mt-4")} />
               )}
           </div>
         </SectionContent>

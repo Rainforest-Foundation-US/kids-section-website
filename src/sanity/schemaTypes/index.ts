@@ -5,6 +5,7 @@ import { EducatorResource } from "./educatorResource";
 import { PickImageGameSchemaType } from "./pickImageGame";
 import { FaqSchemaType } from "./faq";
 import { PolaroidSchemaType } from "./polaroid";
+import { PostcardSchemaType } from "./postcard";
 import { HomePageSchemaType } from "./home";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -15,6 +16,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     PickImageGameSchemaType,
     FaqSchemaType,
     PolaroidSchemaType,
+    PostcardSchemaType,
     HomePageSchemaType,
   ],
 };

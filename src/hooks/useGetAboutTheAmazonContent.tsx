@@ -71,7 +71,7 @@ import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
-  const [pickImageGame, setPickImageGame] = React.useState<PickImageGameData>();
+  const [, setPickImageGame] = React.useState<PickImageGameData>();
 
   React.useEffect(() => {
     async function getData() {
@@ -118,7 +118,12 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: tropicalRainRiver1,
+        postcard: {
+          image: tropicalRainRiver1,
+          alt: "Tropical rainforest",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        },
         polaroid: {
           image: frogInRain2,
         },
@@ -147,7 +152,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: fillInTheBlank2,
+        postcard: {
+          image: fillInTheBlank2,
+          alt: "Rainforest",
+        },
       },
     },
     {
@@ -216,7 +224,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: antarctica3,
+        postcard: {
+          image: antarctica3,
+          alt: "Antarctica",
+        },
       },
     },
     {
@@ -682,7 +693,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: biodiversityCollage21,
+        postcard: {
+          image: biodiversityCollage21,
+          alt: "Biodiversity collage",
+        },
       },
     },
     {
@@ -698,7 +712,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: familyOnBoat22,
+        postcard: {
+          image: familyOnBoat22,
+          alt: "Family on boat",
+        },
       },
     },
     ...vignettes.map((vignette) => ({
@@ -895,7 +912,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: monkeys31,
+        postcard: {
+          image: monkeys31,
+          alt: "Monkeys",
+        },
       },
     },
     {
