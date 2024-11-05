@@ -15,6 +15,7 @@ export function Postcard({ image, alt, description }: PostcardProps) {
 
   return (
     <div className="mx-auto w-full max-w-[814px]">
+      {/* Invisible image to make the parent grow to the child size, since that cannot be done with absolute positioning */}
       <Image className="invisible w-full" src={image} alt="" />
 
       <div
@@ -36,15 +37,21 @@ export function Postcard({ image, alt, description }: PostcardProps) {
             transformStyle: "preserve-3d",
           }}
         >
-          <PolaroidFront image={image} />
-          {description && <PolaroidBack />}
+          <PolaroidFront image={image} alt={alt} />
+          {description && <PolaroidBack description={description} />}
         </motion.div>
       </div>
     </div>
   );
 }
 
-function PolaroidFront({ image }: { image: string | StaticImageData }) {
+function PolaroidFront({
+  image,
+  alt,
+}: {
+  image: string | StaticImageData;
+  alt: string;
+}) {
   return (
     <Image
       placeholder="blur"
@@ -54,12 +61,12 @@ function PolaroidFront({ image }: { image: string | StaticImageData }) {
         backfaceVisibility: "hidden",
       }}
       aria-hidden
-      alt="" // Add: alt
+      alt={alt}
     />
   );
 }
 
-function PolaroidBack() {
+function PolaroidBack({ description }: { description: string }) {
   return (
     <div
       className="absolute flex h-full w-full flex-col justify-center bg-secondary-100 p-2 align-middle text-primary-600 shadow-app-lg shadow-shadow-gray lg:p-4"
@@ -69,17 +76,7 @@ function PolaroidBack() {
       }}
     >
       <RoundSlothIllustration className="self-center" />
-      <div className="overflow-auto p-4">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-        ever since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </div>
+      <div className="overflow-auto p-4">{description}</div>
     </div>
   );
 }
