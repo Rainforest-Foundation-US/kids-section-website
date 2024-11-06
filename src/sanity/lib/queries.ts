@@ -95,8 +95,9 @@ export async function getStatisticsCards() {
   );
 
   return statisticsCards;
+}
 
-  export async function getPickImageGame() {
+export async function getPickImageGame() {
   const pickImageGame = await client.fetch<PickImageGameData[]>(
     groq`*[_type == "pickImageGame"]{
       question,

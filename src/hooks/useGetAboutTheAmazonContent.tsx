@@ -1,7 +1,11 @@
 import * as React from "react";
 
-import { getPickImageGame, getVignettes, getStatisticsCards, getMemoryGame } from "@/sanity/lib/queries";
-import { getMemoryGame } from "@/sanity/lib/queries";
+import {
+  getPickImageGame,
+  getVignettes,
+  getStatisticsCards,
+  getMemoryGame,
+} from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
 
