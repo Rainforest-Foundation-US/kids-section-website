@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 
 import { client } from "./client";
 import { EducatorResource } from "../schemaTypes/educatorResource";
+import { StatisticsCard } from "../schemaTypes/statisticsCard";
 import { PickImageGameData } from "../schemaTypes/pickImageGame";
 
 export async function getHomePage() {
@@ -79,6 +80,21 @@ export async function getEducatorResources() {
   );
 
   return educatorResources;
+}
+
+export async function getStatisticsCards() {
+  const statisticsCards = await client.fetch<StatisticsCard[]>(
+    groq`*[_type == "statisticsCard"]{
+      title,
+      description,
+      "image":  image{
+        alt,
+        "data": asset->url
+      },
+    }`,
+  );
+
+  return statisticsCards;
 }
 
 export async function getPickImageGame() {
