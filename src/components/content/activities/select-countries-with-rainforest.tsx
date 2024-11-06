@@ -1,5 +1,4 @@
 import React from "react";
-import union from "lodash/union";
 import difference from "lodash/difference";
 import random from "lodash/random";
 
@@ -36,21 +35,21 @@ const COUNTRIES_WITH_AMAZON_RAINFOREST = [
 const COUNTRY_MARKERS: Record<string, Marker> = {
   BRA: {
     position: [-50, -14],
-    hoverText: "Brazil",
+    tooltipText: "Brazil",
   },
   COL: {
     position: [-74, 4.5],
-    hoverText: "Colombia",
+    tooltipText: "Colombia",
   },
   BOL: {
     position: [-63.5, -16.2],
-    hoverText: "Bolivia",
+    tooltipText: "Bolivia",
   },
-  GUY: { position: [-58.9, 4.8], hoverText: "Guyana" },
-  SUR: { position: [-56, 4], hoverText: "Suriname" },
-  PER: { position: [-75, -9.2], hoverText: "Peru" },
-  ECU: { position: [-78, -1.8], hoverText: "Ecuador" },
-  VEN: { position: [-66.5, 6.5], hoverText: "Venezuela" },
+  GUY: { position: [-58.9, 4.8], tooltipText: "Guyana" },
+  SUR: { position: [-56, 4], tooltipText: "Suriname" },
+  PER: { position: [-75, -9.2], tooltipText: "Peru" },
+  ECU: { position: [-78, -1.8], tooltipText: "Ecuador" },
+  VEN: { position: [-66.5, 6.5], tooltipText: "Venezuela" },
 };
 
 type SelectCountriesWithRainforestActivityProps = React.PropsWithChildren<
@@ -66,13 +65,9 @@ export function SelectCountriesWithRainforestActivity({
   const [highlightedCountries, setHighlightedCountries] = React.useState<
     string[]
   >([]);
+  const [markers, setMarkers] = React.useState<Marker[]>([]);
   const [hintedCountries, setHintedCountries] = React.useState<string[]>([]);
   const [errorCountries, setErrorCountries] = React.useState<string[]>([]);
-
-  const markers: Marker[] = React.useMemo(
-    () => highlightedCountries.map((name) => COUNTRY_MARKERS[name]),
-    [highlightedCountries],
-  );
 
   const correctCountriesLeft = React.useMemo(
     () => difference(COUNTRIES_WITH_AMAZON_RAINFOREST, highlightedCountries),
@@ -85,7 +80,12 @@ export function SelectCountriesWithRainforestActivity({
     }
 
     if (COUNTRIES_WITH_AMAZON_RAINFOREST.includes(answer)) {
-      setHighlightedCountries((prev) => union(prev, [answer]));
+      if (!correctCountriesLeft.includes(answer)) {
+        return;
+      }
+
+      setHighlightedCountries((prev) => [...prev, answer]);
+      setMarkers((prev) => [...prev, COUNTRY_MARKERS[answer]]);
       setErrorCountries([]);
       setHintedCountries([]);
     } else {

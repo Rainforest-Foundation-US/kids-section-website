@@ -3,6 +3,11 @@ import { VignetteSchemaType } from "./vignette";
 import { MemoryGameSchemaType } from "./memoryGame";
 import { EducatorResource } from "./educatorResource";
 import { StatisticsCard } from "./statisticsCard";
+import { PickImageGameSchemaType } from "./pickImageGame";
+import { FaqSchemaType } from "./faq";
+import { PolaroidSchemaType } from "./polaroid";
+import { PostcardSchemaType } from "./postcard";
+import { HomePageSchemaType } from "./home";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -10,5 +15,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     MemoryGameSchemaType,
     EducatorResource,
     StatisticsCard,
+    PickImageGameSchemaType,
+    FaqSchemaType,
+    PolaroidSchemaType,
+    PostcardSchemaType,
+    HomePageSchemaType,
   ],
 };

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getStatisticsCards, getVignettes } from "@/sanity/lib/queries";
+import { getPickImageGame, getVignettes, getStatisticsCards, getMemoryGame } from "@/sanity/lib/queries";
 import { getMemoryGame } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -67,12 +67,14 @@ import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
+import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
   const [statisticsCards, setStatisticsCards] =
     React.useState<StatisticsCard[]>();
+  const [, setPickImageGame] = React.useState<PickImageGameData>();
 
   React.useEffect(() => {
     async function getData() {
@@ -83,6 +85,11 @@ export function useGetAboutTheAmazonContent() {
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer?.[0]);
       setStatisticsCards(statisticsCardsFromServer);
+      const pickImageGameFromServer = await getPickImageGame();
+
+      setVignettes(vignettesFromServer);
+      setMemoryGame(memoryGameFromServer);
+      setPickImageGame(pickImageGameFromServer?.[0]);
     }
 
     getData();
@@ -119,7 +126,12 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: tropicalRainRiver1,
+        postcard: {
+          image: tropicalRainRiver1,
+          alt: "Tropical rainforest",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        },
         polaroid: {
           image: frogInRain2,
         },
@@ -148,7 +160,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: fillInTheBlank2,
+        postcard: {
+          image: fillInTheBlank2,
+          alt: "Rainforest",
+        },
       },
     },
     {
@@ -217,7 +232,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: antarctica3,
+        postcard: {
+          image: antarctica3,
+          alt: "Antarctica",
+        },
       },
     },
     {
@@ -517,46 +535,55 @@ export function useGetAboutTheAmazonContent() {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
             {
               imageSrc: pictureOfTheAmazon1,
               isCorrect: true,
               alt: "",
+              reason: "",
             },
           ],
         },
@@ -674,7 +701,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: biodiversityCollage21,
+        postcard: {
+          image: biodiversityCollage21,
+          alt: "Biodiversity collage",
+        },
       },
     },
     {
@@ -690,7 +720,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: familyOnBoat22,
+        postcard: {
+          image: familyOnBoat22,
+          alt: "Family on boat",
+        },
       },
     },
     ...vignettes.map((vignette) => ({
@@ -895,7 +928,10 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        image: monkeys31,
+        postcard: {
+          image: monkeys31,
+          alt: "Monkeys",
+        },
       },
     },
     {
@@ -908,11 +944,9 @@ export function useGetAboutTheAmazonContent() {
           text: "I see! People around the world need a healthy rainforest, just as much as my friends and I do!",
         },
       },
-      // TODO: Replace with sad-sloth
-
       subContent: {
         type: "illustration",
-        kind: "sitting-sloth",
+        kind: "sad-sloth",
       },
     },
     {
@@ -1031,7 +1065,7 @@ export function useGetAboutTheAmazonContent() {
           {
             image: desert36,
             caption: "The hotter the planet is harder to live on!",
-            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRation,
+            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRatio,
           },
           {
             image: snowstorms36,
@@ -1092,6 +1126,79 @@ export function useGetAboutTheAmazonContent() {
         data: {
           wideness: "md",
           text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
+        },
+      },
+    },
+    {
+      type: "regular",
+      content: {
+        type: "pick-the-image",
+        data: {
+          leftSideContent: {
+            type: "sloth",
+            text: "Hint, there is more than one right answer!",
+          },
+          wrap: true,
+          wideness: "xl",
+          question:
+            "Select the images that contain threats to the Amazon Rainforest.",
+          options: [
+            // TODO: Use correct options + images
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: true,
+              alt: "",
+              reason: "This is Correct",
+            },
+            {
+              imageSrc: pictureOfTheAmazon1,
+              isCorrect: false,
+              alt: "",
+              reason: "This is InCorrect",
+            },
+          ],
         },
       },
     },
