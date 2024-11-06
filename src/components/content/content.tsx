@@ -58,6 +58,8 @@ import {
 } from "./polymorphic-illustration";
 import { toArrayMaybe } from "@/utils/toArray";
 import { isDefined } from "@/utils/isDefined";
+import { StatisticsScreen } from "./activities/statistics-screen";
+import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 
 type PreContent =
   | {
@@ -103,6 +105,11 @@ type MemoryGameActivityData = {
   data: MemoryGameActivityOptions;
 };
 
+type StatisticsActivityData = {
+  type: "statistics";
+  data: { cards: StatisticsCard[] };
+};
+
 type SingleContent =
   | PlainContentData
   | FillInTheBlankActivityData
@@ -110,7 +117,8 @@ type SingleContent =
   | PickTheOptionActivityData
   | PickTheImageActivityData
   | MemoryGameActivityData
-  | SelectCountriesWithRainforestActivityData;
+  | SelectCountriesWithRainforestActivityData
+  | StatisticsActivityData;
 
 type PagerData = {
   type: "pager";
@@ -246,6 +254,10 @@ function PolymorphicContent({ content }: { content: Content }) {
 
   if (content.type === "pager") {
     return <ContentPager contentList={content.data} enableGoToNextSection />;
+  }
+
+  if (content.type === "statistics") {
+    return <StatisticsScreen cards={content.data.cards} />;
   }
 
   return null;

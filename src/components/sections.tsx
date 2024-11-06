@@ -131,7 +131,7 @@ export function ActivitySection(props: {
         data-section-name={props.name}
         ref={ref}
         className={clsx(
-          "relative flex max-h-[80rem] min-h-[840px] snap-center flex-col py-8",
+          "relative flex min-h-[840px] snap-center flex-col py-8",
           props.className,
         )}
         style={props.style}

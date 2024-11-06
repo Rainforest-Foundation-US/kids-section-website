@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getVignettes } from "@/sanity/lib/queries";
+import { getStatisticsCards, getVignettes } from "@/sanity/lib/queries";
 import { getMemoryGame } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -66,18 +66,23 @@ import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jp
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
+import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
+  const [statisticsCards, setStatisticsCards] =
+    React.useState<StatisticsCard[]>();
 
   React.useEffect(() => {
     async function getData() {
       const vignettesFromServer = await getVignettes();
       const memoryGameFromServer = await getMemoryGame();
+      const statisticsCardsFromServer = await getStatisticsCards();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer?.[0]);
+      setStatisticsCards(statisticsCardsFromServer);
     }
 
     getData();
@@ -721,7 +726,15 @@ export function useGetAboutTheAmazonContent() {
         },
       ],
     },
-    // TODO: Add a section with statistics about biodiversity in the Amazon
+    {
+      type: "regular",
+      content: {
+        type: "statistics",
+        data: {
+          cards: statisticsCards ?? [],
+        },
+      },
+    },
     {
       type: "wavy",
       content: {
