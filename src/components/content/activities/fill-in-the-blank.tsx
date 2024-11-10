@@ -245,6 +245,17 @@ export function FillInTheBlankActivity({
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
 
+  const textColor = useMemo(() => {
+    switch (props.textColorStyle) {
+      case "dark":
+        return "text-neutral-dark-700";
+      case "light":
+        return "text-neutral-100";
+      case "primary":
+        return "text-primary-100";
+    }
+  }, [props.textColorStyle]);
+
   const onSelectOption = useCallback(
     (option: ParsedBlankOption) => {
       const updatedAnswers = { ...answers };
@@ -318,12 +329,7 @@ export function FillInTheBlankActivity({
       )}
 
       <p
-        className={clsx(
-          "mb-2 max-w-[814px] text-4xl leading-snug",
-          props.textColorStyle === "dark" && "text-neutral-dark-700",
-          props.textColorStyle === "light" && "text-neutral-100",
-          props.textColorStyle === "primary" && "text-primary-100",
-        )}
+        className={clsx("mb-2 max-w-[814px] text-4xl leading-snug", textColor)}
       >
         {props.preText}
       </p>
@@ -335,9 +341,7 @@ export function FillInTheBlankActivity({
               "max-w-3xl select-none text-center text-3xl leading-loose md:text-4xl",
               (!props.fontWeightStyle || props.fontWeightStyle === "bold") &&
                 "font-bold",
-              props.textColorStyle === "dark" && "text-neutral-dark-700",
-              props.textColorStyle === "light" && "text-neutral-100",
-              props.textColorStyle === "primary" && "text-primary-100",
+              textColor,
             )}
           >
             {questions.map((blank) => {
@@ -360,14 +364,7 @@ export function FillInTheBlankActivity({
           </p>
 
           {props.subText && (
-            <p
-              className={clsx(
-                "mt-2 text-4xl leading-snug",
-                props.textColorStyle === "dark" && "text-neutral-dark-700",
-                props.textColorStyle === "light" && "text-neutral-100",
-                props.textColorStyle === "primary" && "text-primary-100",
-              )}
-            >
+            <p className={clsx("mt-2 text-4xl leading-snug", textColor)}>
               {props.subText}
             </p>
           )}
