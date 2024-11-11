@@ -79,7 +79,7 @@ export function useGetAboutTheAmazonContent() {
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
   const [statisticsCards, setStatisticsCards] =
     React.useState<StatisticsCard[]>();
-  const [, setPickImageGame] = React.useState<PickImageGameData>();
+  const [pickImageGame, setPickImageGame] = React.useState<PickImageGameData>();
 
   React.useEffect(() => {
     async function getData() {
@@ -94,7 +94,7 @@ export function useGetAboutTheAmazonContent() {
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
-      setPickImageGame(pickImageGameFromServer?.[0]);
+      setPickImageGame(pickImageGameFromServer);
     }
 
     getData();
@@ -1134,76 +1134,28 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    {
+    pickImageGame && {
       type: "regular",
       content: {
         type: "pick-the-image",
         data: {
           leftSideContent: {
             type: "sloth",
-            text: "Hint, there is more than one right answer!",
+            text:
+              pickImageGame.leftSideContent?.hint ||
+              "Hint, there is more than one right answer!",
           },
           wrap: true,
           wideness: "xl",
           question:
+            pickImageGame.question ||
             "Select the images that contain threats to the Amazon Rainforest.",
-          options: [
-            // TODO: Use correct options + images
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "This is Correct",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: false,
-              alt: "",
-              reason: "This is InCorrect",
-            },
-          ],
+          options: pickImageGame.options.map((option) => ({
+            imageSrc: option.src,
+            isCorrect: option.isCorrect,
+            alt: option.alt,
+            reason: option.reason,
+          })),
         },
       },
     },

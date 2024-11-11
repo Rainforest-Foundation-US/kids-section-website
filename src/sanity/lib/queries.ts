@@ -98,15 +98,15 @@ export async function getStatisticsCards() {
 }
 
 export async function getPickImageGame() {
-  const pickImageGame = await client.fetch<PickImageGameData[]>(
-    groq`*[_type == "pickImageGame"]{
+  const pickImageGame = await client.fetch<PickImageGameData>(
+    groq`*[_type == "pickImageGame"][0]{
       question,
       "backgroundImage": backgroundImage.asset->url,
-      leftSideContent->{
+      leftSideContent {
         hint
       },
       options[]{
-        "src": option.image.asset->url,
+        "src": src.asset->url,
         alt,
         isCorrect,
         reason,
