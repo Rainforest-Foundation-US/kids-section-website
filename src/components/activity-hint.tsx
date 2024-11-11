@@ -95,6 +95,7 @@ export function ActivityHint({
         hintPositioning === "relative" &&
           props.hintPosition === "end" &&
           "flex-row space-x-4",
+        props.noSloth && "mt-4",
       )}
     >
       {!props.noSloth && (

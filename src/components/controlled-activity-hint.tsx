@@ -42,7 +42,9 @@ export const useResetHint = () => {
   }, [setHint, setHintStatus]);
 };
 
-export function ControlledActivityHint() {
+export function ControlledActivityHint(props: {
+  noSloth?: boolean;
+}) {
   const hint = useAtomValue(hintAtom);
   const hintStatus = useAtomValue(hintStatusAtom);
 
@@ -51,6 +53,7 @@ export function ControlledActivityHint() {
       hint={hint}
       hintPosition="center"
       status={hintStatus}
+      noSloth={props.noSloth}
       hintSize="xs"
     />
   );

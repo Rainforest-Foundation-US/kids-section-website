@@ -3,10 +3,17 @@ import clsx from "@/utils/clsx";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
+import { StaticImageData } from "next/image";
+import { Postcard } from "@/components/postcard";
 
 export interface PickTheOptionActivityOptions {
   question: string;
   options: Omit<Option, "id">[];
+  postCardContent?: {
+    image: string | StaticImageData;
+    alt: string;
+    description?: string;
+  };
   wrap?: boolean;
   rotateOptions?: boolean;
 }
@@ -97,6 +104,12 @@ export function PickTheOptionActivity({
         className="text-center text-4xl leading-snug"
         dangerouslySetInnerHTML={{ __html: props.question }}
       />
+
+      {props.postCardContent && (
+        <div className="relative py-4">
+          <Postcard {...props.postCardContent} />
+        </div>
+      )}
 
       {props.children}
 
