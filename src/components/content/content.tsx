@@ -124,6 +124,7 @@ type SingleContent =
 type PagerData = {
   type: "pager";
   data: SingleContent[];
+  noSloth?: boolean;
 };
 
 type ContentNavigationButton = {
@@ -260,7 +261,13 @@ function PolymorphicContent({ content }: { content: Content }) {
   }
 
   if (content.type === "pager") {
-    return <ContentPager contentList={content.data} enableGoToNextSection />;
+    return (
+      <ContentPager
+        contentList={content.data}
+        noSloth={content.noSloth}
+        enableGoToNextSection
+      />
+    );
   }
 
   if (content.type === "statistics") {
@@ -522,6 +529,7 @@ export function ContentPager(props: {
   contentList: PagerContent[];
   initialIndex?: number;
   enableGoToNextSection?: boolean;
+  noSloth?: boolean;
 }) {
   const [index, setIndex] = useState(props.initialIndex ?? 0);
   const resetHint = useResetHint();
@@ -545,7 +553,7 @@ export function ContentPager(props: {
   return (
     <>
       <div className="inset-y-0 z-10 mb-4 flex items-center">
-        <ControlledActivityHint />
+        <ControlledActivityHint noSloth={props.noSloth} />
       </div>
 
       <div
