@@ -1,15 +1,14 @@
 import { WavySeparator } from "../activities-illustrations";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 import { ActivitySection } from "../sections";
 
 export interface WavySectionProps {
-  number: number;
-  name?: string;
+  name?: SectionName;
   children?: React.ReactNode;
 }
 export function WavySection(props: WavySectionProps) {
   return (
     <ActivitySection
-      number={props.number}
       name={props.name}
       className="relative z-10 my-0 max-h-full min-h-[0px] py-0 text-primary-100"
     >

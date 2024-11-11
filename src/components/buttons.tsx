@@ -3,6 +3,7 @@ import { IconRight } from "./icons/icons";
 import { useHomeSectionNavigation } from "./sections";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 type NavLinkProps = Omit<PropsOf<typeof Link>, "className"> & {
   className?: string | ((isActive: boolean) => string);
@@ -54,34 +55,21 @@ export function GoToButton({
 }
 
 interface GoToTargetSectionProps extends Omit<GoToButtonProps, "onClick"> {
-  target: "next" | string;
+  target: SectionName;
 }
 export function GoToTargetSection({
   target,
   ...props
 }: GoToTargetSectionProps) {
-  const { onGoNext, onGoToSection } = useHomeSectionNavigation();
-  const onClick = () => {
-    if (target === "next") onGoNext();
-    else onGoToSection(target);
-  };
-
-  return <GoToButton {...props} onClick={onClick} />;
-}
-
-export function HomeGoToSectionButton(props: { className?: string }) {
-  const { onGoNext } = useHomeSectionNavigation();
+  const { onGoToSection } = useHomeSectionNavigation();
 
   return (
-    <button
-      className={clsx(
-        "shadow-green-shadow flex h-20 w-20 items-center justify-center rounded-full border-2 border-primary-100 bg-primary-500",
-        props.className,
-      )}
-      onClick={onGoNext}
-    >
-      <IconRight />
-    </button>
+    <GoToButton
+      {...props}
+      onClick={() => {
+        onGoToSection(target);
+      }}
+    />
   );
 }
 

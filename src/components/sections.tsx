@@ -1,144 +1,98 @@
 import { useEvent } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useRef } from "react";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 const HomeSectionContext = createContext<
   React.RefObject<HTMLDivElement>[] | undefined
 >(undefined);
 
-type HomeSectionDispatchFn = (
-  ref: React.RefObject<HTMLDivElement>,
-  action: "add" | "remove",
-  sectionNumber: number,
-) => void;
-const HomeSectionDispatchContext = createContext<
-  HomeSectionDispatchFn | undefined
->(undefined);
-
-const HomeSectionIndexContext = createContext<number | null>(null);
-
 interface HomeSectionNavigationValue {
-  onGoToSection: (sectionId: number | string) => void;
-  onGoNext: () => void;
+  onGoToSection: (sectionId: SectionName, callback?: () => void) => void;
 }
 
 export function HomeSectionsContainer(props: { children: React.ReactNode }) {
-  const observer = useRef<IntersectionObserver | null>();
-
-  const [sections, setSections] = useState<React.RefObject<HTMLDivElement>[]>(
-    [],
-  );
-
-  const dispatch: HomeSectionDispatchFn = useCallback(
-    (ref, action, sectionNumber) => {
-      if (!ref.current) return;
-
-      setSections((prev) => {
-        if (!ref.current) return prev;
-
-        const newSections = Array.from(prev);
-
-        if (action === "add") {
-          observer.current?.observe(ref.current);
-          newSections.splice(sectionNumber, 0, ref);
-        } else {
-          const index = newSections.indexOf(ref);
-          observer.current?.unobserve(ref.current);
-          newSections.splice(index, 1);
-        }
-
-        return newSections;
-      });
-    },
-    [],
-  );
-
   return (
-    <HomeSectionContext.Provider value={sections}>
-      <HomeSectionDispatchContext.Provider value={dispatch}>
-        {props.children}
-      </HomeSectionDispatchContext.Provider>
+    <HomeSectionContext.Provider value={[]}>
+      {props.children}
     </HomeSectionContext.Provider>
   );
 }
 
 export function useHomeSectionNavigation() {
-  const context = useContext(HomeSectionIndexContext);
+  const context = useContext(HomeSectionContext);
 
   if (context === null) {
     throw new Error(
-      "useHomeSectionNavigation must be used within ActivitySection",
+      "useHomeSectionNavigation must be used within HomeSectionContext",
     );
   }
 
-  const focusOnSection = useEvent((sectionId: number | string) => {
-    const section = document.querySelector(
-      `[data-section-number="${sectionId}"], [data-section-name="${sectionId}"]`,
-    );
+  const focusOnSection = useEvent(
+    (sectionId: SectionName, callback?: () => void) => {
+      const section = document.querySelector(
+        `[data-section-name="${sectionId}"]`,
+      );
 
-    if (!section) return;
+      if (!section) return;
 
-    section.scrollIntoView({ behavior: "smooth" });
-  });
+      const handleScrollEnd = () => {
+        callback?.();
+        window.removeEventListener("scrollend", handleScrollEnd);
+      };
 
-  const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
-    (sectionId) => {
-      focusOnSection(sectionId);
+      window.addEventListener("scrollend", handleScrollEnd);
+
+      section.scrollIntoView({ behavior: "smooth" });
     },
   );
 
-  const onGoNext: HomeSectionNavigationValue["onGoNext"] = useEvent(() => {
-    const next = context + 1;
-    onGoToSection(next);
-  });
+  const onGoToSection: HomeSectionNavigationValue["onGoToSection"] = useEvent(
+    (sectionId: SectionName, callback?: () => void) => {
+      focusOnSection(sectionId, callback);
+    },
+  );
 
   return {
     onGoToSection,
-    onGoNext,
   };
 }
 
 export function ActivitySection(props: {
-  number: number;
   name?: string;
   className?: string;
   children?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
-  const sectionNumber = props.number;
-  const dispatch = useContext(HomeSectionDispatchContext);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (dispatch) {
-      dispatch(ref, "add", sectionNumber);
+    const observer = new IntersectionObserver(() => {}, { threshold: 0.5 });
+    const currentRef = ref.current;
 
-      return () => dispatch(ref, "remove", sectionNumber);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
-  }, [dispatch, sectionNumber]);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   return (
-    <HomeSectionIndexContext.Provider value={sectionNumber}>
-      <section
-        data-section-number={sectionNumber}
-        data-section-name={props.name}
-        ref={ref}
-        className={clsx(
-          "relative flex min-h-[840px] snap-center flex-col py-8",
-          props.className,
-        )}
-        style={props.style}
-      >
-        {props.children}
-      </section>
-    </HomeSectionIndexContext.Provider>
+    <section
+      data-section-name={props.name}
+      ref={ref}
+      className={clsx(
+        "relative flex min-h-[840px] snap-center flex-col py-8",
+        props.className,
+      )}
+      style={props.style}
+    >
+      {props.children}
+    </section>
   );
 }
 

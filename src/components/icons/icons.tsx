@@ -253,27 +253,27 @@ export function MapIcon(props: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_1537_2153)">
+      <g clipPath="url(#clip0_1537_2153)">
         <path
           d="M1.5 6V22L8.5 18L16.5 22L23.5 18V2L16.5 6L8.5 2L1.5 6Z"
           stroke="#5A9A36"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M8.5 2V18"
           stroke="#5A9A36"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M16.5 6V22"
           stroke="#5A9A36"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, PortableTextBlock } from "sanity";
 import { ClipboardImageIcon } from "@sanity/icons";
 
 export const StatisticsCard = defineType({
@@ -50,8 +50,8 @@ export const StatisticsCard = defineType({
 });
 
 export interface StatisticsCard {
-  title: string;
-  description: string;
+  title: PortableTextBlock[];
+  description: PortableTextBlock[];
   image: {
     data: string;
     alt: string;

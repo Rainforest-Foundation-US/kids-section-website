@@ -213,7 +213,7 @@ export function MapWithMarkers({
               in="BLURRED_BLACK_FLOOD"
               result="VIGNETTE_MASK"
             >
-              <feFuncA type="table" tableValues="0 0 0 0 1% 100%" />
+              <feFuncA type="table" tableValues="0 0 0 0 0.01 1" />
             </feComponentTransfer>
             <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
           </filter>
@@ -229,7 +229,7 @@ export function MapWithMarkers({
               in="BLURRED_BLACK_FLOOD"
               result="VIGNETTE_MASK"
             >
-              <feFuncA type="table" tableValues="0 0 0 0.2 3% 100%" />
+              <feFuncA type="table" tableValues="0 0 0 0.2 0.03 1" />
             </feComponentTransfer>
             <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
           </filter>

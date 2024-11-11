@@ -7,12 +7,12 @@ export function StatisticsScreen({ cards }: { cards: StatisticsCard[] }) {
     <div className="flex flex-col flex-wrap gap-8 px-6 py-8 md:flex-row">
       {cards?.map((card) => (
         <div
-          key={card.title}
+          key={card.title[0]._key}
           className="flex h-[480px] w-72 flex-col gap-4 border border-neutral-600 bg-complementary-100 p-12 text-sm shadow-[6px_6px_0px_0px_rgba(60,62,55,0.08)] sm:even:mt-24"
         >
           <Image
             src={card.image.data}
-            alt={card.title}
+            alt={card.image.alt}
             width={194}
             height={160}
           />

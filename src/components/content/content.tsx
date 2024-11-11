@@ -8,11 +8,7 @@ import {
   WavySeparator,
 } from "../activities-illustrations";
 import { Badge } from "../badge";
-import {
-  GoToButton,
-  GoToTargetSection,
-  HomeGoToSectionButton,
-} from "../buttons";
+import { GoToButton, GoToTargetSection } from "../buttons";
 import {
   ControlledActivityHint,
   useResetHint,
@@ -61,6 +57,7 @@ import { isDefined } from "@/utils/isDefined";
 import { StatisticsScreen } from "./activities/statistics-screen";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { Postcard } from "../postcard";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 type PreContent =
   | {
@@ -130,7 +127,7 @@ type PagerData = {
 type ContentNavigationButton = {
   alignment: "bottom-middle";
   direction: "left" | "right" | "bottom";
-  target: "next" | string;
+  target: SectionName;
   caption?: string;
 };
 
@@ -175,7 +172,7 @@ export type DividerStyle = "dark";
 export type SectionWithContent =
   | {
       type: "regular" | "wavy";
-      name?: string;
+      name: SectionName;
       align?: "left" | "center" | "right";
       layout?: "space-between" | "packed";
       textColorStyle?: "dark" | "light" | "light-shadows";
@@ -188,19 +185,18 @@ export type SectionWithContent =
         height: number;
         className: string;
       }[];
-      noNextButton?: boolean;
       preContent?: PreContent;
       content: Content;
       subContent?: SubContent | SubContent[];
     }
   | {
       type: "vignette";
-      name: string;
+      name: SectionName;
       content: VignetteSectionOptions;
     }
   | {
       type: "divider";
-      name?: string;
+      name?: SectionName;
       style: DividerStyle;
     };
 
@@ -338,7 +334,7 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
               <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
                 <GoToTargetSection
                   direction={polaroid.navButton.direction}
-                  target={polaroid.navButton.target}
+                  target={polaroid.navButton.target as SectionName}
                   disabled={false}
                 />
               </div>
@@ -374,8 +370,8 @@ function ContentSection(props: {
   nextSectionType: SectionWithContent["type"] | undefined;
   previousDividerStyle?: DividerStyle;
   nextDividerStyle?: DividerStyle;
-  number: number;
-  name?: string;
+  index: number;
+  name?: SectionName;
 }) {
   const sectionAlign =
     ((props.section.type === "regular" || props.section.type === "wavy") &&
@@ -385,7 +381,7 @@ function ContentSection(props: {
   if (props.section.type === "regular" || props.section.type === "wavy") {
     const children = (
       <>
-        {props.section.type === "regular" && props.number !== 0 && (
+        {props.section.type === "regular" && props.index !== 0 && (
           <ActivitySectionDivider
             variant={
               props.previousSectionType === "wavy"
@@ -432,11 +428,6 @@ function ContentSection(props: {
               toArrayMaybe(props.section.subContent)?.map((subContent, i) => (
                 <PolymorphicSubContent key={i} subContent={subContent} />
               ))}
-
-            {!props.section.noNextButton &&
-              props.section.content.type !== "pager" && (
-                <HomeGoToSectionButton className={clsx("relative z-10 mt-4")} />
-              )}
           </div>
         </SectionContent>
       </>
@@ -450,7 +441,6 @@ function ContentSection(props: {
           )}
 
           <RegularSection
-            number={props.number}
             name={props.name}
             textColorStyle={props.section.textColorStyle}
             backgroundImage={props.section.background}
@@ -464,9 +454,7 @@ function ContentSection(props: {
     } else {
       return (
         <div className="bg-complementary-100">
-          <WavySection number={props.number} name={props.name}>
-            {children}
-          </WavySection>
+          <WavySection name={props.name}>{children}</WavySection>
         </div>
       );
     }
@@ -475,11 +463,7 @@ function ContentSection(props: {
   if (props.section.type === "vignette") {
     return (
       <div className="relative z-10">
-        <VignetteSection
-          number={props.number}
-          name={props.name}
-          {...props.section.content}
-        />
+        <VignetteSection name={props.name} {...props.section.content} />
 
         {props.nextSectionType !== "vignette" && (
           <WavySeparator color="#1E1F1B" direction="down" />
@@ -505,7 +489,7 @@ export function ContentSectionList(props: {
           return (
             <ContentSection
               key={i}
-              number={i}
+              index={i}
               name={section.name}
               section={section}
               previousSectionType={previousSection?.type}
@@ -595,9 +579,7 @@ export function ContentPager(props: {
             />
           )}
 
-          {shouldGoToNextSection ? (
-            <HomeGoToSectionButton />
-          ) : (
+          {!shouldGoToNextSection && (
             <GoToButton
               key="right"
               direction="right"

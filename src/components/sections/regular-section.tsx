@@ -3,6 +3,7 @@ import { ActivitySection } from "../sections";
 
 import mainBackground from "@/assets/activities/1-background.png";
 import clsx from "@/utils/clsx";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 export interface RegularSectionProps {
   children?: React.ReactNode;
@@ -11,13 +12,11 @@ export interface RegularSectionProps {
   backgroundColor?: string;
   fullScreen?: boolean;
   textColorStyle?: "dark" | "light" | "light-shadows";
-  number: number;
-  name?: string;
+  name?: SectionName;
 }
 export function RegularSection(props: RegularSectionProps) {
   return (
     <ActivitySection
-      number={props.number}
       name={props.name}
       className={clsx(
         "py-0",
