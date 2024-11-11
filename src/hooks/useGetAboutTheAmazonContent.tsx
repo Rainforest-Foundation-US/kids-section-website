@@ -46,6 +46,7 @@ import backgroundHouse13 from "@/assets/activities/13-background-house.png";
 
 import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
 import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
+import manOnBoat from "@/assets/activities/man-on-boat.png";
 import monkeys31 from "@/assets/activities/31-monkeys.jpg";
 
 import backgroundForest33 from "@/assets/activities/33-background-forest.jpg";
@@ -1353,6 +1354,182 @@ export function useGetAboutTheAmazonContent() {
             },
           ],
         },
+      },
+    },
+    {
+      type: "wavy",
+      preContent: {
+        type: "emoji",
+        emoji: "thinking-face",
+      },
+      content: {
+        type: "pager",
+        noSloth: true,
+        data: [
+          {
+            type: "pick-the-option",
+            data: {
+              wrap: true,
+              question: "Is this actor deforesting the<br/>Amazon?",
+              postCardContent: {
+                image: manOnBoat,
+                alt: "Man on boat",
+              },
+              options: [
+                {
+                  text: "True",
+                  isCorrect: false,
+                },
+                {
+                  text: "False",
+                  isCorrect: true,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      type: "wavy",
+      content: {
+        type: "pager",
+        data: [
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "Climate change and deforestation",
+              question: "<blank /> major, human-caused",
+              subText: "threats to the Amazon.",
+              numberToOptions: {
+                0: {
+                  options: ["Are", "Are not"],
+                  correctOptionPosition: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText:
+                "When we burn fuels that send greenhouse gasses into the atmosphere",
+              question: "we <blank /> our planet.",
+              numberToOptions: {
+                0: {
+                  options: ["Heat up", "Cool down"],
+                  correctOptionPosition: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "",
+              question: "Rainforest <blank /> carbon dioxide,",
+              subText: "and act as a solution to climate change.",
+              numberToOptions: {
+                0: {
+                  options: ["Absorb", "Release"],
+                  correctOptionPosition: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "Deforestation is when we",
+              question: "<blank /> trees in the forest, on purpose.",
+              numberToOptions: {
+                0: {
+                  options: ["Plant", "Cut down"],
+                  correctOptionPosition: 2,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "Deforestation makes it",
+              question: "<blank /> for forest to be",
+              subText: "a climate solution",
+              numberToOptions: {
+                0: {
+                  options: ["Possible", "Impossible"],
+                  correctOptionPosition: 2,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "The rainforest makes our planet",
+              question: "a <blank /> place to live",
+              numberToOptions: {
+                0: {
+                  options: ["safer", "dangerous"],
+                  correctOptionPosition: 1,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "",
+              question: "People <blank /> depend",
+              subText: "on the rainforest for clean water.",
+              numberToOptions: {
+                0: {
+                  options: ["in the rainforest", "all around the world"],
+                  correctOptionPosition: 2,
+                },
+              },
+            },
+          },
+          {
+            type: "fill-in-the-blank",
+            data: {
+              textColorStyle: "primary",
+              fontWeightStyle: "regular",
+              isNeutral: true,
+              preText: "Indigenous people are",
+              question: "the <blank /> protectors",
+              subText: "of biodiversity and rainforests.",
+              numberToOptions: {
+                0: {
+                  options: ["Are", "Are not"],
+                  correctOptionPosition: 1,
+                },
+              },
+            },
+          },
+        ],
       },
     },
   ];
