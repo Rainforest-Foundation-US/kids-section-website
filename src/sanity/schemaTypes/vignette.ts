@@ -1,3 +1,4 @@
+import { SectionName } from "@/components/content/content";
 import { VignetteSectionOptions } from "@/components/sections/vignette-section";
 import { ThLargeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
@@ -89,5 +90,5 @@ export const VignetteSchemaType = defineType({
 });
 
 export interface VignetteSection extends VignetteSectionOptions {
-  name: string;
+  name: SectionName;
 }

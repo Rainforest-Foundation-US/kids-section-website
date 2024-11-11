@@ -8,7 +8,7 @@ import { FaqSchemaType } from "./faq";
 import { PolaroidSchemaType } from "./polaroid";
 import { PostcardSchemaType } from "./postcard";
 import { HomePageSchemaType } from "./home";
-
+import { NavigationSchemaType } from "./navigation";
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     VignetteSchemaType,
@@ -20,5 +20,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     PolaroidSchemaType,
     PostcardSchemaType,
     HomePageSchemaType,
+    NavigationSchemaType,
   ],
 };

@@ -73,6 +73,122 @@ import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 
+// TODOK: use this type as a name of each schema type
+export const sectionNames = [
+  { title: "what-is-the-amazon", value: "what-is-the-amazon" as const },
+  {
+    title: "rainforests-are-exactly-what-you-d-think",
+    value: "rainforests-are-exactly-what-you-d-think" as const,
+  },
+  {
+    title: "rainforests-have-a-lot-of-rain",
+    value: "rainforests-have-a-lot-of-rain" as const,
+  },
+  {
+    title: "three-most-important-rainforests",
+    value: "three-most-important-rainforests" as const,
+  },
+  {
+    title: "why-no-rainforests-in-antarctica",
+    value: "why-no-rainforests-in-antarctica" as const,
+  },
+  {
+    title: "rainforests-are-among-the-oldest",
+    value: "rainforests-are-among-the-oldest" as const,
+  },
+  {
+    title: "deforestation-in-the-amazon",
+    value: "deforestation-in-the-amazon" as const,
+  },
+  {
+    title: "indigenous-peoples-in-the-amazon",
+    value: "indigenous-peoples-in-the-amazon" as const,
+  },
+  {
+    title: "the-amazon-is-the-biggest-tropical-rainforest",
+    value: "the-amazon-is-the-biggest-tropical-rainforest" as const,
+  },
+  { title: "other-rivers-on-earth", value: "other-rivers-on-earth" as const },
+  {
+    title: "half-of-the-worlds-rainforests-are-in-the-amazon",
+    value: "half-of-the-worlds-rainforests-are-in-the-amazon" as const,
+  },
+  {
+    title: "the-whole-united-states-in-the-amazon",
+    value: "the-whole-united-states-in-the-amazon" as const,
+  },
+  {
+    title: "the-amazon-spreads-across-multiple-countries",
+    value: "the-amazon-spreads-across-multiple-countries" as const,
+  },
+  {
+    title: "what-are-rainforests-quiz",
+    value: "what-are-rainforests-quiz" as const,
+  },
+  {
+    title: "select-countries-with-rainforest",
+    value: "select-countries-with-rainforest" as const,
+  },
+  { title: "life-in-the-amazon", value: "life-in-the-amazon" as const },
+  {
+    title: "which-images-show-the-amazon",
+    value: "which-images-show-the-amazon" as const,
+  },
+  { title: "so-much-more-to-learn", value: "so-much-more-to-learn" as const },
+  {
+    title: "more-plants-and-animals-than-anywhere-else",
+    value: "more-plants-and-animals-than-anywhere-else" as const,
+  },
+  { title: "biodiversity-1", value: "biodiversity-1" as const },
+  {
+    title: "statistics-about-biodiversity",
+    value: "statistics-about-biodiversity" as const,
+  },
+  {
+    title: "statistics-about-biodiversity-cards",
+    value: "statistics-about-biodiversity-cards" as const,
+  },
+  {
+    title: "rainforests-are-important-quiz",
+    value: "rainforests-are-important-quiz" as const,
+  },
+  {
+    title: "rainforests-under-threat",
+    value: "rainforests-under-threat" as const,
+  },
+  { title: "memory-game-pre", value: "memory-game-pre" as const },
+  { title: "memory-game", value: "memory-game" as const },
+  {
+    title: "what-happens-to-animals-when-rainforest-disappears",
+    value: "what-happens-to-animals-when-rainforest-disappears" as const,
+  },
+  { title: "rainforests-matter", value: "rainforests-matter" as const },
+  {
+    title: "rainforests-keep-our-planet-healthy",
+    value: "rainforests-keep-our-planet-healthy" as const,
+  },
+  { title: "rainforests-in-danger", value: "rainforests-in-danger" as const },
+  {
+    title: "climate-change-and-deforestation",
+    value: "climate-change-and-deforestation" as const,
+  },
+  { title: "what-is-climate-change", value: "what-is-climate-change" as const },
+  { title: "climate-change-effects", value: "climate-change-effects" as const },
+  {
+    title: "rainforest-is-a-carbon-sink",
+    value: "rainforest-is-a-carbon-sink" as const,
+  },
+  { title: "deforestation-effects", value: "deforestation-effects" as const },
+  {
+    title: "why-rfus-works-in-the-amazon",
+    value: "why-rfus-works-in-the-amazon" as const,
+  },
+  { title: "narratives", value: "narratives" as const },
+  { title: "faq", value: "faq" as const },
+];
+
+export type SectionName = (typeof sectionNames)[number]["value"];
+
 export function useGetAboutTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSection[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
@@ -102,6 +218,7 @@ export function useGetAboutTheAmazonContent() {
   const aboutTheAmazonSections: (SectionWithContent | undefined)[] = [
     {
       type: "regular",
+      name: "what-is-the-amazon",
       align: "left",
       content: {
         type: "plain",
@@ -114,6 +231,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-are-exactly-what-you-d-think",
       background: secondBackground,
       content: {
         type: "fill-in-the-blank",
@@ -144,6 +262,7 @@ export function useGetAboutTheAmazonContent() {
     {
       type: "regular",
       background: secondBackground,
+      name: "rainforests-have-a-lot-of-rain",
       content: {
         type: "fill-in-the-blank",
         data: {
@@ -172,6 +291,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "three-most-important-rainforests",
       background: null,
       content: {
         type: "locate-in-map",
@@ -222,6 +342,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "why-no-rainforests-in-antarctica",
       preContent: {
         type: "emoji",
         emoji: "thinking-face",
@@ -244,6 +365,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "why-rfus-works-in-the-amazon",
       content: {
         type: "plain",
         data: {
@@ -257,6 +379,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-are-among-the-oldest",
       background: secondBackground,
       content: {
         type: "plain",
@@ -289,11 +412,11 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "deforestation-in-the-amazon",
       backgroundOpacity: 0.5,
       backgroundColor: "#1E1F1B",
       background: backgroundDeforestation6,
       textColorStyle: "light",
-      noNextButton: true,
       content: {
         type: "plain",
         data: {
@@ -308,7 +431,7 @@ export function useGetAboutTheAmazonContent() {
             image: birds6,
             caption: "Jump to biodiversity section",
             navButton: {
-              target: "biodiversity",
+              target: "biodiversity-1", // TODOK: Change to the parent name of the carousel
               alignment: "bottom-middle",
               direction: "left",
             },
@@ -317,7 +440,7 @@ export function useGetAboutTheAmazonContent() {
             image: keepGoing6,
             caption: "Keep going",
             navButton: {
-              target: "next",
+              target: "indigenous-peoples-in-the-amazon",
               alignment: "bottom-middle",
               direction: "bottom",
             },
@@ -326,7 +449,7 @@ export function useGetAboutTheAmazonContent() {
             image: deforestation6,
             caption: "Jump to threats to the Amazon",
             navButton: {
-              target: "threats",
+              target: "rainforests-under-threat",
               alignment: "bottom-middle",
               direction: "right",
             },
@@ -336,6 +459,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "indigenous-peoples-in-the-amazon",
       content: {
         type: "plain",
         data: {
@@ -361,6 +485,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "the-amazon-is-the-biggest-tropical-rainforest",
       background: backgroundRiver8,
       backgroundOpacity: 0.64,
       backgroundColor: "#FAF5EE",
@@ -391,6 +516,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "other-rivers-on-earth",
       content: {
         type: "plain",
         data: {
@@ -417,6 +543,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "half-of-the-worlds-rainforests-are-in-the-amazon",
       background: null,
       backgroundColor: "#F0F4EF",
       content: {
@@ -448,6 +575,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "the-whole-united-states-in-the-amazon",
       background: null,
       backgroundColor: "#F0F4EF",
       content: {
@@ -479,6 +607,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "the-amazon-spreads-across-multiple-countries",
       background: mapBackground,
       layout: "space-between",
       content: {
@@ -498,6 +627,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "select-countries-with-rainforest",
       background: null,
       backgroundColor: "#F0F4EF",
       content: {
@@ -514,6 +644,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "life-in-the-amazon",
       background: backgroundHouse13,
       content: {
         type: "plain",
@@ -528,6 +659,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "which-images-show-the-amazon",
       content: {
         type: "pick-the-image",
         data: {
@@ -593,9 +725,9 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    // TODO: Add: "All of them are in the Amazon!" which is mostly a dup of the previous section but the "options" or locations have a shown label
     {
       type: "wavy",
+      name: "what-are-rainforests-quiz",
       content: {
         type: "pager",
         data: [
@@ -680,6 +812,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "so-much-more-to-learn",
       background: backgroundHouse13,
       content: {
         type: "plain",
@@ -694,6 +827,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "more-plants-and-animals-than-anywhere-else",
       background: backgroundAmazon,
       content: {
         type: "plain",
@@ -713,6 +847,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "indigenous-peoples-in-the-amazon",
       background: backgroundAmazon,
       content: {
         type: "plain",
@@ -732,7 +867,7 @@ export function useGetAboutTheAmazonContent() {
     },
     ...vignettes.map((vignette) => ({
       type: "vignette" as "vignette",
-      name: vignette.name ?? "",
+      name: vignette.name,
       content: {
         title: vignette.title ?? "",
         subtitle: vignette.subtitle ?? "",
@@ -746,6 +881,7 @@ export function useGetAboutTheAmazonContent() {
     })),
     {
       type: "regular",
+      name: "statistics-about-biodiversity",
       content: {
         type: "plain",
         data: {
@@ -765,6 +901,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "statistics-about-biodiversity-cards",
       content: {
         type: "statistics",
         data: {
@@ -774,6 +911,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "rainforests-are-important-quiz",
       content: {
         type: "pager",
         data: [
@@ -852,9 +990,9 @@ export function useGetAboutTheAmazonContent() {
         ],
       },
     },
-    // TODO: Finish section
     {
       type: "regular",
+      name: "memory-game-pre",
       content: {
         type: "plain",
         data: {
@@ -866,6 +1004,7 @@ export function useGetAboutTheAmazonContent() {
     },
     memoryGame && {
       type: "regular",
+      name: "memory-game",
       background: memoryGame.backgroundImage,
       content: {
         type: "memory-game",
@@ -886,6 +1025,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "what-happens-to-animals-when-rainforest-disappears",
       preContent: {
         type: "emoji",
         emoji: "thinking-face",
@@ -900,6 +1040,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-matter",
       content: {
         type: "plain",
         data: {
@@ -921,6 +1062,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-keep-our-planet-healthy",
       background: backgroundAmazon,
       content: {
         type: "plain",
@@ -940,12 +1082,13 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-keep-our-planet-healthy",
       background: mapBackground,
       layout: "space-between",
       content: {
         type: "plain",
         data: {
-          text: "I see! People around the world need a healthy rainforest, just as much as my friends and I do!",
+          text: "I see! <b>People around the world need a healthy rainforest</b>, just as much as my friends and I do!",
         },
       },
       subContent: {
@@ -955,6 +1098,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-in-danger",
       background: backgroundForest33,
       content: {
         type: "fill-in-the-blank",
@@ -981,6 +1125,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "climate-change-and-deforestation",
       backgroundColor: "#1E1F1B",
       background: climateChangeWildfires34,
       textColorStyle: "light",
@@ -1014,6 +1159,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "what-is-climate-change",
       backgroundColor: "#1E1F1B",
       background: null,
       textColorStyle: "light",
@@ -1050,6 +1196,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "climate-change-effects",
       background: spatialPlanetEarth36,
       textColorStyle: "light-shadows",
       content: {
@@ -1080,10 +1227,10 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforest-is-a-carbon-sink",
       backgroundColor: "#F0F4EF", // complementary-100
       background: null,
       textColorStyle: "dark",
-      noNextButton: true,
       preContent: {
         type: "sloth",
       },
@@ -1091,7 +1238,7 @@ export function useGetAboutTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "<b>The rainforest is a carbon sink</b>. It absorbs greenhouse gasses (GHGs) we send into the air, and Earth heats up less)",
+          text: "The rainforest is a <b>carbon sink</b>. It absorbs greenhouse gasses we send into the air, and Earth heats up less)",
         },
       },
       subContent: [
@@ -1121,6 +1268,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "deforestation-effects",
       preContent: {
         type: "emoji",
         emoji: "thinking-face",
@@ -1135,6 +1283,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "rainforests-under-threat",
       content: {
         type: "pick-the-image",
         data: {

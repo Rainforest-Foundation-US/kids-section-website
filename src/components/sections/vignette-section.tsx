@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import { ActivitySection } from "../sections";
-import { HomeGoToSectionButton } from "../buttons";
 import clsx from "@/utils/clsx";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 export interface VignetteSectionOptions {
   title: string;
@@ -15,8 +15,7 @@ export interface VignetteSectionOptions {
 }
 
 interface VignetteSectionProps extends VignetteSectionOptions {
-  number: number;
-  name?: string;
+  name?: SectionName;
 }
 export function VignetteSection({
   imageAlignment = "middle",
@@ -26,11 +25,7 @@ export function VignetteSection({
     <>
       <div className="h-[120px] bg-neutral-dark-700" />
 
-      <ActivitySection
-        number={props.number}
-        name={props.name}
-        className="min-h-[720px]"
-      >
+      <ActivitySection name={props.name} className="min-h-[720px]">
         <Image
           className={clsx(
             "absolute inset-0 block h-full w-full bg-neutral-dark-800 object-cover",
@@ -75,8 +70,6 @@ export function VignetteSection({
               </p>
             </>
           )}
-
-          <HomeGoToSectionButton className="mt-2" />
         </div>
       </ActivitySection>
     </>

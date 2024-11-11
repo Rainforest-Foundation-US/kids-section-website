@@ -4,6 +4,7 @@ import { client } from "./client";
 import { EducatorResource } from "../schemaTypes/educatorResource";
 import { StatisticsCard } from "../schemaTypes/statisticsCard";
 import { PickImageGameData } from "../schemaTypes/pickImageGame";
+import { Navigation } from "../schemaTypes/navigation";
 
 export async function getHomePage() {
   const homePage = await client.fetch(
@@ -130,4 +131,15 @@ export async function getFaqs() {
   );
 
   return faqs;
+}
+
+export async function getNavigation() {
+  const navigation = await client.fetch<Navigation>(
+    groq`*[_type == "navigation"][0]{
+      name,
+      paths
+    }`,
+  );
+
+  return navigation;
 }

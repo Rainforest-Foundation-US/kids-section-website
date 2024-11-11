@@ -4,16 +4,55 @@ import { animated, config, useSpring } from "@react-spring/web";
 import { useMeasure } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
 import React from "react";
+import { useHomeSectionNavigation } from "./sections";
+import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { getNavigation } from "@/sanity/lib/queries";
 
 const AnimatedIconChevronUp = animated(IconChevronUp);
 
 export function LearningPath() {
+  const { onGoToSection } = useHomeSectionNavigation();
   const [containerRef, size] = useMeasure<HTMLDivElement>();
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [learningPath, setLearningPath] = React.useState<
+    { id: SectionName; title: string }[]
+  >([]);
+  const [activeActivity, setActiveActivity] = React.useState<
+    SectionName | undefined
+  >(undefined);
+
+  React.useEffect(() => {
+    getNavigation().then((data) => {
+      const path = data.paths.map((path) => ({
+        id: path.id,
+        title: path.name,
+      }));
+
+      setActiveActivity(path?.[0]?.id ?? undefined);
+      setLearningPath(path);
+    });
+  }, []);
 
   React.useEffect(() => {
     const handleScroll = () => {
+      let newActiveSection = null;
+
+      for (const section of learningPath) {
+        const element = document.querySelector(
+          `[data-section-name="${section.id}"]`,
+        );
+        if (element) {
+          const { top, bottom } = element.getBoundingClientRect();
+          if (top <= 0 && bottom > 0) {
+            newActiveSection = section;
+            break;
+          }
+        }
+      }
+
+      setActiveActivity((prev) => newActiveSection?.id ?? prev);
+
       if (
         window.scrollY > parseInt(tailwindConfig.theme.extend.height.header)
       ) {
@@ -30,7 +69,7 @@ export function LearningPath() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [learningPath]);
 
   const learningPathStyle = useSpring({
     from: {
@@ -62,35 +101,6 @@ export function LearningPath() {
   const collapse = () => {
     setIsCollapsed((v) => !v);
   };
-
-  const learningPath = [
-    {
-      id: "0",
-      title: "General definition",
-    },
-    {
-      id: "1",
-      title: "Visualize the Amazon",
-    },
-    {
-      id: "2",
-      title: "Biodiversity",
-    },
-    {
-      id: "3",
-      title: "Global climate",
-    },
-    {
-      id: "4",
-      title: "Threats",
-    },
-    {
-      id: "5",
-      title: "IPs",
-    },
-  ];
-
-  const activeActivity = learningPath[0].id;
 
   return (
     <animated.div
@@ -135,6 +145,11 @@ export function LearningPath() {
                   <li
                     key={activity.id}
                     className="flex cursor-pointer flex-row items-center space-x-6 pl-2"
+                    onClick={() => {
+                      onGoToSection(activity.id, () => {
+                        setActiveActivity(activity.id);
+                      });
+                    }}
                   >
                     <span className="block h-2 w-2 rounded-full bg-neutral-500" />
 
