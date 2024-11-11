@@ -72,6 +72,27 @@ function dashedBordersPlugin({ matchUtilities, theme }: PluginAPI) {
   );
 }
 
+function dashedBordersAccentPlugin({ matchUtilities, theme }: PluginAPI) {
+  matchUtilities(
+    {
+      "dashed-border-accent": (value) => {
+        const offset = 12;
+        const strokeColor = encodeURIComponent(theme("colors.primary.300"));
+
+        let className = `url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='${value}' ry='${value}' stroke='${strokeColor}' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='${offset}' stroke-linecap='square'/%3e%3c/svg%3e")`;
+
+        return {
+          "background-image": className,
+        };
+      },
+    },
+    {
+      values: theme("borderRadius"),
+      type: ["length"],
+    },
+  );
+}
+
 export const screenBreakpoints = {
   "2xs": "380px",
   xs: "480px",
@@ -204,6 +225,7 @@ export default {
     function (props: PluginAPI) {
       props.addVariant("children", "& > *");
       dashedBordersPlugin(props);
+      dashedBordersAccentPlugin(props);
       maxLinesPlugin(props);
     },
   ],
