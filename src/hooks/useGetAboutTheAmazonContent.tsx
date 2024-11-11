@@ -141,6 +141,9 @@ export const sectionNames = [
     value: "more-plants-and-animals-than-anywhere-else" as const,
   },
   { title: "biodiversity-1", value: "biodiversity-1" as const },
+  { title: "biodiversity-2", value: "biodiversity-2" as const },
+  { title: "biodiversity-3", value: "biodiversity-3" as const },
+  { title: "biodiversity-4", value: "biodiversity-4" as const },
   {
     title: "statistics-about-biodiversity",
     value: "statistics-about-biodiversity" as const,
@@ -156,6 +159,11 @@ export const sectionNames = [
   {
     title: "rainforests-under-threat",
     value: "rainforests-under-threat" as const,
+  },
+  { title: "fill-in-the-blank-1", value: "fill-in-the-blank-1" as const },
+  {
+    title: "is-this-actor-deforesting-the-amazon",
+    value: "is-this-actor-deforesting-the-amazon" as const,
   },
   { title: "memory-game-pre", value: "memory-game-pre" as const },
   { title: "memory-game", value: "memory-game" as const },
@@ -1358,6 +1366,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "is-this-actor-deforesting-the-amazon",
       preContent: {
         type: "emoji",
         emoji: "thinking-face",
@@ -1392,6 +1401,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
+      name: "fill-in-the-blank-1",
       content: {
         type: "pager",
         data: [
