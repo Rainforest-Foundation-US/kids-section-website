@@ -160,7 +160,7 @@ export const sectionNames = [
     title: "rainforests-under-threat",
     value: "rainforests-under-threat" as const,
   },
-  { title: "fill-in-the-blank-1", value: "fill-in-the-blank-1" as const },
+  { title: "climate-change-quiz", value: "climate-change-quiz" as const },
   {
     title: "is-this-actor-deforesting-the-amazon",
     value: "is-this-actor-deforesting-the-amazon" as const,
@@ -1353,7 +1353,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "wavy",
-      name: "fill-in-the-blank-1",
+      name: "climate-change-quiz",
       content: {
         type: "pager",
         data: [
