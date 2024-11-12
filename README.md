@@ -14,11 +14,11 @@ This is a [Next.js](https://nextjs.org/) project so this guide is going to assum
 
 These are the versions we're using:
 
-- Node.js: v20.15.x
-- npm: 10.8.x
+- Node.js: v22.11.x
+- npm: 10.9.x
 - Next.js: 14.x.x
 - TypeScript: 5.5.x
-- TailwindCSS: 3.2.4
+- TailwindCSS: 3.3.x
 
 Make sure you have the correct versions of Node.js and npm installed to run the project. You can check your versions by running `node -v` and `npm -v` in your terminal.
 
