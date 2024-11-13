@@ -57,7 +57,7 @@ export function PlainTextContent({
         <p
           className={clsx(
             "primary-strong whitespace-pre-line leading-snug",
-`text-${subTextSize}`,
+            `text-${subTextSize}`,
             subTextColor && `${subTextColor}`,
           )}
         >
