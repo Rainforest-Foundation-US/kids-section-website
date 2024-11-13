@@ -67,6 +67,9 @@ import earth37 from "@/assets/activities/37-earth.jpg";
 
 import climateChangeWildfires34 from "@/assets/activities/34-climate-change-wildfires.png";
 
+import rfusTeam from "@/assets/activities/rfus-team.png";
+import littleGirls from "@/assets/activities/little-girls.png";
+
 import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jpg";
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { VignetteSection } from "@/sanity/schemaTypes/vignette";
@@ -1490,6 +1493,40 @@ export function useGetAboutTheAmazonContent() {
                 },
               },
             },
+          },
+        ],
+      },
+    },
+    {
+      type: "regular",
+      content: {
+        type: "plain",
+        data: {
+          text: "Indigenous peoples sure do a lot to protect the rainforest! If they already have solutions, <b>why do they work with Rainforest Foundation US?</b>",
+          subText:
+            "Before we can answer this question, we have to understand what everyday life in the Amazon rainforest is like!",
+          subTextColor: "text-neutral-dark-500",
+          subTextSize: "xl",
+          textAlign: "left",
+          wideness: "custom",
+          customWidth: "40.75rem",
+          tracking: "-0.02em",
+          paddingTop: "5rem",
+        },
+      },
+      subContent: {
+        type: "polaroids",
+        polaroids: [
+          {
+            image: littleGirls,
+            caption: "Learn about life in the Amazon",
+            captionStyle: PolaroidCaptionStyle.wrap,
+          },
+
+          {
+            image: rfusTeam,
+            caption: "Learn how RFUS supports indigenous peoples!",
+            captionStyle: PolaroidCaptionStyle.wrap,
           },
         ],
       },
