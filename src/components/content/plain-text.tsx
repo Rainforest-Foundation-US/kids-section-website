@@ -4,15 +4,25 @@ interface PlainTextContentProps {
   caption?: string;
   subText?: string;
   text: string;
-  wideness?: "sm" | "md" | "lg" | "xl" | "2xl";
+  wideness?: "sm" | "md" | "lg" | "xl" | "2xl" | "custom";
+  customWidth?: string;
   textSize?: "base" | "md";
   textAlign?: "left" | "center" | "right";
+  subTextSize?: "lg" | "xl";
+  subTextColor?: string;
+  tracking?: string;
+  paddingTop?: string;
   children?: React.ReactNode;
 }
 export function PlainTextContent({
   wideness = "lg",
+  subTextSize = "lg",
   textAlign = "center",
   textSize = "base",
+  subTextColor,
+  customWidth,
+  tracking,
+  paddingTop,
   ...props
 }: PlainTextContentProps) {
   return (
@@ -24,9 +34,12 @@ export function PlainTextContent({
         wideness === "lg" && "max-w-[40rem]",
         wideness === "xl" && "max-w-[60rem]",
         wideness === "2xl" && "max-w-[70rem]",
+        wideness === "custom" && `max-w-[${customWidth}]`,
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center",
         textAlign === "right" && "text-right",
+        tracking && `tracking-[${tracking}]`,
+        paddingTop && `pt-[${paddingTop}]`,
       )}
     >
       {props.caption && (
@@ -41,7 +54,14 @@ export function PlainTextContent({
         dangerouslySetInnerHTML={{ __html: props.text }}
       />
       {props.subText && (
-        <p className="primary-strong whitespace-pre-line text-lg leading-snug">
+        <p
+          className={clsx(
+            "primary-strong whitespace-pre-line leading-snug",
+            subTextSize === "lg" && "text-lg",
+            subTextSize === "xl" && "text-xl",
+            subTextColor && `${subTextColor}`,
+          )}
+        >
           {props.subText}
         </p>
       )}
