@@ -34,13 +34,15 @@ export function PlainTextContent({
         wideness === "lg" && "max-w-[40rem]",
         wideness === "xl" && "max-w-[60rem]",
         wideness === "2xl" && "max-w-[70rem]",
-        wideness === "custom" && `max-w-[${customWidth}]`,
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center",
         textAlign === "right" && "text-right",
-        tracking && `tracking-[${tracking}]`,
-        paddingTop && `pt-[${paddingTop}]`,
       )}
+      style={{
+        maxWidth: wideness === "custom" ? customWidth : undefined,
+        letterSpacing: tracking || undefined,
+        paddingTop: paddingTop || undefined,
+      }}
     >
       {props.caption && (
         <p className="text-xl font-medium text-primary-700">{props.caption}</p>
