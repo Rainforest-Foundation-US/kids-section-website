@@ -192,6 +192,10 @@ export const sectionNames = [
   },
   { title: "deforestation-effects", value: "deforestation-effects" as const },
   {
+    title: "why-do-indigenous-people-work-with-rfus",
+    value: "why-do-indigenous-people-work-with-rfus" as const,
+  },
+  {
     title: "why-rfus-works-in-the-amazon",
     value: "why-rfus-works-in-the-amazon" as const,
   },
@@ -1499,6 +1503,7 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "why-do-indigenous-people-work-with-rfus",
       content: {
         type: "plain",
         data: {
