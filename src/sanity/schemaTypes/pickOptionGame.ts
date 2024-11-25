@@ -6,9 +6,9 @@ import {
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
-export const PickImageGameSchemaType = defineType({
-  name: "pickImageGame",
-  title: "Pick Image Game",
+export const PickOptionGameSchemaType = defineType({
+  name: "pickOptionGame",
+  title: "Pick Option Game",
   icon: ComponentIcon,
   type: "document",
   fields: [
@@ -28,24 +28,6 @@ export const PickImageGameSchemaType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "backgroundImage",
-      title: "Background Image",
-      type: "image",
-    }),
-    defineField({
-      name: "leftSideContent",
-      title: "Left Side Content",
-      type: "object",
-      fields: [
-        {
-          name: "hint",
-          title: "Hint",
-          type: "string",
-          validation: (rule) => rule.required(),
-        },
-      ],
-    }),
-    defineField({
       name: "options",
       title: "Options",
       type: "array",
@@ -56,14 +38,8 @@ export const PickImageGameSchemaType = defineType({
           title: "Option",
           fields: [
             {
-              name: "src",
-              title: "Image Source",
-              type: "image",
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "alt",
-              title: "Alt Text",
+              name: "text",
+              title: "Text",
               type: "string",
               validation: (rule) => rule.required(),
             },
@@ -73,11 +49,6 @@ export const PickImageGameSchemaType = defineType({
               type: "boolean",
               validation: (rule) => rule.required(),
             },
-            {
-              name: "reason",
-              title: "Reason",
-              type: "text",
-            },
           ],
         },
       ],
@@ -86,30 +57,15 @@ export const PickImageGameSchemaType = defineType({
   preview: {
     select: {
       title: "question",
-      media: "backgroundImage",
-    },
-    prepare(selection) {
-      const { title, media } = selection;
-      return {
-        title,
-        media,
-      };
     },
   },
 });
 
-export interface PickImageGameData {
+export interface PickOptionGameData {
   name: NarrativesSectionName | SectionName;
   question: string;
-  backgroundImage: string;
-  leftSideContent: {
-    type: "sloth";
-    hint: string;
-  };
   options: {
-    imageSrc: string;
-    alt: string;
     isCorrect: boolean;
-    reason: string;
+    text: string;
   }[];
 }

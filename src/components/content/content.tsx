@@ -58,6 +58,7 @@ import { StatisticsScreen } from "./activities/statistics-screen";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { Postcard } from "../postcard";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { PostcardData } from "@/sanity/schemaTypes/postcard";
 
 type PreContent =
   | {
@@ -135,12 +136,6 @@ type PolaroidData = {
   image: string | StaticImageData;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
-};
-
-type PostcardData = {
-  image: string | StaticImageData;
-  alt: string;
-  description?: string;
 };
 
 type SubContent =

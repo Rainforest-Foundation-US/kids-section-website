@@ -9,6 +9,9 @@ import { PolaroidSchemaType } from "./polaroid";
 import { PostcardSchemaType } from "./postcard";
 import { HomePageSchemaType } from "./home";
 import { NavigationSchemaType } from "./navigation";
+import { PlainSchemaType } from "./plain";
+import { PickOptionGameSchemaType } from "./pickOptionGame";
+
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     VignetteSchemaType,
@@ -21,5 +24,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     PostcardSchemaType,
     HomePageSchemaType,
     NavigationSchemaType,
+    PlainSchemaType,
+    PickOptionGameSchemaType,
   ],
 };
