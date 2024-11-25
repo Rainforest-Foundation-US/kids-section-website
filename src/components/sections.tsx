@@ -64,27 +64,9 @@ export function ActivitySection(props: {
   children?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(() => {}, { threshold: 0.5 });
-    const currentRef = ref.current;
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
   return (
     <section
       data-section-name={props.name}
-      ref={ref}
       className={clsx(
         "relative flex min-h-[840px] snap-center flex-col py-8",
         props.className,

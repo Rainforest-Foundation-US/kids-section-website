@@ -143,10 +143,7 @@ export const sectionNames = [
     title: "more-plants-and-animals-than-anywhere-else",
     value: "more-plants-and-animals-than-anywhere-else" as const,
   },
-  { title: "biodiversity-1", value: "biodiversity-1" as const },
-  { title: "biodiversity-2", value: "biodiversity-2" as const },
-  { title: "biodiversity-3", value: "biodiversity-3" as const },
-  { title: "biodiversity-4", value: "biodiversity-4" as const },
+  { title: "biodiversity", value: "biodiversity" as const },
   {
     title: "statistics-about-biodiversity",
     value: "statistics-about-biodiversity" as const,
@@ -447,7 +444,7 @@ export function useGetAboutTheAmazonContent() {
             image: birds6,
             caption: "Jump to biodiversity section",
             navButton: {
-              target: "biodiversity-1", // TODOK: Change to the parent name of the carousel
+              target: "biodiversity",
               alignment: "bottom-middle",
               direction: "left",
             },
@@ -881,20 +878,22 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    ...vignettes.map((vignette) => ({
-      type: "vignette" as "vignette",
-      name: vignette.name,
+    {
+      type: "vignette",
+      name: "biodiversity",
       content: {
-        title: vignette.title ?? "",
-        subtitle: vignette.subtitle ?? "",
-        body: vignette.body ?? "",
-        imageAlignment: vignette.imageAlignment ?? "start",
-        image: {
-          data: vignette.image.data ?? "",
-          alt: vignette.image.alt ?? "",
-        },
+        slides: [
+          ...vignettes.map((vignette) => ({
+            _id: vignette._id,
+            title: vignette.title ?? "",
+            subtitle: vignette.subtitle ?? "",
+            body: vignette.body ?? "",
+            imageAlignment: vignette.imageAlignment ?? "middle",
+            image: vignette.image,
+          })),
+        ],
       },
-    })),
+    },
     {
       type: "regular",
       name: "statistics-about-biodiversity",
