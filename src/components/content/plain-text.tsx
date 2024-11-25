@@ -1,9 +1,11 @@
 import clsx from "@/utils/clsx";
+import { PortableText } from "@portabletext/react";
+import { TypedObject } from "sanity";
 
 interface PlainTextContentProps {
   caption?: string;
   subText?: string;
-  text: string;
+  text: TypedObject | string;
   wideness?: "sm" | "md" | "lg" | "xl" | "2xl" | "custom";
   customWidth?: string;
   textSize?: "base" | "md";
@@ -47,14 +49,20 @@ export function PlainTextContent({
       {props.caption && (
         <p className="text-xl font-medium text-primary-700">{props.caption}</p>
       )}
-      <p
+      <div
         className={clsx(
           "primary-strong whitespace-pre-line leading-snug",
           textSize === "md" && "text-2xl",
           textSize === "base" && "text-4xl",
         )}
-        dangerouslySetInnerHTML={{ __html: props.text }}
-      />
+      >
+        {/* TODO: remove once everything is loaded from the Sanity CMS */}
+        {typeof props.text === "string" ? (
+          <p dangerouslySetInnerHTML={{ __html: props.text }} />
+        ) : (
+          <PortableText value={props.text} />
+        )}
+      </div>
       {props.subText && (
         <p
           className={clsx(

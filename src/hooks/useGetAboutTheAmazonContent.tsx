@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {
-  getPickImageGame,
+  getPickImageGames,
   getVignettes,
   getStatisticsCards,
   getMemoryGame,
@@ -210,26 +210,28 @@ export function useGetAboutTheAmazonContent() {
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
   const [statisticsCards, setStatisticsCards] =
     React.useState<StatisticsCard[]>();
-  const [pickImageGame, setPickImageGame] = React.useState<PickImageGameData>();
+  const [pickImageGames, setPickImageGames] =
+    React.useState<PickImageGameData[]>();
 
   React.useEffect(() => {
     async function getData() {
       const vignettesFromServer = await getVignettes();
       const memoryGameFromServer = await getMemoryGame();
       const statisticsCardsFromServer = await getStatisticsCards();
+      const pickImageGamesFromServer = await getPickImageGames();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer?.[0]);
       setStatisticsCards(statisticsCardsFromServer);
-      const pickImageGameFromServer = await getPickImageGame();
-
-      setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer);
-      setPickImageGame(pickImageGameFromServer);
+      setPickImageGames(pickImageGamesFromServer);
     }
 
     getData();
   }, []);
+
+  const rainforestUnderThreatPickImageGame = pickImageGames?.find(
+    (pickImageGame) => pickImageGame.name === "rainforests-under-threat",
+  );
 
   const aboutTheAmazonSections: (SectionWithContent | undefined)[] = [
     {
@@ -1297,7 +1299,7 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    pickImageGame && {
+    rainforestUnderThreatPickImageGame && {
       type: "regular",
       name: "rainforests-under-threat",
       content: {
@@ -1306,20 +1308,15 @@ export function useGetAboutTheAmazonContent() {
           leftSideContent: {
             type: "sloth",
             text:
-              pickImageGame.leftSideContent?.hint ||
+              rainforestUnderThreatPickImageGame.leftSideContent?.hint ||
               "Hint, there is more than one right answer!",
           },
           wrap: true,
           wideness: "xl",
           question:
-            pickImageGame.question ||
+            rainforestUnderThreatPickImageGame.question ||
             "Select the images that contain threats to the Amazon Rainforest.",
-          options: pickImageGame.options.map((option) => ({
-            imageSrc: option.src,
-            isCorrect: option.isCorrect,
-            alt: option.alt,
-            reason: option.reason,
-          })),
+          options: rainforestUnderThreatPickImageGame.options,
         },
       },
     },
