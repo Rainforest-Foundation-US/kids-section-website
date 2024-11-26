@@ -71,7 +71,7 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
       title={props.option.alt}
       disabled={props.disabled}
       className={clsx(
-        "inline-block rounded-lg border-1 p-3 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75",
+        "inline-block max-w-[250px] rounded-lg border-1 p-3 text-base font-medium text-neutral-dark-600 shadow-app-lg shadow-shadow-gray transition-all duration-75",
         props.isSelected
           ? props.option.isCorrect
             ? "border-primary-500 bg-primary-100 outline outline-2 outline-primary-500 hover:border-primary-600 hover:outline-primary-600"
@@ -86,6 +86,7 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
         height={160}
         alt={props.option.alt}
       />
+      <div className="line-clamp-1">{props.option.alt}</div>
     </button>
   );
 }
@@ -112,12 +113,6 @@ export function PickTheImageActivity({
   const [recentOptionSelect, setResentOptionSelect] = useState<Option | null>(
     null,
   );
-
-  const allCorrectOptionsSelected = useMemo(() => {
-    return localOptions
-      .filter((option) => option.isCorrect)
-      .every((option) => selectedOptions[option.id]);
-  }, [localOptions, selectedOptions]);
 
   const onSelectOption = useCallback(
     (option: Option) => {
@@ -173,10 +168,7 @@ export function PickTheImageActivity({
             >
               <PickTheImageOption
                 option={option}
-                disabled={
-                  allCorrectOptionsSelected ||
-                  (selectedOptions[option.id] && option.isCorrect)
-                }
+                disabled={selectedOptions[option.id] && option.isCorrect}
                 isSelected={selectedOptions[option.id]}
                 onClick={() => {
                   onSelectOption(option);
