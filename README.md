@@ -16,7 +16,7 @@ These are the versions we're using:
 
 - Node.js: v22.11.x
 - npm: 10.9.x
-- Next.js: 14.x.x
+- Next.js: 15.x.x
 - TypeScript: 5.5.x
 - TailwindCSS: 3.3.x
 
