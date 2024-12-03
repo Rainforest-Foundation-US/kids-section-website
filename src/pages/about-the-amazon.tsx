@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { ContentSectionList } from "@/components/content/content";
 import { useGetAboutTheAmazonContent } from "@/hooks/useGetAboutTheAmazonContent";
 
-export default function Home() {
+export default function AboutTheAmazonRoute() {
   const aboutTheAmazonSections = useGetAboutTheAmazonContent();
 
   return (

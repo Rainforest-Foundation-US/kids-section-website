@@ -54,25 +54,6 @@ export function GoToButton({
   );
 }
 
-interface GoToTargetSectionProps extends Omit<GoToButtonProps, "onClick"> {
-  target: SectionName;
-}
-export function GoToTargetSection({
-  target,
-  ...props
-}: GoToTargetSectionProps) {
-  const { onGoToSection } = useHomeSectionNavigation();
-
-  return (
-    <GoToButton
-      {...props}
-      onClick={() => {
-        onGoToSection(target);
-      }}
-    />
-  );
-}
-
 export function NavBarLink(props: {
   className?: string;
   href: string;

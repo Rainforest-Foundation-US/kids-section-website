@@ -134,9 +134,11 @@ export function Footer() {
           >
             Questions and Answers
           </Link>
-          {/* TODO: Add link to resources for educators page */}
           <DownloadResourcesLink resources={resources} />
-          <Link href="/" className="cursor-pointer text-base text-neutral-100">
+          <Link
+            href="/credits"
+            className="cursor-pointer text-base text-neutral-100"
+          >
             Credits
           </Link>
         </div>
