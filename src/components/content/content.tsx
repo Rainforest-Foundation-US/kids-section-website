@@ -8,7 +8,7 @@ import {
   WavySeparator,
 } from "../activities-illustrations";
 import { Badge } from "../badge";
-import { GoToButton, GoToTargetSection } from "../buttons";
+import { GoToButton } from "../buttons";
 import {
   ControlledActivityHint,
   useResetHint,
@@ -146,9 +146,7 @@ type SubContent =
     }
   | {
       type: "polaroids";
-      polaroids: (PolaroidData & {
-        navButton?: ContentNavigationButton;
-      })[];
+      polaroids: PolaroidData[];
     }
   | {
       type: "illustration";
@@ -324,16 +322,6 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
               captionStyle={polaroid.captionStyle}
               isFlipped={isFlipped === i}
             />
-
-            {polaroid.navButton && (
-              <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
-                <GoToTargetSection
-                  direction={polaroid.navButton.direction}
-                  target={polaroid.navButton.target as SectionName}
-                  disabled={false}
-                />
-              </div>
-            )}
           </li>
         ))}
       </ul>
