@@ -201,6 +201,7 @@ export const sectionNames = [
   },
   { title: "narratives", value: "narratives" as const },
   { title: "faq", value: "faq" as const },
+  { title: "credits", value: "credits" as const },
 ];
 
 export type SectionName = (typeof sectionNames)[number]["value"];
@@ -448,29 +449,14 @@ export function useGetAboutTheAmazonContent() {
           {
             image: birds6,
             caption: "Jump to biodiversity section",
-            navButton: {
-              target: "biodiversity-1", // TODOK: Change to the parent name of the carousel
-              alignment: "bottom-middle",
-              direction: "left",
-            },
           },
           {
             image: keepGoing6,
             caption: "Keep going",
-            navButton: {
-              target: "indigenous-peoples-in-the-amazon",
-              alignment: "bottom-middle",
-              direction: "bottom",
-            },
           },
           {
             image: deforestation6,
             caption: "Jump to threats to the Amazon",
-            navButton: {
-              target: "rainforests-under-threat",
-              alignment: "bottom-middle",
-              direction: "right",
-            },
           },
         ],
       },
@@ -626,7 +612,6 @@ export function useGetAboutTheAmazonContent() {
     {
       type: "regular",
       name: "the-amazon-spreads-across-multiple-countries",
-      background: mapBackground,
       layout: "space-between",
       content: {
         type: "fill-in-the-blank",
