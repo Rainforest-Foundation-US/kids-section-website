@@ -267,10 +267,16 @@ export function FillInTheBlankActivity({
       }
 
       if (option.isValid) {
-        onHint(null, ActivityHintStatus.CORRECT);
+        onHint({
+          hint: "",
+          status: ActivityHintStatus.CORRECT,
+        });
         updatedAnswers[option.blankId] = option.id;
       } else {
-        onHint(null, ActivityHintStatus.INCORRECT);
+        onHint({
+          hint: "",
+          status: ActivityHintStatus.INCORRECT,
+        });
         // TODO: Do failure animation
         delete updatedAnswers[option.blankId];
       }

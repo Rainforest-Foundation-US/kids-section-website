@@ -4,53 +4,8 @@ import Image, { StaticImageData } from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
-import { RoundSlothIllustration } from "@/components/activities-illustrations";
 
-export type LeftSideContent = {
-  type: "sloth";
-  text?: string;
-};
-
-export function PolymorphicLeftSideContent({
-  leftSideContent,
-  recentOptionSelect,
-}: {
-  leftSideContent: LeftSideContent;
-  recentOptionSelect: Option | null;
-}) {
-  if (leftSideContent.type === "sloth") {
-    return (
-      <div className="-left-32 z-10 mb-2 flex gap-2 lg:absolute lg:flex-col">
-        <RoundSlothIllustration />
-        {leftSideContent.text && (
-          <p
-            className={clsx(
-              "text-white mt-2 max-h-36 text-wrap rounded-3xl border-8 border-neutral-100 bg-primary-900 p-4 text-center text-xl font-medium leading-8 text-neutral-100 lg:max-h-full lg:max-w-[11.5rem]",
-              recentOptionSelect &&
-                !recentOptionSelect.isCorrect &&
-                "bg-error-700",
-            )}
-          >
-            {recentOptionSelect
-              ? recentOptionSelect.reason
-              : leftSideContent.text}
-          </p>
-        )}
-      </div>
-    );
-  }
-}
-
-export interface PickTheImageActivityOptions {
-  question: string;
-  wideness?: "sm" | "md" | "lg" | "xl" | "2xl";
-  options: Omit<Option, "id">[];
-  wrap?: boolean;
-  rotateOptions?: boolean;
-  leftSideContent?: LeftSideContent;
-}
-
-interface Option {
+export interface PickTheImageOption {
   id: string;
   imageSrc: string | StaticImageData;
   alt: string;
@@ -58,8 +13,16 @@ interface Option {
   reason?: string;
 }
 
+export interface PickTheImageActivityOptions {
+  question: string;
+  wideness?: "sm" | "md" | "lg" | "xl" | "2xl";
+  options: Omit<PickTheImageOption, "id">[];
+  wrap?: boolean;
+  rotateOptions?: boolean;
+}
+
 interface PickTheImageOptionProps {
-  option: Option;
+  option: PickTheImageOption;
   isSelected: boolean;
   disabled: boolean;
   onClick: () => void;
@@ -99,7 +62,7 @@ export function PickTheImageActivity({
   wideness,
   ...props
 }: PickTheImageActivityProps) {
-  const localOptions = useMemo<Option[]>(() => {
+  const localOptions = useMemo<PickTheImageOption[]>(() => {
     return props.options.map((option) => ({
       ...option,
       id: uuid(),
@@ -110,17 +73,14 @@ export function PickTheImageActivity({
     Record<string, boolean>
   >({});
 
-  const [recentOptionSelect, setResentOptionSelect] = useState<Option | null>(
-    null,
-  );
-
   const onSelectOption = useCallback(
-    (option: Option) => {
-      if (option.isCorrect) {
-        onHint(null, ActivityHintStatus.CORRECT);
-      } else {
-        onHint(null, ActivityHintStatus.INCORRECT);
-      }
+    (option: PickTheImageOption) => {
+      onHint({
+        hint: option.reason || "",
+        status: option.isCorrect
+          ? ActivityHintStatus.CORRECT
+          : ActivityHintStatus.INCORRECT,
+      });
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
@@ -139,13 +99,6 @@ export function PickTheImageActivity({
       )}
     >
       <p className="text-center text-4xl leading-snug">{props.question}</p>
-
-      {props.leftSideContent && (
-        <PolymorphicLeftSideContent
-          leftSideContent={props.leftSideContent}
-          recentOptionSelect={recentOptionSelect}
-        />
-      )}
 
       {props.children}
 
@@ -172,7 +125,6 @@ export function PickTheImageActivity({
                 isSelected={selectedOptions[option.id]}
                 onClick={() => {
                   onSelectOption(option);
-                  setResentOptionSelect(option);
                 }}
               />
             </li>

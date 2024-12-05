@@ -2,6 +2,7 @@ import Image, { StaticImageData } from "next/image";
 import { ActivitySection } from "../sections";
 import clsx from "@/utils/clsx";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { HintContent } from "../hint-content";
 
 export interface VignetteSectionOptions {
   title: string;
@@ -16,16 +17,29 @@ export interface VignetteSectionOptions {
 
 interface VignetteSectionProps extends VignetteSectionOptions {
   name?: SectionName;
+  defaultHintContent?: {
+    hint: string;
+  };
 }
 export function VignetteSection({
   imageAlignment = "middle",
   ...props
 }: VignetteSectionProps) {
+  console.log({ props });
   return (
     <>
       <div className="h-[120px] bg-neutral-dark-700" />
 
       <ActivitySection name={props.name} className="min-h-[720px]">
+        {props.defaultHintContent && (
+          <HintContent
+            name={props.name}
+            hintContent={{
+              text: props.defaultHintContent.hint,
+            }}
+          />
+        )}
+
         <Image
           className={clsx(
             "absolute inset-0 block h-full w-full bg-neutral-dark-800 object-cover",

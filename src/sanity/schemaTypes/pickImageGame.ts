@@ -33,8 +33,8 @@ export const PickImageGameSchemaType = defineType({
       type: "image",
     }),
     defineField({
-      name: "leftSideContent",
-      title: "Left Side Content",
+      name: "hintContent",
+      title: "Hint Content",
       type: "object",
       fields: [
         {
@@ -102,8 +102,7 @@ export interface PickImageGameData {
   name: NarrativesSectionName | SectionName;
   question: string;
   backgroundImage: string;
-  leftSideContent: {
-    type: "sloth";
+  hintContent: {
     hint: string;
   };
   options: {
