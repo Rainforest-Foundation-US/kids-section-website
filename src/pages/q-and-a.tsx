@@ -55,8 +55,10 @@ export default function QAndARoute() {
                         noAnimation
                         hintSize="md"
                         hintPosition="center"
-                        status={ActivityHintStatus.CORRECT}
-                        hint={activeQuestion.hint}
+                        hintData={{
+                          hint: activeQuestion.hint,
+                          status: ActivityHintStatus.CORRECT,
+                        }}
                       />
                     </span>
                     <WavingSlothIllustration />

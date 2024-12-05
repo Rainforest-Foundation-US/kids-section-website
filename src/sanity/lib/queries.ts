@@ -106,7 +106,7 @@ export async function getPickImageGames() {
       name,
       question,
       "backgroundImage": backgroundImage.asset->url,
-      leftSideContent {
+      hintContent {
         hint
       },
       options[]{

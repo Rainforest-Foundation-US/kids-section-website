@@ -265,7 +265,7 @@ export default function NarrativesRoute() {
           <NavBar />
 
           <SectionContent>
-            <ContentPager contentList={pageContent} />
+            <ContentPager name="narratives" contentList={pageContent} />
           </SectionContent>
         </RegularSection>
       </main>

@@ -1,6 +1,7 @@
 import { RoundSlothIllustration } from "@/components/activities-illustrations";
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import { HintData } from "./controlled-activity-hint";
 
 export enum ActivityHintStatus {
   /**
@@ -25,14 +26,13 @@ export enum ActivityHintStatus {
 }
 
 interface ActivityHintProps {
-  hint: string;
+  hintData: HintData;
   noSloth?: boolean;
   noAnimation?: boolean;
   hintPosition: "start" | "center" | "end";
   hintPositioning?: "absolute" | "relative";
   hintSize: "xs" | "sm" | "md" | "lg" | "xl";
   textAlign?: "left" | "center" | "right";
-  status: ActivityHintStatus;
 }
 
 /**
@@ -43,11 +43,12 @@ interface ActivityHintProps {
 export function ActivityHint({
   textAlign = "center",
   hintPositioning = "relative",
+  hintData,
   ...props
 }: ActivityHintProps) {
-  const content = props.hint && (
+  const content = hintData.hint && (
     <motion.div
-      key={props.hint}
+      key={hintData.hint}
       role="alert"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -69,16 +70,16 @@ export function ActivityHint({
         props.hintSize === "md" && "min-w-[280px]",
         props.hintSize === "lg" && "min-w-[380px]",
         props.hintSize === "xl" && "min-w-[600px]",
-        props.status === ActivityHintStatus.CORRECT && "bg-primary-600",
-        props.status === ActivityHintStatus.KEEP_GOING && "bg-primary-600",
-        props.status === ActivityHintStatus.INFO && "bg-primary-800",
-        props.status === ActivityHintStatus.INCORRECT && "bg-error-700",
+        hintData.status === ActivityHintStatus.CORRECT && "bg-primary-400",
+        hintData.status === ActivityHintStatus.KEEP_GOING && "bg-primary-600",
+        hintData.status === ActivityHintStatus.INFO && "bg-primary-800",
+        hintData.status === ActivityHintStatus.INCORRECT && "bg-error-700",
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center [text-wrap:balance]",
         textAlign === "right" && "text-right",
       )}
     >
-      {props.hint}
+      {hintData.hint}
     </motion.div>
   );
 

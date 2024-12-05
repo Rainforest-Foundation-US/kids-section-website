@@ -85,12 +85,15 @@ export function PickTheOptionActivity({
     (option: Option) => {
       if (option.isCorrect) {
         if (missingCorrectOptions === 1) {
-          onHint(null, ActivityHintStatus.CORRECT);
+          onHint({ hint: "", status: ActivityHintStatus.CORRECT });
         } else {
-          onHint(null, ActivityHintStatus.KEEP_GOING);
+          onHint({ hint: "", status: ActivityHintStatus.KEEP_GOING });
         }
       } else {
-        onHint(option.wrongAlertText ?? null, ActivityHintStatus.INCORRECT);
+        onHint({
+          hint: option.wrongAlertText ?? "",
+          status: ActivityHintStatus.INCORRECT,
+        });
       }
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));

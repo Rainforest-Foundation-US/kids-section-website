@@ -222,7 +222,7 @@ export function useGetAboutTheAmazonContent() {
       const pickImageGamesFromServer = await getPickImageGames();
 
       setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer?.[0]);
+      setMemoryGame(memoryGameFromServer);
       setStatisticsCards(statisticsCardsFromServer);
       setPickImageGames(pickImageGamesFromServer);
     }
@@ -265,6 +265,9 @@ export function useGetAboutTheAmazonContent() {
           },
         },
       },
+      defaultHintContent: {
+        hint: "What are Rainforests?",
+      },
       subContent: {
         type: "postcard",
         postcard: {
@@ -300,6 +303,9 @@ export function useGetAboutTheAmazonContent() {
           },
         },
       },
+      defaultHintContent: {
+        hint: "How do rainforests stay wet all year round?",
+      },
       subContent: {
         type: "postcard",
         postcard: {
@@ -312,6 +318,9 @@ export function useGetAboutTheAmazonContent() {
       type: "regular",
       name: "three-most-important-rainforests",
       background: null,
+      defaultHintContent: {
+        hint: "Rainforest Foundation US works in the Amazon",
+      },
       content: {
         type: "locate-in-map",
         data: {
@@ -613,6 +622,9 @@ export function useGetAboutTheAmazonContent() {
       type: "regular",
       name: "the-amazon-spreads-across-multiple-countries",
       layout: "space-between",
+      defaultHintContent: {
+        hint: "How many countries does the Amazon spread across?",
+      },
       content: {
         type: "fill-in-the-blank",
         data: {
@@ -663,6 +675,9 @@ export function useGetAboutTheAmazonContent() {
     {
       type: "regular",
       name: "which-images-show-the-amazon",
+      defaultHintContent: {
+        hint: "Hint, there is more than one right answer!",
+      },
       content: {
         type: "pick-the-image",
         data: {
@@ -871,6 +886,12 @@ export function useGetAboutTheAmazonContent() {
     ...vignettes.map((vignette) => ({
       type: "vignette" as "vignette",
       name: vignette.name,
+      defaultHintContent:
+        vignette.name === "biodiversity-3"
+          ? {
+              hint: "We'll discuss deforestation and climate change shortly. For now, know that the biodiversity in the Amazon is disappearing.",
+            }
+          : undefined,
       content: {
         title: vignette.title ?? "",
         subtitle: vignette.subtitle ?? "",
@@ -1103,6 +1124,9 @@ export function useGetAboutTheAmazonContent() {
       type: "regular",
       name: "rainforests-in-danger",
       background: backgroundForest33,
+      defaultHintContent: {
+        hint: "What are the two major threats to the Amazon?",
+      },
       content: {
         type: "fill-in-the-blank",
         data: {
@@ -1287,15 +1311,14 @@ export function useGetAboutTheAmazonContent() {
     rainforestUnderThreatPickImageGame && {
       type: "regular",
       name: "rainforests-under-threat",
+      defaultHintContent: {
+        hint:
+          rainforestUnderThreatPickImageGame.hintContent?.hint ||
+          "Hint, there is more than one right answer!",
+      },
       content: {
         type: "pick-the-image",
         data: {
-          leftSideContent: {
-            type: "sloth",
-            text:
-              rainforestUnderThreatPickImageGame.leftSideContent?.hint ||
-              "Hint, there is more than one right answer!",
-          },
           wrap: true,
           wideness: "xl",
           question:

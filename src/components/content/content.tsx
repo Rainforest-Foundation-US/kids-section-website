@@ -59,6 +59,8 @@ import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { Postcard } from "../postcard";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
+import { HintContent } from "../hint-content";
+import { NarrativesSectionName } from "@/pages/narratives";
 
 type PreContent =
   | {
@@ -125,13 +127,6 @@ type PagerData = {
   noSloth?: boolean;
 };
 
-type ContentNavigationButton = {
-  alignment: "bottom-middle";
-  direction: "left" | "right" | "bottom";
-  target: SectionName;
-  caption?: string;
-};
-
 type PolaroidData = {
   image: string | StaticImageData;
   caption?: string;
@@ -181,11 +176,17 @@ export type SectionWithContent =
       preContent?: PreContent;
       content: Content;
       subContent?: SubContent | SubContent[];
+      defaultHintContent?: {
+        hint: string;
+      };
     }
   | {
       type: "vignette";
       name: SectionName;
       content: VignetteSectionOptions;
+      defaultHintContent?: {
+        hint: string;
+      };
     }
   | {
       type: "divider";
@@ -213,7 +214,13 @@ function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   return null;
 }
 
-function PolymorphicContent({ content }: { content: Content }) {
+function PolymorphicContent({
+  name,
+  content,
+}: {
+  name: NarrativesSectionName | SectionName;
+  content: Content;
+}) {
   const setHint = useSetHint();
 
   if (content.type === "plain") {
@@ -221,37 +228,65 @@ function PolymorphicContent({ content }: { content: Content }) {
   }
 
   if (content.type === "fill-in-the-blank") {
-    return <FillInTheBlankActivity onHint={setHint} {...content.data} />;
+    return (
+      <FillInTheBlankActivity
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "locate-in-map") {
-    return <LocateInMapActivity onHint={setHint} {...content.data} />;
+    return (
+      <LocateInMapActivity
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "select-countries-with-rainforest") {
     return (
       <SelectCountriesWithRainforestActivity
-        onHint={setHint}
+        onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
       />
     );
   }
 
   if (content.type === "pick-the-option") {
-    return <PickTheOptionActivity onHint={setHint} {...content.data} />;
+    return (
+      <PickTheOptionActivity
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "pick-the-image") {
-    return <PickTheImageActivity onHint={setHint} {...content.data} />;
+    return (
+      <PickTheImageActivity
+        onHint={(hintData) => {
+          setHint(name, hintData);
+        }}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "memory-game") {
-    return <MemoryGame onHint={setHint} {...content.data} />;
+    return (
+      <MemoryGame
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "pager") {
     return (
       <ContentPager
+        name={name}
         contentList={content.data}
         noSloth={content.noSloth}
         enableGoToNextSection
@@ -387,6 +422,15 @@ function ContentSection(props: {
         )}
 
         <SectionContent>
+          {props.section.defaultHintContent && (
+            <HintContent
+              name={props.name}
+              hintContent={{
+                text: props.section.defaultHintContent.hint,
+              }}
+            />
+          )}
+
           <div
             className={clsx(
               "flex flex-col",
@@ -405,7 +449,10 @@ function ContentSection(props: {
               <PolymorphicPreContent preContent={props.section.preContent} />
             )}
 
-            <PolymorphicContent content={props.section.content} />
+            <PolymorphicContent
+              name={props.section.name}
+              content={props.section.content}
+            />
 
             {props.section.subContent &&
               toArrayMaybe(props.section.subContent)?.map((subContent, i) => (
@@ -446,7 +493,11 @@ function ContentSection(props: {
   if (props.section.type === "vignette") {
     return (
       <div className="relative z-10">
-        <VignetteSection name={props.name} {...props.section.content} />
+        <VignetteSection
+          name={props.name}
+          defaultHintContent={props.section.defaultHintContent}
+          {...props.section.content}
+        />
 
         {props.nextSectionType !== "vignette" && (
           <WavySeparator color="#1E1F1B" direction="down" />
@@ -493,6 +544,7 @@ export function ContentSectionList(props: {
 }
 
 export function ContentPager(props: {
+  name: NarrativesSectionName | SectionName;
   contentList: PagerContent[];
   initialIndex?: number;
   enableGoToNextSection?: boolean;
@@ -506,12 +558,12 @@ export function ContentPager(props: {
 
   const goNext = () => {
     setIndex((index + 1) % listCount);
-    resetHint();
+    resetHint(props.name);
   };
 
   const goBack = () => {
     setIndex((index - 1) % listCount);
-    resetHint();
+    resetHint(props.name);
   };
 
   const shouldGoToNextSection =
@@ -520,7 +572,7 @@ export function ContentPager(props: {
   return (
     <>
       <div className="inset-y-0 z-10 mb-4 flex items-center">
-        <ControlledActivityHint noSloth={props.noSloth} />
+        <ControlledActivityHint name={props.name} noSloth={props.noSloth} />
       </div>
 
       <div
@@ -537,7 +589,7 @@ export function ContentPager(props: {
             exit={{ opacity: 0, x: -10 }}
             className="mb-4"
           >
-            <PolymorphicContent content={content} />
+            <PolymorphicContent name={props.name} content={content} />
 
             {content.subContent &&
               toArrayMaybe(content.subContent)?.map((subContent, i) => (
