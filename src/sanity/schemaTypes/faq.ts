@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
+import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
 
 export const FaqSchemaType = defineType({
   name: "faq",
@@ -44,7 +45,12 @@ export const FaqSchemaType = defineType({
               name: "description",
               type: "array",
               title: "Description",
-              of: [{ type: "block" }],
+              of: [
+                {
+                  type: "block",
+                  marks: { annotations: defaultMarkAnnotations },
+                },
+              ],
               validation: (rule) => rule.required(),
             },
           ],
