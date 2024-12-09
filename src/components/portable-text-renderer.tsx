@@ -1,5 +1,6 @@
 import React from "react";
 import { PortableText } from "@portabletext/react";
+import { WordHighlightWithTooltip } from "./word-highlight-with-tooltip";
 
 const PortableTextRenderer = ({ content }: { content: any }) => {
   const components = {
@@ -12,6 +13,7 @@ const PortableTextRenderer = ({ content }: { content: any }) => {
       strong: ({ children }: { children?: React.ReactNode }) => (
         <strong>{children}</strong>
       ),
+      highlightWithTooltip: WordHighlightWithTooltip,
     },
   };
 
