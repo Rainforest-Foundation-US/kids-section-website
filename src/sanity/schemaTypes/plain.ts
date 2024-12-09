@@ -7,6 +7,7 @@ import {
 import { SectionName, sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
 import { PostcardData } from "./postcard";
 import { PolaroidData } from "./polaroid";
+import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
 
 export const PlainSchemaType = defineType({
   name: "plain",
@@ -27,7 +28,7 @@ export const PlainSchemaType = defineType({
       name: "text",
       title: "Text",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ type: "block", marks: { annotations: defaultMarkAnnotations } }],
     }),
     defineField({
       name: "textAlign",

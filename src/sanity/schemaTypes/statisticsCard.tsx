@@ -1,5 +1,6 @@
 import { defineType, defineField, PortableTextBlock } from "sanity";
-import { ClipboardImageIcon } from "@sanity/icons";
+import { ClipboardImageIcon, LinkIcon, HighlightIcon } from "@sanity/icons";
+import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
 
 export const StatisticsCard = defineType({
   name: "statisticsCard",
@@ -38,13 +39,20 @@ export const StatisticsCard = defineType({
       name: "title",
       title: "Statistics title",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ type: "block", marks: { annotations: defaultMarkAnnotations } }],
     }),
     defineField({
       name: "description",
       title: "Statistics description",
       type: "array",
-      of: [{ type: "block" }],
+      of: [
+        {
+          type: "block",
+          marks: {
+            annotations: defaultMarkAnnotations,
+          },
+        },
+      ],
     }),
   ],
 });
