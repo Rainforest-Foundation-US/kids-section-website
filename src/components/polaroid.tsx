@@ -1,13 +1,16 @@
 import clsx from "@/utils/clsx";
 import { wrapText, truncateText } from "@/utils/truncateText";
+import { RevertIcon } from "@sanity/icons";
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
-import { useMemo } from "react";
 import React from "react";
+
+import styles from "./turn-image-icon.module.css";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 const DEFAULT_POLAROID_HEIGHT = 132;
 const DEFAULT_POLAROID_WIDTH = 140;
+const TURN_ICON_STARTING_X = 128;
 
 export enum PolaroidCaptionStyle {
   wrap = "wrap",
@@ -56,7 +59,7 @@ function PolaroidFront(props: PolaroidProps) {
 
   const noCaption = !props.caption?.length;
 
-  const lines = useMemo(() => {
+  const lines = React.useMemo(() => {
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
@@ -141,6 +144,22 @@ function PolaroidFront(props: PolaroidProps) {
           {caption}
         </text>
       ))}
+
+      {props.description && (
+        <>
+          <rect
+            x={TURN_ICON_STARTING_X}
+            y={0}
+            className="h-3 w-3 fill-neutral-100 opacity-80"
+          />
+          <RevertIcon
+            x={TURN_ICON_STARTING_X}
+            y={0}
+            viewBox="0 0 32 32"
+            className={`${styles.revertIcon} text-neutral-dark-800`}
+          />
+        </>
+      )}
     </motion.svg>
   );
 }
@@ -150,7 +169,7 @@ function PolaroidBack(props: PolaroidProps) {
 
   const noCaption = !props.caption?.length;
 
-  const lines = useMemo(() => {
+  const lines = React.useMemo(() => {
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
@@ -221,6 +240,18 @@ function PolaroidBack(props: PolaroidProps) {
           {caption}
         </text>
       ))}
+
+      <rect
+        x={TURN_ICON_STARTING_X}
+        y={0}
+        className="h-3 w-3 fill-neutral-100 opacity-80"
+      />
+      <RevertIcon
+        x={TURN_ICON_STARTING_X}
+        y={0}
+        viewBox="0 0 32 32"
+        className={`${styles.revertIcon} text-neutral-dark-800`}
+      />
     </motion.svg>
   );
 }

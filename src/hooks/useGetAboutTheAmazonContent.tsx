@@ -470,32 +470,7 @@ export function useGetAboutTheAmazonContent() {
         ],
       },
     },
-    {
-      type: "wavy",
-      name: "indigenous-peoples-in-the-amazon",
-      content: {
-        type: "plain",
-        data: {
-          wideness: "md",
-          text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
-          subText: "See the pictures from various Indigenous communities!",
-        },
-      },
-      subContent: {
-        type: "polaroids",
-        polaroids: [
-          {
-            image: elders7,
-          },
-          {
-            image: family7,
-          },
-          {
-            image: monitors7,
-          },
-        ],
-      },
-    },
+
     {
       type: "regular",
       name: "the-amazon-is-the-biggest-tropical-rainforest",
@@ -741,6 +716,32 @@ export function useGetAboutTheAmazonContent() {
             },
           ],
         },
+      },
+    },
+    {
+      type: "regular",
+      name: "indigenous-peoples-in-the-amazon",
+      content: {
+        type: "plain",
+        data: {
+          wideness: "md",
+          text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
+          subText: "See the pictures from various Indigenous communities!",
+        },
+      },
+      subContent: {
+        type: "polaroids",
+        polaroids: [
+          {
+            image: elders7,
+          },
+          {
+            image: family7,
+          },
+          {
+            image: monitors7,
+          },
+        ],
       },
     },
     {
