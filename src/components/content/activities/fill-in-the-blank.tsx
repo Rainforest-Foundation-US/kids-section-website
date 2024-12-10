@@ -5,6 +5,8 @@ import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
 import { CommonActivityOptions } from "./common";
 import { ActivityHintStatus } from "@/components/activity-hint";
+import { congratulationsAtom } from "@/components/congratulations";
+import { useAtom } from "jotai";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
@@ -14,6 +16,7 @@ export interface FillInTheBlankActivityOptions {
   fontWeightStyle?: "regular" | "bold";
   question: StringifiedQuestion;
   numberToOptions: NumberToOptions;
+  isLastAnswer?: boolean;
 }
 
 type StringifiedQuestion = string;
@@ -241,6 +244,7 @@ export function FillInTheBlankActivity({
   onHint,
   ...props
 }: FillInTheBlankActivityProps) {
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
   const [optionSelected, setOptionSelected] = useState(false);
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
@@ -272,6 +276,10 @@ export function FillInTheBlankActivity({
           status: ActivityHintStatus.CORRECT,
         });
         updatedAnswers[option.blankId] = option.id;
+
+        if (congratulations[props.name] !== undefined && props.isLastAnswer) {
+          setCongratulations({ ...congratulations, [props.name]: true });
+        }
       } else {
         onHint({
           hint: "",
@@ -284,7 +292,15 @@ export function FillInTheBlankActivity({
       setOptionSelected(true);
       setAnswers(updatedAnswers);
     },
-    [answers, onHint, setAnswers],
+    [
+      answers,
+      congratulations,
+      props.isLastAnswer,
+      props.name,
+      onHint,
+      setAnswers,
+      setCongratulations,
+    ],
   );
 
   const getSelectedOption = useCallback(

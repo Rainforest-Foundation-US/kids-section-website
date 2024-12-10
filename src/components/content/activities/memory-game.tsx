@@ -5,6 +5,8 @@ import sampleSize from "lodash/sampleSize";
 import { CommonActivityOptions } from "./common";
 
 import clsx from "@/utils/clsx";
+import { congratulationsAtom } from "@/components/congratulations";
+import { useAtom } from "jotai";
 
 interface MemoryCard {
   id?: string;
@@ -26,7 +28,10 @@ type MemoryGameActivityProps = React.PropsWithChildren<
 const MAX_UNIQUE_CARDS_IN_THE_GAME = 9;
 
 export function MemoryGame(props: MemoryGameActivityProps) {
-  const [, setCardsLeft] = React.useState(MAX_UNIQUE_CARDS_IN_THE_GAME);
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
+  const [cardsLeft, setCardsLeft] = React.useState(
+    MAX_UNIQUE_CARDS_IN_THE_GAME,
+  );
   const [localCards, setLocalCards] = React.useState<MemoryCard[]>([]);
   const [choiceOne, setChoiceOne] = React.useState<MemoryCard | null>(null);
   const [choiceTwo, setChoiceTwo] = React.useState<MemoryCard | null>(null);
@@ -76,6 +81,19 @@ export function MemoryGame(props: MemoryGameActivityProps) {
     },
     [props.cards],
   );
+
+  React.useEffect(() => {
+    if (cardsLeft === 0) {
+      setCongratulations({ ...congratulations, [props.name]: true });
+      shuffleCards();
+    }
+  }, [
+    cardsLeft,
+    props.name,
+    congratulations,
+    setCongratulations,
+    shuffleCards,
+  ]);
 
   React.useEffect(() => {
     // It starts the game

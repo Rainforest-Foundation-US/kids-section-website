@@ -1,13 +1,11 @@
 import { defineField, defineType, TypedObject } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
-import {
-  NarrativesSectionName,
-  narrativesSectionNames,
-} from "@/pages/narratives";
-import { SectionName, sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import { narrativesSectionNames } from "@/pages/narratives";
+import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
 import { PostcardData } from "./postcard";
 import { PolaroidData } from "./polaroid";
 import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
+import { SectionNames } from "@/components/content/content";
 
 export const PlainSchemaType = defineType({
   name: "plain",
@@ -102,7 +100,7 @@ export const PlainSchemaType = defineType({
 });
 
 interface BasePlainData {
-  name: NarrativesSectionName | SectionName;
+  name: SectionNames;
   text: TypedObject;
   textAlign: "left" | "center" | "right";
   caption: string;

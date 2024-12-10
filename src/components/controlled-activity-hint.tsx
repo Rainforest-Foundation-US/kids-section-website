@@ -3,13 +3,13 @@ import { useCallback } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 import { NarrativesSectionName } from "@/pages/narratives";
+import { SectionNames } from "./content/content";
 
-export type HintKey = SectionName | NarrativesSectionName;
 export type HintData = {
   hint: string;
   status: ActivityHintStatus;
 };
-export type HintAtomValue = Record<HintKey, HintData>;
+export type HintAtomValue = Record<SectionNames, HintData>;
 
 export const hintAtom = atom<Partial<HintAtomValue>>({
   "rainforests-are-exactly-what-you-d-think": {
@@ -32,6 +32,22 @@ export const hintAtom = atom<Partial<HintAtomValue>>({
     hint: "",
     status: ActivityHintStatus.INFO,
   },
+  "what-are-rainforests-quiz": {
+    hint: "",
+    status: ActivityHintStatus.INFO,
+  },
+  "rainforests-are-important-quiz": {
+    hint: "",
+    status: ActivityHintStatus.INFO,
+  },
+  "climate-change-quiz": {
+    hint: "",
+    status: ActivityHintStatus.INFO,
+  },
+  "is-this-actor-deforesting-the-amazon": {
+    hint: "",
+    status: ActivityHintStatus.INFO,
+  },
   narratives: { hint: "", status: ActivityHintStatus.INFO },
 });
 
@@ -44,7 +60,7 @@ export const useSetHint = () => {
   const setHint = useSetAtom(hintAtom);
 
   return useCallback(
-    (key: HintKey, hintData: HintData) => {
+    (key: SectionNames, hintData: HintData) => {
       if (!hintData.hint && hintData.status === ActivityHintStatus.KEEP_GOING) {
         hintData.hint =
           keepGoingHints[Math.floor(Math.random() * keepGoingHints.length)];
@@ -64,7 +80,7 @@ export const useSetHint = () => {
 
       setHint({ ...hintAtomValue, [key]: hintData });
     },
-    [setHint],
+    [hintAtomValue, setHint],
   );
 };
 
@@ -73,13 +89,13 @@ export const useResetHint = () => {
   const setHint = useSetAtom(hintAtom);
 
   return useCallback(
-    (key: HintKey) => {
+    (key: SectionNames) => {
       setHint({
         ...hintAtomValue,
         [key]: { hint: "", status: ActivityHintStatus.INFO },
       });
     },
-    [setHint],
+    [hintAtomValue, setHint],
   );
 };
 

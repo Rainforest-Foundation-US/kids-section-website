@@ -1,7 +1,10 @@
 import { useEvent } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { Congratulations, congratulationsAtom } from "./congratulations";
+import { useAtomValue } from "jotai";
+import { SectionNames } from "./content/content";
 
 const HomeSectionContext = createContext<
   React.RefObject<HTMLDivElement>[] | undefined
@@ -59,12 +62,13 @@ export function useHomeSectionNavigation() {
 }
 
 export function ActivitySection(props: {
-  name?: string;
+  name?: SectionNames;
   className?: string;
   children?: React.ReactNode;
   style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const congratulations = useAtomValue(congratulationsAtom);
 
   useEffect(() => {
     const observer = new IntersectionObserver(() => {}, { threshold: 0.5 });
@@ -92,6 +96,9 @@ export function ActivitySection(props: {
       style={props.style}
     >
       {props.children}
+      {props.name && congratulations[props.name] && (
+        <Congratulations name={props.name} />
+      )}
     </section>
   );
 }

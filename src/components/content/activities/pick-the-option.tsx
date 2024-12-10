@@ -5,6 +5,8 @@ import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
 import { StaticImageData } from "next/image";
 import { Postcard } from "@/components/postcard";
+import { useAtom } from "jotai";
+import { congratulationsAtom } from "@/components/congratulations";
 
 export interface PickTheOptionActivityOptions {
   question: string;
@@ -16,6 +18,7 @@ export interface PickTheOptionActivityOptions {
   };
   wrap?: boolean;
   rotateOptions?: boolean;
+  isLastAnswer?: boolean;
 }
 
 interface Option {
@@ -57,6 +60,7 @@ export function PickTheOptionActivity({
   onHint,
   ...props
 }: PickTheOptionActivityProps) {
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
   const localOptions = useMemo<Option[]>(() => {
     return props.options.map((option) => ({
       ...option,
@@ -86,6 +90,10 @@ export function PickTheOptionActivity({
       if (option.isCorrect) {
         if (missingCorrectOptions === 1) {
           onHint({ hint: "", status: ActivityHintStatus.CORRECT });
+
+          if (congratulations[props.name] !== undefined && props.isLastAnswer) {
+            setCongratulations({ ...congratulations, [props.name]: true });
+          }
         } else {
           onHint({ hint: "", status: ActivityHintStatus.KEEP_GOING });
         }
@@ -98,7 +106,14 @@ export function PickTheOptionActivity({
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [missingCorrectOptions, onHint],
+    [
+      props.isLastAnswer,
+      props.name,
+      missingCorrectOptions,
+      congratulations,
+      onHint,
+      setCongratulations,
+    ],
   );
 
   return (

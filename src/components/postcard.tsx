@@ -71,7 +71,7 @@ function PolaroidFront({
 
       {description && (
         <>
-          <rect className="absolute right-4 top-4 h-8 w-8 bg-neutral-100 opacity-80" />
+          <div className="absolute right-4 top-4 h-8 w-8 bg-neutral-100 opacity-80" />
           <RevertIcon
             className={`${styles.revertIcon} absolute right-4 top-4 h-8 w-8 text-neutral-dark-800`}
           />
