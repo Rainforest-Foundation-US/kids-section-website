@@ -1,7 +1,7 @@
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   RoundSlothIllustration,
   ThinkingFaceEmoji,
@@ -61,6 +61,8 @@ import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
 import { HintContent } from "../hint-content";
 import { NarrativesSectionName } from "@/pages/narratives";
+import { useAtomValue } from "jotai";
+import { congratulationsAtom } from "../congratulations";
 
 type PreContent =
   | {
@@ -194,6 +196,8 @@ export type SectionWithContent =
       style: DividerStyle;
     };
 
+export type SectionNames = SectionName | NarrativesSectionName;
+
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   if (preContent.type === "sloth") {
     return (
@@ -217,9 +221,11 @@ function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
 function PolymorphicContent({
   name,
   content,
+  isLastAnswer,
 }: {
-  name: NarrativesSectionName | SectionName;
+  name: SectionNames;
   content: Content;
+  isLastAnswer?: boolean;
 }) {
   const setHint = useSetHint();
 
@@ -230,7 +236,9 @@ function PolymorphicContent({
   if (content.type === "fill-in-the-blank") {
     return (
       <FillInTheBlankActivity
+        name={name}
         onHint={(hintData) => setHint(name, hintData)}
+        isLastAnswer={isLastAnswer}
         {...content.data}
       />
     );
@@ -239,6 +247,7 @@ function PolymorphicContent({
   if (content.type === "locate-in-map") {
     return (
       <LocateInMapActivity
+        name={name}
         onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
       />
@@ -248,6 +257,7 @@ function PolymorphicContent({
   if (content.type === "select-countries-with-rainforest") {
     return (
       <SelectCountriesWithRainforestActivity
+        name={name}
         onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
       />
@@ -257,7 +267,9 @@ function PolymorphicContent({
   if (content.type === "pick-the-option") {
     return (
       <PickTheOptionActivity
+        name={name}
         onHint={(hintData) => setHint(name, hintData)}
+        isLastAnswer={isLastAnswer}
         {...content.data}
       />
     );
@@ -266,6 +278,7 @@ function PolymorphicContent({
   if (content.type === "pick-the-image") {
     return (
       <PickTheImageActivity
+        name={name}
         onHint={(hintData) => {
           setHint(name, hintData);
         }}
@@ -277,6 +290,7 @@ function PolymorphicContent({
   if (content.type === "memory-game") {
     return (
       <MemoryGame
+        name={name}
         onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
       />
@@ -289,7 +303,6 @@ function PolymorphicContent({
         name={name}
         contentList={content.data}
         noSloth={content.noSloth}
-        enableGoToNextSection
       />
     );
   }
@@ -422,14 +435,14 @@ function ContentSection(props: {
         )}
 
         <SectionContent>
-          {props.section.defaultHintContent && (
+          {props.section.defaultHintContent?.hint ? (
             <HintContent
               name={props.name}
               hintContent={{
                 text: props.section.defaultHintContent.hint,
               }}
             />
-          )}
+          ) : null}
 
           <div
             className={clsx(
@@ -544,12 +557,12 @@ export function ContentSectionList(props: {
 }
 
 export function ContentPager(props: {
-  name: NarrativesSectionName | SectionName;
+  name: SectionNames;
   contentList: PagerContent[];
   initialIndex?: number;
-  enableGoToNextSection?: boolean;
   noSloth?: boolean;
 }) {
+  const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
   const resetHint = useResetHint();
 
@@ -557,17 +570,26 @@ export function ContentPager(props: {
   const listCount = props.contentList.length;
 
   const goNext = () => {
-    setIndex((index + 1) % listCount);
+    setIndex((prevIndex) => (prevIndex + 1) % listCount);
     resetHint(props.name);
   };
 
   const goBack = () => {
-    setIndex((index - 1) % listCount);
+    setIndex((prevIndex) => (prevIndex - 1 + listCount) % listCount);
     resetHint(props.name);
   };
 
-  const shouldGoToNextSection =
-    props.enableGoToNextSection && index === listCount - 1;
+  const isLastAnswer = useMemo(
+    () => index === listCount - 1,
+    [index, listCount],
+  );
+
+  useEffect(() => {
+    if (isLastAnswer && congratulations[props.name]) {
+      setIndex(0);
+      resetHint(props.name);
+    }
+  }, [isLastAnswer, congratulations, props.name, setIndex, resetHint]);
 
   return (
     <>
@@ -589,7 +611,11 @@ export function ContentPager(props: {
             exit={{ opacity: 0, x: -10 }}
             className="mb-4"
           >
-            <PolymorphicContent name={props.name} content={content} />
+            <PolymorphicContent
+              name={props.name}
+              content={content}
+              isLastAnswer={isLastAnswer}
+            />
 
             {content.subContent &&
               toArrayMaybe(content.subContent)?.map((subContent, i) => (
@@ -614,7 +640,7 @@ export function ContentPager(props: {
             />
           )}
 
-          {!shouldGoToNextSection && (
+          {!isLastAnswer && (
             <GoToButton
               key="right"
               direction="right"

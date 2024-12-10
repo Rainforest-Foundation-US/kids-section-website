@@ -1,8 +1,6 @@
-import { SectionName, sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
-import {
-  NarrativesSectionName,
-  narrativesSectionNames,
-} from "@/pages/narratives";
+import { SectionNames } from "@/components/content/content";
+import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import { narrativesSectionNames } from "@/pages/narratives";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -99,7 +97,7 @@ export const PickImageGameSchemaType = defineType({
 });
 
 export interface PickImageGameData {
-  name: NarrativesSectionName | SectionName;
+  name: SectionNames;
   question: string;
   backgroundImage: string;
   hintContent: {

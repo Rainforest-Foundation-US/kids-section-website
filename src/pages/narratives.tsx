@@ -4,7 +4,11 @@ import Head from "next/head";
 
 import { Footer } from "@/components/layout/footer";
 import { RegularSection } from "@/components/sections/regular-section";
-import { ContentPager, PagerContent } from "@/components/content/content";
+import {
+  ContentPager,
+  PagerContent,
+  SectionNames,
+} from "@/components/content/content";
 import { SectionContent } from "@/components/content/section-content";
 
 import React from "react";
@@ -16,7 +20,6 @@ import {
 } from "@/sanity/lib/queries";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 import { PickOptionGameData } from "@/sanity/schemaTypes/pickOptionGame";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 export const narrativesSectionNames = [
   { title: "learn-about-daniela", value: "learn-about-daniela" as const },
@@ -106,15 +109,11 @@ function arrayOfObjectsToDictionary<T extends { name: string }>(
 
 function useGetNarrativesContent() {
   const [plainData, setPlainData] =
-    React.useState<Record<NarrativesSectionName | SectionName, PlainData>>();
+    React.useState<Record<SectionNames, PlainData>>();
   const [pickTheImageData, setPickTheImageData] =
-    React.useState<
-      Record<NarrativesSectionName | SectionName, PickImageGameData>
-    >();
+    React.useState<Record<SectionNames, PickImageGameData>>();
   const [pickTheOptionData, setPickTheOptionData] =
-    React.useState<
-      Record<NarrativesSectionName | SectionName, PickOptionGameData>
-    >();
+    React.useState<Record<SectionNames, PickOptionGameData>>();
 
   React.useEffect(() => {
     async function getData() {

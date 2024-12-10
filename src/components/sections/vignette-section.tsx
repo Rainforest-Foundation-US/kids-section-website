@@ -25,7 +25,6 @@ export function VignetteSection({
   imageAlignment = "middle",
   ...props
 }: VignetteSectionProps) {
-  console.log({ props });
   return (
     <>
       <div className="h-[120px] bg-neutral-dark-700" />
