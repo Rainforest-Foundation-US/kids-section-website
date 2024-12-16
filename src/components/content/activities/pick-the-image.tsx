@@ -19,12 +19,14 @@ export interface PickTheImageActivityOptions {
   options: Omit<PickTheImageOption, "id">[];
   wrap?: boolean;
   rotateOptions?: boolean;
+  showAltText?: boolean;
 }
 
 interface PickTheImageOptionProps {
   option: PickTheImageOption;
   isSelected: boolean;
   disabled: boolean;
+  showAltText?: boolean;
   onClick: () => void;
 }
 export function PickTheImageOption(props: PickTheImageOptionProps) {
@@ -49,7 +51,7 @@ export function PickTheImageOption(props: PickTheImageOptionProps) {
         height={160}
         alt={props.option.alt}
       />
-      <div className="line-clamp-1">{props.option.alt}</div>
+      {props.showAltText && <div className="pt-3">{props.option.alt}</div>}
     </button>
   );
 }
@@ -123,6 +125,7 @@ export function PickTheImageActivity({
                 option={option}
                 disabled={selectedOptions[option.id] && option.isCorrect}
                 isSelected={selectedOptions[option.id]}
+                showAltText={props.showAltText}
                 onClick={() => {
                   onSelectOption(option);
                 }}

@@ -105,7 +105,6 @@ export async function getPickImageGames() {
     groq`*[_type == "pickImageGame"]{
       name,
       question,
-      "backgroundImage": backgroundImage.asset->url,
       hintContent {
         hint
       },
