@@ -26,11 +26,6 @@ export const PickImageGameSchemaType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "backgroundImage",
-      title: "Background Image",
-      type: "image",
-    }),
-    defineField({
       name: "hintContent",
       title: "Hint Content",
       type: "object",
@@ -99,7 +94,6 @@ export const PickImageGameSchemaType = defineType({
 export interface PickImageGameData {
   name: SectionNames;
   question: string;
-  backgroundImage: string;
   hintContent: {
     hint: string;
   };

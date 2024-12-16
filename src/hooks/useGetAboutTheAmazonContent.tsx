@@ -13,7 +13,6 @@ import secondBackground from "@/assets/activities/2-background.png";
 import mapBackground from "@/assets/activities/3-map-background.png";
 
 import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
-import pictureOfTheAmazon1 from "@/assets/activities/picture-of-the-amazon.jpg";
 import backgroundAmazon from "@/assets/activities/background-amazon.png";
 
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
@@ -230,6 +229,9 @@ export function useGetAboutTheAmazonContent() {
     getData();
   }, []);
 
+  const whichImagesShowTheAmazonPickImageGame = pickImageGames?.find(
+    (pickImageGame) => pickImageGame.name === "which-images-show-the-amazon",
+  );
   const rainforestUnderThreatPickImageGame = pickImageGames?.find(
     (pickImageGame) => pickImageGame.name === "rainforests-under-threat",
   );
@@ -647,74 +649,19 @@ export function useGetAboutTheAmazonContent() {
         kind: "happy-sloth",
       },
     },
-    {
+    whichImagesShowTheAmazonPickImageGame && {
       type: "regular",
       name: "which-images-show-the-amazon",
       defaultHintContent: {
-        hint: "Hint, there is more than one right answer!",
+        hint: whichImagesShowTheAmazonPickImageGame.hintContent.hint,
       },
       content: {
         type: "pick-the-image",
         data: {
           wrap: true,
-          question: "Which images show the Amazon?",
-          options: [
-            // TODO: Use correct options + images
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-            {
-              imageSrc: pictureOfTheAmazon1,
-              isCorrect: true,
-              alt: "",
-              reason: "",
-            },
-          ],
+          wideness: "xl",
+          question: whichImagesShowTheAmazonPickImageGame.question,
+          options: whichImagesShowTheAmazonPickImageGame.options,
         },
       },
     },
@@ -1313,18 +1260,15 @@ export function useGetAboutTheAmazonContent() {
       type: "regular",
       name: "rainforests-under-threat",
       defaultHintContent: {
-        hint:
-          rainforestUnderThreatPickImageGame.hintContent?.hint ||
-          "Hint, there is more than one right answer!",
+        hint: rainforestUnderThreatPickImageGame.hintContent.hint,
       },
       content: {
         type: "pick-the-image",
         data: {
           wrap: true,
           wideness: "xl",
-          question:
-            rainforestUnderThreatPickImageGame.question ||
-            "Select the images that contain threats to the Amazon Rainforest.",
+          showAltText: true,
+          question: rainforestUnderThreatPickImageGame.question,
           options: rainforestUnderThreatPickImageGame.options,
         },
       },
