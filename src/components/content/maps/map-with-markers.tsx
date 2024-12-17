@@ -12,6 +12,8 @@ import countriesTopoJSON from "@/assets/countries-topo.json";
 import clsx from "@/utils/clsx";
 import { wrapTextToLength } from "@/utils/wrapTextToLength";
 import { Tooltip } from "react-tooltip";
+import { USMapChart } from "./us-map";
+import { SectionNames } from "../content";
 
 export interface MapWithMarkersOptions {
   /**
@@ -22,6 +24,7 @@ export interface MapWithMarkersOptions {
   highlightedCountries?: string[];
   errorCountries?: string[];
   hintedCountries?: string[];
+  secondaryCountries?: string[];
   markers?: Marker[];
   onSelectCountry?: (country: string) => void;
 }
@@ -180,14 +183,18 @@ function MapAnnotation(props: Marker) {
   );
 }
 
-type MapWithMarkersProps = MapWithMarkersOptions;
+type MapWithMarkersProps = MapWithMarkersOptions & {
+  name: SectionNames;
+};
 export function MapWithMarkers({
+  name,
   center,
   scale,
   markers,
   highlightedCountries,
   hintedCountries,
   errorCountries,
+  secondaryCountries,
   onSelectCountry,
 }: MapWithMarkersProps) {
   return (
@@ -248,6 +255,9 @@ export function MapWithMarkers({
                 const isHintedCountry = hintedCountries?.includes(
                   getCountryCode(geo),
                 );
+                const isSecondaryCountry = secondaryCountries?.includes(
+                  getCountryCode(geo),
+                );
 
                 return (
                   <Geography
@@ -263,6 +273,7 @@ export function MapWithMarkers({
                       isErrorCountry &&
                         "fill-error-500 opacity-100 transition-all duration-150 hover:z-10",
                       isHintedCountry && "stroke-primary-400 stroke-1",
+                      isSecondaryCountry && "fill-secondary-300 opacity-100",
                     )}
                     tabIndex={
                       highlightedCountries?.includes(getCountryCode(geo))
@@ -286,6 +297,12 @@ export function MapWithMarkers({
           />
         ))}
       </ComposableMap>
+
+      {name === "the-whole-united-states-in-the-amazon" && (
+        <div className="absolute inset-0 z-10">
+          <USMapChart />
+        </div>
+      )}
 
       {markers?.map((marker) =>
         marker.tooltipText ? (

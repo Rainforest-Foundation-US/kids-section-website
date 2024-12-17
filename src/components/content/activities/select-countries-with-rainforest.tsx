@@ -7,7 +7,7 @@ import {
   MapWithMarkers,
   MapWithMarkersOptions,
   Marker,
-} from "../base/map-with-markers";
+} from "../maps/map-with-markers";
 import {
   PolymorphicIllustration,
   PolymorphicIllustrationOptions,
@@ -123,6 +123,7 @@ export function SelectCountriesWithRainforestActivity({
       </div>
 
       <MapWithMarkers
+        name="select-countries-with-rainforest"
         highlightedCountries={highlightedCountries}
         errorCountries={errorCountries}
         hintedCountries={hintedCountries}
