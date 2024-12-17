@@ -330,7 +330,6 @@ export function useGetAboutTheAmazonContent() {
           center: [0, 20],
           scale: 145,
           highlightedCountries: [
-            "USA",
             "VEN",
             "COL",
             "BRA",
@@ -345,6 +344,7 @@ export function useGetAboutTheAmazonContent() {
             "CAF",
             "IDN",
           ],
+          secondaryCountries: ["USA"],
           markers: [
             {
               position: [-110, 46],
@@ -451,7 +451,7 @@ export function useGetAboutTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "But some humans are permanently damaging rainforests, <b>specially the Amazon!</b>",
+          text: "But some humans are permanently damaging rainforests, <b>especially the Amazon!</b>",
         },
       },
       subContent: {
@@ -1016,7 +1016,7 @@ export function useGetAboutTheAmazonContent() {
       content: {
         type: "plain",
         data: {
-          text: "So, a healthy Rainforest depends on plants and animals, like me and my friends!",
+          text: "That's why my friends and I—all the plants and animals of the rainforest—need people to keep our home safe!",
         },
       },
       subContent: [
@@ -1027,7 +1027,7 @@ export function useGetAboutTheAmazonContent() {
         {
           type: "plain",
           data: {
-            text: "But <b>why does the rainforest matter</b>, and what does it have to do with you?",
+            text: "Indigenous communities have spent thousands of years learning about all the creatures in the rainforest, and have carefully passed down values, knowledge, and practices for keeping the forest where they live in balance.",
           },
         },
       ],
@@ -1041,7 +1041,7 @@ export function useGetAboutTheAmazonContent() {
         data: {
           wideness: "lg",
           textAlign: "center",
-          text: "Just as biodiversity keeps the Amazon healthy, the rainforest keeps our planet healthy!",
+          text: "",
         },
       },
       subContent: {

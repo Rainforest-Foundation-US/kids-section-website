@@ -2,7 +2,7 @@ import clsx from "@/utils/clsx";
 import {
   MapWithMarkers,
   MapWithMarkersOptions,
-} from "../base/map-with-markers";
+} from "../maps/map-with-markers";
 import {
   PolymorphicIllustration,
   PolymorphicIllustrationOptions,
@@ -45,9 +45,11 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
 
       <MapWithMarkers
         highlightedCountries={props.highlightedCountries}
+        secondaryCountries={props.secondaryCountries}
         markers={props.markers}
         center={props.center}
         scale={props.scale}
+        name={props.name}
       />
     </div>
   );
