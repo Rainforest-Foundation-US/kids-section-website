@@ -14,8 +14,9 @@ This is a [Next.js](https://nextjs.org/) project so this guide is going to assum
 
 These are the versions we're using:
 
-- Node.js: v22.11.x
-- npm: 10.9.x
+- Node.js: v22.12.x
+- React: v19.x.x
+- npm: 11.x.x
 - Next.js: 15.x.x
 - TypeScript: 5.5.x
 - TailwindCSS: 3.3.x
