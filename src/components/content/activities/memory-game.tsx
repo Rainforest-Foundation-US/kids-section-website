@@ -7,6 +7,7 @@ import { CommonActivityOptions } from "./common";
 import clsx from "@/utils/clsx";
 import { congratulationsAtom } from "@/components/congratulations";
 import { useAtom } from "jotai";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 interface MemoryCard {
   id?: string;
@@ -40,6 +41,8 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   // the animation for the first 2 cards is still running.
   const [disabled, setDisabled] = React.useState(false);
 
+  const { playSound } = usePlaySounds();
+
   React.useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
@@ -56,13 +59,15 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         });
         setCardsLeft((prev) => prev - 1);
         resetTurn();
+        playSound("correct");
       } else {
         setTimeout(() => {
           resetTurn();
         }, 2000);
+        playSound("incorrect");
       }
     }
-  }, [choiceOne, choiceTwo]);
+  }, [choiceOne, choiceTwo, playSound]);
 
   const shuffleCards = React.useCallback(
     function shuffleCards() {
@@ -84,6 +89,7 @@ export function MemoryGame(props: MemoryGameActivityProps) {
 
   React.useEffect(() => {
     if (cardsLeft === 0) {
+      playSound("congratulations");
       setCongratulations({ ...congratulations, [props.name]: true });
       shuffleCards();
     }
@@ -93,6 +99,7 @@ export function MemoryGame(props: MemoryGameActivityProps) {
     congratulations,
     setCongratulations,
     shuffleCards,
+    playSound,
   ]);
 
   React.useEffect(() => {

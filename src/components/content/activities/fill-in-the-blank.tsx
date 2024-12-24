@@ -7,6 +7,7 @@ import { CommonActivityOptions } from "./common";
 import { ActivityHintStatus } from "@/components/activity-hint";
 import { congratulationsAtom } from "@/components/congratulations";
 import { useAtom } from "jotai";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
@@ -248,6 +249,7 @@ export function FillInTheBlankActivity({
   const [optionSelected, setOptionSelected] = useState(false);
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
+  const { playSound } = usePlaySounds();
 
   const textColor = useMemo(() => {
     switch (props.textColorStyle) {
@@ -278,9 +280,13 @@ export function FillInTheBlankActivity({
         updatedAnswers[option.blankId] = option.id;
 
         if (congratulations[props.name] !== undefined && props.isLastAnswer) {
+          playSound("congratulations");
           setCongratulations({ ...congratulations, [props.name]: true });
+        } else {
+          playSound("correct");
         }
       } else {
+        playSound("incorrect");
         onHint({
           hint: "",
           status: ActivityHintStatus.INCORRECT,
@@ -300,6 +306,7 @@ export function FillInTheBlankActivity({
       onHint,
       setAnswers,
       setCongratulations,
+      playSound,
     ],
   );
 
