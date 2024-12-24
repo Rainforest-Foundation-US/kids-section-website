@@ -20,8 +20,8 @@ export default function QAndARoute() {
     setActiveQuestionI(index);
     mainRef.current?.scrollIntoView({
       behavior: "smooth",
-      block: "start",
-      inline: "start",
+      block: "nearest",
+      inline: "nearest",
     });
   };
 
@@ -35,21 +35,18 @@ export default function QAndARoute() {
         <RegularSection fullScreen textColorStyle="dark" name="faq">
           <NavBar />
 
-          <div className="relative z-10 mx-6 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
+          <div className="relative z-10 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
             <QANav
               activeQuestionI={activeQuestionI}
               qAndAContent={qAndAContent}
               itemClick={navClick}
             />
 
-            <div
-              className="flex flex-1 flex-col justify-around space-y-6 pt-6 lg:flex-row lg:space-y-0"
-              ref={mainRef}
-            >
+            <div className="flex flex-1 flex-col space-y-6 pt-6 lg:flex-row lg:space-y-0">
               {activeQuestion && (
                 <>
-                  <span className="mx-auto inline-flex flex-col space-y-6">
-                    <span className="ml-16 inline-flex w-min">
+                  <span className="inline-flex max-w-sm flex-col space-y-6">
+                    <span className="ml-8 inline-flex w-min lg:ml-16">
                       <ActivityHint
                         noSloth
                         noAnimation
@@ -64,7 +61,10 @@ export default function QAndARoute() {
                     <WavingSlothIllustration />
                   </span>
 
-                  <section className="space-y-6">
+                  <section
+                    className="space-y-6 px-8 pb-8 lg:max-w-5xl lg:px-16"
+                    ref={mainRef}
+                  >
                     <h2 className="whitespace-pre-line text-3xl font-bold text-neutral-dark-800">
                       {activeQuestion.answer}
                     </h2>
