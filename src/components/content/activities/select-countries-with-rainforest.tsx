@@ -13,6 +13,7 @@ import {
   PolymorphicIllustrationOptions,
 } from "../polymorphic-illustration";
 import { CommonActivityOptions } from "./common";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 export interface SelectCountriesWithRainforestActivityOptions
   extends MapWithMarkersOptions {
@@ -74,6 +75,8 @@ export function SelectCountriesWithRainforestActivity({
     [highlightedCountries],
   );
 
+  const { playSound } = usePlaySounds();
+
   function onSelectCountry(answer: string) {
     if (correctCountriesLeft.length === 0) {
       return;
@@ -84,11 +87,14 @@ export function SelectCountriesWithRainforestActivity({
         return;
       }
 
+      playSound("correct");
       setHighlightedCountries((prev) => [...prev, answer]);
       setMarkers((prev) => [...prev, COUNTRY_MARKERS[answer]]);
       setErrorCountries([]);
       setHintedCountries([]);
     } else {
+      playSound("incorrect");
+
       if (hintedCountries.length === 0) {
         const randomCountryWithAmazonRainforest =
           correctCountriesLeft[random(0, correctCountriesLeft.length - 1)];

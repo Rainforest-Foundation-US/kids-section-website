@@ -4,6 +4,7 @@ import Image, { StaticImageData } from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 export interface PickTheImageOption {
   id: string;
@@ -75,8 +76,16 @@ export function PickTheImageActivity({
     Record<string, boolean>
   >({});
 
+  const { playSound } = usePlaySounds();
+
   const onSelectOption = useCallback(
     (option: PickTheImageOption) => {
+      if (option.isCorrect) {
+        playSound("correct");
+      } else {
+        playSound("incorrect");
+      }
+
       onHint({
         hint: option.reason || "",
         status: option.isCorrect
@@ -86,7 +95,7 @@ export function PickTheImageActivity({
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [onHint],
+    [onHint, playSound],
   );
 
   return (
