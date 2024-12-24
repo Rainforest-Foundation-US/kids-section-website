@@ -26,6 +26,7 @@ export interface MapWithMarkersOptions {
   hintedCountries?: string[];
   secondaryCountries?: string[];
   markers?: Marker[];
+  shouldApplyVignette?: boolean;
   onSelectCountry?: (country: string) => void;
 }
 
@@ -195,6 +196,7 @@ export function MapWithMarkers({
   hintedCountries,
   errorCountries,
   secondaryCountries,
+  shouldApplyVignette = true,
   onSelectCountry,
 }: MapWithMarkersProps) {
   return (
@@ -205,42 +207,53 @@ export function MapWithMarkers({
           center,
           scale,
         }}
-        className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
+        className="scale-150 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
         data-tip=""
       >
-        <defs>
-          <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
-            <feFlood floodColor="black" result="BLACK_FLOOD" />
-            <feGaussianBlur
-              in="BLACK_FLOOD"
-              stdDeviation="0 50"
-              result="BLURRED_BLACK_FLOOD"
-            />
-            <feComponentTransfer
-              in="BLURRED_BLACK_FLOOD"
-              result="VIGNETTE_MASK"
-            >
-              <feFuncA type="table" tableValues="0 0 0 0 0.01 1" />
-            </feComponentTransfer>
-            <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
-          </filter>
+        {/* Check for mobile and tablet and apply different filter */}
+        {shouldApplyVignette && (
+          <defs>
+            <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
+              <feFlood floodColor="black" result="BLACK_FLOOD" />
+              <feGaussianBlur
+                in="BLACK_FLOOD"
+                stdDeviation="100 50"
+                result="BLURRED_BLACK_FLOOD"
+              />
+              <feComponentTransfer
+                in="BLURRED_BLACK_FLOOD"
+                result="VIGNETTE_MASK"
+              >
+                <feFuncA type="table" tableValues="0 0 0 0 0 1" />
+              </feComponentTransfer>
+              <feComposite
+                in="SourceGraphic"
+                in2="VIGNETTE_MASK"
+                operator="in"
+              />
+            </filter>
 
-          <filter id="lg-vignette" x="0%" y="0%" width="100%" height="100%">
-            <feFlood floodColor="black" result="BLACK_FLOOD" />
-            <feGaussianBlur
-              in="BLACK_FLOOD"
-              stdDeviation="50 200"
-              result="BLURRED_BLACK_FLOOD"
-            />
-            <feComponentTransfer
-              in="BLURRED_BLACK_FLOOD"
-              result="VIGNETTE_MASK"
-            >
-              <feFuncA type="table" tableValues="0 0 0 0.2 0.03 1" />
-            </feComponentTransfer>
-            <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
-          </filter>
-        </defs>
+            <filter id="lg-vignette" x="0%" y="0%" width="100%" height="100%">
+              <feFlood floodColor="black" result="BLACK_FLOOD" />
+              <feGaussianBlur
+                in="BLACK_FLOOD"
+                stdDeviation="200 100"
+                result="BLURRED_BLACK_FLOOD"
+              />
+              <feComponentTransfer
+                in="BLURRED_BLACK_FLOOD"
+                result="VIGNETTE_MASK"
+              >
+                <feFuncA type="table" tableValues="0 0 0 0 0 1" />
+              </feComponentTransfer>
+              <feComposite
+                in="SourceGraphic"
+                in2="VIGNETTE_MASK"
+                operator="in"
+              />
+            </filter>
+          </defs>
+        )}
 
         <g>
           <Geographies geography={countriesTopoJSON}>

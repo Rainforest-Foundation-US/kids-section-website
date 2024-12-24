@@ -2,16 +2,12 @@ import React from "react";
 import difference from "lodash/difference";
 import random from "lodash/random";
 
-import clsx from "@/utils/clsx";
 import {
   MapWithMarkers,
   MapWithMarkersOptions,
   Marker,
 } from "../maps/map-with-markers";
-import {
-  PolymorphicIllustration,
-  PolymorphicIllustrationOptions,
-} from "../polymorphic-illustration";
+import { PolymorphicIllustrationOptions } from "../polymorphic-illustration";
 import { CommonActivityOptions } from "./common";
 
 export interface SelectCountriesWithRainforestActivityOptions
@@ -20,6 +16,22 @@ export interface SelectCountriesWithRainforestActivityOptions
   questionPosition?: "top" /** Default */ | "left" | "right";
   questionIllustration?: PolymorphicIllustrationOptions["kind"];
 }
+
+const ALL_SELECTABLE_COUNTRIES_KEYS = {
+  BRA: true,
+  COL: true,
+  BOL: true,
+  GUY: true,
+  SUR: true,
+  PER: true,
+  ECU: true,
+  VEN: true,
+  FRA: true,
+  PRY: true,
+  CHL: true,
+  URY: true,
+  ARG: true,
+};
 
 const COUNTRIES_WITH_AMAZON_RAINFOREST = [
   "BRA",
@@ -30,9 +42,11 @@ const COUNTRIES_WITH_AMAZON_RAINFOREST = [
   "PER",
   "ECU",
   "VEN",
-];
+] as const;
 
-const COUNTRY_MARKERS: Record<string, Marker> = {
+type CountryCode = (typeof COUNTRIES_WITH_AMAZON_RAINFOREST)[number];
+
+const COUNTRY_MARKERS: Record<CountryCode, Marker> = {
   BRA: {
     position: [-50, -14],
     tooltipText: "Brazil",
@@ -68,6 +82,10 @@ export function SelectCountriesWithRainforestActivity({
   const [markers, setMarkers] = React.useState<Marker[]>([]);
   const [hintedCountries, setHintedCountries] = React.useState<string[]>([]);
   const [errorCountries, setErrorCountries] = React.useState<string[]>([]);
+  const [recentOptionSelect, setRecentOptionSelect] = React.useState<{
+    code: CountryCode;
+    isCorrect: boolean;
+  } | null>(null);
 
   const correctCountriesLeft = React.useMemo(
     () => difference(COUNTRIES_WITH_AMAZON_RAINFOREST, highlightedCountries),
@@ -79,15 +97,20 @@ export function SelectCountriesWithRainforestActivity({
       return;
     }
 
-    if (COUNTRIES_WITH_AMAZON_RAINFOREST.includes(answer)) {
+    if (!(answer in ALL_SELECTABLE_COUNTRIES_KEYS)) {
+      return;
+    }
+
+    if (COUNTRIES_WITH_AMAZON_RAINFOREST.includes(answer as CountryCode)) {
       if (!correctCountriesLeft.includes(answer)) {
         return;
       }
 
       setHighlightedCountries((prev) => [...prev, answer]);
-      setMarkers((prev) => [...prev, COUNTRY_MARKERS[answer]]);
+      setMarkers((prev) => [...prev, COUNTRY_MARKERS[answer as CountryCode]]);
       setErrorCountries([]);
       setHintedCountries([]);
+      setRecentOptionSelect({ code: answer as CountryCode, isCorrect: true });
     } else {
       if (hintedCountries.length === 0) {
         const randomCountryWithAmazonRainforest =
@@ -95,33 +118,12 @@ export function SelectCountriesWithRainforestActivity({
         setHintedCountries([randomCountryWithAmazonRainforest]);
       }
       setErrorCountries([answer]);
+      setRecentOptionSelect({ code: answer as CountryCode, isCorrect: false });
     }
   }
 
   return (
-    <div className="w-full max-w-5xl">
-      <div
-        className={clsx(
-          "z-10 flex -translate-x-16 items-center",
-          questionPosition === "left" &&
-            "absolute inset-y-0 my-auto max-h-[200px] -translate-y-10 flex-row",
-          (questionPosition === "top" || !questionPosition) &&
-            "relative mx-auto max-w-[500px] translate-y-10 flex-col text-center",
-        )}
-      >
-        {questionIllustration && (
-          <PolymorphicIllustration kind={questionIllustration} />
-        )}
-
-        <p
-          className={clsx(
-            "z-10 text-3xl font-normal leading-relaxed text-neutral-dark-700",
-            questionPosition === "left" && "max-w-[250px]",
-          )}
-          dangerouslySetInnerHTML={{ __html: question }}
-        />
-      </div>
-
+    <div className="w-full">
       <MapWithMarkers
         name="select-countries-with-rainforest"
         highlightedCountries={highlightedCountries}

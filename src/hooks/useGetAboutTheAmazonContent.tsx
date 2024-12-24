@@ -345,6 +345,7 @@ export function useGetAboutTheAmazonContent() {
             "IDN",
           ],
           secondaryCountries: ["USA"],
+          shouldApplyVignette: false,
           markers: [
             {
               position: [-110, 46],
@@ -622,14 +623,14 @@ export function useGetAboutTheAmazonContent() {
       name: "select-countries-with-rainforest",
       background: null,
       backgroundColor: "#F0F4EF",
+      defaultHintContent: {
+        hint: "Select the countries with <b>Amazon Rainforest</b> in them",
+      },
       content: {
         type: "select-countries-with-rainforest",
         data: {
-          question:
-            "Select the countries with <b>Amazon Rainforest</b> in them",
-          questionPosition: "left",
-          questionIllustration: "happy-sloth",
-          center: [-88, -20],
+          question: "",
+          center: [-70, -30],
           scale: 280,
         },
       },
