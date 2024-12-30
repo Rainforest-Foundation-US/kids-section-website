@@ -33,7 +33,7 @@ export function USMapChart() {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    className="fill-secondary-400 stroke-none opacity-65"
+                    className="fill-secondary-400 stroke-none opacity-65 outline-none"
                   />
                 );
               })

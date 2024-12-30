@@ -7,6 +7,7 @@ import { PickImageGameData } from "../schemaTypes/pickImageGame";
 import { Navigation } from "../schemaTypes/navigation";
 import { PickOptionGameData } from "../schemaTypes/pickOptionGame";
 import { PlainData } from "../schemaTypes/plain";
+import { GameSounds } from "../schemaTypes/sounds";
 
 export async function getHomePage() {
   const homePage = await client.fetch(
@@ -210,4 +211,17 @@ export async function getNavigation() {
   );
 
   return navigation;
+}
+
+export async function getSounds() {
+  const sounds = await client.fetch<GameSounds>(
+    groq`*[_type == "gameSounds"][0]{
+      name,
+      "correct": correct.asset->url,
+      "incorrect": incorrect.asset->url,
+      "congratulations": congratulations.asset->url
+    }`,
+  );
+
+  return sounds;
 }
