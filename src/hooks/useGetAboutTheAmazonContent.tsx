@@ -272,6 +272,7 @@ export function useGetAboutTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
+        shouldShowFlipIconReminder: true,
         postcard: {
           image: tropicalRainRiver1,
           alt: "Tropical rainforest",
@@ -328,7 +329,7 @@ export function useGetAboutTheAmazonContent() {
         data: {
           question: "The three most important rainforests are:",
           center: [0, 20],
-          scale: 145,
+          scale: 125,
           highlightedCountries: [
             "VEN",
             "COL",
@@ -345,7 +346,7 @@ export function useGetAboutTheAmazonContent() {
             "IDN",
           ],
           secondaryCountries: ["USA"],
-          shouldApplyVignette: false,
+          shouldApplyLGVignette: false,
           markers: [
             {
               position: [-110, 46],
@@ -624,13 +625,13 @@ export function useGetAboutTheAmazonContent() {
       background: null,
       backgroundColor: "#F0F4EF",
       defaultHintContent: {
-        hint: "Select the countries with <b>Amazon Rainforest</b> in them",
+        hint: "Select the countries with Amazon Rainforest in them",
       },
       content: {
         type: "select-countries-with-rainforest",
         data: {
           question: "",
-          center: [-70, -30],
+          center: [-65, -22],
           scale: 280,
         },
       },

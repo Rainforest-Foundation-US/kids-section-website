@@ -1,3 +1,6 @@
+import { RevertIcon } from "@sanity/icons";
+
+import styles from "./turn-image-icon.module.css";
 interface IconProps {
   className?: string;
   style?: React.CSSProperties;
@@ -287,5 +290,15 @@ export function MapIcon(props: IconProps) {
         </clipPath>
       </defs>
     </svg>
+  );
+}
+
+export function FlipIcon(
+  props: React.SVGProps<SVGSVGElement> & React.RefAttributes<SVGSVGElement>,
+) {
+  const { className, ...rest } = props;
+
+  return (
+    <RevertIcon className={`${styles.revertIcon} ${className} `} {...rest} />
   );
 }

@@ -1,10 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
-import { RevertIcon } from "@sanity/icons";
 
 import { RoundSlothIllustration } from "./activities-illustrations";
-import styles from "./turn-image-icon.module.css";
+import { FlipIcon } from "./icons/icons";
 
 interface PostcardProps {
   image: string | StaticImageData;
@@ -72,9 +71,7 @@ function PolaroidFront({
       {description && (
         <>
           <div className="absolute right-4 top-4 h-8 w-8 bg-neutral-100 opacity-80" />
-          <RevertIcon
-            className={`${styles.revertIcon} absolute right-4 top-4 h-8 w-8 text-neutral-dark-800`}
-          />
+          <FlipIcon className="absolute right-4 top-4 h-8 w-8 text-neutral-dark-800" />
         </>
       )}
     </>
@@ -93,9 +90,7 @@ function PolaroidBack({ description }: { description: string }) {
       <RoundSlothIllustration className="self-center" />
       <div className="overflow-auto p-4">{description}</div>
 
-      <RevertIcon
-        className={`${styles.revertIcon} absolute right-4 top-4 h-8 w-8 text-neutral-dark-800`}
-      />
+      <FlipIcon className="absolute right-4 top-4 h-8 w-8 text-neutral-dark-800" />
     </div>
   );
 }
