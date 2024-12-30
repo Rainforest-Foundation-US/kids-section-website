@@ -26,6 +26,7 @@ export interface MapWithMarkersOptions {
   hintedCountries?: string[];
   secondaryCountries?: string[];
   markers?: Marker[];
+  shouldApplyLGVignette?: boolean;
   onSelectCountry?: (country: string) => void;
 }
 
@@ -195,6 +196,7 @@ export function MapWithMarkers({
   hintedCountries,
   errorCountries,
   secondaryCountries,
+  shouldApplyLGVignette = true,
   onSelectCountry,
 }: MapWithMarkersProps) {
   return (
@@ -205,22 +207,27 @@ export function MapWithMarkers({
           center,
           scale,
         }}
-        className="scale-125 [filter:url(#vignette)] lg:[filter:url(#lg-vignette)]"
+        className={clsx(
+          "scale-[2] [filter:url(#vignette)] lg:scale-[1.5]",
+          shouldApplyLGVignette && "lg:[filter:url(#lg-vignette)]",
+        )}
         data-tip=""
       >
+        {/* Check for mobile and tablet and apply different filter */}
+
         <defs>
           <filter id="vignette" x="0%" y="0%" width="100%" height="100%">
             <feFlood floodColor="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
-              stdDeviation="0 50"
+              stdDeviation="90 30"
               result="BLURRED_BLACK_FLOOD"
             />
             <feComponentTransfer
               in="BLURRED_BLACK_FLOOD"
               result="VIGNETTE_MASK"
             >
-              <feFuncA type="table" tableValues="0 0 0 0 0.01 1" />
+              <feFuncA type="table" tableValues="0 0 0 0 0 1" />
             </feComponentTransfer>
             <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
           </filter>
@@ -229,14 +236,14 @@ export function MapWithMarkers({
             <feFlood floodColor="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
-              stdDeviation="50 200"
+              stdDeviation="200 150"
               result="BLURRED_BLACK_FLOOD"
             />
             <feComponentTransfer
               in="BLURRED_BLACK_FLOOD"
               result="VIGNETTE_MASK"
             >
-              <feFuncA type="table" tableValues="0 0 0 0.2 0.03 1" />
+              <feFuncA type="table" tableValues="0 0 0 0 0 1" />
             </feComponentTransfer>
             <feComposite in="SourceGraphic" in2="VIGNETTE_MASK" operator="in" />
           </filter>

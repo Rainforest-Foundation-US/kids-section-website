@@ -13,7 +13,7 @@ export function USMapChart() {
     <>
       <ComposableMap
         projection="geoMercator"
-        projectionConfig={{ scale: 280, center: [-135, 28] }}
+        projectionConfig={{ scale: 340, center: [-135, 28] }}
         className="h-full w-full"
       >
         <Geographies geography={usStatesTopoJSON}>

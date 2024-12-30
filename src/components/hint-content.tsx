@@ -19,12 +19,12 @@ export function HintContent({
   const hintAtomValue = useAtomValue(hintAtom);
 
   return (
-    <div className="left-32 top-12 z-10 mb-2 flex gap-2 lg:absolute lg:flex-col">
+    <div className="left-[15%] top-12 z-10 mb-2 flex gap-2 lg:absolute lg:flex-col">
       <RoundSlothIllustration />
       {hintContent.text && name && (
         <p
           className={clsx(
-            "text-white mt-2 max-h-36 text-wrap rounded-3xl border-8 border-neutral-100 bg-primary-900 p-4 text-center text-xl font-medium leading-8 text-neutral-100 lg:max-h-full lg:max-w-[11.5rem]",
+            "text-white text-md mt-2 text-wrap rounded-3xl border-8 border-neutral-100 bg-primary-900 p-4 text-center font-medium leading-8 text-neutral-100 lg:max-h-full lg:max-w-[11.5rem] lg:text-xl",
             hintAtomValue[name]?.status === ActivityHintStatus.INCORRECT &&
               "bg-error-700",
           )}

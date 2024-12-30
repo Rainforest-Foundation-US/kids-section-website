@@ -46,6 +46,7 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
       <MapWithMarkers
         highlightedCountries={props.highlightedCountries}
         secondaryCountries={props.secondaryCountries}
+        shouldApplyLGVignette={props.shouldApplyLGVignette}
         markers={props.markers}
         center={props.center}
         scale={props.scale}

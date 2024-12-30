@@ -1,11 +1,10 @@
 import clsx from "@/utils/clsx";
 import { wrapText, truncateText } from "@/utils/truncateText";
-import { RevertIcon } from "@sanity/icons";
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React from "react";
 
-import styles from "./turn-image-icon.module.css";
+import { FlipIcon } from "./icons/icons";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 const DEFAULT_POLAROID_HEIGHT = 132;
@@ -152,11 +151,11 @@ function PolaroidFront(props: PolaroidProps) {
             y={0}
             className="h-3 w-3 fill-neutral-100 opacity-80"
           />
-          <RevertIcon
+          <FlipIcon
             x={TURN_ICON_STARTING_X}
             y={0}
             viewBox="0 0 32 32"
-            className={`${styles.revertIcon} text-neutral-dark-800`}
+            className="text-neutral-dark-800"
           />
         </>
       )}
@@ -246,11 +245,11 @@ function PolaroidBack(props: PolaroidProps) {
         y={0}
         className="h-3 w-3 fill-neutral-100 opacity-80"
       />
-      <RevertIcon
+      <FlipIcon
         x={TURN_ICON_STARTING_X}
         y={0}
         viewBox="0 0 32 32"
-        className={`${styles.revertIcon} text-neutral-dark-800`}
+        className="text-neutral-dark-800"
       />
     </motion.svg>
   );

@@ -2,6 +2,7 @@ import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import { useEffect, useMemo, useState } from "react";
+
 import {
   RoundSlothIllustration,
   ThinkingFaceEmoji,
@@ -63,6 +64,7 @@ import { HintContent } from "../hint-content";
 import { NarrativesSectionName } from "@/pages/narratives";
 import { useAtomValue } from "jotai";
 import { congratulationsAtom } from "../congratulations";
+import { FlipIconReminder } from "../flip-icon-reminder";
 
 type PreContent =
   | {
@@ -140,10 +142,12 @@ type SubContent =
       type: "postcard";
       postcard: PostcardData;
       polaroid?: PolaroidData;
+      shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "polaroids";
       polaroids: PolaroidData[];
+      shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "illustration";
@@ -327,6 +331,8 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
         >
           <Postcard {...subContent.postcard} />
         </div>
+
+        {subContent.shouldShowFlipIconReminder && <FlipIconReminder />}
 
         {subContent.polaroid && (
           <Polaroid
