@@ -1,13 +1,13 @@
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   RoundSlothIllustration,
   ThinkingFaceEmoji,
   WavySeparator,
-} from "../activities-illustrations";
+} from "../illustrations/activities-illustrations";
 import { Badge } from "../badge";
 import { GoToButton } from "../buttons";
 import {
@@ -163,6 +163,15 @@ export type PagerContent = Content & {
 
 export type DividerStyle = "dark";
 
+export type Illustrations = {
+  topLeft?: React.ReactNode;
+  topRight?: React.ReactNode;
+  bottomLeft?: React.ReactNode;
+  bottomRight?: React.ReactNode;
+  right?: React.ReactNode;
+  left?: React.ReactNode;
+};
+
 export type SectionWithContent =
   | {
       type: "regular" | "wavy";
@@ -185,6 +194,7 @@ export type SectionWithContent =
       defaultHintContent?: {
         hint: string;
       };
+      illustrations?: Illustrations;
     }
   | {
       type: "vignette";
@@ -449,6 +459,13 @@ function ContentSection(props: {
               }}
             />
           ) : null}
+
+          {props.section.illustrations?.topLeft ?? null}
+          {props.section.illustrations?.topRight ?? null}
+          {props.section.illustrations?.left ?? null}
+          {props.section.illustrations?.right ?? null}
+          {props.section.illustrations?.bottomLeft ?? null}
+          {props.section.illustrations?.bottomRight ?? null}
 
           <div
             className={clsx(

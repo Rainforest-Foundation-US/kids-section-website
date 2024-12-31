@@ -28,6 +28,7 @@
     "next-sanity": "^9.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-is": "^19.0.0",
     "react-simple-maps": "3.0.0",
     "react-tooltip": "^5.28.0",
     "react-use-measure": "2.1.1",

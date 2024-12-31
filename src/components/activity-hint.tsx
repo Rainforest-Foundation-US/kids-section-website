@@ -1,4 +1,4 @@
-import { RoundSlothIllustration } from "@/components/activities-illustrations";
+import { RoundSlothIllustration } from "@/components/illustrations/activities-illustrations";
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { HintData } from "./controlled-activity-hint";

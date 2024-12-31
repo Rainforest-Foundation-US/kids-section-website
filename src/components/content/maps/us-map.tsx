@@ -1,4 +1,4 @@
-import { USMapIllustration } from "@/components/activities-illustrations";
+import { USMapIllustration } from "@/components/illustrations/activities-illustrations";
 import {
   ComposableMap,
   Geographies,

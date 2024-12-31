@@ -6,7 +6,7 @@ import {
   HomeMonkeyIllustration,
   HomeParrotIllustration,
   HomeRightLeavesIllustration,
-} from "@/components/home-illustrations";
+} from "@/components/illustrations/home-illustrations";
 import { Polaroid } from "@/components/polaroid";
 import clsx from "@/utils/clsx";
 import Head from "next/head";

@@ -75,6 +75,33 @@ import { VignetteSection } from "@/sanity/schemaTypes/vignette";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
+import {
+  HangingSlothIllustration,
+  BottomLeftBushIllustration,
+  MonkeyInABushIllustration,
+  RightBushIllustration,
+  RightLeavesWithParrotIllustration,
+  WavingSlothIllustration,
+  RightLeavesIllustration,
+  TopLeftBushIllustration,
+  SlothInABushIllustration,
+  LemurInABushIllustration,
+  RightParrotIllustration,
+  ChameleonInABushIllustration,
+  ToucanWithDeadLeavesIllustration,
+  LeftDeadLeavesIllustration,
+  HelpSlothIllustration,
+  FlamingoAndChameleonIllustration,
+  RightParrotAndLemurIllustration,
+} from "@/components/illustrations/activities-illustrations";
+import {
+  bottomLeftIllustrationStyles,
+  bottomRightIllustrationStyles,
+  leftIllustrationStyles,
+  rightIllustrationStyles,
+  topLeftIllustrationStyles,
+} from "@/styles/illustration-styles";
+import clsx from "@/utils/clsx";
 
 // TODOK: use this type as a name of each schema type
 export const sectionNames = [
@@ -249,6 +276,14 @@ export function useGetAboutTheAmazonContent() {
           text: "You might be wondering: <b>What is a rainforest?</b>",
         },
       },
+      illustrations: {
+        bottomLeft: (
+          <BottomLeftBushIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-bottom-24")}
+          />
+        ),
+        left: <WavingSlothIllustration className={leftIllustrationStyles} />,
+      },
     },
     {
       type: "regular",
@@ -269,6 +304,16 @@ export function useGetAboutTheAmazonContent() {
       },
       defaultHintContent: {
         hint: "What are Rainforests?",
+      },
+      illustrations: {
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
       },
       subContent: {
         type: "postcard",
@@ -305,6 +350,16 @@ export function useGetAboutTheAmazonContent() {
             },
           },
         },
+      },
+      illustrations: {
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
       },
       defaultHintContent: {
         hint: "How do rainforests stay wet all year round?",
@@ -387,6 +442,21 @@ export function useGetAboutTheAmazonContent() {
           text: "Why do you think there are <b>no rainforests in Antarctica?</b>",
         },
       },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
+      },
       subContent: {
         type: "postcard",
         postcard: {
@@ -403,6 +473,16 @@ export function useGetAboutTheAmazonContent() {
         data: {
           text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, <b>we have to learn more about the Amazon!</b>",
         },
+      },
+      illustrations: {
+        bottomLeft: (
+          <MonkeyInABushIllustration className={bottomLeftIllustrationStyles} />
+        ),
+        right: (
+          <RightLeavesWithParrotIllustration
+            className={rightIllustrationStyles}
+          />
+        ),
       },
       subContent: {
         type: "illustration",
@@ -487,6 +567,13 @@ export function useGetAboutTheAmazonContent() {
           text: "The Amazon is the biggest tropical rainforest in the world! At its heart: <b>the Amazon River, the largest river on Earth, by far</b>",
         },
       },
+      illustrations: {
+        bottomLeft: (
+          <BottomLeftBushIllustration
+            className={bottomLeftIllustrationStyles}
+          />
+        ),
+      },
       subContent: {
         type: "polaroids",
         polaroids: [
@@ -514,6 +601,21 @@ export function useGetAboutTheAmazonContent() {
         data: {
           text: "<b>The other 9 largest rivers on Earth combined</b>, would have less water than the Amazon!",
         },
+      },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
       },
       subContent: {
         type: "polaroids",
@@ -646,6 +748,14 @@ export function useGetAboutTheAmazonContent() {
           text: "Now we know how big my home is, <b>but what does life in the Amazon actually look like?</b>",
         },
       },
+      illustrations: {
+        bottomLeft: (
+          <BottomLeftBushIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-bottom-24")}
+          />
+        ),
+        right: <RightLeavesIllustration className={rightIllustrationStyles} />,
+      },
       subContent: {
         type: "illustration",
         kind: "happy-sloth",
@@ -677,6 +787,21 @@ export function useGetAboutTheAmazonContent() {
           text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
           subText: "See the pictures from various Indigenous communities!",
         },
+      },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
       },
       subContent: {
         type: "polaroids",
@@ -777,6 +902,21 @@ export function useGetAboutTheAmazonContent() {
           },
         ],
       },
+      illustrations: {
+        topLeft: (
+          <TopLeftBushIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <SlothInABushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-10",
+            )}
+          />
+        ),
+      },
     },
     {
       type: "regular",
@@ -787,6 +927,17 @@ export function useGetAboutTheAmazonContent() {
         data: {
           text: "So, we understand a bit about rainforests!\n<b>But, there's a lot more to learn...</b>",
         },
+      },
+      illustrations: {
+        bottomLeft: (
+          <BottomLeftBushIllustration
+            className={clsx(
+              bottomLeftIllustrationStyles,
+              "-bottom-24 -left-10",
+            )}
+          />
+        ),
+        right: <RightLeavesIllustration className={rightIllustrationStyles} />,
       },
       subContent: {
         type: "illustration",
@@ -861,6 +1012,14 @@ export function useGetAboutTheAmazonContent() {
         data: {
           text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
         },
+      },
+      illustrations: {
+        bottomLeft: (
+          <LemurInABushIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-bottom-32")}
+          />
+        ),
+        right: <RightParrotIllustration className={rightIllustrationStyles} />,
       },
       subContent: [
         {
@@ -963,6 +1122,21 @@ export function useGetAboutTheAmazonContent() {
           },
         ],
       },
+      illustrations: {
+        topLeft: (
+          <TopLeftBushIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <ChameleonInABushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-32 -right-10",
+            )}
+          />
+        ),
+      },
     },
     {
       type: "regular",
@@ -974,6 +1148,23 @@ export function useGetAboutTheAmazonContent() {
           subText:
             "Learn about the plants and animals whose home is disappearing with a Memory game.",
         },
+      },
+      illustrations: {
+        bottomLeft: (
+          <LeftDeadLeavesIllustration
+            className={bottomLeftIllustrationStyles}
+          />
+        ),
+        bottomRight: (
+          <ToucanWithDeadLeavesIllustration
+            className={bottomRightIllustrationStyles}
+          />
+        ),
+        left: (
+          <HelpSlothIllustration
+            className={clsx(leftIllustrationStyles, "left-24")}
+          />
+        ),
       },
     },
     memoryGame && {
@@ -1011,6 +1202,21 @@ export function useGetAboutTheAmazonContent() {
           text: "What do you think happens to animals \n <b> when rainforest disappears?</b>",
         },
       },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
+      },
     },
     {
       type: "regular",
@@ -1020,6 +1226,18 @@ export function useGetAboutTheAmazonContent() {
         data: {
           text: "That's why my friends and I—all the plants and animals of the rainforest—need people to keep our home safe!",
         },
+      },
+      illustrations: {
+        bottomLeft: (
+          <FlamingoAndChameleonIllustration
+            className={bottomLeftIllustrationStyles}
+          />
+        ),
+        right: (
+          <RightParrotAndLemurIllustration
+            className={rightIllustrationStyles}
+          />
+        ),
       },
       subContent: [
         {
@@ -1257,6 +1475,21 @@ export function useGetAboutTheAmazonContent() {
           text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
         },
       },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightBushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-32 lg:-right-48",
+            )}
+          />
+        ),
+      },
     },
     rainforestUnderThreatPickImageGame && {
       type: "regular",
@@ -1308,6 +1541,18 @@ export function useGetAboutTheAmazonContent() {
             },
           },
         ],
+      },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightLeavesWithParrotIllustration
+            className={clsx(bottomRightIllustrationStyles, "-right-10")}
+          />
+        ),
       },
     },
     {
@@ -1452,6 +1697,21 @@ export function useGetAboutTheAmazonContent() {
           },
         ],
       },
+      illustrations: {
+        topLeft: (
+          <TopLeftBushIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <ChameleonInABushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-24 -right-10",
+            )}
+          />
+        ),
+      },
     },
     {
       type: "regular",
@@ -1470,6 +1730,15 @@ export function useGetAboutTheAmazonContent() {
           tracking: "-0.02em",
           paddingTop: "5rem",
         },
+      },
+      illustrations: {
+        left: <WavingSlothIllustration className={leftIllustrationStyles} />,
+        right: <RightLeavesIllustration className={rightIllustrationStyles} />,
+        bottomLeft: (
+          <BottomLeftBushIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-bottom-20")}
+          />
+        ),
       },
       subContent: {
         type: "polaroids",
