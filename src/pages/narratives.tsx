@@ -20,6 +20,14 @@ import {
 } from "@/sanity/lib/queries";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 import { PickOptionGameData } from "@/sanity/schemaTypes/pickOptionGame";
+import {
+  MonkeyInABushIllustration,
+  RightLeavesIllustration,
+} from "@/components/illustrations/activities-illustrations";
+import {
+  bottomLeftIllustrationStyles,
+  rightIllustrationStyles,
+} from "@/styles/illustration-styles";
 
 export const narrativesSectionNames = [
   { title: "learn-about-daniela", value: "learn-about-daniela" as const },
@@ -264,6 +272,14 @@ export default function NarrativesRoute() {
           <NavBar />
 
           <SectionContent>
+            {/* Bottom left illustration */}
+            <MonkeyInABushIllustration
+              className={bottomLeftIllustrationStyles}
+            />
+
+            {/* Right leaves illustration */}
+            <RightLeavesIllustration className={rightIllustrationStyles} />
+
             <ContentPager name="narratives" contentList={pageContent} />
           </SectionContent>
         </RegularSection>

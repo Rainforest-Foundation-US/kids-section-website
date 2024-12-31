@@ -3,7 +3,7 @@ import {
   SadSlothIllustration,
   SittingSlothIllustration,
   WavingSlothIllustration,
-} from "../activities-illustrations";
+} from "../illustrations/activities-illustrations";
 
 export interface PolymorphicIllustrationOptions {
   kind: "sitting-sloth" | "waving-sloth" | "happy-sloth" | "sad-sloth";

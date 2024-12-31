@@ -1,9 +1,9 @@
 import {
   FlamingoAndChameleonIllustration,
-  HangingSlothIllustration,
-  LeftBushIllustration,
+  HangingSlothOnTreeIllustration,
+  TopLeftBushIllustration,
   RightBushIllustration,
-} from "./activities-illustrations";
+} from "./illustrations/activities-illustrations";
 import { motion } from "framer-motion";
 import { AppButton } from "./buttons";
 import { atom, useAtom } from "jotai";
@@ -23,7 +23,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
   // Define animation variants
   const variants = {
     topLeft: { opacity: 0, x: -500 }, // For LeftBushIllustration
-    topRight: { opacity: 0, y: -500 }, // For HangingSlothIllustration
+    topRight: { opacity: 0, y: -500 }, // For HangingSlothOnTreeIllustration
     bottomLeft: { opacity: 0, y: 500 }, // For FlamingoAndChameleonIllustration
     bottomRight: { opacity: 0, x: 500 }, // For RightBushIllustration
     visible: { opacity: 1, y: 0, x: 0, transition: { duration: 0.5 } },
@@ -45,7 +45,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
         variants={variants}
         transition={{ duration: 0.5 }}
       >
-        <LeftBushIllustration className="absolute left-0 top-0 h-auto max-h-full w-auto max-w-full" />
+        <TopLeftBushIllustration className="absolute left-0 top-0 h-auto max-h-full w-auto max-w-full" />
       </motion.div>
 
       <motion.div
@@ -65,7 +65,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
         variants={variants}
         transition={{ duration: 0.5 }}
       >
-        <HangingSlothIllustration className="absolute right-8 top-0 h-auto max-h-full w-auto max-w-full" />
+        <HangingSlothOnTreeIllustration className="absolute right-8 top-0 h-auto max-h-full w-auto max-w-full" />
       </motion.div>
 
       <motion.div

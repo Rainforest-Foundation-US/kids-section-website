@@ -1,4 +1,4 @@
-import { RoundSlothIllustration } from "@/components/activities-illustrations";
+import { RoundSlothIllustration } from "@/components/illustrations/activities-illustrations";
 import clsx from "@/utils/clsx";
 import { useAtomValue } from "jotai";
 import { hintAtom } from "@/components/controlled-activity-hint";

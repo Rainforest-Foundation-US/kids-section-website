@@ -1,4 +1,4 @@
-import { WavingSlothIllustration } from "@/components/activities-illustrations";
+import { WavingSlothIllustration } from "@/components/illustrations/activities-illustrations";
 import { ActivityHint, ActivityHintStatus } from "@/components/activity-hint";
 import { Footer } from "@/components/layout/footer";
 import { NavBar } from "@/components/layout/nav";

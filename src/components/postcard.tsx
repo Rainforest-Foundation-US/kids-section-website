@@ -2,7 +2,7 @@ import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
 
-import { RoundSlothIllustration } from "./activities-illustrations";
+import { RoundSlothIllustration } from "./illustrations/activities-illustrations";
 import { FlipIcon } from "./icons/icons";
 
 interface PostcardProps {
