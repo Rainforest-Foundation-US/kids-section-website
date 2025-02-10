@@ -1,5 +1,5 @@
 import { defineType, defineField, PortableTextBlock } from "sanity";
-import { ClipboardImageIcon, LinkIcon, HighlightIcon } from "@sanity/icons";
+import { ClipboardImageIcon } from "@sanity/icons";
 import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
 
 export const StatisticsCard = defineType({

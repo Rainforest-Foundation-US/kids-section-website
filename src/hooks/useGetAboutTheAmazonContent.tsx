@@ -181,6 +181,7 @@ export const sectionNames = [
     title: "statistics-about-biodiversity-cards",
     value: "statistics-about-biodiversity-cards" as const,
   },
+  { title: "find-the-animals", value: "find-the-animals" as const },
   {
     title: "rainforests-are-important-quiz",
     value: "rainforests-are-important-quiz" as const,
@@ -1034,11 +1035,77 @@ export function useGetAboutTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "three-most-important-rainforests",
+      background: null,
+      defaultHintContent: {
+        hint: "Rainforest Foundation US works in the Amazon",
+      },
+      content: {
+        type: "locate-in-map",
+        data: {
+          question: "The three most important rainforests are:",
+          center: [0, 20],
+          scale: 125,
+          highlightedCountries: [
+            "VEN",
+            "COL",
+            "BRA",
+            "PER",
+            "ECU",
+            "GUY",
+            "SUR",
+            "CMR",
+            "GAB",
+            "COG",
+            "COD",
+            "CAF",
+            "IDN",
+          ],
+          secondaryCountries: ["USA"],
+          shouldApplyLGVignette: false,
+          markers: [
+            {
+              position: [-110, 46],
+              text: "United States",
+              orientation: "top-right",
+            },
+            {
+              position: [-81, -1],
+              text: "The Amazon Basin, in South America",
+              orientation: "left",
+            },
+            {
+              position: [10, 7],
+              text: "The Congo Basin, in Subsaharan Africa",
+              orientation: "top-left",
+            },
+            {
+              position: [105, -6],
+              text: "The Indonesian Archipelago",
+              orientation: "bottom-left",
+            },
+          ],
+        },
+      },
+    },
+    {
+      type: "regular",
       name: "statistics-about-biodiversity-cards",
       content: {
         type: "statistics",
         data: {
           cards: statisticsCards ?? [],
+        },
+      },
+    },
+    {
+      type: "regular",
+      name: "find-the-animals",
+      background: secondBackground,
+      content: {
+        type: "find-the-animals",
+        data: {
+          test: ["some string"],
         },
       },
     },

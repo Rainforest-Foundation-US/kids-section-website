@@ -24,7 +24,6 @@ export function usePlaySounds() {
     }
 
     return () => {
-      console.log("pausing sounds");
       Object.values(sounds.current).forEach((sound) => {
         if (sound) {
           sound.pause();

@@ -28,6 +28,10 @@ import {
   MemoryGameActivityOptions,
 } from "./activities/memory-game";
 import {
+  FindTheAnimalsGameActivityOptions,
+  FindTheAnimalsGame,
+} from "./activities/find-the-animals-game";
+import {
   SelectCountriesWithRainforestActivity,
   SelectCountriesWithRainforestActivityOptions,
 } from "./activities/select-countries-with-rainforest";
@@ -110,6 +114,11 @@ type MemoryGameActivityData = {
   data: MemoryGameActivityOptions;
 };
 
+type FindAnimalsGameActivityData = {
+  type: "find-the-animals";
+  data: FindTheAnimalsGameActivityOptions;
+};
+
 type StatisticsActivityData = {
   type: "statistics";
   data: { cards: StatisticsCard[] };
@@ -122,6 +131,7 @@ type SingleContent =
   | PickTheOptionActivityData
   | PickTheImageActivityData
   | MemoryGameActivityData
+  | FindAnimalsGameActivityData
   | SelectCountriesWithRainforestActivityData
   | StatisticsActivityData;
 
@@ -161,7 +171,7 @@ export type PagerContent = Content & {
   subContent?: SubContent | SubContent[];
 };
 
-export type DividerStyle = "dark";
+export type DividerStyle = "dark" | "light";
 
 export type Illustrations = {
   topLeft?: React.ReactNode;
@@ -307,6 +317,15 @@ function PolymorphicContent({
         name={name}
         onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
+      />
+    );
+  }
+
+  if (content.type === "find-the-animals") {
+    return (
+      <FindTheAnimalsGame
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
       />
     );
   }
@@ -470,9 +489,11 @@ function ContentSection(props: {
           <div
             className={clsx(
               "flex flex-col",
-              ["locate-in-map", "select-countries-with-rainforest"].includes(
-                props.section.content.type,
-              ) && "w-full",
+              [
+                "locate-in-map",
+                "select-countries-with-rainforest",
+                "find-the-animals",
+              ].includes(props.section.content.type) && "w-full",
               props.section.layout === "space-between"
                 ? "flex-1 justify-between py-8"
                 : "",
