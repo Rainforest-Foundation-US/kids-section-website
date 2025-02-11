@@ -267,32 +267,32 @@ export function HelpSlothIllustration({ className }: { className?: string }) {
       <path
         d="M173.245 460.109C195.354 475.909 243.355 477.208 265.994 468.84"
         stroke="#A7968F"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
       <path
         d="M102.764 353.36C85.9073 370.441 81.4295 409.576 94.2982 446.15"
         stroke="#5A9A36"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
       <path
         d="M337.45 383.5C333.047 367.922 321.195 334.057 299.587 317.802"
         stroke="#5A9A36"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
       <path
         d="M82.8912 348.956C78.4665 353.44 77.2912 363.712 80.669 373.312"
         stroke="#5A9A36"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
       <path
         d="M337.159 314.396C332.294 318.397 321.957 318.638 312.703 314.405"
         stroke="#5A9A36"
-        stroke-width="6"
-        stroke-linecap="round"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
       <path
         d="M235.821 541.764C242.666 541.463 248.702 537.645 252.462 531.917C261.578 518.027 254.009 499.096 238.144 494.164C221.967 489.136 203.062 482.23 189.184 474.047C178.222 467.582 166.755 458.172 156.301 448.453C136.121 429.693 102.637 431.792 88.013 455.144C77.2073 472.399 81.0312 495.062 98.193 506.015C112.922 515.416 131.18 525.53 147.907 530.441C187.021 541.926 219.731 542.469 235.821 541.764Z"
