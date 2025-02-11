@@ -162,6 +162,7 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
       }
 
       const iframeDoc = iframe.contentDocument;
+      const iframeRect = iframe.getBoundingClientRect();
 
       animals.forEach((animal) => {
         const animalElement = iframeDoc.getElementById(`${animal.id}-outline`);
@@ -172,7 +173,6 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
 
           // Get element position
           const rect = animalElement.getBoundingClientRect();
-          const iframeRect = iframe.getBoundingClientRect();
 
           const offset = getOffset(rect, animal.tooltipPlace);
 
@@ -190,19 +190,16 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
             });
           }
 
-          animalElement.addEventListener(
-            "click",
-            function animalElementOnClick() {
-              // Turn on outline visibility
-              animalElement.style.opacity = "1";
+          animalElement.addEventListener("click", function animalElementClickHandler() {
+            // Turn on outline visibility
+            animalElement.style.opacity = "1";
 
-              tooltipRef.current?.open({
-                position: absolutePosition,
-                place: animal.tooltipPlace,
-                content: animal.name,
-              });
-            },
-          );
+            tooltipRef.current?.open({
+              position: absolutePosition,
+              place: animal.tooltipPlace,
+              content: animal.name,
+            });
+          });
         }
       });
     };
@@ -219,11 +216,12 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
   }, []);
 
   return (
-    <div className="h-screen w-4/5">
+    <div className="h-full w-full md:w-5/6">
       <iframe
         ref={iframeRef}
         src="/rainforest.html"
         className="h-full w-full"
+        style={{ aspectRatio: "7408.16/4697.1" }} // This is the SVG size inside the rainforest.html file
       />
       <Tooltip
         ref={tooltipRef}
