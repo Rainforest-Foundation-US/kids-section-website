@@ -190,16 +190,19 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
             });
           }
 
-          animalElement.addEventListener("click", function animalElementClickHandler() {
-            // Turn on outline visibility
-            animalElement.style.opacity = "1";
+          animalElement.addEventListener(
+            "click",
+            function animalElementClickHandler() {
+              // Turn on outline visibility
+              animalElement.style.opacity = "1";
 
-            tooltipRef.current?.open({
-              position: absolutePosition,
-              place: animal.tooltipPlace,
-              content: animal.name,
-            });
-          });
+              tooltipRef.current?.open({
+                position: absolutePosition,
+                place: animal.tooltipPlace,
+                content: animal.name,
+              });
+            },
+          );
         }
       });
     };
