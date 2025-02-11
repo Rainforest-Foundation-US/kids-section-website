@@ -1,5 +1,5 @@
 import { CommonActivityOptions } from "./common";
-import { Tooltip, TooltipRefProps } from "react-tooltip";
+import { PlacesType, Tooltip, TooltipRefProps } from "react-tooltip";
 import type { PropsWithChildren } from "react";
 import React from "react";
 
@@ -11,28 +11,143 @@ type FindTheAnimalsGameActivityProps = PropsWithChildren<
   FindTheAnimalsGameActivityOptions & CommonActivityOptions
 >;
 
-const animals = [
-  "tamarin-monkey",
-  "harpy-eagle",
-  "harmonia-tigerwing-butterfly",
-  "toucan",
-  "collared-peccary",
-  "blue-morpho-butterfly",
-  "jaguar",
-  "anaconda",
-  "red-macaw",
-  "woolly-monkey",
-  "blue-macaw",
-  "hummingbirds",
-  "golden-poison-frog",
-  "yellow-eyelash-viper",
-  "capybaras",
-  "ocelot",
-  "armadillo",
-  "fruit-eating-bat",
-  "amazon-kingfisher",
-  "sloth",
-];
+interface Animal {
+  id: string;
+  name: string;
+  tooltipPlace: PlacesType;
+}
+
+const animals: Animal[] = [
+  {
+    id: "tamarin-monkey",
+    name: "Tamarin monkey",
+    tooltipPlace: "top",
+  },
+  {
+    id: "harpy-eagle",
+    name: "Harpy eagle",
+    tooltipPlace: "top-end",
+  },
+  {
+    id: "harmonia-tigerwing-butterfly",
+    name: "Harmonia tigerwing butterfly",
+    tooltipPlace: "top",
+  },
+  {
+    id: "toucan",
+    name: "Toucan",
+    tooltipPlace: "top-end",
+  },
+  {
+    id: "collared-peccary",
+    name: "Collared peccary",
+    tooltipPlace: "bottom-start",
+  },
+  {
+    id: "blue-morpho-butterfly",
+    name: "Blue morpho butterfly",
+    tooltipPlace: "top",
+  },
+  {
+    id: "jaguar",
+    name: "Jaguar",
+    tooltipPlace: "right",
+  },
+  {
+    id: "anaconda",
+    name: "Anaconda",
+    tooltipPlace: "bottom-end",
+  },
+  {
+    id: "red-macaw",
+    name: "Red macaw",
+    tooltipPlace: "top",
+  },
+  {
+    id: "woolly-monkey",
+    name: "Woolly monkey",
+    tooltipPlace: "right",
+  },
+  {
+    id: "blue-macaw",
+    name: "Blue macaw",
+    tooltipPlace: "right-start",
+  },
+  {
+    id: "hummingbirds",
+    name: "Hummingbirds",
+    tooltipPlace: "top",
+  },
+  {
+    id: "golden-poison-frog",
+    name: "Golden poison frog",
+    tooltipPlace: "top",
+  },
+  {
+    id: "yellow-eyelash-viper",
+    name: "Yellow eyelash viper",
+    tooltipPlace: "bottom",
+  },
+  {
+    id: "capybaras",
+    name: "Capybaras",
+    tooltipPlace: "top",
+  },
+  {
+    id: "ocelot",
+    name: "Ocelot",
+    tooltipPlace: "left",
+  },
+  {
+    id: "armadillo",
+    name: "Armadillo or cingulata",
+    tooltipPlace: "left",
+  },
+  {
+    id: "fruit-eating-bat",
+    name: "Fruit-eating bat",
+    tooltipPlace: "top",
+  },
+  {
+    id: "amazon-kingfisher",
+    name: "Amazon kingfisher",
+    tooltipPlace: "top",
+  },
+  {
+    id: "sloth",
+    name: "Three-toed sloth (that's me!)",
+    tooltipPlace: "left",
+  },
+] as const;
+
+function getOffset(rect: DOMRect, tooltipPlace: PlacesType) {
+  switch (tooltipPlace) {
+    case "top":
+      return { x: rect.width / 2, y: 0 };
+    case "top-start":
+      return { x: 0, y: 0 };
+    case "top-end":
+      return { x: rect.width, y: 0 };
+    case "right":
+      return { x: rect.width, y: rect.height / 2 };
+    case "right-start":
+      return { x: rect.width, y: 0 };
+    case "right-end":
+      return { x: rect.width, y: rect.height };
+    case "bottom":
+      return { x: rect.width / 2, y: rect.height };
+    case "bottom-start":
+      return { x: 0, y: rect.height };
+    case "bottom-end":
+      return { x: rect.width, y: rect.height };
+    case "left":
+      return { x: 0, y: rect.height / 2 };
+    case "left-start":
+      return { x: 0, y: 0 };
+    case "left-end":
+      return { x: 0, y: rect.height };
+  }
+}
 
 export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
@@ -48,44 +163,47 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
 
       const iframeDoc = iframe.contentDocument;
 
-      animals.forEach((animalName) => {
-        const animalElements = iframeDoc.querySelectorAll(
-          `[id^=${animalName}]`,
-        );
-        const animalOutlineElement = iframeDoc.getElementById(
-          `${animalName}-outline`,
-        );
+      animals.forEach((animal) => {
+        const animalElement = iframeDoc.getElementById(`${animal.id}-outline`);
 
-        animalElements.forEach((animalElement) => {
-          if (animalElement && animalOutlineElement) {
-            // Hide outline initially
-            animalOutlineElement.style.opacity = "0";
+        if (animalElement) {
+          // Hide outline initially
+          animalElement.style.opacity = "0";
 
-            animalElement.addEventListener(
-              "click",
-              function animalElementOnClick() {
-                // Get element position
-                const rect = animalElement.getBoundingClientRect();
-                const iframeRect = iframe.getBoundingClientRect();
+          // Get element position
+          const rect = animalElement.getBoundingClientRect();
+          const iframeRect = iframe.getBoundingClientRect();
 
-                // Calculate absolute position (relative to the page)
-                const absolutePosition = {
-                  x: rect.left + iframeRect.left + rect.width / 2,
-                  y: rect.top + iframeRect.top,
-                };
+          const offset = getOffset(rect, animal.tooltipPlace);
 
-                // Toggle outline visibility
-                animalOutlineElement.style.opacity =
-                  animalOutlineElement.style.opacity === "0" ? "1" : "0";
-                tooltipRef.current?.open({
-                  position: absolutePosition,
-                  place: "top",
-                  content: "Test", // TODO
-                });
-              },
-            );
+          // Calculate absolute position (relative to the page)
+          const absolutePosition = {
+            x: rect.left + iframeRect.left + offset.x,
+            y: rect.top + iframeRect.top + offset.y,
+          };
+
+          if (animal.id === "sloth") {
+            tooltipRef.current?.open({
+              position: absolutePosition,
+              place: animal.tooltipPlace,
+              content: "How many of my rainforest friends can you find?",
+            });
           }
-        });
+
+          animalElement.addEventListener(
+            "click",
+            function animalElementOnClick() {
+              // Turn on outline visibility
+              animalElement.style.opacity = "1";
+
+              tooltipRef.current?.open({
+                position: absolutePosition,
+                place: animal.tooltipPlace,
+                content: animal.name,
+              });
+            },
+          );
+        }
       });
     };
 
@@ -107,7 +225,10 @@ export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
         src="/rainforest.html"
         className="h-full w-full"
       />
-      <Tooltip ref={tooltipRef} />
+      <Tooltip
+        ref={tooltipRef}
+        className="!w-fit !max-w-48 !rounded-md !bg-neutral-100 !text-primary-700 !opacity-95"
+      />
     </div>
   );
 }
