@@ -6,7 +6,7 @@ import {
   HomeMonkeyIllustration,
   HomeParrotIllustration,
   HomeRightLeavesIllustration,
-} from "@/components/home-illustrations";
+} from "@/components/illustrations/home-illustrations";
 import { Polaroid } from "@/components/polaroid";
 import clsx from "@/utils/clsx";
 import Head from "next/head";
@@ -20,9 +20,12 @@ import { NavBar } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
 import { useGetHomePageData } from "@/hooks/useGetHomePageData";
 import { urlFor } from "@/sanity/lib/image";
+import React from "react";
 
 export default function Home() {
   const homePageData = useGetHomePageData();
+
+  const [isFlipped, setIsFlipped] = React.useState(-1);
 
   return (
     <>
@@ -175,16 +178,29 @@ export default function Home() {
                 {homePageData.polaroids.map((polaroid, i) => {
                   const isOdd = i % 2 !== 0;
                   return (
-                    <li key={polaroid._id}>
+                    <li
+                      key={polaroid._id}
+                      onClick={() =>
+                        setIsFlipped((prev) => {
+                          if (i === prev) {
+                            return -1;
+                          }
+
+                          return i;
+                        })
+                      }
+                      className={clsx(
+                        isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
+                        "relative w-[18rem] hover:z-10 hover:rotate-0 hover:scale-105",
+                      )}
+                    >
                       <Polaroid
-                        className={clsx(
-                          isOdd ? "rotate-[6.5deg]" : "-rotate-[6.5deg]",
-                          "relative w-[18rem] hover:z-10 hover:rotate-0 hover:scale-105",
-                        )}
                         src={urlFor(polaroid.image).url()}
                         caption={polaroid.caption}
                         captionStyle={polaroid.captionStyle}
                         verticalAlign={polaroid.imageAlignment}
+                        description={polaroid.description}
+                        isFlipped={isFlipped === i}
                       />
                     </li>
                   );

@@ -1,11 +1,12 @@
 import Image, { StaticImageData } from "next/image";
-import { ActivitySection } from "../sections";
 import clsx from "@/utils/clsx";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 import React from "react";
+import { HintContent } from "../hint-content";
 
 export interface VignetteSlide {
   _id: string;
+  name: string;
   title: string;
   subtitle: string;
   image: {
@@ -23,79 +24,155 @@ export interface VignetteSectionOptions {
 
 interface VignetteSectionProps extends VignetteSectionOptions {
   name?: SectionName;
+  defaultHintContent?: {
+    hint: string;
+  };
 }
 
-export function VignetteSection({ slides, name }: VignetteSectionProps) {
+export function VignetteSection({
+  slides,
+  name,
+  defaultHintContent,
+}: VignetteSectionProps) {
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const sectionRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const [isLastSlide, setIsLastSlide] = React.useState(false);
+  const [isFirstSlide, setIsFirstSlide] = React.useState(true);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  let isTransitioning = React.useRef(false);
+  const touchStart = React.useRef<number | null>(null);
+  const lastWheelTime = React.useRef(0);
 
-  console.log({ slides, name });
+  const handleScroll = React.useCallback(
+    (deltaY: number) => {
+      if (!containerRef.current) return false;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const now = Date.now();
+
+      // Only activate when section is almost fully in viewport
+      const isAlmostFullyVisible =
+        rect.top <= window.innerHeight * 0.2 &&
+        rect.bottom >= window.innerHeight * 0.8;
+
+      // If we're not in the active zone, reset states and allow normal scroll
+      if (!isAlmostFullyVisible) {
+        isTransitioning.current = false;
+        return false;
+      }
+
+      // Debounce rapid events
+      if (now - lastWheelTime.current < 40) {
+        return true;
+      }
+      lastWheelTime.current = now;
+
+      // Allow normal scroll if:
+      // 1. On last slide and scrolling down
+      // 2. On first slide and scrolling up
+      if ((isLastSlide && deltaY > 0) || (isFirstSlide && deltaY < 0)) {
+        isTransitioning.current = false;
+        return false;
+      }
+
+      // Don't process new events during transition
+      if (isTransitioning.current) return true;
+
+      const scrollingDown = deltaY > 0;
+
+      if (scrollingDown && activeIndex < slides.length - 1) {
+        isTransitioning.current = true;
+        setActiveIndex((prev) => prev + 1);
+        setTimeout(() => {
+          isTransitioning.current = false;
+        }, 700);
+        return true;
+      } else if (!scrollingDown && activeIndex > 0) {
+        isTransitioning.current = true;
+        setActiveIndex((prev) => prev - 1);
+        setTimeout(() => {
+          isTransitioning.current = false;
+        }, 700);
+        return true;
+      }
+
+      return true;
+    },
+    [activeIndex, slides.length, isLastSlide, isFirstSlide],
+  );
 
   React.useEffect(() => {
-    const currentSectionRef = sectionRefs.current;
-
-    // Reset active index when scrolled to top
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setActiveIndex(0);
+    const handleWheel = (e: WheelEvent) => {
+      const shouldPreventDefault = handleScroll(e.deltaY);
+      if (shouldPreventDefault) {
+        e.preventDefault();
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: [0, 0.5, 1], // Detect at start, middle, and end of section
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStart.current = e.touches[0].clientY;
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const index = currentSectionRef.findIndex(
-          (ref) => ref === entry.target,
-        );
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStart.current) return;
 
-        if (index !== -1) {
-          // Prioritize when section is more than 50% visible
-          if (entry.intersectionRatio > 0.5) {
-            setActiveIndex(index);
-          }
+      const touchEnd = e.touches[0].clientY;
+      const delta = touchStart.current - touchEnd;
+
+      // Only prevent default if we're handling the scroll
+      if (Math.abs(delta) > 5) {
+        // Add a small threshold to detect intentional scrolls
+        const shouldPreventDefault = handleScroll(delta);
+        if (shouldPreventDefault) {
+          e.preventDefault();
         }
-      });
-    }, observerOptions);
+      }
 
-    // Observe all sections
-    currentSectionRef.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      currentSectionRef.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
+      touchStart.current = touchEnd;
     };
-  }, []);
+
+    // Add both wheel and touch event listeners
+    document.addEventListener("wheel", handleWheel, { passive: false });
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", handleWheel);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [handleScroll]);
+
+  // Update isLastSlide and isFirstSlide when activeIndex changes
+  React.useEffect(() => {
+    setIsLastSlide(activeIndex === slides.length - 1);
+    setIsFirstSlide(activeIndex === 0);
+  }, [activeIndex, slides.length]);
 
   return (
     <>
       <div className="relative h-[120px] bg-neutral-dark-700" />
 
-      <section data-section-name={name} className="relative h-[2880px]">
+      <section
+        ref={containerRef}
+        data-section-name={name}
+        className="relative h-[80svh]"
+      >
+        {defaultHintContent && (
+          <HintContent
+            name={name}
+            hintContent={{
+              text: defaultHintContent.hint,
+            }}
+          />
+        )}
         {slides.map((slide, index) => (
           <div
             key={slide._id}
-            ref={(el) => {
-              sectionRefs.current[index] = el;
-            }}
-            className={`sticky top-0 h-[720px] w-full transition-all duration-700 ease-in-out ${
-              index === activeIndex
-                ? "z-10 opacity-100"
-                : index < activeIndex
-                  ? "z-0 opacity-30"
-                  : "z-0 opacity-0"
-            } `}
+            className={`absolute inset-0 h-full w-full transition-all duration-700 ease-in-out ${
+              index === activeIndex ? "z-10 opacity-100" : "z-0 opacity-0"
+            }`}
           >
             <div className="absolute inset-0">
               <Image
@@ -113,7 +190,7 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
                 background:
                   "linear-gradient(180deg, #1E1F1B 0%, rgba(30, 31, 27, 0) 100%)",
               }}
-              className="absolute inset-x-0 top-0 h-[240px]"
+              className="absolute inset-x-0 top-0 h-[120px]"
             />
 
             <div
@@ -121,7 +198,7 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
                 background:
                   "linear-gradient(180deg, #1E1F1B 0%, rgba(30, 31, 27, 0) 100%)",
               }}
-              className="absolute inset-x-0 bottom-0 h-[240px] rotate-180"
+              className="absolute inset-x-0 bottom-0 h-[120px] rotate-180"
             />
 
             <div className="relative z-20 flex h-full flex-col items-center justify-center p-10 text-center">
@@ -156,7 +233,7 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
                       : "translate-y-10 opacity-0",
                   )}
                 >
-                  <div className="my-2 h-1 w-8 bg-neutral-100" />
+                  <div className="my-2 h-1 w-24 justify-self-center bg-neutral-100/75" />
                   <p className="my-2 max-w-xl text-base text-secondary-100">
                     {slide.body}
                   </p>

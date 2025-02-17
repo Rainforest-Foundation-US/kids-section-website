@@ -19,6 +19,7 @@ dist
 
 # Sanity
 .sanity
+migrations
 
 # misc
 .DS_Store

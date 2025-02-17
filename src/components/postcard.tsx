@@ -2,7 +2,8 @@ import Image, { StaticImageData } from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
 
-import { RoundSlothIllustration } from "./activities-illustrations";
+import { RoundSlothIllustration } from "./illustrations/activities-illustrations";
+import { FlipIcon } from "./icons/icons";
 
 interface PostcardProps {
   image: string | StaticImageData;
@@ -37,7 +38,7 @@ export function Postcard({ image, alt, description }: PostcardProps) {
             transformStyle: "preserve-3d",
           }}
         >
-          <PolaroidFront image={image} alt={alt} />
+          <PolaroidFront image={image} alt={alt} description={description} />
           {description && <PolaroidBack description={description} />}
         </motion.div>
       </div>
@@ -48,21 +49,32 @@ export function Postcard({ image, alt, description }: PostcardProps) {
 function PolaroidFront({
   image,
   alt,
+  description,
 }: {
   image: string | StaticImageData;
   alt: string;
+  description?: string;
 }) {
   return (
-    <Image
-      placeholder="blur"
-      className="absolute w-full bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
-      src={image}
-      style={{
-        backfaceVisibility: "hidden",
-      }}
-      aria-hidden
-      alt={alt}
-    />
+    <>
+      <Image
+        placeholder="blur"
+        className="absolute w-full bg-secondary-100 object-contain p-2 shadow-app-lg shadow-shadow-gray lg:p-4"
+        src={image}
+        style={{
+          backfaceVisibility: "hidden",
+        }}
+        aria-hidden
+        alt={alt}
+      />
+
+      {description && (
+        <>
+          <div className="absolute right-4 top-4 h-8 w-8 bg-neutral-100 opacity-80" />
+          <FlipIcon className="absolute right-4 top-4 h-8 w-8 text-neutral-dark-800" />
+        </>
+      )}
+    </>
   );
 }
 
@@ -77,6 +89,8 @@ function PolaroidBack({ description }: { description: string }) {
     >
       <RoundSlothIllustration className="self-center" />
       <div className="overflow-auto p-4">{description}</div>
+
+      <FlipIcon className="absolute right-4 top-4 h-8 w-8 text-neutral-dark-800" />
     </div>
   );
 }

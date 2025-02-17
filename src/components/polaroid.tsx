@@ -2,12 +2,14 @@ import clsx from "@/utils/clsx";
 import { wrapText, truncateText } from "@/utils/truncateText";
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
-import { useMemo } from "react";
 import React from "react";
+
+import { FlipIcon } from "./icons/icons";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 const DEFAULT_POLAROID_HEIGHT = 132;
 const DEFAULT_POLAROID_WIDTH = 140;
+const TURN_ICON_STARTING_X = 128;
 
 export enum PolaroidCaptionStyle {
   wrap = "wrap",
@@ -56,7 +58,7 @@ function PolaroidFront(props: PolaroidProps) {
 
   const noCaption = !props.caption?.length;
 
-  const lines = useMemo(() => {
+  const lines = React.useMemo(() => {
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
@@ -90,12 +92,12 @@ function PolaroidFront(props: PolaroidProps) {
     props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
 
   const textStartY = shouldWrapPreserveAspectRatio
-    ? 127 - 16 * (lines.length - 1)
+    ? 127 - 12 * (lines.length - 1)
     : 127;
 
   const svgHeight = shouldWrapPreserveAspectRatio
     ? DEFAULT_POLAROID_HEIGHT
-    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
   return (
@@ -136,11 +138,27 @@ function PolaroidFront(props: PolaroidProps) {
           className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
-          y={textStartY + 16 * i}
+          y={textStartY + 12 * i}
         >
           {caption}
         </text>
       ))}
+
+      {props.description && (
+        <>
+          <rect
+            x={TURN_ICON_STARTING_X}
+            y={0}
+            className="h-3 w-3 fill-neutral-100 opacity-80"
+          />
+          <FlipIcon
+            x={TURN_ICON_STARTING_X}
+            y={0}
+            viewBox="0 0 32 32"
+            className="text-neutral-dark-800"
+          />
+        </>
+      )}
     </motion.svg>
   );
 }
@@ -150,7 +168,7 @@ function PolaroidBack(props: PolaroidProps) {
 
   const noCaption = !props.caption?.length;
 
-  const lines = useMemo(() => {
+  const lines = React.useMemo(() => {
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
@@ -170,12 +188,12 @@ function PolaroidBack(props: PolaroidProps) {
     props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
 
   const textStartY = shouldWrapPreserveAspectRatio
-    ? 127 - 16 * (lines.length - 1)
+    ? 127 - 12 * (lines.length - 1)
     : 127;
 
   const svgHeight = shouldWrapPreserveAspectRatio
     ? DEFAULT_POLAROID_HEIGHT
-    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
   return (
@@ -216,11 +234,23 @@ function PolaroidBack(props: PolaroidProps) {
           className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
-          y={textStartY + 16 * i}
+          y={textStartY + 12 * i}
         >
           {caption}
         </text>
       ))}
+
+      <rect
+        x={TURN_ICON_STARTING_X}
+        y={0}
+        className="h-3 w-3 fill-neutral-100 opacity-80"
+      />
+      <FlipIcon
+        x={TURN_ICON_STARTING_X}
+        y={0}
+        viewBox="0 0 32 32"
+        className="text-neutral-dark-800"
+      />
     </motion.svg>
   );
 }

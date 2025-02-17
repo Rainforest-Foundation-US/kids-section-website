@@ -1,14 +1,15 @@
 import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
-import { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+
 import {
   RoundSlothIllustration,
   ThinkingFaceEmoji,
   WavySeparator,
-} from "../activities-illustrations";
+} from "../illustrations/activities-illustrations";
 import { Badge } from "../badge";
-import { GoToButton, GoToTargetSection } from "../buttons";
+import { GoToButton } from "../buttons";
 import {
   ControlledActivityHint,
   useResetHint,
@@ -26,6 +27,10 @@ import {
   MemoryGame,
   MemoryGameActivityOptions,
 } from "./activities/memory-game";
+import {
+  FindTheAnimalsGameActivityOptions,
+  FindTheAnimalsGame,
+} from "./activities/find-the-animals-game";
 import {
   SelectCountriesWithRainforestActivity,
   SelectCountriesWithRainforestActivityOptions,
@@ -58,6 +63,12 @@ import { StatisticsScreen } from "./activities/statistics-screen";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { Postcard } from "../postcard";
 import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { PostcardData } from "@/sanity/schemaTypes/postcard";
+import { HintContent } from "../hint-content";
+import { NarrativesSectionName } from "@/pages/narratives";
+import { useAtomValue } from "jotai";
+import { congratulationsAtom } from "../congratulations";
+import { FlipIconReminder } from "../flip-icon-reminder";
 
 type PreContent =
   | {
@@ -103,6 +114,11 @@ type MemoryGameActivityData = {
   data: MemoryGameActivityOptions;
 };
 
+type FindAnimalsGameActivityData = {
+  type: "find-the-animals";
+  data: FindTheAnimalsGameActivityOptions;
+};
+
 type StatisticsActivityData = {
   type: "statistics";
   data: { cards: StatisticsCard[] };
@@ -115,6 +131,7 @@ type SingleContent =
   | PickTheOptionActivityData
   | PickTheImageActivityData
   | MemoryGameActivityData
+  | FindAnimalsGameActivityData
   | SelectCountriesWithRainforestActivityData
   | StatisticsActivityData;
 
@@ -124,23 +141,10 @@ type PagerData = {
   noSloth?: boolean;
 };
 
-type ContentNavigationButton = {
-  alignment: "bottom-middle";
-  direction: "left" | "right" | "bottom";
-  target: SectionName;
-  caption?: string;
-};
-
 type PolaroidData = {
   image: string | StaticImageData;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
-};
-
-type PostcardData = {
-  image: string | StaticImageData;
-  alt: string;
-  description?: string;
 };
 
 type SubContent =
@@ -148,12 +152,12 @@ type SubContent =
       type: "postcard";
       postcard: PostcardData;
       polaroid?: PolaroidData;
+      shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "polaroids";
-      polaroids: (PolaroidData & {
-        navButton?: ContentNavigationButton;
-      })[];
+      polaroids: PolaroidData[];
+      shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "illustration";
@@ -167,7 +171,16 @@ export type PagerContent = Content & {
   subContent?: SubContent | SubContent[];
 };
 
-export type DividerStyle = "dark";
+export type DividerStyle = "dark" | "light";
+
+export type Illustrations = {
+  topLeft?: React.ReactNode;
+  topRight?: React.ReactNode;
+  bottomLeft?: React.ReactNode;
+  bottomRight?: React.ReactNode;
+  right?: React.ReactNode;
+  left?: React.ReactNode;
+};
 
 export type SectionWithContent =
   | {
@@ -188,17 +201,26 @@ export type SectionWithContent =
       preContent?: PreContent;
       content: Content;
       subContent?: SubContent | SubContent[];
+      defaultHintContent?: {
+        hint: string;
+      };
+      illustrations?: Illustrations;
     }
   | {
       type: "vignette";
       name: SectionName;
       content: VignetteSectionOptions;
+      defaultHintContent?: {
+        hint: string;
+      };
     }
   | {
       type: "divider";
       name?: SectionName;
       style: DividerStyle;
     };
+
+export type SectionNames = SectionName | NarrativesSectionName;
 
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   if (preContent.type === "sloth") {
@@ -220,7 +242,15 @@ function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   return null;
 }
 
-function PolymorphicContent({ content }: { content: Content }) {
+function PolymorphicContent({
+  name,
+  content,
+  isLastAnswer,
+}: {
+  name: SectionNames;
+  content: Content;
+  isLastAnswer?: boolean;
+}) {
   const setHint = useSetHint();
 
   if (content.type === "plain") {
@@ -228,40 +258,79 @@ function PolymorphicContent({ content }: { content: Content }) {
   }
 
   if (content.type === "fill-in-the-blank") {
-    return <FillInTheBlankActivity onHint={setHint} {...content.data} />;
+    return (
+      <FillInTheBlankActivity
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
+        isLastAnswer={isLastAnswer}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "locate-in-map") {
-    return <LocateInMapActivity onHint={setHint} {...content.data} />;
+    return (
+      <LocateInMapActivity
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "select-countries-with-rainforest") {
     return (
       <SelectCountriesWithRainforestActivity
-        onHint={setHint}
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
         {...content.data}
       />
     );
   }
 
   if (content.type === "pick-the-option") {
-    return <PickTheOptionActivity onHint={setHint} {...content.data} />;
+    return (
+      <PickTheOptionActivity
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
+        isLastAnswer={isLastAnswer}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "pick-the-image") {
-    return <PickTheImageActivity onHint={setHint} {...content.data} />;
+    return (
+      <PickTheImageActivity
+        name={name}
+        onHint={(hintData) => {
+          setHint(name, hintData);
+        }}
+        {...content.data}
+      />
+    );
   }
 
   if (content.type === "memory-game") {
-    return <MemoryGame onHint={setHint} {...content.data} />;
+    return (
+      <MemoryGame
+        name={name}
+        onHint={(hintData) => setHint(name, hintData)}
+        {...content.data}
+      />
+    );
+  }
+
+  if (content.type === "find-the-animals") {
+    return <FindTheAnimalsGame />;
   }
 
   if (content.type === "pager") {
     return (
       <ContentPager
+        name={name}
         contentList={content.data}
         noSloth={content.noSloth}
-        enableGoToNextSection
       />
     );
   }
@@ -286,6 +355,8 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
         >
           <Postcard {...subContent.postcard} />
         </div>
+
+        {subContent.shouldShowFlipIconReminder && <FlipIconReminder />}
 
         {subContent.polaroid && (
           <Polaroid
@@ -329,16 +400,6 @@ function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
               captionStyle={polaroid.captionStyle}
               isFlipped={isFlipped === i}
             />
-
-            {polaroid.navButton && (
-              <div className="absolute inset-x-0 bottom-0 flex translate-y-[75%] justify-center">
-                <GoToTargetSection
-                  direction={polaroid.navButton.direction}
-                  target={polaroid.navButton.target as SectionName}
-                  disabled={false}
-                />
-              </div>
-            )}
           </li>
         ))}
       </ul>
@@ -404,12 +465,30 @@ function ContentSection(props: {
         )}
 
         <SectionContent>
+          {props.section.defaultHintContent?.hint ? (
+            <HintContent
+              name={props.name}
+              hintContent={{
+                text: props.section.defaultHintContent.hint,
+              }}
+            />
+          ) : null}
+
+          {props.section.illustrations?.topLeft ?? null}
+          {props.section.illustrations?.topRight ?? null}
+          {props.section.illustrations?.left ?? null}
+          {props.section.illustrations?.right ?? null}
+          {props.section.illustrations?.bottomLeft ?? null}
+          {props.section.illustrations?.bottomRight ?? null}
+
           <div
             className={clsx(
               "flex flex-col",
-              ["locate-in-map", "select-countries-with-rainforest"].includes(
-                props.section.content.type,
-              ) && "w-full",
+              [
+                "locate-in-map",
+                "select-countries-with-rainforest",
+                "find-the-animals",
+              ].includes(props.section.content.type) && "w-full",
               props.section.layout === "space-between"
                 ? "flex-1 justify-between py-8"
                 : "",
@@ -422,7 +501,10 @@ function ContentSection(props: {
               <PolymorphicPreContent preContent={props.section.preContent} />
             )}
 
-            <PolymorphicContent content={props.section.content} />
+            <PolymorphicContent
+              name={props.section.name}
+              content={props.section.content}
+            />
 
             {props.section.subContent &&
               toArrayMaybe(props.section.subContent)?.map((subContent, i) => (
@@ -463,7 +545,11 @@ function ContentSection(props: {
   if (props.section.type === "vignette") {
     return (
       <div className="relative z-10">
-        <VignetteSection name={props.name} {...props.section.content} />
+        <VignetteSection
+          name={props.name}
+          defaultHintContent={props.section.defaultHintContent}
+          {...props.section.content}
+        />
 
         {props.nextSectionType !== "vignette" && (
           <WavySeparator color="#1E1F1B" direction="down" />
@@ -510,11 +596,12 @@ export function ContentSectionList(props: {
 }
 
 export function ContentPager(props: {
+  name: SectionNames;
   contentList: PagerContent[];
   initialIndex?: number;
-  enableGoToNextSection?: boolean;
   noSloth?: boolean;
 }) {
+  const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
   const resetHint = useResetHint();
 
@@ -522,22 +609,31 @@ export function ContentPager(props: {
   const listCount = props.contentList.length;
 
   const goNext = () => {
-    setIndex((index + 1) % listCount);
-    resetHint();
+    setIndex((prevIndex) => (prevIndex + 1) % listCount);
+    resetHint(props.name);
   };
 
   const goBack = () => {
-    setIndex((index - 1) % listCount);
-    resetHint();
+    setIndex((prevIndex) => (prevIndex - 1 + listCount) % listCount);
+    resetHint(props.name);
   };
 
-  const shouldGoToNextSection =
-    props.enableGoToNextSection && index === listCount - 1;
+  const isLastAnswer = useMemo(
+    () => index === listCount - 1,
+    [index, listCount],
+  );
+
+  useEffect(() => {
+    if (isLastAnswer && congratulations[props.name]) {
+      setIndex(0);
+      resetHint(props.name);
+    }
+  }, [isLastAnswer, congratulations, props.name, setIndex, resetHint]);
 
   return (
     <>
       <div className="inset-y-0 z-10 mb-4 flex items-center">
-        <ControlledActivityHint noSloth={props.noSloth} />
+        <ControlledActivityHint name={props.name} noSloth={props.noSloth} />
       </div>
 
       <div
@@ -554,7 +650,11 @@ export function ContentPager(props: {
             exit={{ opacity: 0, x: -10 }}
             className="mb-4"
           >
-            <PolymorphicContent content={content} />
+            <PolymorphicContent
+              name={props.name}
+              content={content}
+              isLastAnswer={isLastAnswer}
+            />
 
             {content.subContent &&
               toArrayMaybe(content.subContent)?.map((subContent, i) => (
@@ -579,7 +679,7 @@ export function ContentPager(props: {
             />
           )}
 
-          {!shouldGoToNextSection && (
+          {!isLastAnswer && (
             <GoToButton
               key="right"
               direction="right"

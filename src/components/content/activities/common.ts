@@ -1,5 +1,7 @@
-import { ActivityHintStatus } from "@/components/activity-hint";
+import { HintData } from "@/components/controlled-activity-hint";
+import { SectionNames } from "../content";
 
 export interface CommonActivityOptions {
-  onHint: (hint: string | null, status: ActivityHintStatus) => void;
+  name: SectionNames;
+  onHint: (hintData: HintData) => void;
 }

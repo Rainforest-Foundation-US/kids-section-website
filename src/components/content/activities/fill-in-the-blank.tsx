@@ -5,6 +5,9 @@ import { useDraggable, useDroppable } from "@/utils/draggable";
 import { useAnimate, motion, easeIn } from "framer-motion";
 import { CommonActivityOptions } from "./common";
 import { ActivityHintStatus } from "@/components/activity-hint";
+import { congratulationsAtom } from "@/components/congratulations";
+import { useAtom } from "jotai";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
@@ -14,6 +17,7 @@ export interface FillInTheBlankActivityOptions {
   fontWeightStyle?: "regular" | "bold";
   question: StringifiedQuestion;
   numberToOptions: NumberToOptions;
+  isLastAnswer?: boolean;
 }
 
 type StringifiedQuestion = string;
@@ -241,9 +245,11 @@ export function FillInTheBlankActivity({
   onHint,
   ...props
 }: FillInTheBlankActivityProps) {
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
   const [optionSelected, setOptionSelected] = useState(false);
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
+  const { playSound } = usePlaySounds();
 
   const textColor = useMemo(() => {
     switch (props.textColorStyle) {
@@ -267,10 +273,24 @@ export function FillInTheBlankActivity({
       }
 
       if (option.isValid) {
-        onHint(null, ActivityHintStatus.CORRECT);
+        onHint({
+          hint: "",
+          status: ActivityHintStatus.CORRECT,
+        });
         updatedAnswers[option.blankId] = option.id;
+
+        if (congratulations[props.name] !== undefined && props.isLastAnswer) {
+          playSound("congratulations");
+          setCongratulations({ ...congratulations, [props.name]: true });
+        } else {
+          playSound("correct");
+        }
       } else {
-        onHint(null, ActivityHintStatus.INCORRECT);
+        playSound("incorrect");
+        onHint({
+          hint: "",
+          status: ActivityHintStatus.INCORRECT,
+        });
         // TODO: Do failure animation
         delete updatedAnswers[option.blankId];
       }
@@ -278,7 +298,16 @@ export function FillInTheBlankActivity({
       setOptionSelected(true);
       setAnswers(updatedAnswers);
     },
-    [answers, onHint, setAnswers],
+    [
+      answers,
+      congratulations,
+      props.isLastAnswer,
+      props.name,
+      onHint,
+      setAnswers,
+      setCongratulations,
+      playSound,
+    ],
   );
 
   const getSelectedOption = useCallback(

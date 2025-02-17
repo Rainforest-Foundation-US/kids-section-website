@@ -1,3 +1,6 @@
+import { SectionNames } from "@/components/content/content";
+import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import { narrativesSectionNames } from "@/pages/narratives";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -8,20 +11,23 @@ export const PickImageGameSchemaType = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "name",
+      title: "Name",
+      type: "string",
+      validation: (rule) => rule.required(),
+      options: {
+        list: [...narrativesSectionNames, ...sectionNames],
+      },
+    }),
+    defineField({
       name: "question",
       title: "Question",
       type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "backgroundImage",
-      title: "Background Image",
-      type: "image",
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: "leftSideContent",
-      title: "Left Side Content",
+      name: "hintContent",
+      title: "Hint Content",
       type: "object",
       fields: [
         {
@@ -64,7 +70,6 @@ export const PickImageGameSchemaType = defineType({
               name: "reason",
               title: "Reason",
               type: "text",
-              validation: (rule) => rule.required(),
             },
           ],
         },
@@ -87,13 +92,13 @@ export const PickImageGameSchemaType = defineType({
 });
 
 export interface PickImageGameData {
+  name: SectionNames;
   question: string;
-  bacgroundImage: string;
-  leftSideContent: {
+  hintContent: {
     hint: string;
   };
   options: {
-    src: string;
+    imageSrc: string;
     alt: string;
     isCorrect: boolean;
     reason: string;

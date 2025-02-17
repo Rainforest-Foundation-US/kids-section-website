@@ -5,6 +5,9 @@ import sampleSize from "lodash/sampleSize";
 import { CommonActivityOptions } from "./common";
 
 import clsx from "@/utils/clsx";
+import { congratulationsAtom } from "@/components/congratulations";
+import { useAtom } from "jotai";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 interface MemoryCard {
   id?: string;
@@ -26,7 +29,10 @@ type MemoryGameActivityProps = React.PropsWithChildren<
 const MAX_UNIQUE_CARDS_IN_THE_GAME = 9;
 
 export function MemoryGame(props: MemoryGameActivityProps) {
-  const [, setCardsLeft] = React.useState(MAX_UNIQUE_CARDS_IN_THE_GAME);
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
+  const [cardsLeft, setCardsLeft] = React.useState(
+    MAX_UNIQUE_CARDS_IN_THE_GAME,
+  );
   const [localCards, setLocalCards] = React.useState<MemoryCard[]>([]);
   const [choiceOne, setChoiceOne] = React.useState<MemoryCard | null>(null);
   const [choiceTwo, setChoiceTwo] = React.useState<MemoryCard | null>(null);
@@ -34,6 +40,8 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   // It disables clicking on the cards. This is done to prevent the user from opening additional (3 or more) cards at the same time while
   // the animation for the first 2 cards is still running.
   const [disabled, setDisabled] = React.useState(false);
+
+  const { playSound } = usePlaySounds();
 
   React.useEffect(() => {
     if (choiceOne && choiceTwo) {
@@ -51,13 +59,15 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         });
         setCardsLeft((prev) => prev - 1);
         resetTurn();
+        playSound("correct");
       } else {
         setTimeout(() => {
           resetTurn();
         }, 2000);
+        playSound("incorrect");
       }
     }
-  }, [choiceOne, choiceTwo]);
+  }, [choiceOne, choiceTwo, playSound]);
 
   const shuffleCards = React.useCallback(
     function shuffleCards() {
@@ -76,6 +86,21 @@ export function MemoryGame(props: MemoryGameActivityProps) {
     },
     [props.cards],
   );
+
+  React.useEffect(() => {
+    if (cardsLeft === 0) {
+      playSound("congratulations");
+      setCongratulations({ ...congratulations, [props.name]: true });
+      shuffleCards();
+    }
+  }, [
+    cardsLeft,
+    props.name,
+    congratulations,
+    setCongratulations,
+    shuffleCards,
+    playSound,
+  ]);
 
   React.useEffect(() => {
     // It starts the game

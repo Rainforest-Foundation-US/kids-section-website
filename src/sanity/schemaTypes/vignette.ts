@@ -1,5 +1,4 @@
 import { VignetteSlide } from "@/components/sections/vignette-section";
-import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
 import { ThLargeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -13,9 +12,6 @@ export const VignetteSchemaType = defineType({
       name: "name",
       title: "Name",
       type: "string",
-      options: {
-        list: sectionNames,
-      },
       validation: (rule) => rule.required(),
     }),
     defineField({

@@ -1,10 +1,13 @@
 import { ActivityHintStatus } from "@/components/activity-hint";
 import clsx from "@/utils/clsx";
-import { useCallback, useMemo, useState } from "react";
+import React from "react";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
 import { StaticImageData } from "next/image";
 import { Postcard } from "@/components/postcard";
+import { useAtom } from "jotai";
+import { congratulationsAtom } from "@/components/congratulations";
+import { usePlaySounds } from "@/hooks/usePlaySound";
 
 export interface PickTheOptionActivityOptions {
   question: string;
@@ -16,6 +19,7 @@ export interface PickTheOptionActivityOptions {
   };
   wrap?: boolean;
   rotateOptions?: boolean;
+  isLastAnswer?: boolean;
 }
 
 interface Option {
@@ -57,22 +61,25 @@ export function PickTheOptionActivity({
   onHint,
   ...props
 }: PickTheOptionActivityProps) {
-  const localOptions = useMemo<Option[]>(() => {
+  const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
+  const localOptions = React.useMemo<Option[]>(() => {
     return props.options.map((option) => ({
       ...option,
       id: uuid(),
     }));
   }, [props.options]);
 
-  const [selectedOptions, setSelectedOptions] = useState<
+  const { playSound } = usePlaySounds();
+
+  const [selectedOptions, setSelectedOptions] = React.useState<
     Record<string, boolean>
   >({});
 
-  const correctOptions = useMemo(
+  const correctOptions = React.useMemo(
     () => localOptions.filter((option) => option.isCorrect),
     [localOptions],
   );
-  const missingCorrectOptions = useMemo(
+  const missingCorrectOptions = React.useMemo(
     () =>
       correctOptions.length -
       correctOptions.filter((option) => selectedOptions[option.id]).length,
@@ -81,21 +88,40 @@ export function PickTheOptionActivity({
 
   const allCorrectOptionsSelected = missingCorrectOptions === 0;
 
-  const onSelectOption = useCallback(
+  const onSelectOption = React.useCallback(
     (option: Option) => {
       if (option.isCorrect) {
         if (missingCorrectOptions === 1) {
-          onHint(null, ActivityHintStatus.CORRECT);
+          onHint({ hint: "", status: ActivityHintStatus.CORRECT });
+
+          if (congratulations[props.name] !== undefined && props.isLastAnswer) {
+            playSound("congratulations");
+            setCongratulations({ ...congratulations, [props.name]: true });
+          } else {
+            playSound("correct");
+          }
         } else {
-          onHint(null, ActivityHintStatus.KEEP_GOING);
+          onHint({ hint: "", status: ActivityHintStatus.KEEP_GOING });
         }
       } else {
-        onHint(option.wrongAlertText ?? null, ActivityHintStatus.INCORRECT);
+        playSound("incorrect");
+        onHint({
+          hint: option.wrongAlertText ?? "",
+          status: ActivityHintStatus.INCORRECT,
+        });
       }
 
       setSelectedOptions((v) => ({ ...v, [option.id]: !v[option.id] }));
     },
-    [missingCorrectOptions, onHint],
+    [
+      props.isLastAnswer,
+      props.name,
+      missingCorrectOptions,
+      congratulations,
+      playSound,
+      onHint,
+      setCongratulations,
+    ],
   );
 
   return (

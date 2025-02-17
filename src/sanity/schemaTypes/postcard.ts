@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { ImageIcon } from "@sanity/icons";
-import { SanityImageObject } from "@sanity/image-url/lib/types/types";
+import { StaticImageData } from "next/image";
 
 export const PostcardSchemaType = defineType({
   name: "postcard",
@@ -57,7 +57,7 @@ export const PostcardSchemaType = defineType({
 });
 
 export interface PostcardData {
-  image: SanityImageObject;
+  image: string | StaticImageData;
   description?: string;
   alt: string;
 }

@@ -5,244 +5,262 @@ import Head from "next/head";
 import { Footer } from "@/components/layout/footer";
 import { RegularSection } from "@/components/sections/regular-section";
 import {
-  Content,
   ContentPager,
   PagerContent,
+  SectionNames,
 } from "@/components/content/content";
 import { SectionContent } from "@/components/content/section-content";
 
-import europeanCity from "@/assets/narratives/daniela-community/european-city.png";
-import indigenousCommunity from "@/assets/narratives/daniela-community/indigenous-community.png";
-import caribbeanCommunity from "@/assets/narratives/daniela-community/caribbean-community.png";
+import React from "react";
+import { PlainData } from "@/sanity/schemaTypes/plain";
+import {
+  getPickOptionGames,
+  getPlainData,
+  getPickImageGames,
+} from "@/sanity/lib/queries";
+import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
+import { PickOptionGameData } from "@/sanity/schemaTypes/pickOptionGame";
+import {
+  MonkeyInABushIllustration,
+  RightLeavesIllustration,
+} from "@/components/illustrations/activities-illustrations";
+import {
+  bottomLeftIllustrationStyles,
+  rightIllustrationStyles,
+} from "@/styles/illustration-styles";
 
-const contentFirstPart: PagerContent[] = [
+export const narrativesSectionNames = [
+  { title: "learn-about-daniela", value: "learn-about-daniela" as const },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      caption: "Narratives",
-      text: "Learn about Daniela, a young girl from an Indigenous community along the Amazon river. Answer questions as you read her story!",
-    },
+    title: "which-photo-represents-danielas-community",
+    value: "which-photo-represents-danielas-community" as const,
   },
   {
-    type: "pick-the-image",
-    data: {
-      wrap: true,
-      question: "Which photo might represent Daniela’s community?",
-      options: [
-        {
-          alt: "An aerial view of an european city",
-          imageSrc: europeanCity,
-          isCorrect: false,
-        },
-        {
-          alt: "An aerial view of an indigenous community",
-          imageSrc: indigenousCommunity,
-          isCorrect: true,
-        },
-        {
-          alt: "An aerial view of a caribbean community",
-          imageSrc: caribbeanCommunity,
-          isCorrect: false,
-        },
-      ],
-    },
+    title: "helping-with-chores",
+    value: "helping-with-chores" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "Lately Mom’s been sick, so I’ve been doing a lot around the house. I’m only eight, but I cook, clean, and do laundry. I even garden, harvesting plantain, yucca, and lots of other crops. I wish Mom and Dad would have another kid. That way, I’d have someone to help me with these chores! Most importantly, I’d have a new best friend!",
-    },
+    title: "how-old-is-daniela",
+    value: "how-old-is-daniela" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      rotateOptions: true,
-      question: "How old is Daniela?",
-      options: [
-        {
-          text: "7",
-          isCorrect: false,
-        },
-        {
-          text: "8",
-          isCorrect: true,
-        },
-        {
-          text: "9",
-          isCorrect: false,
-        },
-        {
-          text: "10",
-          isCorrect: false,
-        },
-      ],
-    },
+    title: "today-was-sunday",
+    value: "today-was-sunday" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "Today was Sunday. On Sundays, Mom usually travels about two hours down-river to Leticia, the nearest town, and sells soup in the local market. Today would be different, though. Mom had an appointment with the doctor in Leticia (our community doesn’t have a hospital). I’m happy she’s getting help, but I’m nervous, too. I’d have to work in the market all by myself.",
-    },
+    title: "indigenous-communities-do-not-have-hospitals",
+    value: "indigenous-communities-do-not-have-hospitals" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      question:
-        "Many Indigenous communities in the Amazon Rainforest do not have hospitals?",
-      options: [
-        {
-          text: "True",
-          isCorrect: true,
-        },
-        {
-          text: "False",
-          isCorrect: false,
-        },
-      ],
-    },
+    title: "favorite-breakfast",
+    value: "favorite-breakfast" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "I woke up early to make my favorite breakfast: casabe with tucupí (a pancake, with hot sauce that has crunchy ants). In the kitchen, I lit our wood-burning stove and made cashew tea to soothe Mom’s stomach. “Mom!” I called out, as the stove heated up. I heard her rising, the wooden floorboards creaking under her weight. “Hurry, or we’ll be late for your appointment.”\n\n“We’ll be on time, Dani.” Mom said, emerging from the family bedroom. While she drank her tea, I scarfed down my breakfast, gathered the pot of soup we’d made yesterday, and grabbed some serving spoons and supplies.",
-    },
+    title: "casabe-con-tucupi",
+    value: "casabe-con-tucupi" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      question: "Would you like to have ‘casabe con tucupí’ for breakfast?",
-      options: [
-        {
-          text: "True",
-          isCorrect: true,
-        },
-        {
-          text: "False",
-          isCorrect: false,
-        },
-      ],
-    },
+    title: "dad-was-waiting-for-us",
+    value: "dad-was-waiting-for-us" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "Outside, Dad was waiting for us. The sun wasn’t yet up, but the sky was dark blue and pink and full of birds, flitting between the trees. I loved how quiet and still the river was at this hour. Dad, who had been fishing all night, was too tired to say much. He smiled when we approached, kissed each of us on the cheek, and lowered us down into his peque peque. He wrapped Mom in a blanket, then set us off for Leticia.",
-    },
+    title: "no-roads-just-boats",
+    value: "no-roads-just-boats" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "There are no roads leading to Daniela’s community, so boats are the main modes of transportation.",
-    },
-    subContent: {
-      type: "postcard",
-      postcard: {
-        image: indigenousCommunity,
-        alt: "Indigenous community",
-      },
-    },
+    title: "ride-to-the-market",
+    value: "ride-to-the-market" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "I like the ride to the market. Sometimes the stars are still out, and I can connect the spaces between them, and make shapes in the sky. Once, Mom and I saw a caiman near the riverbank, disguised in twilight. Today, Mom was telling me how to run our stall at the market. She was teaching me to talk to customers when I interrupted her. “Look!” I shouted, pointing to our left.",
-    },
+    title: "indigenous-peoples-live-near-wild-animals",
+    value: "indigenous-peoples-live-near-wild-animals" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      question:
-        "Indigenous Peoples live near (and often encounter) wild animals. This can be dangerous, but Indigenous Peoples have a knowledge of the forest that keeps them safe.",
-      options: [
-        {
-          text: "True",
-          isCorrect: true,
-        },
-        {
-          text: "False",
-          isCorrect: false,
-        },
-      ],
-    },
+    title: "pack-of-dolphins",
+    value: "pack-of-dolphins" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "There, a boat-length away, a pack of dolphins was splashing about. Hearing my call, they swam toward us. It was as if they spoke tikuna (our language) and understood me. Quickly, we were surrounded. My excitement turned to fear. These were gray dolphins, not pink ones. Countless times, Dad had told me how pink dolphins were a fisherman’s good omen. But you had to be careful with gray ones. They’re beautiful, he’d say, but aggressive if their babies are around.",
-    },
+    title: "indigenous-peoples-unique-languages",
+    value: "indigenous-peoples-unique-languages" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      question:
-        "Indigenous peoples have unique languages. This influences their culture and identity. What language do the characters in this story speak?",
-      options: [
-        {
-          text: "Spanish (this is the national language of Colombia, where the story takes place)",
-          isCorrect: true,
-        },
-        {
-          text: "English",
-          isCorrect: false,
-        },
-        {
-          text: "Tikuna",
-          isCorrect: true,
-        },
-      ],
-    },
+    title: "dolphin-banging-on-the-boat",
+    value: "dolphin-banging-on-the-boat" as const,
   },
   {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      text: "The dolphins began banging into our boat. I braced myself, thinking we would flip. Meanwhile, Mom thrust a paddle into the water to keep us steady. “We can’t lose the soup!” she called out. “A week’s work!”",
-    },
+    title: "will-the-dolphin-flip-danielas-boat",
+    value: "will-the-dolphin-flip-danielas-boat" as const,
   },
   {
-    type: "pick-the-option",
-    data: {
-      wrap: true,
-      question:
-        "Do you think the dolphins will flip Daniela’s boat? This is not unheard of in the Amazon!",
-      options: [
-        {
-          text: "True",
-          isCorrect: true,
-        },
-        {
-          text: "False",
-          isCorrect: false,
-        },
-      ],
-    },
-  },
-  {
-    type: "plain",
-    data: {
-      textAlign: "left",
-      subText: "Story continues in second part...",
-      text: "At her mention of the soup, I grabbed a spoonful of fish from Mom’s broth, and tossed it overboard. The dolphins peeled off, chasing down the easy breakfast. We were safe, but shaken. In the now motionless river, the sun reflected, peeking out over the upside-down tree-line. We collected our nerves, and made the rest of the trip to Leticia in silence.",
-    },
+    title: "the-dolphins-peeled-off",
+    value: "the-dolphins-peeled-off" as const,
   },
 ];
 
-const pageContent: PagerContent[] = [...contentFirstPart];
+export type NarrativesSectionName =
+  (typeof narrativesSectionNames)[number]["value"];
+const narrativesSectionNameKeys = narrativesSectionNames.map(
+  (item) => item.value,
+);
+
+function arrayOfObjectsToDictionary<T extends { name: string }>(
+  array: T[],
+): Record<string, T> {
+  return array.reduce(
+    (acc, curr) => {
+      acc[curr.name] = curr;
+      return acc;
+    },
+    {} as Record<string, T>,
+  );
+}
+
+function useGetNarrativesContent() {
+  const [plainData, setPlainData] =
+    React.useState<Record<SectionNames, PlainData>>();
+  const [pickTheImageData, setPickTheImageData] =
+    React.useState<Record<SectionNames, PickImageGameData>>();
+  const [pickTheOptionData, setPickTheOptionData] =
+    React.useState<Record<SectionNames, PickOptionGameData>>();
+
+  React.useEffect(() => {
+    async function getData() {
+      const plainDataFromServer = await getPlainData();
+      const pickTheImageDataFromServer = await getPickImageGames();
+      const pickTheOptionDataFromServer = await getPickOptionGames();
+
+      const plainDataDictionary =
+        arrayOfObjectsToDictionary(plainDataFromServer);
+      const pickTheImageDataDictionary = arrayOfObjectsToDictionary(
+        pickTheImageDataFromServer,
+      );
+      const pickTheOptionDataDictionary = arrayOfObjectsToDictionary(
+        pickTheOptionDataFromServer,
+      );
+
+      setPlainData(plainDataDictionary);
+      setPickTheImageData(pickTheImageDataDictionary);
+      setPickTheOptionData(pickTheOptionDataDictionary);
+    }
+
+    getData();
+  }, []);
+
+  if (!plainData || !pickTheImageData || !pickTheOptionData) {
+    return null;
+  }
+
+  const contentFirstPart: Record<NarrativesSectionName, PagerContent> = {
+    "learn-about-daniela": {
+      type: "plain",
+      data: plainData["learn-about-daniela"],
+    },
+    "which-photo-represents-danielas-community": {
+      type: "pick-the-image",
+      data: {
+        wrap: true,
+        ...pickTheImageData["which-photo-represents-danielas-community"],
+      },
+    },
+    "helping-with-chores": {
+      type: "plain",
+      data: plainData["helping-with-chores"],
+    },
+    "how-old-is-daniela": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        rotateOptions: true,
+        ...pickTheOptionData["how-old-is-daniela"],
+      },
+    },
+    "today-was-sunday": {
+      type: "plain",
+      data: plainData["today-was-sunday"],
+    },
+    "indigenous-communities-do-not-have-hospitals": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        ...pickTheOptionData["indigenous-communities-do-not-have-hospitals"],
+      },
+    },
+    "favorite-breakfast": {
+      type: "plain",
+      data: plainData["favorite-breakfast"],
+    },
+    "casabe-con-tucupi": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        ...pickTheOptionData["casabe-con-tucupi"],
+      },
+    },
+    "dad-was-waiting-for-us": {
+      type: "plain",
+      data: plainData["dad-was-waiting-for-us"],
+    },
+    "no-roads-just-boats": {
+      type: "plain",
+      data: plainData["no-roads-just-boats"],
+      subContent: plainData["no-roads-just-boats"].subContent?.postcard && {
+        type: plainData["no-roads-just-boats"].subContent?.type as "postcard",
+        postcard: plainData["no-roads-just-boats"].subContent?.postcard,
+      },
+    },
+    "ride-to-the-market": {
+      type: "plain",
+      data: plainData["ride-to-the-market"],
+    },
+    "indigenous-peoples-live-near-wild-animals": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        ...pickTheOptionData["indigenous-peoples-live-near-wild-animals"],
+      },
+    },
+    "pack-of-dolphins": {
+      type: "plain",
+      data: plainData["pack-of-dolphins"],
+    },
+    "indigenous-peoples-unique-languages": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        ...pickTheOptionData["indigenous-peoples-unique-languages"],
+      },
+    },
+    "dolphin-banging-on-the-boat": {
+      type: "plain",
+      data: plainData["dolphin-banging-on-the-boat"],
+    },
+    "will-the-dolphin-flip-danielas-boat": {
+      type: "pick-the-option",
+      data: {
+        wrap: true,
+        ...pickTheOptionData["will-the-dolphin-flip-danielas-boat"],
+      },
+    },
+    "the-dolphins-peeled-off": {
+      type: "plain",
+      data: plainData["the-dolphins-peeled-off"],
+    },
+  };
+
+  const pageContent: PagerContent[] = narrativesSectionNameKeys.map(
+    (key) => contentFirstPart[key],
+  );
+
+  return pageContent;
+}
 
 export default function NarrativesRoute() {
+  const pageContent = useGetNarrativesContent();
+
+  if (!pageContent) {
+    return null;
+  }
+
   return (
     <>
       <Head>
@@ -254,7 +272,15 @@ export default function NarrativesRoute() {
           <NavBar />
 
           <SectionContent>
-            <ContentPager contentList={pageContent} />
+            {/* Bottom left illustration */}
+            <MonkeyInABushIllustration
+              className={bottomLeftIllustrationStyles}
+            />
+
+            {/* Right leaves illustration */}
+            <RightLeavesIllustration className={rightIllustrationStyles} />
+
+            <ContentPager name="narratives" contentList={pageContent} />
           </SectionContent>
         </RegularSection>
       </main>
