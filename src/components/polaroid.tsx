@@ -92,12 +92,12 @@ function PolaroidFront(props: PolaroidProps) {
     props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
 
   const textStartY = shouldWrapPreserveAspectRatio
-    ? 127 - 16 * (lines.length - 1)
+    ? 127 - 12 * (lines.length - 1)
     : 127;
 
   const svgHeight = shouldWrapPreserveAspectRatio
     ? DEFAULT_POLAROID_HEIGHT
-    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
   return (
@@ -138,7 +138,7 @@ function PolaroidFront(props: PolaroidProps) {
           className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
-          y={textStartY + 16 * i}
+          y={textStartY + 12 * i}
         >
           {caption}
         </text>
@@ -188,12 +188,12 @@ function PolaroidBack(props: PolaroidProps) {
     props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
 
   const textStartY = shouldWrapPreserveAspectRatio
-    ? 127 - 16 * (lines.length - 1)
+    ? 127 - 12 * (lines.length - 1)
     : 127;
 
   const svgHeight = shouldWrapPreserveAspectRatio
     ? DEFAULT_POLAROID_HEIGHT
-    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 16;
+    : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
   return (
@@ -234,7 +234,7 @@ function PolaroidBack(props: PolaroidProps) {
           className="text-4xs [text-shadow:none]"
           textAnchor="middle"
           x={70}
-          y={textStartY + 16 * i}
+          y={textStartY + 12 * i}
         >
           {caption}
         </text>

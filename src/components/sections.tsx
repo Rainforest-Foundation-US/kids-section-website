@@ -46,7 +46,7 @@ export function useHomeSectionNavigation() {
 
       window.addEventListener("scrollend", handleScrollEnd);
 
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ block: "start", behavior: "smooth" });
     },
   );
 
@@ -88,7 +88,6 @@ export function ActivitySection(props: {
   return (
     <section
       data-section-name={props.name}
-      ref={ref}
       className={clsx(
         "relative flex min-h-[840px] snap-center flex-col py-8",
         props.className,

@@ -322,12 +322,7 @@ function PolymorphicContent({
   }
 
   if (content.type === "find-the-animals") {
-    return (
-      <FindTheAnimalsGame
-        name={name}
-        onHint={(hintData) => setHint(name, hintData)}
-      />
-    );
+    return <FindTheAnimalsGame />;
   }
 
   if (content.type === "pager") {

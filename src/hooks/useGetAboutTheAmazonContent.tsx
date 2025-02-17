@@ -169,10 +169,7 @@ export const sectionNames = [
     title: "more-plants-and-animals-than-anywhere-else",
     value: "more-plants-and-animals-than-anywhere-else" as const,
   },
-  { title: "biodiversity-1", value: "biodiversity-1" as const },
-  { title: "biodiversity-2", value: "biodiversity-2" as const },
-  { title: "biodiversity-3", value: "biodiversity-3" as const },
-  { title: "biodiversity-4", value: "biodiversity-4" as const },
+  { title: "biodiversity", value: "biodiversity" as const },
   {
     title: "statistics-about-biodiversity",
     value: "statistics-about-biodiversity" as const,
@@ -985,26 +982,28 @@ export function useGetAboutTheAmazonContent() {
         },
       },
     },
-    ...vignettes.map((vignette) => ({
+    {
       type: "vignette" as "vignette",
-      name: vignette.name,
-      defaultHintContent:
-        vignette.name === "biodiversity-3"
-          ? {
-              hint: "We'll discuss deforestation and climate change shortly. For now, know that the biodiversity in the Amazon is disappearing.",
-            }
-          : undefined,
-      content: {
-        title: vignette.title ?? "",
-        subtitle: vignette.subtitle ?? "",
-        body: vignette.body ?? "",
-        imageAlignment: vignette.imageAlignment ?? "start",
-        image: {
-          data: vignette.image.data ?? "",
-          alt: vignette.image.alt ?? "",
-        },
+      name: "biodiversity",
+      defaultHintContent: {
+        hint: "We'll discuss deforestation and climate change shortly. For now, know that the biodiversity in the Amazon is disappearing.",
       },
-    })),
+      content: {
+        slides: [
+          ...vignettes
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((vignette) => ({
+              _id: vignette._id,
+              name: vignette.name,
+              title: vignette.title ?? "",
+              subtitle: vignette.subtitle ?? "",
+              body: vignette.body ?? "",
+              imageAlignment: vignette.imageAlignment ?? "middle",
+              image: vignette.image,
+            })),
+        ],
+      },
+    },
     {
       type: "regular",
       name: "statistics-about-biodiversity",

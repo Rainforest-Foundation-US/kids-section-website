@@ -37,12 +37,15 @@ export async function getHomePage() {
 export async function getVignettes() {
   const vignettes = await client.fetch(
     groq`*[_type == "vignette"]{
+      _id,
       name,
       title,
       subtitle,
       "image": image{
           alt,
-          "data": asset->url
+          "data": asset->url,
+          "height": asset->metadata.dimensions.height,
+          "width": asset->metadata.dimensions.width,
       },
       imageAlignment,
       body

@@ -149,74 +149,128 @@ function getOffset(rect: DOMRect, tooltipPlace: PlacesType) {
   }
 }
 
-export function FindTheAnimalsGame(props: FindTheAnimalsGameActivityProps) {
+export function FindTheAnimalsGame() {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const tooltipRef = React.useRef<TooltipRefProps>(null);
+  const animalElementsRef = React.useRef<{
+    [key: string]: {
+      element: HTMLElement;
+      clickHandler: (e: MouseEvent) => void;
+    };
+  }>({});
 
-  React.useEffect(() => {
+  // Function to calculate positions
+  const updatePositions = React.useCallback(() => {
+    const iframe = iframeRef.current;
+    if (!iframe?.contentDocument) return;
+
+    const iframeRect = iframe.getBoundingClientRect();
+
+    Object.entries(animalElementsRef.current).forEach(
+      ([animalId, { element }]) => {
+        const animal = animals.find((a) => a.id === animalId);
+        if (!animal) return;
+
+        const rect = element.getBoundingClientRect();
+        const offset = getOffset(rect, animal.tooltipPlace);
+
+        // Store the position in the click handler
+        animalElementsRef.current[animalId].clickHandler = (e: MouseEvent) => {
+          element.style.opacity = "1";
+          const currentRect = element.getBoundingClientRect();
+          const currentOffset = getOffset(currentRect, animal.tooltipPlace);
+          const currentPosition = {
+            x: currentRect.left + currentOffset.x + iframeRect.left,
+            y: currentRect.top + currentOffset.y + iframeRect.top,
+          };
+
+          tooltipRef.current?.open({
+            position: currentPosition,
+            place: animal.tooltipPlace,
+            content: animal.name,
+          });
+        };
+
+        // Update sloth tooltip position
+        if (animal.id === "sloth") {
+          tooltipRef.current?.open({
+            position: {
+              x: rect.left + offset.x + iframeRect.left,
+              y: rect.top + offset.y + iframeRect.top,
+            },
+            place: animal.tooltipPlace,
+            content: "How many of my rainforest friends can you find?",
+          });
+        }
+      },
+    );
+  }, []);
+
+  React.useLayoutEffect(() => {
     const iframe = iframeRef.current;
 
     const handleLoad = () => {
-      if (!iframe?.contentDocument) {
-        return;
-      }
+      if (!iframe?.contentDocument) return;
 
       const iframeDoc = iframe.contentDocument;
-      const iframeRect = iframe.getBoundingClientRect();
 
       animals.forEach((animal) => {
         const animalElement = iframeDoc.getElementById(`${animal.id}-outline`);
+        if (!animalElement) return;
 
-        if (animalElement) {
-          // Hide outline initially
-          animalElement.style.opacity = "0";
+        // Hide outline initially
+        animalElement.style.opacity = "0";
 
-          // Get element position
-          const rect = animalElement.getBoundingClientRect();
+        // Initialize with dummy click handler
+        animalElementsRef.current[animal.id] = {
+          element: animalElement,
+          clickHandler: () => {},
+        };
 
-          const offset = getOffset(rect, animal.tooltipPlace);
-
-          // Calculate absolute position (relative to the page)
-          const absolutePosition = {
-            x: rect.left + iframeRect.left + offset.x,
-            y: rect.top + iframeRect.top + offset.y,
-          };
-
-          if (animal.id === "sloth") {
-            tooltipRef.current?.open({
-              position: absolutePosition,
-              place: animal.tooltipPlace,
-              content: "How many of my rainforest friends can you find?",
-            });
-          }
-
-          animalElement.addEventListener(
-            "click",
-            function animalElementClickHandler() {
-              // Turn on outline visibility
-              animalElement.style.opacity = "1";
-
-              tooltipRef.current?.open({
-                position: absolutePosition,
-                place: animal.tooltipPlace,
-                content: animal.name,
-              });
-            },
-          );
-        }
+        animalElement.addEventListener("click", (e) => {
+          animalElementsRef.current[animal.id].clickHandler(e);
+        });
       });
+
+      updatePositions();
     };
 
     if (iframe) {
       iframe.addEventListener("load", handleLoad);
     }
 
+    // Add event listeners for various scenarios that might affect positioning
+    window.addEventListener("scroll", updatePositions);
+    window.addEventListener("resize", updatePositions);
+
+    // Create an intersection observer to update positions when the component becomes visible
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        updatePositions();
+      }
+    });
+
+    if (iframe) {
+      observer.observe(iframe);
+    }
+
     return () => {
       if (iframe) {
         iframe.removeEventListener("load", handleLoad);
+        observer.unobserve(iframe);
       }
+      window.removeEventListener("scroll", updatePositions);
+      window.removeEventListener("resize", updatePositions);
+
+      // Cleanup event listeners
+      Object.values(animalElementsRef.current).forEach(
+        ({ element, clickHandler }) => {
+          element.removeEventListener("click", clickHandler);
+        },
+      );
+      animalElementsRef.current = {};
     };
-  }, []);
+  }, [updatePositions]);
 
   return (
     <div className="h-full w-full md:w-5/6">

@@ -24,7 +24,7 @@ export const hintAtom = atom<Partial<HintAtomValue>>({
     hint: "",
     status: ActivityHintStatus.INFO,
   },
-  "biodiversity-3": {
+  biodiversity: {
     hint: "",
     status: ActivityHintStatus.INFO,
   },

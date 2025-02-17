@@ -1,16 +1,6 @@
-import { VignetteSectionOptions } from "@/components/sections/vignette-section";
-import { SectionName, sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import { VignetteSlide } from "@/components/sections/vignette-section";
 import { ThLargeIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-
-const vignetteNames = sectionNames.filter(({ value }) =>
-  [
-    "biodiversity-1",
-    "biodiversity-2",
-    "biodiversity-3",
-    "biodiversity-4",
-  ].includes(value),
-);
 
 export const VignetteSchemaType = defineType({
   name: "vignette",
@@ -22,9 +12,6 @@ export const VignetteSchemaType = defineType({
       name: "name",
       title: "Name",
       type: "string",
-      options: {
-        list: vignetteNames,
-      },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -93,6 +80,4 @@ export const VignetteSchemaType = defineType({
   },
 });
 
-export interface VignetteSection extends VignetteSectionOptions {
-  name: SectionName;
-}
+export interface VignetteSection extends VignetteSlide {}

@@ -19,7 +19,7 @@ export function HintContent({
   const hintAtomValue = useAtomValue(hintAtom);
 
   return (
-    <div className="left-[15%] top-12 z-10 mb-2 flex gap-2 lg:absolute lg:flex-col">
+    <div className="left-[15%] top-12 z-20 mb-2 flex gap-2 lg:absolute lg:flex-col">
       <RoundSlothIllustration />
       {hintContent.text && name && (
         <p
