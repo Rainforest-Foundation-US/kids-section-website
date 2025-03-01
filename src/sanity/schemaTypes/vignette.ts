@@ -1,5 +1,5 @@
-import { VignetteSlide } from "@/components/sections/vignette-section";
 import { ThLargeIcon } from "@sanity/icons";
+import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 import { defineField, defineType } from "sanity";
 
 export const VignetteSchemaType = defineType({
@@ -38,7 +38,10 @@ export const VignetteSchemaType = defineType({
           description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              if (
+                (context.document?.picture as SanityImageObject)?.asset?._ref &&
+                !alt
+              ) {
                 return "Required";
               }
               return true;
@@ -79,5 +82,3 @@ export const VignetteSchemaType = defineType({
     },
   },
 });
-
-export interface VignetteSection extends VignetteSlide {}

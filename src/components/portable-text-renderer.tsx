@@ -2,6 +2,7 @@ import React from "react";
 import { PortableText } from "@portabletext/react";
 import { WordHighlightWithTooltip } from "./word-highlight-with-tooltip";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PortableTextRenderer = ({ content }: { content: any }) => {
   const components = {
     block: {

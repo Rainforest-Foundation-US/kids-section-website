@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type GenericFunction<T extends unknown[]> = (...args: readonly [...T]) => any;
 
 type PropsOf<C extends (...args: any) => any> = Parameters<C>[0];

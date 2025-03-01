@@ -108,7 +108,11 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   }, [shuffleCards]);
 
   function handleChoice(card: MemoryCard) {
-    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+    if (choiceOne) {
+      setChoiceTwo(card);
+    } else {
+      setChoiceOne(card);
+    }
   }
 
   function resetTurn() {

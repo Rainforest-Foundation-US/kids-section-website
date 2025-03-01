@@ -16,6 +16,7 @@ export async function getHomePage() {
       title,
       subtitle,
       discoverTheAmazonButtonLabel,
+      resourcesForTeachersButtonLabel,
       supportButtonLabel,
       supportLinkUrl,
       videoUrl,

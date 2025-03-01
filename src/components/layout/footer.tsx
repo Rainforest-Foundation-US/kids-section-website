@@ -114,19 +114,19 @@ export function Footer() {
             href="https://rainforestfoundation.org/"
             className="cursor-pointer text-base text-neutral-100"
           >
-            Foundation Main website
+            RFUS website
           </a>
           <Link
-            href="/about-the-amazon"
+            href="/discover-the-amazon"
             className="cursor-pointer text-base text-neutral-100"
           >
-            About the amazon
+            Discover the Amazon
           </Link>
           <Link
-            href="/narratives"
+            href="/stories"
             className="cursor-pointer text-base text-neutral-100"
           >
-            Narratives
+            Stories
           </Link>
           <Link
             href="/q-and-a"

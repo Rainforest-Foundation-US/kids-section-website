@@ -1,6 +1,7 @@
 import { defineType, defineField, PortableTextBlock } from "sanity";
 import { ClipboardImageIcon } from "@sanity/icons";
 import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
+import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 
 export const StatisticsCard = defineType({
   name: "statisticsCard",
@@ -20,7 +21,10 @@ export const StatisticsCard = defineType({
           description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              if (
+                (context.document?.picture as SanityImageObject)?.asset?._ref &&
+                !alt
+              ) {
                 return "Required";
               }
               return true;

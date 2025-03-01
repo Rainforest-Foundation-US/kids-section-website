@@ -1,14 +1,11 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
-import { NarrativesSectionName } from "@/pages/narratives";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
+import { StoriesSectionName } from "@/pages/stories";
 import { SectionNames } from "./content/content";
 
-export type HintData = {
-  hint: string;
-  status: ActivityHintStatus;
-};
+export type HintData = { hint: string; status: ActivityHintStatus };
 export type HintAtomValue = Record<SectionNames, HintData>;
 
 export const hintAtom = atom<Partial<HintAtomValue>>({
@@ -24,31 +21,19 @@ export const hintAtom = atom<Partial<HintAtomValue>>({
     hint: "",
     status: ActivityHintStatus.INFO,
   },
-  biodiversity: {
-    hint: "",
-    status: ActivityHintStatus.INFO,
-  },
-  "rainforests-in-danger": {
-    hint: "",
-    status: ActivityHintStatus.INFO,
-  },
-  "what-are-rainforests-quiz": {
-    hint: "",
-    status: ActivityHintStatus.INFO,
-  },
+  biodiversity: { hint: "", status: ActivityHintStatus.INFO },
+  "rainforests-in-danger": { hint: "", status: ActivityHintStatus.INFO },
+  "what-are-rainforests-quiz": { hint: "", status: ActivityHintStatus.INFO },
   "rainforests-are-important-quiz": {
     hint: "",
     status: ActivityHintStatus.INFO,
   },
-  "climate-change-quiz": {
-    hint: "",
-    status: ActivityHintStatus.INFO,
-  },
+  "climate-change-quiz": { hint: "", status: ActivityHintStatus.INFO },
   "is-this-actor-deforesting-the-amazon": {
     hint: "",
     status: ActivityHintStatus.INFO,
   },
-  narratives: { hint: "", status: ActivityHintStatus.INFO },
+  stories: { hint: "", status: ActivityHintStatus.INFO },
 });
 
 const incorrectHints = ["Whoops!\nTry again!"];
@@ -101,7 +86,7 @@ export const useResetHint = () => {
 
 export function ControlledActivityHint(props: {
   noSloth?: boolean;
-  name: SectionName | NarrativesSectionName;
+  name: SectionName | StoriesSectionName;
 }) {
   const hintAtomValue = useAtomValue(hintAtom);
 

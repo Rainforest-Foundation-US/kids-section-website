@@ -23,9 +23,22 @@ import { urlFor } from "@/sanity/lib/image";
 import React from "react";
 
 export default function Home() {
-  const homePageData = useGetHomePageData();
+  const { homePageData, educatorResources } = useGetHomePageData();
 
   const [isFlipped, setIsFlipped] = React.useState(-1);
+
+  const onClick = () => {
+    educatorResources.forEach((resource, index) => {
+      setTimeout(() => {
+        const link = document.createElement("a");
+        link.href = resource.link;
+        link.download = resource.title;
+        document.body.appendChild(link); // Append to body to make it work in Firefox
+        link.click();
+        document.body.removeChild(link);
+      }, 200 * index);
+    });
+  };
 
   return (
     <>
@@ -34,9 +47,9 @@ export default function Home() {
       </Head>
 
       <main className="flex flex-col bg-secondary-100">
-        <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
-          <NavBar />
+        <NavBar styles="bg-secondary-100 sticky top-0" />
 
+        <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
           <Image
             placeholder="blur"
             className="absolute left-0 right-0 top-0 block h-full w-full object-cover object-bottom"
@@ -72,15 +85,12 @@ export default function Home() {
                   <AppLink
                     className="inline-block"
                     variant="primary"
-                    href="/about-the-amazon"
+                    href="/discover-the-amazon"
                   >
                     {homePageData.discoverTheAmazonButtonLabel}
                   </AppLink>
 
-                  <AppLink
-                    variant="secondary"
-                    href={homePageData.supportLinkUrl}
-                  >
+                  <AppLink variant="primary" href={homePageData.supportLinkUrl}>
                     {homePageData.supportButtonLabel}
                   </AppLink>
                 </div>
@@ -160,12 +170,16 @@ export default function Home() {
                   <AppLink
                     className="inline-block"
                     variant="primary"
-                    href="./about-the-amazon"
+                    href="./discover-the-amazon"
                   >
-                    Discover the Amazon!
+                    {homePageData?.discoverTheAmazonButtonLabel}
                   </AppLink>
-                  <AppButton className="inline-block" variant="secondary">
-                    Support our work
+                  <AppButton
+                    className="inline-block"
+                    variant="primary"
+                    onClick={onClick}
+                  >
+                    {homePageData?.resourcesForTeachersButtonLabel}
                   </AppButton>
                 </div>
               </section>
@@ -214,17 +228,7 @@ export default function Home() {
                   className="relative z-20 mx-auto -mt-4 block h-[372px] w-[314px] object-cover object-center"
                   aria-hidden
                 />
-
-                <h2 className="invisible text-4xl font-normal leading-snug text-neutral-dark-700">
-                  Teach the Amazon in class
-                </h2>
               </header>
-
-              <div className="invisible space-y-4 text-center xs:space-x-4 xs:space-y-0">
-                <AppButton variant="secondary">
-                  Resources for educators
-                </AppButton>
-              </div>
             </section>
           </div>
 

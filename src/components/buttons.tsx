@@ -1,9 +1,7 @@
 import clsx from "@/utils/clsx";
 import { IconRight } from "./icons/icons";
-import { useHomeSectionNavigation } from "./sections";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
 
 type NavLinkProps = Omit<PropsOf<typeof Link>, "className"> & {
   className?: string | ((isActive: boolean) => string);
@@ -32,7 +30,6 @@ interface GoToButtonProps {
 }
 export function GoToButton({
   direction = "bottom",
-  position = "start",
   ...props
 }: GoToButtonProps) {
   return (
@@ -134,7 +131,7 @@ interface AppLinkProps {
   children?: React.ReactNode;
   onClick?: () => void;
 }
-export function AppLink({ size = "medium", ...props }: AppLinkProps) {
+export function AppLink(props: AppLinkProps) {
   const Component = props.href?.startsWith("http") ? "a" : Link;
 
   return (

@@ -1,15 +1,9 @@
-import { CommonActivityOptions } from "./common";
 import { PlacesType, Tooltip, TooltipRefProps } from "react-tooltip";
-import type { PropsWithChildren } from "react";
 import React from "react";
 
 export interface FindTheAnimalsGameActivityOptions {
   test?: string[];
 }
-
-type FindTheAnimalsGameActivityProps = PropsWithChildren<
-  FindTheAnimalsGameActivityOptions & CommonActivityOptions
->;
 
 interface Animal {
   id: string;
@@ -175,7 +169,7 @@ export function FindTheAnimalsGame() {
         const offset = getOffset(rect, animal.tooltipPlace);
 
         // Store the position in the click handler
-        animalElementsRef.current[animalId].clickHandler = (e: MouseEvent) => {
+        animalElementsRef.current[animalId].clickHandler = () => {
           element.style.opacity = "1";
           const currentRect = element.getBoundingClientRect();
           const currentOffset = getOffset(currentRect, animal.tooltipPlace);

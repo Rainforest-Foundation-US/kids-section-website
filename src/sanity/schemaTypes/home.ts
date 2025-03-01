@@ -51,6 +51,12 @@ export const HomePageSchemaType = defineType({
         }),
     }),
     defineField({
+      name: "resourcesForTeachersButtonLabel",
+      title: "Resources for teachers button label",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "videoUrl",
       title: "Video URL",
       type: "string",
@@ -86,6 +92,7 @@ export interface HomePageData {
   polaroids?: PolaroidData[];
   welcomeMessage?: string;
   discoverTheAmazonButtonLabel: string;
+  resourcesForTeachersButtonLabel: string;
   videoUrl?: string;
   description?: string;
   title: string;

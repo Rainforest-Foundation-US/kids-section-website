@@ -62,22 +62,15 @@ import { isDefined } from "@/utils/isDefined";
 import { StatisticsScreen } from "./activities/statistics-screen";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { Postcard } from "../postcard";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
 import { HintContent } from "../hint-content";
-import { NarrativesSectionName } from "@/pages/narratives";
+import { StoriesSectionName } from "@/pages/stories";
 import { useAtomValue } from "jotai";
 import { congratulationsAtom } from "../congratulations";
 import { FlipIconReminder } from "../flip-icon-reminder";
 
-type PreContent =
-  | {
-      type: "sloth";
-    }
-  | {
-      type: "emoji";
-      emoji: "thinking-face";
-    };
+type PreContent = { type: "sloth" } | { type: "emoji"; emoji: "thinking-face" };
 
 type PlainContentData = {
   type: "plain";
@@ -135,11 +128,7 @@ type SingleContent =
   | SelectCountriesWithRainforestActivityData
   | StatisticsActivityData;
 
-type PagerData = {
-  type: "pager";
-  data: SingleContent[];
-  noSloth?: boolean;
-};
+type PagerData = { type: "pager"; data: SingleContent[]; noSloth?: boolean };
 
 type PolaroidData = {
   image: string | StaticImageData;
@@ -159,17 +148,12 @@ type SubContent =
       polaroids: PolaroidData[];
       shouldShowFlipIconReminder?: boolean;
     }
-  | {
-      type: "illustration";
-      kind: PolymorphicIllustrationOptions["kind"];
-    }
+  | { type: "illustration"; kind: PolymorphicIllustrationOptions["kind"] }
   | PlainContentData;
 
 export type Content = SingleContent | PagerData;
 
-export type PagerContent = Content & {
-  subContent?: SubContent | SubContent[];
-};
+export type PagerContent = Content & { subContent?: SubContent | SubContent[] };
 
 export type DividerStyle = "dark" | "light";
 
@@ -201,26 +185,18 @@ export type SectionWithContent =
       preContent?: PreContent;
       content: Content;
       subContent?: SubContent | SubContent[];
-      defaultHintContent?: {
-        hint: string;
-      };
+      defaultHintContent?: { hint: string };
       illustrations?: Illustrations;
     }
   | {
       type: "vignette";
       name: SectionName;
       content: VignetteSectionOptions;
-      defaultHintContent?: {
-        hint: string;
-      };
+      defaultHintContent?: { hint: string };
     }
-  | {
-      type: "divider";
-      name?: SectionName;
-      style: DividerStyle;
-    };
+  | { type: "divider"; name?: SectionName; style: DividerStyle };
 
-export type SectionNames = SectionName | NarrativesSectionName;
+export type SectionNames = SectionName | StoriesSectionName;
 
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   if (preContent.type === "sloth") {
@@ -468,9 +444,7 @@ function ContentSection(props: {
           {props.section.defaultHintContent?.hint ? (
             <HintContent
               name={props.name}
-              hintContent={{
-                text: props.section.defaultHintContent.hint,
-              }}
+              hintContent={{ text: props.section.defaultHintContent.hint }}
             />
           ) : null}
 

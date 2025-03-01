@@ -1,6 +1,6 @@
 import { SectionNames } from "@/components/content/content";
-import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
-import { narrativesSectionNames } from "@/pages/narratives";
+import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
+import { storiesSectionNames } from "@/pages/stories";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -15,9 +15,7 @@ export const PickOptionGameSchemaType = defineType({
       title: "Name",
       type: "string",
       validation: (rule) => rule.required(),
-      options: {
-        list: [...narrativesSectionNames, ...sectionNames],
-      },
+      options: { list: [...storiesSectionNames, ...sectionNames] },
     }),
     defineField({
       name: "question",
@@ -52,18 +50,11 @@ export const PickOptionGameSchemaType = defineType({
       ],
     }),
   ],
-  preview: {
-    select: {
-      title: "question",
-    },
-  },
+  preview: { select: { title: "question" } },
 });
 
 export interface PickOptionGameData {
   name: SectionNames;
   question: string;
-  options: {
-    isCorrect: boolean;
-    text: string;
-  }[];
+  options: { isCorrect: boolean; text: string }[];
 }

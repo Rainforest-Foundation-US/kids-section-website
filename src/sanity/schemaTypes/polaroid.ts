@@ -49,7 +49,10 @@ export const PolaroidSchemaType = defineType({
           description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              if (
+                (context.document?.picture as SanityImageObject)?.asset?._ref &&
+                !alt
+              ) {
                 return "Required";
               }
               return true;

@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import clsx from "@/utils/clsx";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import React from "react";
 import { HintContent } from "../hint-content";
 
@@ -24,9 +24,7 @@ export interface VignetteSectionOptions {
 
 interface VignetteSectionProps extends VignetteSectionOptions {
   name?: SectionName;
-  defaultHintContent?: {
-    hint: string;
-  };
+  defaultHintContent?: { hint: string };
 }
 
 export function VignetteSection({
@@ -38,7 +36,7 @@ export function VignetteSection({
   const [isLastSlide, setIsLastSlide] = React.useState(false);
   const [isFirstSlide, setIsFirstSlide] = React.useState(true);
   const containerRef = React.useRef<HTMLDivElement>(null);
-  let isTransitioning = React.useRef(false);
+  const isTransitioning = React.useRef(false);
   const touchStart = React.useRef<number | null>(null);
   const lastWheelTime = React.useRef(0);
 
@@ -162,9 +160,7 @@ export function VignetteSection({
         {defaultHintContent && (
           <HintContent
             name={name}
-            hintContent={{
-              text: defaultHintContent.hint,
-            }}
+            hintContent={{ text: defaultHintContent.hint }}
           />
         )}
         {slides.map((slide, index) => (

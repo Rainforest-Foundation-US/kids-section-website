@@ -1,5 +1,5 @@
 import { WavySeparator } from "../illustrations/activities-illustrations";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ActivitySection } from "../sections";
 
 export interface WavySectionProps {

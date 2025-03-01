@@ -37,7 +37,7 @@ export function wrapText(text: string, maxLineLength: number): string[] {
     return [text];
   }
 
-  let result: string[] = [];
+  const result: string[] = [];
   let curLine = "";
 
   const segmenter = new Intl.Segmenter("en", { granularity: "word" });

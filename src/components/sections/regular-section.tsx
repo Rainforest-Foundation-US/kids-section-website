@@ -3,7 +3,7 @@ import { ActivitySection } from "../sections";
 
 import mainBackground from "@/assets/activities/1-background.png";
 import clsx from "@/utils/clsx";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 
 export interface RegularSectionProps {
   children?: React.ReactNode;
@@ -26,9 +26,7 @@ export function RegularSection(props: RegularSectionProps) {
           "text-neutral-100 [text-shadow:1px_1px_5px_black]",
         props.fullScreen && "max-h-[unset] min-h-screen",
       )}
-      style={{
-        backgroundColor: props.backgroundColor,
-      }}
+      style={{ backgroundColor: props.backgroundColor }}
     >
       {props.backgroundImage !== null && (
         <Image

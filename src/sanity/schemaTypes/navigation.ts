@@ -1,6 +1,9 @@
 import { defineField, defineType } from "sanity";
 import { DocumentIcon } from "@sanity/icons";
-import { SectionName, sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import {
+  SectionName,
+  sectionNames,
+} from "@/hooks/useGetDiscoverTheAmazonContent";
 
 export const NavigationSchemaType = defineType({
   name: "navigation",
@@ -8,11 +11,7 @@ export const NavigationSchemaType = defineType({
   type: "document",
   icon: DocumentIcon,
   fields: [
-    defineField({
-      name: "name",
-      title: "Name",
-      type: "string",
-    }),
+    defineField({ name: "name", title: "Name", type: "string" }),
     defineField({
       name: "paths",
       title: "Paths",
@@ -27,9 +26,7 @@ export const NavigationSchemaType = defineType({
               name: "id",
               type: "string",
               title: "Id",
-              options: {
-                list: sectionNames,
-              },
+              options: { list: sectionNames },
               validation: (rule) => rule.required(),
             },
             {
@@ -43,17 +40,10 @@ export const NavigationSchemaType = defineType({
       ],
     }),
   ],
-  preview: {
-    select: {
-      title: "name",
-    },
-  },
+  preview: { select: { title: "name" } },
 });
 
 export interface Navigation {
   name: string;
-  paths: {
-    id: SectionName;
-    name: string;
-  }[];
+  paths: { id: SectionName; name: string }[];
 }

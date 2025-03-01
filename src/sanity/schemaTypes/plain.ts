@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineField, defineType, TypedObject } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
-import { narrativesSectionNames } from "@/pages/narratives";
-import { sectionNames } from "@/hooks/useGetAboutTheAmazonContent";
+import { storiesSectionNames } from "@/pages/stories";
+import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { PostcardData } from "./postcard";
 import { PolaroidData } from "./polaroid";
 import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
@@ -18,7 +19,7 @@ export const PlainSchemaType = defineType({
       title: "Name",
       type: "string",
       options: {
-        list: [...narrativesSectionNames, ...sectionNames],
+        list: [...storiesSectionNames, ...sectionNames],
       },
       validation: (rule) => rule.required(),
     }),
@@ -71,7 +72,7 @@ export const PlainSchemaType = defineType({
           type: "array",
           of: [{ type: "reference", to: [{ type: "polaroid" }] }],
           hidden: ({ document }) =>
-            (document as any)?.subContent?.type !== "polaroids",
+            (document?.subContent as any)?.type !== "polaroids",
         }),
         defineField({
           name: "singleReference",
@@ -79,10 +80,10 @@ export const PlainSchemaType = defineType({
           type: "reference",
           to: [{ type: "postcard" }, { type: "plain" }],
           hidden: ({ document }) =>
-            (document as any)?.subContent?.type === "polaroids",
+            (document?.subContent as any)?.type === "polaroids",
           options: {
             filter: ({ document }) => {
-              const type = (document as any)?.subContent?.type;
+              const type = (document?.subContent as any)?.type;
               return {
                 filter: `_type == "${type}"`,
               };

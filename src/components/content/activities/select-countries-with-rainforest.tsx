@@ -71,10 +71,7 @@ type SelectCountriesWithRainforestActivityProps = React.PropsWithChildren<
   SelectCountriesWithRainforestActivityOptions & CommonActivityOptions
 >;
 export function SelectCountriesWithRainforestActivity({
-  questionPosition,
   scale,
-  question,
-  questionIllustration,
   center,
 }: SelectCountriesWithRainforestActivityProps) {
   const [highlightedCountries, setHighlightedCountries] = React.useState<
@@ -83,7 +80,7 @@ export function SelectCountriesWithRainforestActivity({
   const [markers, setMarkers] = React.useState<Marker[]>([]);
   const [hintedCountries, setHintedCountries] = React.useState<string[]>([]);
   const [errorCountries, setErrorCountries] = React.useState<string[]>([]);
-  const [recentOptionSelect, setRecentOptionSelect] = React.useState<{
+  const [, setRecentOptionSelect] = React.useState<{
     code: CountryCode;
     isCorrect: boolean;
   } | null>(null);

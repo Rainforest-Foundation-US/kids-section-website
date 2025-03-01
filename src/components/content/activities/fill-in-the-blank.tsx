@@ -186,6 +186,7 @@ export function FillInTheBlankActivityDropZone({
   const [droppableProps] = useDroppable(
     "blank-" + blankId,
     useCallback(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async (option: ParsedBlankOption, _target: HTMLButtonElement) => {
         if (option.blankId !== blankId || !option.isValid) {
           const options = { duration: 100 / 1000, transition: easeIn };

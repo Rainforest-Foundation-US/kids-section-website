@@ -5,10 +5,11 @@ import { useMeasure } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
 import React from "react";
 import { useHomeSectionNavigation } from "./sections";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { getNavigation } from "@/sanity/lib/queries";
 
 const AnimatedIconChevronUp = animated(IconChevronUp);
+const AnimatedDiv = animated("div");
 
 export function LearningPath() {
   const { onGoToSection } = useHomeSectionNavigation();
@@ -72,11 +73,7 @@ export function LearningPath() {
   }, [learningPath]);
 
   const learningPathStyle = useSpring({
-    from: {
-      width: 289,
-      height: "auto",
-      display: "block",
-    },
+    from: { width: 289, height: "auto", display: "block" },
     to: {
       width: isCollapsed ? 64 : 289,
       height: isCollapsed ? 64 : "auto",
@@ -85,12 +82,8 @@ export function LearningPath() {
     config: config.stiff,
   });
   const containerStyles = useSpring({
-    from: {
-      height: 0,
-    },
-    to: {
-      height: isCollapsed ? 0 : size.scrollHeight,
-    },
+    from: { height: 0 },
+    to: { height: isCollapsed ? 0 : size.scrollHeight },
     config: config.stiff,
   });
   const chevronStyles = useSpring({
@@ -103,7 +96,7 @@ export function LearningPath() {
   };
 
   return (
-    <animated.div
+    <AnimatedDiv
       role="menu"
       className={clsx(
         "fixed right-10 overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray",
@@ -127,7 +120,7 @@ export function LearningPath() {
         )}
       </div>
 
-      <animated.div
+      <AnimatedDiv
         role="menuitem"
         aria-expanded={isCollapsed}
         style={containerStyles}
@@ -168,7 +161,7 @@ export function LearningPath() {
             </div>
           </div>
         </div>
-      </animated.div>
-    </animated.div>
+      </AnimatedDiv>
+    </AnimatedDiv>
   );
 }

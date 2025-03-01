@@ -1,7 +1,7 @@
 import { useEvent } from "@/utils/hooks";
 import clsx from "@/utils/clsx";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { SectionName } from "@/hooks/useGetAboutTheAmazonContent";
+import { createContext, useContext, useEffect, useRef } from "react";
+import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { Congratulations, congratulationsAtom } from "./congratulations";
 import { useAtomValue } from "jotai";
 import { SectionNames } from "./content/content";
@@ -56,9 +56,7 @@ export function useHomeSectionNavigation() {
     },
   );
 
-  return {
-    onGoToSection,
-  };
+  return { onGoToSection };
 }
 
 export function ActivitySection(props: {
@@ -128,9 +126,7 @@ export function ActivitySectionDivider({
 
   return (
     <div
-      style={{
-        background,
-      }}
+      style={{ background }}
       className={clsx(
         "absolute inset-x-0",
         position === "bottom" && "bottom-0 h-[240px] -scale-y-100",

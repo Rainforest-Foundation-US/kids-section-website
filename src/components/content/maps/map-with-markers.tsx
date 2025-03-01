@@ -32,6 +32,7 @@ export interface MapWithMarkersOptions {
 
 const countryCodeKey = "ADM0_ISO";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getCountryCode(geo: any) {
   return geo.properties[countryCodeKey];
 }

@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import clsx from "@/utils/clsx";
 import Link from "next/link";
 
-export function NavBar() {
+export function NavBar({ styles }: { styles?: string }) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = useCallback(() => {
@@ -26,7 +26,12 @@ export function NavBar() {
   );
 
   return (
-    <header className="relative z-50 mx-6 flex flex-row justify-between border-b-1 border-neutral-500 pb-2 pt-6">
+    <header
+      className={clsx(
+        "relative z-50 flex flex-row justify-between border-b-1 border-neutral-500 px-6 pb-2 pt-6",
+        styles,
+      )}
+    >
       <Link href="/">
         <Image
           src="/large-logo.png"
@@ -47,19 +52,21 @@ export function NavBar() {
             <NavBarLink href="/">Home</NavBarLink>
           </li>
           <li>
-            <NavBarLink href="/about-the-amazon">About the Amazon</NavBarLink>
+            <NavBarLink href="/discover-the-amazon">
+              Discover the Amazon
+            </NavBarLink>
           </li>
           <li>
-            <NavBarLink href="/narratives">Narratives</NavBarLink>
+            <NavBarLink href="/stories">Stories</NavBarLink>
           </li>
           <li>
             <NavBarLink href="/q-and-a">Q&A</NavBarLink>
           </li>
 
           <li>
-            <NavBarLink href="https://rainforestfoundation.org/">
+            <NavBarLink href="https://rainforestfoundation.org/engage/start-a-fundraiser/">
               <AppButton variant="primary" size="small">
-                Donate now
+                Start a fundraiser
               </AppButton>
             </NavBarLink>
           </li>
@@ -90,16 +97,16 @@ export function NavBar() {
           </li>
           <li>
             <AppLink
-              href="/about-the-amazon"
+              href="/discover-the-amazon"
               variant="text"
               className="block w-full"
             >
-              About the Amazon
+              Discover the Amazon
             </AppLink>
           </li>
           <li>
-            <AppLink href="/narratives" variant="text" className="block w-full">
-              Narratives
+            <AppLink href="/stories" variant="text" className="block w-full">
+              Stories
             </AppLink>
           </li>
           <li>
@@ -113,7 +120,7 @@ export function NavBar() {
               variant="primary"
               className="block w-full"
             >
-              Donate now
+              Start a fundraiser
             </AppLink>
           </li>
         </ul>

@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { ImageIcon } from "@sanity/icons";
 import { StaticImageData } from "next/image";
+import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 
 export const PostcardSchemaType = defineType({
   name: "postcard",
@@ -27,7 +28,10 @@ export const PostcardSchemaType = defineType({
           description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              if (
+                (context.document?.picture as SanityImageObject)?.asset?._ref &&
+                !alt
+              ) {
                 return "Required";
               }
               return true;
