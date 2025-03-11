@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
 import { usePlaySounds } from "@/hooks/usePlaySound";
 
-export interface PickTheImageOption {
+interface PickTheImageOption {
   id: string;
   imageSrc: string | StaticImageData;
   alt: string;

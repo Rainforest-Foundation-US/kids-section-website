@@ -150,13 +150,13 @@ type SubContent =
   | { type: "illustration"; kind: PolymorphicIllustrationOptions["kind"] }
   | PlainContentData;
 
-export type Content = SingleContent | PagerData;
+type Content = SingleContent | PagerData;
 
 export type PagerContent = Content & { subContent?: SubContent | SubContent[] };
 
-export type DividerStyle = "dark" | "light";
+type DividerStyle = "dark" | "light";
 
-export type Illustrations = {
+type Illustrations = {
   topLeft?: React.ReactNode;
   topRight?: React.ReactNode;
   bottomLeft?: React.ReactNode;

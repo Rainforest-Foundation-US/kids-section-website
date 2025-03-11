@@ -9,7 +9,7 @@ import { AppButton } from "./buttons";
 import { atom, useAtom } from "jotai";
 import { SectionNames } from "./content/content";
 
-export type CongratulationsAtomValue = Record<SectionNames, boolean>;
+type CongratulationsAtomValue = Record<SectionNames, boolean>;
 export const congratulationsAtom = atom<Partial<CongratulationsAtomValue>>({
   "what-are-rainforests-quiz": false,
   "rainforests-are-important-quiz": false,

@@ -143,7 +143,8 @@ interface FillInTheBlankActivityOptionProps {
   isOddI: boolean;
   onClick: () => void;
 }
-export function FillInTheBlankActivityOption(
+
+function FillInTheBlankActivityOption(
   props: FillInTheBlankActivityOptionProps,
 ) {
   const [draggableProps, isDragging] = useDraggable(
@@ -169,7 +170,7 @@ export function FillInTheBlankActivityOption(
   );
 }
 
-export function FillInTheBlankActivityDropZone({
+function FillInTheBlankActivityDropZone({
   onDrop,
   ...props
 }: {

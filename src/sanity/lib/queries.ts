@@ -5,8 +5,6 @@ import { EducatorResource } from "../schemaTypes/educatorResource";
 import { StatisticsCard } from "../schemaTypes/statisticsCard";
 import { PickImageGameData } from "../schemaTypes/pickImageGame";
 import { Navigation } from "../schemaTypes/navigation";
-import { PickOptionGameData } from "../schemaTypes/pickOptionGame";
-import { PlainData } from "../schemaTypes/plain";
 import { GameSounds } from "../schemaTypes/sounds";
 import { StoryCompositionData } from "../schemaTypes/storyComposition";
 
@@ -191,22 +189,6 @@ export async function getPickImageGames() {
   );
 
   return pickImageGames;
-}
-
-export async function getPickOptionGames() {
-  const pickOptionGames = await client.fetch<PickOptionGameData[]>(
-    groq`*[_type == "pickOptionGame"]${pickOptionGameQuery}`,
-  );
-
-  return pickOptionGames;
-}
-
-export async function getPlainData() {
-  const plainData = await client.fetch<PlainData[]>(
-    groq`*[_type == "plain"]${plainDataQuery}`,
-  );
-
-  return plainData;
 }
 
 export async function getFaqs() {

@@ -12,7 +12,7 @@ import { getEducatorResources } from "@/sanity/lib/queries";
 import { useEffect, useState } from "react";
 import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
 
-export function VercelSponsorshipBanner() {
+function VercelSponsorshipBanner() {
   return (
     <a
       className="app-text self-center text-neutral-100"

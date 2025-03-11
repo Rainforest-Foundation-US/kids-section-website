@@ -7,7 +7,7 @@ import { QANav } from "@/components/q-and-a/nav";
 import { useGetQAndAContent } from "@/components/q-and-a/useGetContent";
 import Head from "next/head";
 import { useRef, useState } from "react";
-import { PortableText } from "@portabletext/react";
+import PortableTextRenderer from "@/components/portable-text-renderer";
 
 export default function QAndARoute() {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -18,11 +18,14 @@ export default function QAndARoute() {
 
   const navClick = (index: number) => {
     setActiveQuestionI(index);
-    mainRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
+    // Only scroll into view on mobile devices
+    if (typeof window !== "undefined" && window.mobileCheck?.()) {
+      mainRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "nearest",
+      });
+    }
   };
 
   return (
@@ -69,7 +72,9 @@ export default function QAndARoute() {
                       {activeQuestion.answer}
                     </h2>
 
-                    <PortableText value={activeQuestion.description} />
+                    <PortableTextRenderer
+                      content={activeQuestion.description}
+                    />
                   </section>
                 </>
               )}

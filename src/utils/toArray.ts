@@ -1,4 +1,4 @@
-export const toArray = <T>(value: T | T[]): T[] =>
+const toArray = <T>(value: T | T[]): T[] =>
   Array.isArray(value) ? value : [value];
 
 export const toArrayMaybe = <T>(value: T | T[] | undefined): T[] | undefined =>

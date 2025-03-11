@@ -47,7 +47,7 @@ export const StoryCompositionSchemaType = defineType({
   },
 });
 
-export interface ContentItem {
+interface ContentItem {
   type: "plain" | "pickOptionGame" | "pickImageGame";
   data: PlainData | PickOptionGameData | PickImageGameData;
 }
