@@ -5,7 +5,7 @@ import { hintAtom } from "@/components/controlled-activity-hint";
 import { ActivityHintStatus } from "@/components/activity-hint";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 
-export type HintContentData = { text?: string };
+type HintContentData = { text?: string };
 
 export function HintContent({
   name,

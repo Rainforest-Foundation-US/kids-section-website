@@ -91,7 +91,7 @@ export default function StoriesRoute() {
         <title>{"Stories - Kids' Corner - Rainforest Foundation US"}</title>
       </Head>
 
-      <main className="overflow-hidden overflow-y-auto bg-secondary-100">
+      <main className="overflow-hidden bg-secondary-100">
         <RegularSection fullScreen textColorStyle="dark" name="stories">
           <NavBar />
 

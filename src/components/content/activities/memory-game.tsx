@@ -127,7 +127,7 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         Memory Game
       </h1>
 
-      <div className="mx-auto mt-7 grid max-w-full grid-cols-6 gap-5 lg:max-w-[80%] lg:px-12 xl:max-w-[50%]">
+      <div className="mx-auto mt-7 grid max-w-full grid-cols-6 gap-5 xl:max-w-[80%] xl:px-12 2xl:max-w-[50%]">
         {localCards.map((card, index) => (
           <Card
             key={card.id}

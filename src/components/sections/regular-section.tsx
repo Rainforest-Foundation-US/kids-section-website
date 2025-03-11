@@ -5,7 +5,7 @@ import mainBackground from "@/assets/activities/1-background.png";
 import clsx from "@/utils/clsx";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 
-export interface RegularSectionProps {
+interface RegularSectionProps {
   children?: React.ReactNode;
   backgroundImage?: string | null | StaticImageData;
   backgroundOpacity?: number;
