@@ -1,19 +1,22 @@
 import { Tooltip } from "react-tooltip";
+import Image from "next/image";
+import { Image as SanityImage } from "sanity";
+import { urlFor } from "@/sanity/lib/image";
 import React from "react";
 import { createPortal } from "react-dom";
 
-export function WordHighlightWithTooltip({
+export function WordHighlightWithImage({
   children,
   value,
 }: {
   children: React.ReactNode;
-  value?: { description: string };
+  value?: { image: SanityImage };
 }) {
   const [mounted, setMounted] = React.useState(false);
 
   // Generate a unique ID for each tooltip
   const tooltipId = React.useMemo(
-    () => `tooltip-${Math.random().toString(36).substring(2, 11)}`,
+    () => `image-tooltip-${Math.random().toString(36).substring(2, 11)}`,
     [],
   );
 
@@ -30,22 +33,35 @@ export function WordHighlightWithTooltip({
     );
   }
 
+  const image = urlFor(value.image).url();
+  const alt =
+    typeof value.image.alt === "string" ? value.image.alt : "default-alt-text";
+
   return (
     <>
       <span
         className="group relative cursor-pointer underline"
         data-tooltip-id={tooltipId}
-        data-tooltip-content={value?.description}
       >
         {children}
       </span>
+
       {mounted &&
         createPortal(
           <Tooltip
             id={tooltipId}
             place="top"
-            className="!z-50 !max-w-64 !rounded-md !border !border-primary-300 !bg-primary-800 !text-lg !text-neutral-100 !opacity-95"
-          />,
+            className="!z-50 !rounded-md !bg-primary-800 !p-2 !opacity-100"
+          >
+            <Image
+              src={image}
+              alt={alt}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: "200px", height: "auto" }}
+            />
+          </Tooltip>,
           document.getElementById("app-root")!,
         )}
     </>

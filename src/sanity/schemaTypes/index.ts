@@ -12,6 +12,7 @@ import { NavigationSchemaType } from "./navigation";
 import { PlainSchemaType } from "./plain";
 import { PickOptionGameSchemaType } from "./pickOptionGame";
 import { GameSoundsSchemaType } from "./sounds";
+import { StoryCompositionSchemaType } from "./storyComposition";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -28,5 +29,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     PlainSchemaType,
     PickOptionGameSchemaType,
     GameSoundsSchemaType,
+    StoryCompositionSchemaType,
   ],
 };

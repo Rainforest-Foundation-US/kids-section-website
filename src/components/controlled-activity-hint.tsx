@@ -1,8 +1,6 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback } from "react";
 import { ActivityHint, ActivityHintStatus } from "./activity-hint";
-import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
-import { StoriesSectionName } from "@/pages/stories";
 import { SectionNames } from "./content/content";
 
 export type HintData = { hint: string; status: ActivityHintStatus };
@@ -86,7 +84,7 @@ export const useResetHint = () => {
 
 export function ControlledActivityHint(props: {
   noSloth?: boolean;
-  name: SectionName | StoriesSectionName;
+  name: SectionNames;
 }) {
   const hintAtomValue = useAtomValue(hintAtom);
 

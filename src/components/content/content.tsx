@@ -65,7 +65,6 @@ import { Postcard } from "../postcard";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
 import { HintContent } from "../hint-content";
-import { StoriesSectionName } from "@/pages/stories";
 import { useAtomValue } from "jotai";
 import { congratulationsAtom } from "../congratulations";
 import { FlipIconReminder } from "../flip-icon-reminder";
@@ -196,7 +195,7 @@ export type SectionWithContent =
     }
   | { type: "divider"; name?: SectionName; style: DividerStyle };
 
-export type SectionNames = SectionName | StoriesSectionName;
+export type SectionNames = SectionName | string;
 
 function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
   if (preContent.type === "sloth") {

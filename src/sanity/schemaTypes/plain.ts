@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineField, defineType, TypedObject } from "sanity";
 import { InfoOutlineIcon } from "@sanity/icons";
-import { storiesSectionNames } from "@/pages/stories";
 import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { PostcardData } from "./postcard";
 import { PolaroidData } from "./polaroid";
@@ -15,13 +14,49 @@ export const PlainSchemaType = defineType({
   icon: InfoOutlineIcon,
   fields: [
     defineField({
+      name: "contentType",
+      title: "Content Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "About the Amazon", value: "aboutTheAmazon" },
+          { title: "Stories", value: "stories" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "aboutTheAmazon",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "name",
       title: "Name",
       type: "string",
       options: {
-        list: [...storiesSectionNames, ...sectionNames],
+        list: sectionNames,
       },
-      validation: (rule) => rule.required(),
+      hidden: ({ document }) => document?.contentType === "stories",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (context.document?.contentType === "aboutTheAmazon") {
+            return value
+              ? true
+              : "Name is required for About the Amazon content";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      name: "customName",
+      title: "Name",
+      type: "string",
+      hidden: ({ document }) => document?.contentType !== "stories",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (context.document?.contentType === "stories") {
+            return value ? true : "Custom name is required for Stories content";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "text",
@@ -95,13 +130,21 @@ export const PlainSchemaType = defineType({
   ],
   preview: {
     select: {
-      title: "name",
+      name: "name",
+      customName: "customName",
+    },
+    prepare(selection) {
+      return {
+        title: selection.name || selection.customName,
+      };
     },
   },
 });
 
 interface BasePlainData {
-  name: SectionNames;
+  contentType: "aboutTheAmazon" | "stories";
+  name?: SectionNames;
+  customName?: string;
   text: TypedObject;
   textAlign: "left" | "center" | "right";
   caption: string;
