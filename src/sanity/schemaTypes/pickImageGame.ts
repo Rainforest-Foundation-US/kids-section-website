@@ -1,6 +1,5 @@
 import { SectionNames } from "@/components/content/content";
 import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
-import { storiesSectionNames } from "@/pages/stories";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
@@ -11,11 +10,49 @@ export const PickImageGameSchemaType = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "contentType",
+      title: "Content Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "About the Amazon", value: "aboutTheAmazon" },
+          { title: "Stories", value: "stories" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "aboutTheAmazon",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "name",
       title: "Name",
       type: "string",
-      validation: (rule) => rule.required(),
-      options: { list: [...storiesSectionNames, ...sectionNames] },
+      options: {
+        list: sectionNames,
+      },
+      hidden: ({ document }) => document?.contentType === "stories",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (context.document?.contentType === "aboutTheAmazon") {
+            return value
+              ? true
+              : "Name is required for About the Amazon content";
+          }
+          return true;
+        }),
+    }),
+    defineField({
+      name: "customName",
+      title: "Name",
+      type: "string",
+      hidden: ({ document }) => document?.contentType !== "stories",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (context.document?.contentType === "stories") {
+            return value ? true : "Custom name is required for Stories content";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "question",
@@ -80,7 +117,9 @@ export const PickImageGameSchemaType = defineType({
 });
 
 export interface PickImageGameData {
-  name: SectionNames;
+  contentType: "aboutTheAmazon" | "stories";
+  name?: SectionNames;
+  customName?: string;
   question: string;
   hintContent: { hint: string };
   options: {

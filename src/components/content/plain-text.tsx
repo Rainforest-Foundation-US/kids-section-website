@@ -1,6 +1,6 @@
 import clsx from "@/utils/clsx";
-import { PortableText } from "@portabletext/react";
 import { TypedObject } from "sanity";
+import PortableTextRenderer from "../portable-text-renderer";
 
 interface PlainTextContentProps {
   caption?: string;
@@ -60,7 +60,7 @@ export function PlainTextContent({
         {typeof props.text === "string" ? (
           <p dangerouslySetInnerHTML={{ __html: props.text }} />
         ) : (
-          <PortableText value={props.text} />
+          <PortableTextRenderer content={props.text} />
         )}
       </div>
       {props.subText && (

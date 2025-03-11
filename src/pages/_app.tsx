@@ -22,9 +22,11 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <div className={`${fontFamily.variable} font-sans`}>
-        <Provider>
-          <Component {...pageProps} />
-        </Provider>
+        <div id="app-root">
+          <Provider>
+            <Component {...pageProps} />
+          </Provider>
+        </div>
       </div>
     </>
   );

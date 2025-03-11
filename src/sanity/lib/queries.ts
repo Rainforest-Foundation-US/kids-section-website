@@ -8,6 +8,86 @@ import { Navigation } from "../schemaTypes/navigation";
 import { PickOptionGameData } from "../schemaTypes/pickOptionGame";
 import { PlainData } from "../schemaTypes/plain";
 import { GameSounds } from "../schemaTypes/sounds";
+import { StoryCompositionData } from "../schemaTypes/storyComposition";
+
+// Define reusable query fragments
+const pickImageGameQuery = groq`
+  {
+    name,
+    customName,
+    question,
+    hintContent {
+      hint
+    },
+    options[]{
+      "imageSrc": src.asset->url,
+      alt,
+      isCorrect,
+      reason,
+    }
+  }
+`;
+
+const plainDataQuery = groq`
+  {
+    name,
+    customName,
+    text,
+    textAlign,
+    caption,
+    subText,
+    subContent {
+      type,
+      "polaroids": reference[]->{
+        _id,
+        caption,
+        captionStyle,
+        image,
+        description,
+        imageAlignment
+      },
+      "polaroid": singleReference->{
+        _id,
+        caption,
+        captionStyle,
+        image,
+        description,
+        imageAlignment
+      },
+      "data": singleReference->{
+        name,
+        text,
+        textAlign,
+        caption,
+        subText,
+        subContent
+      },
+      "postcard": singleReference->{
+        "alt": image.alt,
+        "image": image{
+          "src": asset->url,
+          "blurDataURL": asset->metadata.lqip,
+          "height": asset->metadata.dimensions.height,
+          "width": asset->metadata.dimensions.width,
+        },
+        description,
+      }
+    }
+  }
+`;
+
+const pickOptionGameQuery = groq`
+  {
+    name,
+    customName,
+    question,
+    rotateOptions,
+    options[]{
+      text,
+      isCorrect,
+    }
+  }
+`;
 
 export async function getHomePage() {
   const homePage = await client.fetch(
@@ -107,19 +187,7 @@ export async function getStatisticsCards() {
 
 export async function getPickImageGames() {
   const pickImageGames = await client.fetch<PickImageGameData[]>(
-    groq`*[_type == "pickImageGame"]{
-      name,
-      question,
-      hintContent {
-        hint
-      },
-      options[]{
-        "imageSrc": src.asset->url,
-        alt,
-        isCorrect,
-        reason,
-      },
-    }`,
+    groq`*[_type == "pickImageGame"]${pickImageGameQuery}`,
   );
 
   return pickImageGames;
@@ -127,14 +195,7 @@ export async function getPickImageGames() {
 
 export async function getPickOptionGames() {
   const pickOptionGames = await client.fetch<PickOptionGameData[]>(
-    groq`*[_type == "pickOptionGame"]{
-      name,
-      question,
-      options[]{
-        text,
-        isCorrect,
-      }
-    }`,
+    groq`*[_type == "pickOptionGame"]${pickOptionGameQuery}`,
   );
 
   return pickOptionGames;
@@ -142,50 +203,7 @@ export async function getPickOptionGames() {
 
 export async function getPlainData() {
   const plainData = await client.fetch<PlainData[]>(
-    groq`*[_type == "plain"]{
-      name,
-      text,
-      textAlign,
-      caption,
-      subText,
-      subContent {
-        type,
-        "polaroids": reference[]->{
-          _id,
-          caption,
-          captionStyle,
-          image,
-          description,
-          imageAlignment
-        },
-        "polaroid": singleReference->{
-          _id,
-          caption,
-          captionStyle,
-          image,
-          description,
-          imageAlignment
-        },
-        "data": singleReference->{
-          name,
-          text,
-          textAlign,
-          caption,
-          subText,
-          subContent
-        },
-        "postcard": singleReference->{
-          "alt": image.alt,
-          "image": image{
-            "src": asset->url,
-            "blurDataURL": asset->metadata.lqip,
-            "height": asset->metadata.dimensions.height,
-            "width": asset->metadata.dimensions.width,
-          },
-          description,
-        }
-      }
-    }`,
+    groq`*[_type == "plain"]${plainDataQuery}`,
   );
 
   return plainData;
@@ -228,4 +246,23 @@ export async function getSounds() {
   );
 
   return sounds;
+}
+
+export async function getStoryComposition() {
+  const storyComposition = await client.fetch<StoryCompositionData>(
+    groq`*[_type == "storyComposition"][0]{
+      title,
+      description,
+      contentItems[]->{
+        "type": _type,
+        "data": select(
+          _type == "pickImageGame" => ${pickImageGameQuery},
+          _type == "plain" => ${plainDataQuery},
+          _type == "pickOptionGame" => ${pickOptionGameQuery}
+        )
+      }
+    }`,
+  );
+
+  return storyComposition;
 }
