@@ -35,7 +35,7 @@ interface PickTheOptionOptionProps {
   disabled: boolean;
   onClick: () => void;
 }
-export function PickTheOptionOption(props: PickTheOptionOptionProps) {
+function PickTheOptionOption(props: PickTheOptionOptionProps) {
   return (
     <button
       disabled={props.disabled}

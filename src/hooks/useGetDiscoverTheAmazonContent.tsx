@@ -46,7 +46,6 @@ import backgroundHouse13 from "@/assets/activities/13-background-house.png";
 import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
 import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
 import manOnBoat from "@/assets/activities/man-on-boat.png";
-import monkeys31 from "@/assets/activities/31-monkeys.jpg";
 
 import backgroundForest33 from "@/assets/activities/33-background-forest.jpg";
 
@@ -191,6 +190,10 @@ export const sectionNames = [
   {
     title: "is-this-actor-deforesting-the-amazon",
     value: "is-this-actor-deforesting-the-amazon" as const,
+  },
+  {
+    title: "is-this-actor-deforesting-the-amazon-2",
+    value: "is-this-actor-deforesting-the-amazon-2" as const,
   },
   { title: "memory-game-pre", value: "memory-game-pre" as const },
   { title: "memory-game", value: "memory-game" as const },
@@ -933,61 +936,6 @@ export function useGetDiscoverTheAmazonContent() {
     },
     {
       type: "regular",
-      name: "three-most-important-rainforests",
-      background: null,
-      defaultHintContent: {
-        hint: "Rainforest Foundation US works in the Amazon",
-      },
-      content: {
-        type: "locate-in-map",
-        data: {
-          question: "The three most important rainforests are:",
-          center: [0, 20],
-          scale: 125,
-          highlightedCountries: [
-            "VEN",
-            "COL",
-            "BRA",
-            "PER",
-            "ECU",
-            "GUY",
-            "SUR",
-            "CMR",
-            "GAB",
-            "COG",
-            "COD",
-            "CAF",
-            "IDN",
-          ],
-          secondaryCountries: ["USA"],
-          shouldApplyLGVignette: false,
-          markers: [
-            {
-              position: [-110, 46],
-              text: "United States",
-              orientation: "top-right",
-            },
-            {
-              position: [-81, -1],
-              text: "The Amazon Basin, in South America",
-              orientation: "left",
-            },
-            {
-              position: [10, 7],
-              text: "The Congo Basin, in Subsaharan Africa",
-              orientation: "top-left",
-            },
-            {
-              position: [105, -6],
-              text: "The Indonesian Archipelago",
-              orientation: "bottom-left",
-            },
-          ],
-        },
-      },
-    },
-    {
-      type: "regular",
       name: "statistics-about-biodiversity-cards",
       content: { type: "statistics", data: { cards: statisticsCards ?? [] } },
     },
@@ -997,78 +945,7 @@ export function useGetDiscoverTheAmazonContent() {
       background: secondBackground,
       content: { type: "find-the-animals", data: { test: ["some string"] } },
     },
-    {
-      type: "wavy",
-      name: "rainforests-are-important-quiz",
-      content: {
-        type: "pager",
-        data: [
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "Plants and animals are interconnected. They have unique roles in ecosystems, and they need each other to survive",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "With more biodiversity, ecosystems are more resilient. They’re stronger in the face of changes like <b>deforestation</b>.",
-              options: [
-                { text: "True", isCorrect: false },
-                { text: "False", isCorrect: true },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "Plants and animals give people <b>necessary resources</b> like food, clean air, and clean water..",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "The rainforest is being cut down. This deforestation is making biodiversity disappear..",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-        ],
-      },
-      illustrations: {
-        topLeft: (
-          <TopLeftBushIllustration
-            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
-          />
-        ),
-        bottomRight: (
-          <ChameleonInABushIllustration
-            className={clsx(
-              bottomRightIllustrationStyles,
-              "-bottom-32 -right-10",
-            )}
-          />
-        ),
-      },
-    },
+
     {
       type: "regular",
       name: "memory-game-pre",
@@ -1102,6 +979,7 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "memory-game",
       background: memoryGame.backgroundImage,
+      className: "min-h-min py-0 pt-0 pb-8",
       content: {
         type: "memory-game",
         data: {
@@ -1176,19 +1054,6 @@ export function useGetDiscoverTheAmazonContent() {
     {
       type: "regular",
       name: "rainforests-keep-our-planet-healthy",
-      background: backgroundAmazon,
-      content: {
-        type: "plain",
-        data: { wideness: "lg", textAlign: "center", text: "" },
-      },
-      subContent: {
-        type: "postcard",
-        postcard: { image: monkeys31, alt: "Monkeys" },
-      },
-    },
-    {
-      type: "regular",
-      name: "rainforests-keep-our-planet-healthy",
       background: mapBackground,
       layout: "space-between",
       content: {
@@ -1198,6 +1063,78 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
       subContent: { type: "illustration", kind: "sad-sloth" },
+    },
+    {
+      type: "wavy",
+      name: "rainforests-are-important-quiz",
+      content: {
+        type: "pager",
+        data: [
+          {
+            type: "pick-the-option",
+            data: {
+              wrap: true,
+              question:
+                "Plants and animals are interconnected. They have unique roles in ecosystems, and they need each other to survive",
+              options: [
+                { text: "True", isCorrect: true },
+                { text: "False", isCorrect: false },
+              ],
+            },
+          },
+          {
+            type: "pick-the-option",
+            data: {
+              wrap: true,
+              question:
+                "With more biodiversity, ecosystems are more resilient. They’re stronger in the face of changes like <b>deforestation</b>.",
+              options: [
+                { text: "True", isCorrect: false },
+                { text: "False", isCorrect: true },
+              ],
+            },
+          },
+          {
+            type: "pick-the-option",
+            data: {
+              wrap: true,
+              question:
+                "Plants and animals give people <b>necessary resources</b> like food, clean air, and clean water..",
+              options: [
+                { text: "True", isCorrect: true },
+                { text: "False", isCorrect: false },
+              ],
+            },
+          },
+          {
+            type: "pick-the-option",
+            data: {
+              wrap: true,
+              question:
+                "The rainforest is being cut down. This deforestation is making biodiversity disappear..",
+              options: [
+                { text: "True", isCorrect: true },
+                { text: "False", isCorrect: false },
+              ],
+            },
+          },
+        ],
+      },
+      illustrations: {
+        topLeft: (
+          <TopLeftBushIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <ChameleonInABushIllustration
+            className={clsx(
+              bottomRightIllustrationStyles,
+              "-bottom-32 -right-10",
+            )}
+          />
+        ),
+      },
     },
     {
       type: "regular",
@@ -1376,27 +1313,69 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
+
+    {
+      type: "regular",
+      name: "rainforests-are-exactly-what-you-d-think",
+      background: secondBackground,
+      content: {
+        type: "fill-in-the-blank",
+        data: {
+          preText: "Rainforest are exactly what you’d think!",
+          question: "Very <blank /> forest biomes!",
+          numberToOptions: {
+            0: {
+              options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
+              correctOptionPosition: 3,
+            },
+          },
+        },
+      },
+    },
     {
       type: "wavy",
       name: "is-this-actor-deforesting-the-amazon",
-      preContent: { type: "emoji", emoji: "thinking-face" },
       content: {
-        type: "pager",
-        noSloth: true,
-        data: [
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question: "Is this actor deforesting the<br/>Amazon?",
-              postCardContent: { image: manOnBoat, alt: "Man on boat" },
-              options: [
-                { text: "True", isCorrect: false },
-                { text: "False", isCorrect: true },
-              ],
-            },
-          },
-        ],
+        type: "plain",
+        data: {
+          text: "Is this actor deforesting the<br/>Amazon?",
+        },
+      },
+      subContent: {
+        type: "postcard",
+        postcard: {
+          image: manOnBoat,
+          alt: "Man on boat",
+        },
+      },
+      illustrations: {
+        topLeft: (
+          <HangingSlothIllustration
+            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+          />
+        ),
+        bottomRight: (
+          <RightLeavesWithParrotIllustration
+            className={clsx(bottomRightIllustrationStyles, "-right-10")}
+          />
+        ),
+      },
+    },
+    {
+      type: "regular",
+      name: "is-this-actor-deforesting-the-amazon-2",
+      content: {
+        type: "plain",
+        data: {
+          text: "Is this actor deforesting the<br/>Amazon 2?",
+        },
+      },
+      subContent: {
+        type: "postcard",
+        postcard: {
+          image: manOnBoat,
+          alt: "Man on boat",
+        },
       },
       illustrations: {
         topLeft: (

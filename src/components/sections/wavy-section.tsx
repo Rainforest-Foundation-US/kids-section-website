@@ -2,7 +2,7 @@ import { WavySeparator } from "../illustrations/activities-illustrations";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ActivitySection } from "../sections";
 
-export interface WavySectionProps {
+interface WavySectionProps {
   name?: SectionName;
   children?: React.ReactNode;
 }

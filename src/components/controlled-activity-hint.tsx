@@ -4,7 +4,7 @@ import { ActivityHint, ActivityHintStatus } from "./activity-hint";
 import { SectionNames } from "./content/content";
 
 export type HintData = { hint: string; status: ActivityHintStatus };
-export type HintAtomValue = Record<SectionNames, HintData>;
+type HintAtomValue = Record<SectionNames, HintData>;
 
 export const hintAtom = atom<Partial<HintAtomValue>>({
   "rainforests-are-exactly-what-you-d-think": {

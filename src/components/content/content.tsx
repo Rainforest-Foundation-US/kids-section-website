@@ -172,6 +172,7 @@ export type SectionWithContent =
       align?: "left" | "center" | "right";
       layout?: "space-between" | "packed";
       textColorStyle?: "dark" | "light" | "light-shadows";
+      className?: string;
       background?: string | StaticImageData | null;
       backgroundOpacity?: number;
       backgroundColor?: string;
@@ -439,7 +440,7 @@ function ContentSection(props: {
           <ActivitySectionDivider variant="dark" position="bottom" />
         )}
 
-        <SectionContent>
+        <SectionContent className={props.section.className}>
           {props.section.defaultHintContent?.hint ? (
             <HintContent
               name={props.name}
@@ -501,6 +502,7 @@ function ContentSection(props: {
             backgroundImage={props.section.background}
             backgroundOpacity={props.section.backgroundOpacity}
             backgroundColor={props.section.backgroundColor}
+            className={props.section.className}
           >
             {children}
           </RegularSection>

@@ -13,6 +13,7 @@ interface RegularSectionProps {
   fullScreen?: boolean;
   textColorStyle?: "dark" | "light" | "light-shadows";
   name?: SectionName;
+  className?: string;
 }
 export function RegularSection(props: RegularSectionProps) {
   return (
@@ -25,6 +26,7 @@ export function RegularSection(props: RegularSectionProps) {
         props.textColorStyle === "light-shadows" &&
           "text-neutral-100 [text-shadow:1px_1px_5px_black]",
         props.fullScreen && "max-h-[unset] min-h-screen",
+        props.className,
       )}
       style={{ backgroundColor: props.backgroundColor }}
     >
