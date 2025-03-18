@@ -996,7 +996,6 @@ export function useGetDiscoverTheAmazonContent() {
     {
       type: "wavy",
       name: "what-happens-to-animals-when-rainforest-disappears",
-      preContent: { type: "emoji", emoji: "thinking-face" },
       content: {
         type: "plain",
         data: {
@@ -1024,9 +1023,9 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "rainforests-matter",
       content: {
-        type: "plain",
+        type: "click-the-animals",
         data: {
-          text: "That's why my friends and I—all the plants and animals of the rainforest—need people to keep our home safe!",
+          defaultText: "Click on different animals to see what they say",
         },
       },
       illustrations: {
