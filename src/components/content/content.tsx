@@ -68,6 +68,10 @@ import { HintContent } from "../hint-content";
 import { useAtomValue } from "jotai";
 import { congratulationsAtom } from "../congratulations";
 import { FlipIconReminder } from "../flip-icon-reminder";
+import {
+  ClickTheAnimals,
+  ClickTheAnimalsActivityOptions,
+} from "./activities/click-the-animals";
 
 type PreContent = { type: "sloth" } | { type: "emoji"; emoji: "thinking-face" };
 
@@ -111,6 +115,11 @@ type FindAnimalsGameActivityData = {
   data: FindTheAnimalsGameActivityOptions;
 };
 
+type ClickTheAnimalsActivityData = {
+  type: "click-the-animals";
+  data: ClickTheAnimalsActivityOptions;
+};
+
 type StatisticsActivityData = {
   type: "statistics";
   data: { cards: StatisticsCard[] };
@@ -125,7 +134,8 @@ type SingleContent =
   | MemoryGameActivityData
   | FindAnimalsGameActivityData
   | SelectCountriesWithRainforestActivityData
-  | StatisticsActivityData;
+  | StatisticsActivityData
+  | ClickTheAnimalsActivityData;
 
 type PagerData = { type: "pager"; data: SingleContent[]; noSloth?: boolean };
 
@@ -299,6 +309,10 @@ function PolymorphicContent({
 
   if (content.type === "find-the-animals") {
     return <FindTheAnimalsGame />;
+  }
+
+  if (content.type === "click-the-animals") {
+    return <ClickTheAnimals {...content.data} />;
   }
 
   if (content.type === "pager") {

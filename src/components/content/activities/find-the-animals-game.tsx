@@ -146,6 +146,7 @@ function getOffset(rect: DOMRect, tooltipPlace: PlacesType) {
 export function FindTheAnimalsGame() {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const tooltipRef = React.useRef<TooltipRefProps>(null);
+  const isLoadedRef = React.useRef(false);
   const animalElementsRef = React.useRef<{
     [key: string]: {
       element: HTMLElement;
@@ -186,7 +187,7 @@ export function FindTheAnimalsGame() {
         };
 
         // Update sloth tooltip position
-        if (animal.id === "sloth") {
+        if (animal.id === "sloth" && !isLoadedRef.current) {
           tooltipRef.current?.open({
             position: {
               x: rect.left + offset.x + iframeRect.left,
@@ -195,6 +196,7 @@ export function FindTheAnimalsGame() {
             place: animal.tooltipPlace,
             content: "How many of my rainforest friends can you find?",
           });
+          isLoadedRef.current = true;
         }
       },
     );
