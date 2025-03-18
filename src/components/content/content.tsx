@@ -5,10 +5,8 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import {
   RoundSlothIllustration,
-  ThinkingFaceEmoji,
   WavySeparator,
 } from "../illustrations/activities-illustrations";
-import { Badge } from "../badge";
 import { GoToButton } from "../buttons";
 import {
   ControlledActivityHint,
@@ -73,7 +71,7 @@ import {
   ClickTheAnimalsActivityOptions,
 } from "./activities/click-the-animals";
 
-type PreContent = { type: "sloth" } | { type: "emoji"; emoji: "thinking-face" };
+type PreContent = { type: "sloth" };
 
 type PlainContentData = {
   type: "plain";
@@ -214,14 +212,6 @@ function PolymorphicPreContent({ preContent }: { preContent: PreContent }) {
       <div className="mb-2">
         <RoundSlothIllustration />
       </div>
-    );
-  }
-
-  if (preContent.type === "emoji" && preContent.emoji === "thinking-face") {
-    return (
-      <Badge>
-        <ThinkingFaceEmoji />
-      </Badge>
     );
   }
 

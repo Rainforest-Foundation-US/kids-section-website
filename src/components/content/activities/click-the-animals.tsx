@@ -55,7 +55,9 @@ export function ClickTheAnimals({
 }: ClickTheAnimalsActivityOptions) {
   return (
     <div>
-      <div className="text-center text-4xl">{defaultText}</div>
+      <div className="text-xl font-medium leading-snug text-primary-600">
+        {defaultText}
+      </div>
       {animals.map((animal) => (
         <Tooltip
           key={animal.id}

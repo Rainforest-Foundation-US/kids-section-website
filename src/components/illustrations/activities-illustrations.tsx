@@ -31,7 +31,6 @@ export function WavySeparator(props: WavySeparatorProps) {
   );
 }
 
-export * from "./ThinkingFaceEmoji";
 export * from "./LeavesAndBushes";
 export * from "./USMapIllustration";
 export * from "./SadSlothIllustration";

@@ -10,7 +10,6 @@ import {
 import { SectionWithContent } from "@/components/content/content";
 
 import secondBackground from "@/assets/activities/2-background.png";
-import mapBackground from "@/assets/activities/3-map-background.png";
 
 import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
 import backgroundAmazon from "@/assets/activities/background-amazon.png";
@@ -421,7 +420,6 @@ export function useGetDiscoverTheAmazonContent() {
     {
       type: "wavy",
       name: "why-no-rainforests-in-antarctica",
-      preContent: { type: "emoji", emoji: "thinking-face" },
       content: {
         type: "plain",
         data: {
@@ -615,6 +613,7 @@ export function useGetDiscoverTheAmazonContent() {
             "COD",
             "CAF",
             "IDN",
+            "FRA",
           ],
         },
       },
@@ -647,6 +646,7 @@ export function useGetDiscoverTheAmazonContent() {
             "COD",
             "CAF",
             "IDN",
+            "FRA",
           ],
         },
       },
@@ -1052,8 +1052,7 @@ export function useGetDiscoverTheAmazonContent() {
     {
       type: "regular",
       name: "rainforests-keep-our-planet-healthy",
-      background: mapBackground,
-      layout: "space-between",
+      className: "min-h-80",
       content: {
         type: "plain",
         data: {
@@ -1270,7 +1269,6 @@ export function useGetDiscoverTheAmazonContent() {
     {
       type: "wavy",
       name: "deforestation-effects",
-      preContent: { type: "emoji", emoji: "thinking-face" },
       content: {
         type: "plain",
         data: {
@@ -1311,27 +1309,8 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-
     {
       type: "regular",
-      name: "rainforests-are-exactly-what-you-d-think",
-      background: secondBackground,
-      content: {
-        type: "fill-in-the-blank",
-        data: {
-          preText: "Rainforest are exactly what you’d think!",
-          question: "Very <blank /> forest biomes!",
-          numberToOptions: {
-            0: {
-              options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
-              correctOptionPosition: 3,
-            },
-          },
-        },
-      },
-    },
-    {
-      type: "wavy",
       name: "is-this-actor-deforesting-the-amazon",
       content: {
         type: "plain",
@@ -1360,7 +1339,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
     },
     {
-      type: "regular",
+      type: "wavy",
       name: "is-this-actor-deforesting-the-amazon-2",
       content: {
         type: "plain",

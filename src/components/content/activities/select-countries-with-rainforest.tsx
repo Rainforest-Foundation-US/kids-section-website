@@ -43,6 +43,7 @@ const COUNTRIES_WITH_AMAZON_RAINFOREST = [
   "PER",
   "ECU",
   "VEN",
+  "FRA",
 ] as const;
 
 type CountryCode = (typeof COUNTRIES_WITH_AMAZON_RAINFOREST)[number];
@@ -65,6 +66,7 @@ const COUNTRY_MARKERS: Record<CountryCode, Marker> = {
   PER: { position: [-75, -9.2], tooltipText: "Peru" },
   ECU: { position: [-78, -1.8], tooltipText: "Ecuador" },
   VEN: { position: [-66.5, 6.5], tooltipText: "Venezuela" },
+  FRA: { position: [2.2, 46.2], tooltipText: "French Guiana" },
 };
 
 type SelectCountriesWithRainforestActivityProps = React.PropsWithChildren<

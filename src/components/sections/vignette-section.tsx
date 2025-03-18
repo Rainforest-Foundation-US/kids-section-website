@@ -76,14 +76,14 @@ export function VignetteSection({
           direction="left"
           onClick={goToPrevSlide}
           disabled={false}
-          className="absolute bottom-12 left-1/3 z-20 opacity-80"
+          className="absolute bottom-12 left-1/3 z-20"
         />
         {/* Right Arrow Navigation */}
         <GoToButton
           direction="right"
           onClick={goToNextSlide}
           disabled={false}
-          className="absolute bottom-12 right-1/3 z-20 opacity-80"
+          className="absolute bottom-12 right-1/3 z-20"
         />
 
         {slides.map((slide, index) => (
