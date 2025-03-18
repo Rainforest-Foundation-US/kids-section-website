@@ -911,6 +911,12 @@ export function useGetDiscoverTheAmazonContent() {
     },
     {
       type: "regular",
+      name: "find-the-animals",
+      background: secondBackground,
+      content: { type: "find-the-animals", data: { test: ["some string"] } },
+    },
+    {
+      type: "regular",
       name: "statistics-about-biodiversity",
       content: {
         type: "plain",
@@ -939,13 +945,6 @@ export function useGetDiscoverTheAmazonContent() {
       name: "statistics-about-biodiversity-cards",
       content: { type: "statistics", data: { cards: statisticsCards ?? [] } },
     },
-    {
-      type: "regular",
-      name: "find-the-animals",
-      background: secondBackground,
-      content: { type: "find-the-animals", data: { test: ["some string"] } },
-    },
-
     {
       type: "regular",
       name: "memory-game-pre",

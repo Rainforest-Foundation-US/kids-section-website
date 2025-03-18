@@ -60,6 +60,14 @@
       "react": "^16.8.0 || 17.x || 18.x || 19.x",
       "react-dom": "^16.8.0 || 17.x || 18.x || 19.x"
     },
+    "d3-interpolate": {
+      "d3-color": "^3.1.0"
+    },
+    "d3-transition": {
+      "d3-color": "^3.1.0"
+    },
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@react-spring/web": {
       "react": "^16.8.0 || 17.x || 18.x || 19.x",
       "react-dom": "^16.8.0 || 17.x || 18.x || 19.x"
