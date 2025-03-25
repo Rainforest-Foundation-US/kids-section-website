@@ -123,7 +123,7 @@ export function VignetteSection({
             <div className="relative z-20 flex h-full flex-col items-center justify-center p-10 text-center">
               <p
                 className={clsx(
-                  "break-all text-7xl font-medium text-neutral-100 transition-all duration-700",
+                  "break-all text-7xl font-semibold text-neutral-100 transition-all duration-700",
                   index === activeIndex
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0",
@@ -134,7 +134,7 @@ export function VignetteSection({
 
               <p
                 className={clsx(
-                  "my-2 text-base text-secondary-100 transition-all duration-700",
+                  "my-2 text-base font-semibold text-neutral-100 transition-all duration-700",
                   index === activeIndex
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0",

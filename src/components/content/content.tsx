@@ -322,13 +322,19 @@ function PolymorphicContent({
   return null;
 }
 
-function PolymorphicSubContent({ subContent }: { subContent: SubContent }) {
+function PolymorphicSubContent({
+  subContent,
+  className,
+}: {
+  subContent: SubContent;
+  className?: string;
+}) {
   const [isFlipped, setIsFlipped] = useState(-1);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   if (subContent.type === "postcard") {
     return (
-      <div className="relative mt-12">
+      <div className={clsx("relative mt-12", className)}>
         <div
           onMouseEnter={() => setIsMouseOver(true)}
           onMouseLeave={() => setIsMouseOver(false)}
@@ -579,6 +585,7 @@ export function ContentPager(props: {
   contentList: PagerContent[];
   initialIndex?: number;
   noSloth?: boolean;
+  mainContentClassName?: string;
 }) {
   const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
@@ -627,7 +634,7 @@ export function ContentPager(props: {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
-            className="mb-4"
+            className={clsx("mb-4 h-[30vh]", props.mainContentClassName)}
           >
             <PolymorphicContent
               name={props.name}
@@ -637,36 +644,34 @@ export function ContentPager(props: {
 
             {content.subContent &&
               toArrayMaybe(content.subContent)?.map((subContent, i) => (
-                <PolymorphicSubContent key={i} subContent={subContent} />
+                <PolymorphicSubContent
+                  key={i}
+                  subContent={subContent}
+                  className="ml-10 w-11/12"
+                />
               ))}
           </motion.div>
         </AnimatePresence>
 
-        <div
-          className={clsx(
-            "flex flex-row space-x-2",
-            content.subContent && "items-center justify-center",
-          )}
-        >
-          {index > 0 && (
-            <GoToButton
-              className="bg-neutral-100"
-              key="left"
-              direction="left"
-              disabled={false}
-              onClick={goBack}
-            />
-          )}
+        {index > 0 && (
+          <GoToButton
+            className="absolute right-[calc(50%+26rem)] top-[40%]"
+            key="left"
+            direction="left"
+            disabled={false}
+            onClick={goBack}
+          />
+        )}
 
-          {!isLastAnswer && (
-            <GoToButton
-              key="right"
-              direction="right"
-              disabled={false}
-              onClick={goNext}
-            />
-          )}
-        </div>
+        {!isLastAnswer && (
+          <GoToButton
+            className="absolute left-[calc(50%+26rem)] top-[40%]"
+            key="right"
+            direction="right"
+            disabled={false}
+            onClick={goNext}
+          />
+        )}
       </div>
     </>
   );

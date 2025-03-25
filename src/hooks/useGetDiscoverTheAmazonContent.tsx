@@ -1310,7 +1310,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
     },
     {
-      type: "regular",
+      type: "wavy",
       name: "is-this-actor-deforesting-the-amazon",
       content: {
         type: "plain",
@@ -1339,7 +1339,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
     },
     {
-      type: "wavy",
+      type: "regular",
       name: "is-this-actor-deforesting-the-amazon-2",
       content: {
         type: "plain",
@@ -1355,13 +1355,13 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
       illustrations: {
-        topLeft: (
-          <HangingSlothIllustration
-            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+        bottomLeft: (
+          <MonkeyInABushIllustration
+            className={clsx(bottomLeftIllustrationStyles)}
           />
         ),
         bottomRight: (
-          <RightLeavesWithParrotIllustration
+          <RightParrotAndLemurIllustration
             className={clsx(bottomRightIllustrationStyles, "-right-10")}
           />
         ),

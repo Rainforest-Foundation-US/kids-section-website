@@ -194,7 +194,8 @@ export function FindTheAnimalsGame() {
               y: rect.top + offset.y + iframeRect.top,
             },
             place: animal.tooltipPlace,
-            content: "How many of my rainforest friends can you find?",
+            content:
+              "Can you spot all 20 of my friends? Click on each animal to reveal its name and mark it as found!",
           });
           isLoadedRef.current = true;
         }

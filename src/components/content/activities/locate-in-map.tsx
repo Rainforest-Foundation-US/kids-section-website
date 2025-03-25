@@ -1,8 +1,6 @@
 import clsx from "@/utils/clsx";
-import {
-  MapWithMarkers,
-  MapWithMarkersOptions,
-} from "../maps/map-with-markers";
+import { MapWithMarkers } from "../maps/map-with-markers";
+import { MapWithMarkersOptions } from "../maps/map-with-markers-component";
 import {
   PolymorphicIllustration,
   PolymorphicIllustrationOptions,

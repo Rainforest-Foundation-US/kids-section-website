@@ -104,7 +104,11 @@ export default function StoriesRoute() {
             {/* Right leaves illustration */}
             <RightLeavesIllustration className={rightIllustrationStyles} />
 
-            <ContentPager name="stories" contentList={pageContent} />
+            <ContentPager
+              name="stories"
+              contentList={pageContent}
+              mainContentClassName="h-[50vh]"
+            />
           </SectionContent>
         </RegularSection>
       </main>

@@ -2,11 +2,11 @@ import React from "react";
 import difference from "lodash/difference";
 import random from "lodash/random";
 
+import { MapWithMarkers } from "../maps/map-with-markers";
 import {
-  MapWithMarkers,
-  MapWithMarkersOptions,
   Marker,
-} from "../maps/map-with-markers";
+  MapWithMarkersOptions,
+} from "../maps/map-with-markers-component";
 import { PolymorphicIllustrationOptions } from "../polymorphic-illustration";
 import { CommonActivityOptions } from "./common";
 import { usePlaySounds } from "@/hooks/usePlaySound";
