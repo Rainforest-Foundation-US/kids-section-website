@@ -586,6 +586,8 @@ export function ContentPager(props: {
   initialIndex?: number;
   noSloth?: boolean;
   mainContentClassName?: string;
+  leftArrowClassName?: string;
+  rightArrowClassName?: string;
 }) {
   const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
@@ -655,7 +657,10 @@ export function ContentPager(props: {
 
         {index > 0 && (
           <GoToButton
-            className="absolute right-[calc(50%+26rem)] top-[40%]"
+            className={clsx(
+              "absolute right-[calc(50%+26rem)] top-[40%]",
+              props.leftArrowClassName,
+            )}
             key="left"
             direction="left"
             disabled={false}
@@ -665,7 +670,10 @@ export function ContentPager(props: {
 
         {!isLastAnswer && (
           <GoToButton
-            className="absolute left-[calc(50%+26rem)] top-[40%]"
+            className={clsx(
+              "absolute left-[calc(50%+26rem)] top-[40%]",
+              props.rightArrowClassName,
+            )}
             key="right"
             direction="right"
             disabled={false}

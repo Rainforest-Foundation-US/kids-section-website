@@ -108,6 +108,8 @@ export default function StoriesRoute() {
               name="stories"
               contentList={pageContent}
               mainContentClassName="h-[50vh]"
+              leftArrowClassName="top-1/3"
+              rightArrowClassName="top-1/3"
             />
           </SectionContent>
         </RegularSection>
