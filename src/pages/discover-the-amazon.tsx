@@ -15,13 +15,13 @@ export default function DiscoverTheAmazonRoute() {
 
   React.useEffect(() => {
     // Check if we're in production environment
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.VERCEL_ENV?.toLowerCase() === "production") {
       router.replace("/under-construction");
     }
   }, [router]);
 
   // If we're in production, don't render anything while redirecting
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.VERCEL_ENV?.toLowerCase() === "production") {
     return null;
   }
 
