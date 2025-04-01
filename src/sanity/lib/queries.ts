@@ -7,6 +7,7 @@ import { PickImageGameData } from "../schemaTypes/pickImageGame";
 import { Navigation } from "../schemaTypes/navigation";
 import { GameSounds } from "../schemaTypes/sounds";
 import { StoryCompositionData } from "../schemaTypes/storyComposition";
+import { PickOptionMultiPageGameData } from "../schemaTypes/pickOptionMultiPageGame";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -85,6 +86,16 @@ const pickOptionGameQuery = groq`
       isCorrect,
       hintText,
     }
+  }
+`;
+
+const pickOptionMultiPageGameQuery = groq`
+  {
+    contentType,
+    name,
+    customName,
+    title,
+    gamePages[]->${pickOptionGameQuery}
   }
 `;
 
@@ -190,6 +201,14 @@ export async function getPickImageGames() {
   );
 
   return pickImageGames;
+}
+
+export async function getPickOptionMultiPageGames() {
+  const pickOptionMultiPageGames = await client.fetch<
+    PickOptionMultiPageGameData[]
+  >(groq`*[_type == "pickOptionMultiPageGame"]${pickOptionMultiPageGameQuery}`);
+
+  return pickOptionMultiPageGames;
 }
 
 export async function getFaqs() {

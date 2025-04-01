@@ -5,6 +5,7 @@ import {
   getVignettes,
   getStatisticsCards,
   getMemoryGame,
+  getPickOptionMultiPageGames,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -100,6 +101,7 @@ import {
 } from "@/styles/illustration-styles";
 import clsx from "@/utils/clsx";
 import { VignetteSlide } from "@/components/sections/vignette-section";
+import { PickOptionMultiPageGameData } from "@/sanity/schemaTypes/pickOptionMultiPageGame";
 
 // TODOK: use this type as a name of each schema type
 export const sectionNames = [
@@ -239,6 +241,8 @@ export function useGetDiscoverTheAmazonContent() {
     React.useState<StatisticsCard[]>();
   const [pickImageGames, setPickImageGames] =
     React.useState<PickImageGameData[]>();
+  const [pickOptionMultiPageGames, setPickOptionMultiPageGames] =
+    React.useState<PickOptionMultiPageGameData[]>();
 
   React.useEffect(() => {
     async function getData() {
@@ -246,11 +250,14 @@ export function useGetDiscoverTheAmazonContent() {
       const memoryGameFromServer = await getMemoryGame();
       const statisticsCardsFromServer = await getStatisticsCards();
       const pickImageGamesFromServer = await getPickImageGames();
+      const pickOptionMultiPageGamesFromServer =
+        await getPickOptionMultiPageGames();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
       setStatisticsCards(statisticsCardsFromServer);
       setPickImageGames(pickImageGamesFromServer);
+      setPickOptionMultiPageGames(pickOptionMultiPageGamesFromServer);
     }
 
     getData();
@@ -262,6 +269,16 @@ export function useGetDiscoverTheAmazonContent() {
   const rainforestUnderThreatPickImageGame = pickImageGames?.find(
     (pickImageGame) => pickImageGame.name === "rainforests-under-threat",
   );
+  const whatAreRainforestsQuizPickOptionMultiPageGame =
+    pickOptionMultiPageGames?.find(
+      (pickOptionMultiPageGame) =>
+        pickOptionMultiPageGame.name === "what-are-rainforests-quiz",
+    );
+  const rainforestsAreImportantQuizPickOptionMultiPageGame =
+    pickOptionMultiPageGames?.find(
+      (pickOptionMultiPageGame) =>
+        pickOptionMultiPageGame.name === "rainforests-are-important-quiz",
+    );
 
   const discoverTheAmazonSections: (SectionWithContent | undefined)[] = [
     {
@@ -513,7 +530,6 @@ export function useGetDiscoverTheAmazonContent() {
         ],
       },
     },
-
     {
       type: "regular",
       name: "the-amazon-is-the-biggest-tropical-rainforest",
@@ -754,65 +770,20 @@ export function useGetDiscoverTheAmazonContent() {
         ],
       },
     },
-    {
+    whatAreRainforestsQuizPickOptionMultiPageGame && {
       type: "wavy",
       name: "what-are-rainforests-quiz",
       content: {
         type: "pager",
-        data: [
-          {
+        data: whatAreRainforestsQuizPickOptionMultiPageGame.gamePages.map(
+          (gamePage) => ({
             type: "pick-the-option",
             data: {
-              question: "Rainforests are forests that:",
-              options: [
-                {
-                  text: "Stay green all year round, and get lots of rain!",
-                  isCorrect: true,
-                },
-                {
-                  text: "Do not have a large variety of plants and animals.",
-                  hintText:
-                    "Rainforests have a large variety of plants and animals.",
-                  isCorrect: false,
-                },
-                { text: "Exists on every continent.", isCorrect: false },
-              ],
+              question: gamePage.question,
+              options: gamePage.options,
             },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              question: "What is the largest rainforest in the world?",
-              options: [
-                { text: "The Amazon Rainforest", isCorrect: true },
-                { text: "The Congo Basin", isCorrect: false },
-                { text: "The Indonesian Archipelago", isCorrect: false },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              question:
-                "Along with ecosystems, cities, towns, and natural ecosystems, the Amazon is home 100s of indigenous communities, each with a unique culture and way of life.",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              question:
-                "The Amazon is the largest rainforest in the world. It is home to plants and animals, cities and towns, and almost 400 unique indigenous communities!",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-        ],
+          }),
+        ),
       },
       illustrations: {
         topLeft: (
@@ -1061,61 +1032,21 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: { type: "illustration", kind: "sad-sloth" },
     },
-    {
+    rainforestsAreImportantQuizPickOptionMultiPageGame && {
       type: "wavy",
       name: "rainforests-are-important-quiz",
       content: {
         type: "pager",
-        data: [
-          {
+        data: rainforestsAreImportantQuizPickOptionMultiPageGame?.gamePages.map(
+          (gamePage) => ({
             type: "pick-the-option",
             data: {
               wrap: true,
-              question:
-                "Plants and animals are interconnected. They have unique roles in ecosystems, and they need each other to survive",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
+              question: gamePage.question,
+              options: gamePage.options,
             },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "With more biodiversity, ecosystems are more resilient. They’re stronger in the face of changes like <b>deforestation</b>.",
-              options: [
-                { text: "True", isCorrect: false },
-                { text: "False", isCorrect: true },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "Plants and animals give people <b>necessary resources</b> like food, clean air, and clean water..",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-          {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              question:
-                "The rainforest is being cut down. This deforestation is making biodiversity disappear..",
-              options: [
-                { text: "True", isCorrect: true },
-                { text: "False", isCorrect: false },
-              ],
-            },
-          },
-        ],
+          }),
+        ),
       },
       illustrations: {
         topLeft: (

@@ -1,10 +1,12 @@
 import { SectionNames } from "@/components/content/content";
+import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { PickOptionGameData } from "./pickOptionGame";
 
-export const PickOptionGameSchemaType = defineType({
-  name: "pickOptionGame",
-  title: "Pick Option Game",
+export const PickOptionMultiPageGameSchemaType = defineType({
+  name: "pickOptionMultiPageGame",
+  title: "Pick Option Multi-Page Game",
   icon: ComponentIcon,
   type: "document",
   fields: [
@@ -26,6 +28,9 @@ export const PickOptionGameSchemaType = defineType({
       name: "name",
       title: "Name",
       type: "string",
+      options: {
+        list: sectionNames,
+      },
       hidden: ({ document }) => document?.contentType === "stories",
       validation: (rule) =>
         rule.custom((value, context) => {
@@ -51,61 +56,36 @@ export const PickOptionGameSchemaType = defineType({
         }),
     }),
     defineField({
-      name: "question",
-      title: "Question",
+      name: "title",
+      title: "Title",
       type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "rotateOptions",
-      title: "Rotate Options",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
-      name: "options",
-      title: "Options",
+      name: "gamePages",
+      title: "Game Pages",
       type: "array",
       of: [
         {
-          name: "option",
-          type: "object",
-          title: "Option",
-          fields: [
-            {
-              name: "text",
-              title: "Text",
-              type: "string",
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "isCorrect",
-              title: "Is Correct",
-              type: "boolean",
-              validation: (rule) => rule.required(),
-            },
-            {
-              name: "hintText",
-              title: "Hint Text",
-              type: "string",
-            },
-          ],
+          type: "reference",
+          to: [{ type: "pickOptionGame" }],
         },
       ],
+      validation: (rule) => rule.required().min(1),
     }),
   ],
-  preview: { select: { title: "question" } },
+  preview: {
+    select: {
+      title: "title",
+      subtitle: "contentType",
+    },
+  },
 });
 
-export interface PickOptionGameData {
+export interface PickOptionMultiPageGameData {
   contentType: "aboutTheAmazon" | "stories";
   name?: SectionNames;
   customName?: string;
-  question: string;
-  rotateOptions: boolean;
-  options: {
-    isCorrect: boolean;
-    text: string;
-    hintText?: string;
-  }[];
+  title: string;
+  gamePages: PickOptionGameData[];
 }
