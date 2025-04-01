@@ -107,7 +107,7 @@ export default function StoriesRoute() {
             <ContentPager
               name="stories"
               contentList={pageContent}
-              mainContentClassName="h-[50vh]"
+              mainContentClassName="h-[50vh] overflow-y-auto overflow-x-hidden"
               leftArrowClassName="top-1/3"
               rightArrowClassName="top-1/3"
               isStories

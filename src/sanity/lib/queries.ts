@@ -8,6 +8,8 @@ import { Navigation } from "../schemaTypes/navigation";
 import { GameSounds } from "../schemaTypes/sounds";
 import { StoryCompositionData } from "../schemaTypes/storyComposition";
 import { PickOptionMultiPageGameData } from "../schemaTypes/pickOptionMultiPageGame";
+import { FillInTheBlankGameData } from "../schemaTypes/fillInTheBlankGame";
+import { FillInTheBlankMultiPageGameData } from "../schemaTypes/fillInTheBlankMultiPageGame";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -96,6 +98,37 @@ const pickOptionMultiPageGameQuery = groq`
     customName,
     title,
     gamePages[]->${pickOptionGameQuery}
+  }
+`;
+
+const fillInTheBlankGameQuery = groq`
+  {
+    name,
+    customName,
+    question,
+    preText,
+    subText,
+    textColorStyle,
+    fontWeightStyle,
+    isNeutral,
+    blanks[] {
+      position,
+      options,
+      correctOptionPosition,
+      correctHintText,
+      incorrectHintText,
+    },
+    hint
+  }
+`;
+
+const fillInTheBlankMultiPageGameQuery = groq`
+  {
+    contentType,
+    name,
+    customName,
+    title,
+    gamePages[]->${fillInTheBlankGameQuery}
   }
 `;
 
@@ -209,6 +242,24 @@ export async function getPickOptionMultiPageGames() {
   >(groq`*[_type == "pickOptionMultiPageGame"]${pickOptionMultiPageGameQuery}`);
 
   return pickOptionMultiPageGames;
+}
+
+export async function getFillInTheBlankGames() {
+  const fillInTheBlankGames = await client.fetch<FillInTheBlankGameData[]>(
+    groq`*[_type == "fillInTheBlankGame"]${fillInTheBlankGameQuery}`,
+  );
+
+  return fillInTheBlankGames;
+}
+
+export async function getFillInTheBlankMultiPageGames() {
+  const fillInTheBlankMultiPageGames = await client.fetch<
+    FillInTheBlankMultiPageGameData[]
+  >(
+    groq`*[_type == "fillInTheBlankMultiPageGame"]${fillInTheBlankMultiPageGameQuery}`,
+  );
+
+  return fillInTheBlankMultiPageGames;
 }
 
 export async function getFaqs() {

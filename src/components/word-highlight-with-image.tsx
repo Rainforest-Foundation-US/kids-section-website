@@ -51,7 +51,7 @@ export function WordHighlightWithImage({
           <Tooltip
             id={tooltipId}
             place="top"
-            className="!z-50 !rounded-md !border-primary-300 !bg-primary-800 !p-2 !opacity-95"
+            className="!z-50 !rounded-md !border-primary-300 !bg-primary-600 !p-2 !opacity-95"
           >
             <Image
               src={image}

@@ -6,6 +6,8 @@ import {
   getStatisticsCards,
   getMemoryGame,
   getPickOptionMultiPageGames,
+  getFillInTheBlankGames,
+  getFillInTheBlankMultiPageGames,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -102,6 +104,8 @@ import {
 import clsx from "@/utils/clsx";
 import { VignetteSlide } from "@/components/sections/vignette-section";
 import { PickOptionMultiPageGameData } from "@/sanity/schemaTypes/pickOptionMultiPageGame";
+import { FillInTheBlankGameData } from "@/sanity/schemaTypes/fillInTheBlankGame";
+import { FillInTheBlankMultiPageGameData } from "@/sanity/schemaTypes/fillInTheBlankMultiPageGame";
 
 // TODOK: use this type as a name of each schema type
 export const sectionNames = [
@@ -243,6 +247,10 @@ export function useGetDiscoverTheAmazonContent() {
     React.useState<PickImageGameData[]>();
   const [pickOptionMultiPageGames, setPickOptionMultiPageGames] =
     React.useState<PickOptionMultiPageGameData[]>();
+  const [fillInTheBlankGames, setFillInTheBlankGames] =
+    React.useState<FillInTheBlankGameData[]>();
+  const [fillInTheBlankMultiPageGames, setFillInTheBlankMultiPageGames] =
+    React.useState<FillInTheBlankMultiPageGameData[]>();
 
   React.useEffect(() => {
     async function getData() {
@@ -252,12 +260,17 @@ export function useGetDiscoverTheAmazonContent() {
       const pickImageGamesFromServer = await getPickImageGames();
       const pickOptionMultiPageGamesFromServer =
         await getPickOptionMultiPageGames();
+      const fillInTheBlankGamesFromServer = await getFillInTheBlankGames();
+      const fillInTheBlankMultiPageGamesFromServer =
+        await getFillInTheBlankMultiPageGames();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
       setStatisticsCards(statisticsCardsFromServer);
       setPickImageGames(pickImageGamesFromServer);
       setPickOptionMultiPageGames(pickOptionMultiPageGamesFromServer);
+      setFillInTheBlankGames(fillInTheBlankGamesFromServer);
+      setFillInTheBlankMultiPageGames(fillInTheBlankMultiPageGamesFromServer);
     }
 
     getData();
@@ -278,6 +291,34 @@ export function useGetDiscoverTheAmazonContent() {
     pickOptionMultiPageGames?.find(
       (pickOptionMultiPageGame) =>
         pickOptionMultiPageGame.name === "rainforests-are-important-quiz",
+    );
+
+  const rainforestAreExactlyWhatYoudThinkFillInTheBlankGame =
+    fillInTheBlankGames?.find(
+      (fillInTheBlankGame) =>
+        fillInTheBlankGame.name === "rainforests-are-exactly-what-you-d-think",
+    );
+
+  const rainforestsHaveALotOfRainFillInTheBlankGame = fillInTheBlankGames?.find(
+    (fillInTheBlankGame) =>
+      fillInTheBlankGame.name === "rainforests-have-a-lot-of-rain",
+  );
+
+  const theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame =
+    fillInTheBlankGames?.find(
+      (fillInTheBlankGame) =>
+        fillInTheBlankGame.name ===
+        "the-amazon-spreads-across-multiple-countries",
+    );
+
+  const rainforestsInDangerFillInTheBlankGame = fillInTheBlankGames?.find(
+    (fillInTheBlankGame) => fillInTheBlankGame.name === "rainforests-in-danger",
+  );
+
+  const climateChangeFillInTheBlankMultiPageGame =
+    fillInTheBlankMultiPageGames?.find(
+      (fillInTheBlankMultiPageGame) =>
+        fillInTheBlankMultiPageGame.name === "climate-change-quiz",
     );
 
   const discoverTheAmazonSections: (SectionWithContent | undefined)[] = [
@@ -302,24 +343,28 @@ export function useGetDiscoverTheAmazonContent() {
         left: <WavingSlothIllustration className={leftIllustrationStyles} />,
       },
     },
-    {
+    rainforestAreExactlyWhatYoudThinkFillInTheBlankGame && {
       type: "regular",
       name: "rainforests-are-exactly-what-you-d-think",
       background: secondBackground,
       content: {
         type: "fill-in-the-blank",
         data: {
-          preText: "Rainforest are exactly what you’d think!",
-          question: "Very <blank /> forest biomes!",
-          numberToOptions: {
-            0: {
-              options: ["Arid", "Dry", "Rainy", "Sparse", "Scary", "Big"],
-              correctOptionPosition: 3,
-            },
-          },
+          preText: rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.preText,
+          question:
+            rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.question,
+          numberToOptions:
+            rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.blanks.map(
+              (blank) => ({
+                options: blank.options,
+                correctOptionPosition: blank.correctOptionPosition,
+              }),
+            ),
         },
       },
-      defaultHintContent: { hint: "What are Rainforests?" },
+      defaultHintContent: {
+        hint: rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.hint,
+      },
       illustrations: {
         bottomRight: (
           <RightBushIllustration
@@ -342,23 +387,20 @@ export function useGetDiscoverTheAmazonContent() {
         polaroid: { image: frogInRain2 },
       },
     },
-    {
+    rainforestsHaveALotOfRainFillInTheBlankGame && {
       type: "regular",
       background: secondBackground,
       name: "rainforests-have-a-lot-of-rain",
       content: {
         type: "fill-in-the-blank",
         data: {
-          preText: "Thanks to the rain,",
-          question:
-            "rainforests have <blank /> climates. They stay <blank /> all year round.",
-          numberToOptions: {
-            0: {
-              options: ["Warm", "Cold", "Wet", "Dry"],
-              correctOptionPosition: 1,
-            },
-            1: { options: ["Green", "Happy"], correctOptionPosition: 1 },
-          },
+          preText: rainforestsHaveALotOfRainFillInTheBlankGame.preText,
+          question: rainforestsHaveALotOfRainFillInTheBlankGame.question,
+          numberToOptions:
+            rainforestsHaveALotOfRainFillInTheBlankGame.blanks.map((blank) => ({
+              options: blank.options,
+              correctOptionPosition: blank.correctOptionPosition,
+            })),
         },
       },
       illustrations: {
@@ -372,7 +414,7 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
       defaultHintContent: {
-        hint: "How do rainforests stay wet all year round?",
+        hint: rainforestsHaveALotOfRainFillInTheBlankGame.hint,
       },
       subContent: {
         type: "postcard",
@@ -610,7 +652,7 @@ export function useGetDiscoverTheAmazonContent() {
         type: "locate-in-map",
         data: {
           question:
-            "Half of the world’s remaining rainforest <b>is in the Amazon</b>.",
+            "Half of the world's remaining rainforest <b>is in the Amazon</b>.",
           questionPosition: "left",
           questionIllustration: "sitting-sloth",
           center: [-88, -20],
@@ -667,22 +709,29 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame && {
       type: "regular",
       name: "the-amazon-spreads-across-multiple-countries",
       layout: "space-between",
       defaultHintContent: {
-        hint: "How many countries does the Amazon spread across?",
+        hint: theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.hint,
       },
       content: {
         type: "fill-in-the-blank",
         data: {
-          preText: "The Amazon spreads",
-          subText: "(and one territory)",
-          question: "across <blank /> countries",
-          numberToOptions: {
-            0: { options: ["3", "5", "8"], correctOptionPosition: 3 },
-          },
+          preText:
+            theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.preText,
+          subText:
+            theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.subText,
+          question:
+            theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.question,
+          numberToOptions:
+            theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.blanks.map(
+              (blank) => ({
+                options: blank.options,
+                correctOptionPosition: blank.correctOptionPosition,
+              }),
+            ),
         },
       },
     },
@@ -1064,29 +1113,24 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    rainforestsInDangerFillInTheBlankGame && {
       type: "regular",
       name: "rainforests-in-danger",
       background: backgroundForest33,
       defaultHintContent: {
-        hint: "What are the two major threats to the Amazon?",
+        hint: rainforestsInDangerFillInTheBlankGame.hint,
       },
       content: {
         type: "fill-in-the-blank",
         data: {
-          preText:
-            "Right now, the Amazon is in danger, from two major threats.",
-          question: "<blank /> and <blank />",
-          numberToOptions: {
-            0: {
-              options: ["Biodiversity", "Technology", "Deforestation"],
-              correctOptionPosition: 3,
-            },
-            1: {
-              options: ["Climate change", "Indigenous peoples"],
-              correctOptionPosition: 1,
-            },
-          },
+          preText: rainforestsInDangerFillInTheBlankGame.preText,
+          question: rainforestsInDangerFillInTheBlankGame.question,
+          numberToOptions: rainforestsInDangerFillInTheBlankGame.blanks.map(
+            (blank) => ({
+              options: blank.options,
+              correctOptionPosition: blank.correctOptionPosition,
+            }),
+          ),
         },
       },
     },
@@ -1298,135 +1342,23 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    climateChangeFillInTheBlankMultiPageGame && {
       type: "wavy",
       name: "climate-change-quiz",
       content: {
         type: "pager",
-        data: [
-          {
+        data: climateChangeFillInTheBlankMultiPageGame.gamePages.map(
+          (gamePage) => ({
             type: "fill-in-the-blank",
             data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "Climate change and deforestation",
-              question: "<blank /> major, human-caused",
-              subText: "threats to the Amazon.",
-              numberToOptions: {
-                0: { options: ["Are", "Are not"], correctOptionPosition: 1 },
-              },
+              ...gamePage,
+              numberToOptions: gamePage.blanks.map((blank) => ({
+                options: blank.options,
+                correctOptionPosition: blank.correctOptionPosition,
+              })),
             },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText:
-                "When we burn fuels that send greenhouse gasses into the atmosphere",
-              question: "we <blank /> our planet.",
-              numberToOptions: {
-                0: {
-                  options: ["Heat up", "Cool down"],
-                  correctOptionPosition: 1,
-                },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "",
-              question: "Rainforest <blank /> carbon dioxide,",
-              subText: "and act as a solution to climate change.",
-              numberToOptions: {
-                0: { options: ["Absorb", "Release"], correctOptionPosition: 1 },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "Deforestation is when we",
-              question: "<blank /> trees in the forest, on purpose.",
-              numberToOptions: {
-                0: { options: ["Plant", "Cut down"], correctOptionPosition: 2 },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "Deforestation makes it",
-              question: "<blank /> for forest to be",
-              subText: "a climate solution",
-              numberToOptions: {
-                0: {
-                  options: ["Possible", "Impossible"],
-                  correctOptionPosition: 2,
-                },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "The rainforest makes our planet",
-              question: "a <blank /> place to live",
-              numberToOptions: {
-                0: {
-                  options: ["safer", "dangerous"],
-                  correctOptionPosition: 1,
-                },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "",
-              question: "People <blank /> depend",
-              subText: "on the rainforest for clean water.",
-              numberToOptions: {
-                0: {
-                  options: ["in the rainforest", "all around the world"],
-                  correctOptionPosition: 2,
-                },
-              },
-            },
-          },
-          {
-            type: "fill-in-the-blank",
-            data: {
-              textColorStyle: "primary",
-              fontWeightStyle: "regular",
-              isNeutral: true,
-              preText: "Indigenous people are",
-              question: "the <blank /> protectors",
-              subText: "of biodiversity and rainforests.",
-              numberToOptions: {
-                0: { options: ["Are", "Are not"], correctOptionPosition: 1 },
-              },
-            },
-          },
-        ],
+          }),
+        ),
       },
       illustrations: {
         topLeft: (

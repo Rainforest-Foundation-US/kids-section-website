@@ -53,7 +53,7 @@ export function PlainTextContent({
       )}
       <div
         className={clsx(
-          "primary-strong whitespace-pre-line",
+          "whitespace-pre-line",
           textSize === "md" && "text-xl",
           textSize === "base" && "text-3xl",
         )}
@@ -68,7 +68,7 @@ export function PlainTextContent({
       {props.subText && (
         <p
           className={clsx(
-            "primary-strong whitespace-pre-line leading-snug",
+            "whitespace-pre-line leading-snug",
             `text-${subTextSize}`,
             subTextColor && `${subTextColor}`,
           )}

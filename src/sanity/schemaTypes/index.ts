@@ -14,6 +14,9 @@ import { PickOptionGameSchemaType } from "./pickOptionGame";
 import { GameSoundsSchemaType } from "./sounds";
 import { StoryCompositionSchemaType } from "./storyComposition";
 import { PickOptionMultiPageGameSchemaType } from "./pickOptionMultiPageGame";
+import { FillInTheBlankGameSchemaType } from "./fillInTheBlankGame";
+import { FillInTheBlankMultiPageGameSchemaType } from "./fillInTheBlankMultiPageGame";
+
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     VignetteSchemaType,
@@ -31,5 +34,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     GameSoundsSchemaType,
     StoryCompositionSchemaType,
     PickOptionMultiPageGameSchemaType,
+    FillInTheBlankGameSchemaType,
+    FillInTheBlankMultiPageGameSchemaType,
   ],
 };
