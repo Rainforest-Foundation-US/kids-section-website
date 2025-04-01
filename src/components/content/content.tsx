@@ -25,10 +25,7 @@ import {
   MemoryGame,
   MemoryGameActivityOptions,
 } from "./activities/memory-game";
-import {
-  FindTheAnimalsGameActivityOptions,
-  FindTheAnimalsGame,
-} from "./activities/find-the-animals-game";
+import { FindTheAnimalsGame } from "./activities/find-the-animals-game";
 import {
   SelectCountriesWithRainforestActivity,
   SelectCountriesWithRainforestActivityOptions,
@@ -110,7 +107,6 @@ type MemoryGameActivityData = {
 
 type FindAnimalsGameActivityData = {
   type: "find-the-animals";
-  data: FindTheAnimalsGameActivityOptions;
 };
 
 type ClickTheAnimalsActivityData = {

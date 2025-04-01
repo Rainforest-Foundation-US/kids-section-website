@@ -933,7 +933,7 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "find-the-animals",
       background: secondBackground,
-      content: { type: "find-the-animals", data: { test: ["some string"] } },
+      content: { type: "find-the-animals" },
     },
     {
       type: "regular",

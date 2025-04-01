@@ -1,10 +1,6 @@
 import { PlacesType, Tooltip, TooltipRefProps } from "react-tooltip";
 import React from "react";
 
-export interface FindTheAnimalsGameActivityOptions {
-  test?: string[];
-}
-
 interface Animal {
   id: string;
   name: string;
