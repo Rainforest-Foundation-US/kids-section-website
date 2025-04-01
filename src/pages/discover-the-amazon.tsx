@@ -2,13 +2,28 @@ import { LearningPath } from "@/components/learning-path-map";
 import { NavBar } from "@/components/layout/nav";
 import { HomeSectionsContainer } from "@/components/sections";
 import Head from "next/head";
+import React from "react";
+import { useRouter } from "next/router";
 
 import { Footer } from "@/components/layout/footer";
 import { ContentSectionList } from "@/components/content/content";
 import { useGetDiscoverTheAmazonContent } from "@/hooks/useGetDiscoverTheAmazonContent";
 
 export default function DiscoverTheAmazonRoute() {
+  const router = useRouter();
   const discoverTheAmazonSections = useGetDiscoverTheAmazonContent();
+
+  React.useEffect(() => {
+    // Check if we're in production environment
+    if (process.env.NODE_ENV === "production") {
+      router.replace("/under-construction");
+    }
+  }, [router]);
+
+  // If we're in production, don't render anything while redirecting
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
 
   return (
     <>

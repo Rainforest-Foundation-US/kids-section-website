@@ -88,6 +88,11 @@ export const PickOptionGameSchemaType = defineType({
               type: "boolean",
               validation: (rule) => rule.required(),
             },
+            {
+              name: "hintText",
+              title: "Hint Text",
+              type: "string",
+            },
           ],
         },
       ],
@@ -102,5 +107,9 @@ export interface PickOptionGameData {
   customName?: string;
   question: string;
   rotateOptions: boolean;
-  options: { isCorrect: boolean; text: string }[];
+  options: {
+    isCorrect: boolean;
+    text: string;
+    hintText?: string;
+  }[];
 }

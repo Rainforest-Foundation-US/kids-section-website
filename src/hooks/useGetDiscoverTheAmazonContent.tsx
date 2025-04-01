@@ -771,8 +771,8 @@ export function useGetDiscoverTheAmazonContent() {
                 },
                 {
                   text: "Do not have a large variety of plants and animals.",
-                  wrongAlertText:
-                    "Rainforest have a large variety of plants and animals.",
+                  hintText:
+                    "Rainforests have a large variety of plants and animals.",
                   isCorrect: false,
                 },
                 { text: "Exists on every continent.", isCorrect: false },

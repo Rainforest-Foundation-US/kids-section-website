@@ -47,13 +47,15 @@ export function PlainTextContent({
       }}
     >
       {props.caption && (
-        <p className="text-xl font-medium text-primary-700">{props.caption}</p>
+        <p className="text-center text-xl font-medium text-primary-700">
+          {props.caption}
+        </p>
       )}
       <div
         className={clsx(
-          "primary-strong whitespace-pre-line leading-snug",
-          textSize === "md" && "text-2xl",
-          textSize === "base" && "text-4xl",
+          "primary-strong whitespace-pre-line",
+          textSize === "md" && "text-xl",
+          textSize === "base" && "text-3xl",
         )}
       >
         {/* TODO: remove once everything is loaded from the Sanity CMS */}

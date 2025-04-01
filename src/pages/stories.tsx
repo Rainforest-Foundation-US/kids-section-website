@@ -110,6 +110,7 @@ export default function StoriesRoute() {
               mainContentClassName="h-[50vh]"
               leftArrowClassName="top-1/3"
               rightArrowClassName="top-1/3"
+              isStories
             />
           </SectionContent>
         </RegularSection>

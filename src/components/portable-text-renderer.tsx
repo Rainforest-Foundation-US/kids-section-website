@@ -8,7 +8,7 @@ const PortableTextRenderer = ({ content }: { content: any }) => {
   const components = {
     block: {
       normal: ({ children }: { children?: React.ReactNode }) => (
-        <p>{children}</p>
+        <p className="leading-snug">{children}</p>
       ),
     },
     marks: {

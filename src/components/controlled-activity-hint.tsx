@@ -44,21 +44,17 @@ export const useSetHint = () => {
 
   return useCallback(
     (key: SectionNames, hintData: HintData) => {
-      if (!hintData.hint && hintData.status === ActivityHintStatus.KEEP_GOING) {
-        hintData.hint =
-          keepGoingHints[Math.floor(Math.random() * keepGoingHints.length)];
-      } else if (
-        !hintData.hint &&
-        hintData.status === ActivityHintStatus.CORRECT
-      ) {
-        hintData.hint =
-          correctHints[Math.floor(Math.random() * correctHints.length)];
-      } else if (
-        !hintData.hint &&
-        hintData.status === ActivityHintStatus.INCORRECT
-      ) {
-        hintData.hint =
-          incorrectHints[Math.floor(Math.random() * incorrectHints.length)];
+      if (!hintData.hint) {
+        if (hintData.status === ActivityHintStatus.KEEP_GOING) {
+          hintData.hint =
+            keepGoingHints[Math.floor(Math.random() * keepGoingHints.length)];
+        } else if (hintData.status === ActivityHintStatus.CORRECT) {
+          hintData.hint =
+            correctHints[Math.floor(Math.random() * correctHints.length)];
+        } else if (hintData.status === ActivityHintStatus.INCORRECT) {
+          hintData.hint =
+            incorrectHints[Math.floor(Math.random() * incorrectHints.length)];
+        }
       }
 
       setHint({ ...hintAtomValue, [key]: hintData });

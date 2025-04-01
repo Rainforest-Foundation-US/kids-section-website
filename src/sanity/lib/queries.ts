@@ -21,7 +21,7 @@ const pickImageGameQuery = groq`
       "imageSrc": src.asset->url,
       alt,
       isCorrect,
-      reason,
+      hintText,
     }
   }
 `;
@@ -83,6 +83,7 @@ const pickOptionGameQuery = groq`
     options[]{
       text,
       isCorrect,
+      hintText,
     }
   }
 `;

@@ -588,6 +588,7 @@ export function ContentPager(props: {
   mainContentClassName?: string;
   leftArrowClassName?: string;
   rightArrowClassName?: string;
+  isStories?: boolean;
 }) {
   const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
@@ -620,7 +621,37 @@ export function ContentPager(props: {
 
   return (
     <>
-      <div className="inset-y-0 z-10 mb-4 flex items-center">
+      <div className="relative inset-y-0 z-10 mb-4 flex items-center">
+        {props.isStories && (
+          <>
+            {index > 0 && (
+              <GoToButton
+                className={clsx(
+                  "absolute right-[calc(50%+10rem)] top-[40%]",
+                  props.leftArrowClassName,
+                )}
+                key="left"
+                direction="left"
+                disabled={false}
+                onClick={goBack}
+              />
+            )}
+
+            {!isLastAnswer && (
+              <GoToButton
+                className={clsx(
+                  "absolute left-[calc(50%+10rem)] top-[40%]",
+                  props.rightArrowClassName,
+                )}
+                key="right"
+                direction="right"
+                disabled={false}
+                onClick={goNext}
+              />
+            )}
+          </>
+        )}
+
         <ControlledActivityHint name={props.name} noSloth={props.noSloth} />
       </div>
 
@@ -655,30 +686,34 @@ export function ContentPager(props: {
           </motion.div>
         </AnimatePresence>
 
-        {index > 0 && (
-          <GoToButton
-            className={clsx(
-              "absolute right-[calc(50%+26rem)] top-[40%]",
-              props.leftArrowClassName,
+        {!props.isStories && (
+          <>
+            {index > 0 && (
+              <GoToButton
+                className={clsx(
+                  "absolute right-[calc(50%+26rem)] top-[40%]",
+                  props.leftArrowClassName,
+                )}
+                key="left"
+                direction="left"
+                disabled={false}
+                onClick={goBack}
+              />
             )}
-            key="left"
-            direction="left"
-            disabled={false}
-            onClick={goBack}
-          />
-        )}
 
-        {!isLastAnswer && (
-          <GoToButton
-            className={clsx(
-              "absolute left-[calc(50%+26rem)] top-[40%]",
-              props.rightArrowClassName,
+            {!isLastAnswer && (
+              <GoToButton
+                className={clsx(
+                  "absolute left-[calc(50%+26rem)] top-[40%]",
+                  props.rightArrowClassName,
+                )}
+                key="right"
+                direction="right"
+                disabled={false}
+                onClick={goNext}
+              />
             )}
-            key="right"
-            direction="right"
-            disabled={false}
-            onClick={goNext}
-          />
+          </>
         )}
       </div>
     </>

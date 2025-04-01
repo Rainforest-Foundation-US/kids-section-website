@@ -101,7 +101,15 @@ export const PickImageGameSchemaType = defineType({
               type: "boolean",
               validation: (rule) => rule.required(),
             },
-            { name: "reason", title: "Reason", type: "text" },
+            {
+              name: "reason",
+              title: "Reason",
+              type: "text",
+              deprecated: {
+                reason: "Use hintText instead",
+              },
+            },
+            { name: "hintText", title: "Hint Text", type: "text" },
           ],
         },
       ],
@@ -126,6 +134,6 @@ export interface PickImageGameData {
     imageSrc: string;
     alt: string;
     isCorrect: boolean;
-    reason: string;
+    hintText: string;
   }[];
 }

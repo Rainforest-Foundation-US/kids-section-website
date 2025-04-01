@@ -11,7 +11,7 @@ interface PickTheImageOption {
   imageSrc: string | StaticImageData;
   alt: string;
   isCorrect: boolean;
-  reason?: string;
+  hintText?: string;
 }
 
 export interface PickTheImageActivityOptions {
@@ -87,7 +87,7 @@ export function PickTheImageActivity({
       }
 
       onHint({
-        hint: option.reason || "",
+        hint: option.hintText || "",
         status: option.isCorrect
           ? ActivityHintStatus.CORRECT
           : ActivityHintStatus.INCORRECT,

@@ -25,7 +25,7 @@ export interface PickTheOptionActivityOptions {
 interface Option {
   id: string;
   text: string;
-  wrongAlertText?: string;
+  hintText?: string;
   isCorrect: boolean;
 }
 
@@ -92,7 +92,10 @@ export function PickTheOptionActivity({
     (option: Option) => {
       if (option.isCorrect) {
         if (missingCorrectOptions === 1) {
-          onHint({ hint: "", status: ActivityHintStatus.CORRECT });
+          onHint({
+            hint: option.hintText ?? "",
+            status: ActivityHintStatus.CORRECT,
+          });
 
           if (congratulations[props.name] !== undefined && props.isLastAnswer) {
             playSound("congratulations");
@@ -101,12 +104,15 @@ export function PickTheOptionActivity({
             playSound("correct");
           }
         } else {
-          onHint({ hint: "", status: ActivityHintStatus.KEEP_GOING });
+          onHint({
+            hint: option.hintText ?? "",
+            status: ActivityHintStatus.KEEP_GOING,
+          });
         }
       } else {
         playSound("incorrect");
         onHint({
-          hint: option.wrongAlertText ?? "",
+          hint: option.hintText ?? "",
           status: ActivityHintStatus.INCORRECT,
         });
       }
