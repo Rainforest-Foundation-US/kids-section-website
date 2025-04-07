@@ -59,6 +59,34 @@ export const PlainSchemaType = defineType({
         }),
     }),
     defineField({
+      name: "caption",
+      title: "Caption",
+      type: "string",
+    }),
+    defineField({
+      name: "captionAlign",
+      title: "Caption Align",
+      type: "string",
+      options: {
+        list: ["left", "center", "right"],
+      },
+      initialValue: "left",
+    }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+    }),
+    defineField({
+      name: "titleAlign",
+      title: "Title Align",
+      type: "string",
+      options: {
+        list: ["left", "center", "right"],
+      },
+      initialValue: "left",
+    }),
+    defineField({
       name: "text",
       title: "Text",
       type: "array",
@@ -72,11 +100,6 @@ export const PlainSchemaType = defineType({
         list: ["left", "center", "right"],
       },
       initialValue: "left",
-    }),
-    defineField({
-      name: "caption",
-      title: "Caption",
-      type: "string",
     }),
     defineField({
       name: "subText",

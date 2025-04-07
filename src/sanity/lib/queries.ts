@@ -36,6 +36,9 @@ const plainDataQuery = groq`
     text,
     textAlign,
     caption,
+    captionAlign,
+    title,
+    titleAlign,
     subText,
     subContent {
       type,

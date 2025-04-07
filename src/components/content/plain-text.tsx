@@ -4,6 +4,9 @@ import PortableTextRenderer from "../portable-text-renderer";
 
 interface PlainTextContentProps {
   caption?: string;
+  captionAlign?: "left" | "center" | "right";
+  title?: string;
+  titleAlign?: "left" | "center" | "right";
   subText?: string;
   text: TypedObject | string;
   wideness?: "sm" | "md" | "lg" | "xl" | "2xl" | "custom";
@@ -36,9 +39,6 @@ export function PlainTextContent({
         wideness === "lg" && "max-w-[40rem]",
         wideness === "xl" && "max-w-[60rem]",
         wideness === "2xl" && "max-w-[70rem]",
-        textAlign === "left" && "text-left",
-        textAlign === "center" && "text-center",
-        textAlign === "right" && "text-right",
       )}
       style={{
         maxWidth: wideness === "custom" ? customWidth : undefined,
@@ -47,15 +47,37 @@ export function PlainTextContent({
       }}
     >
       {props.caption && (
-        <p className="text-center text-xl font-medium text-primary-700">
+        <p
+          className={clsx(
+            "text-center text-xl font-medium text-primary-700",
+            props.captionAlign === "left" && "text-left",
+            props.captionAlign === "right" && "text-right",
+          )}
+        >
           {props.caption}
         </p>
       )}
+
+      {props.title && (
+        <p
+          className={clsx(
+            "text-center text-3xl font-bold text-neutral-dark-800",
+            props.titleAlign === "left" && "text-left",
+            props.titleAlign === "right" && "text-right",
+          )}
+        >
+          {props.title}
+        </p>
+      )}
+
       <div
         className={clsx(
           "whitespace-pre-line",
           textSize === "md" && "text-xl",
           textSize === "base" && "text-3xl",
+          textAlign === "left" && "text-left",
+          textAlign === "center" && "text-center",
+          textAlign === "right" && "text-right",
         )}
       >
         {/* TODO: remove once everything is loaded from the Sanity CMS */}
@@ -71,6 +93,9 @@ export function PlainTextContent({
             "whitespace-pre-line leading-snug",
             `text-${subTextSize}`,
             subTextColor && `${subTextColor}`,
+            textAlign === "left" && "text-left",
+            textAlign === "center" && "text-center",
+            textAlign === "right" && "text-right",
           )}
         >
           {props.subText}
