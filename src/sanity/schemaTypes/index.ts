@@ -16,6 +16,7 @@ import { StoryCompositionSchemaType } from "./storyComposition";
 import { PickOptionMultiPageGameSchemaType } from "./pickOptionMultiPageGame";
 import { FillInTheBlankGameSchemaType } from "./fillInTheBlankGame";
 import { FillInTheBlankMultiPageGameSchemaType } from "./fillInTheBlankMultiPageGame";
+import { LocateInMapSchemaType } from "./locateInMap";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -36,5 +37,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     PickOptionMultiPageGameSchemaType,
     FillInTheBlankGameSchemaType,
     FillInTheBlankMultiPageGameSchemaType,
+    LocateInMapSchemaType,
   ],
 };

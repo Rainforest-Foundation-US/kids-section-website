@@ -6,6 +6,7 @@
 
 import { assist } from "@sanity/assist";
 import { visionTool } from "@sanity/vision";
+import { colorInput } from "@sanity/color-input";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 
@@ -26,5 +27,6 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
     assist(),
+    colorInput(),
   ],
 });

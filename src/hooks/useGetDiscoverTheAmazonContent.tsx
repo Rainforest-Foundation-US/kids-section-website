@@ -8,6 +8,7 @@ import {
   getPickOptionMultiPageGames,
   getFillInTheBlankGames,
   getFillInTheBlankMultiPageGames,
+  getPlainData,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -20,58 +21,17 @@ import backgroundAmazon from "@/assets/activities/background-amazon.png";
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
 import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
 
-import antarctica3 from "@/assets/activities/03-antarctica.jpeg";
-
-import biodiversityButterfly4 from "@/assets/activities/04-biodiversity-butterfly.jpeg";
-import biodiversityRoraima4 from "@/assets/activities/04-biodiversity-roraima.png";
-import biodiversitySloth4 from "@/assets/activities/04-biodiversity-sloth.jpeg";
-
 import backgroundDeforestation6 from "@/assets/activities/06-background-deforestation.jpg";
-import birds6 from "@/assets/activities/06-birds.jpeg";
-import deforestation6 from "@/assets/activities/06-deforestation.png";
-import keepGoing6 from "@/assets/activities/06-keep-going.png";
-
-import elders7 from "@/assets/activities/07-elders.jpg";
-import family7 from "@/assets/activities/07-family.png";
-import monitors7 from "@/assets/activities/07-monitors.png";
 
 import backgroundRiver8 from "@/assets/activities/08-background-river.png";
-import amazonRiver8 from "@/assets/activities/08-amazon-river.png";
-import amazonRiverWide8 from "@/assets/activities/08-amazon-river-wide.png";
-
-import nileRiver09 from "@/assets/activities/09-nile-river.jpg";
-import yangtzeRiver09 from "@/assets/activities/09-yangtze-river.jpg";
-import mississippiRiver09 from "@/assets/activities/09-mississippi-river.jpg";
 
 import backgroundHouse13 from "@/assets/activities/13-background-house.png";
 
-import biodiversityCollage21 from "@/assets/activities/21-biodiversity-collage.jpg";
-import familyOnBoat22 from "@/assets/activities/22-family-on-boat.jpg";
-import manOnBoat from "@/assets/activities/man-on-boat.png";
-
 import backgroundForest33 from "@/assets/activities/33-background-forest.jpg";
-
-import deforestation34 from "@/assets/activities/34-deforestation.jpg";
-import floodsClimateChange34 from "@/assets/activities/34-floods-climate-change.jpg";
-
-import trash35 from "@/assets/activities/35-trash.jpg";
-import industryPollution35 from "@/assets/activities/35-industry-pollution.jpg";
-import transport35 from "@/assets/activities/35-transport.jpg";
-
-import flood36 from "@/assets/activities/36-floods.jpg";
-import desert36 from "@/assets/activities/36-desert.jpg";
-import snowstorms36 from "@/assets/activities/36-snowstorms.jpg";
-
-import rainforest37 from "@/assets/activities/37-rainforest.jpg";
-import earth37 from "@/assets/activities/37-earth.jpg";
 
 import climateChangeWildfires34 from "@/assets/activities/34-climate-change-wildfires.png";
 
-import rfusTeam from "@/assets/activities/rfus-team.png";
-import littleGirls from "@/assets/activities/little-girls.png";
-
 import spatialPlanetEarth36 from "@/assets/activities/36-spatial-planet-earth.jpg";
-import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { MemoryGameData } from "@/sanity/schemaTypes/memoryGame";
 import { StatisticsCard } from "@/sanity/schemaTypes/statisticsCard";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
@@ -106,6 +66,10 @@ import { VignetteSlide } from "@/components/sections/vignette-section";
 import { PickOptionMultiPageGameData } from "@/sanity/schemaTypes/pickOptionMultiPageGame";
 import { FillInTheBlankGameData } from "@/sanity/schemaTypes/fillInTheBlankGame";
 import { FillInTheBlankMultiPageGameData } from "@/sanity/schemaTypes/fillInTheBlankMultiPageGame";
+import { PlainData } from "@/sanity/schemaTypes/plain";
+import { urlFor } from "@/sanity/lib/image";
+import { PolaroidData } from "@/sanity/schemaTypes/polaroid";
+import { PostcardData } from "@/sanity/schemaTypes/postcard";
 
 // TODOK: use this type as a name of each schema type
 export const sectionNames = [
@@ -172,6 +136,10 @@ export const sectionNames = [
   {
     title: "more-plants-and-animals-than-anywhere-else",
     value: "more-plants-and-animals-than-anywhere-else" as const,
+  },
+  {
+    title: "indigenous-communities-in-the-amazon",
+    value: "indigenous-communities-in-the-amazon" as const,
   },
   { title: "biodiversity", value: "biodiversity" as const },
   {
@@ -251,6 +219,7 @@ export function useGetDiscoverTheAmazonContent() {
     React.useState<FillInTheBlankGameData[]>();
   const [fillInTheBlankMultiPageGames, setFillInTheBlankMultiPageGames] =
     React.useState<FillInTheBlankMultiPageGameData[]>();
+  const [plainSections, setPlainSections] = React.useState<PlainData[]>([]);
 
   React.useEffect(() => {
     async function getData() {
@@ -263,6 +232,7 @@ export function useGetDiscoverTheAmazonContent() {
       const fillInTheBlankGamesFromServer = await getFillInTheBlankGames();
       const fillInTheBlankMultiPageGamesFromServer =
         await getFillInTheBlankMultiPageGames();
+      const plainSectionsFromServer = await getPlainData();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
@@ -271,6 +241,7 @@ export function useGetDiscoverTheAmazonContent() {
       setPickOptionMultiPageGames(pickOptionMultiPageGamesFromServer);
       setFillInTheBlankGames(fillInTheBlankGamesFromServer);
       setFillInTheBlankMultiPageGames(fillInTheBlankMultiPageGamesFromServer);
+      setPlainSections(plainSectionsFromServer);
     }
 
     getData();
@@ -321,8 +292,20 @@ export function useGetDiscoverTheAmazonContent() {
         fillInTheBlankMultiPageGame.name === "climate-change-quiz",
     );
 
+  const plainSectionsDictionary = plainSections
+    .filter((section) => section.contentType === "aboutTheAmazon")
+    .filter((section) => section.name)
+    .reduce(
+      (acc, section) => {
+        // It's safe to use section.name! because we filtered out the sections that don't have a name
+        acc[section.name!] = section;
+        return acc;
+      },
+      {} as Record<string, PlainData>,
+    );
+
   const discoverTheAmazonSections: (SectionWithContent | undefined)[] = [
-    {
+    plainSectionsDictionary["what-is-the-amazon"] && {
       type: "regular",
       name: "what-is-the-amazon",
       align: "left",
@@ -330,8 +313,7 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "md",
-          textAlign: "left",
-          text: "You might be wondering: <b>What is a rainforest?</b>",
+          ...mapPlainData(plainSectionsDictionary["what-is-the-amazon"]),
         },
       },
       illustrations: {
@@ -476,15 +458,16 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    plainSectionsDictionary["why-no-rainforests-in-antarctica"] && {
       type: "wavy",
       name: "why-no-rainforests-in-antarctica",
       content: {
         type: "plain",
         data: {
           wideness: "md",
-          textAlign: "center",
-          text: "Why do you think there are <b>no rainforests in Antarctica?</b>",
+          ...mapPlainData(
+            plainSectionsDictionary["why-no-rainforests-in-antarctica"],
+          ),
         },
       },
       illustrations: {
@@ -504,16 +487,21 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: {
         type: "postcard",
-        postcard: { image: antarctica3, alt: "Antarctica" },
+        postcard: mapPostcard(
+          plainSectionsDictionary["why-no-rainforests-in-antarctica"]
+            ?.subContent.postcard,
+        ),
       },
     },
-    {
+    plainSectionsDictionary["why-rfus-works-in-the-amazon"] && {
       type: "regular",
       name: "why-rfus-works-in-the-amazon",
       content: {
         type: "plain",
         data: {
-          text: "To understand why Rainforest Foundation US (RFUS) works in the Amazon, what we do, and who we partner with, <b>we have to learn more about the Amazon!</b>",
+          ...mapPlainData(
+            plainSectionsDictionary["why-rfus-works-in-the-amazon"],
+          ),
         },
       },
       illustrations: {
@@ -528,7 +516,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: { type: "illustration", kind: "happy-sloth" },
     },
-    {
+    plainSectionsDictionary["rainforests-are-among-the-oldest"] && {
       type: "regular",
       name: "rainforests-are-among-the-oldest",
       background: secondBackground,
@@ -536,20 +524,21 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "Rainforests are among <b>the oldest, most complex and interconnected communities of life</b> on Earth.",
+          ...mapPlainData(
+            plainSectionsDictionary["rainforests-are-among-the-oldest"],
+          ),
         },
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: biodiversityButterfly4, caption: "Biodiversity" },
-          { image: biodiversityRoraima4, caption: "Indigenous people" },
-          { image: biodiversitySloth4, caption: "Unique ecosystems" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["rainforests-are-among-the-oldest"]
+            ?.subContent.polaroids,
+        ),
       },
     },
     { type: "divider", style: "dark" },
-    {
+    plainSectionsDictionary["deforestation-in-the-amazon"] && {
       type: "regular",
       name: "deforestation-in-the-amazon",
       backgroundOpacity: 0.5,
@@ -560,19 +549,22 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "But some humans are permanently damaging rainforests, <b>especially the Amazon!</b>",
+          ...mapPlainData(
+            plainSectionsDictionary["deforestation-in-the-amazon"],
+          ),
         },
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: birds6, caption: "Jump to biodiversity section" },
-          { image: keepGoing6, caption: "Keep going" },
-          { image: deforestation6, caption: "Jump to threats to the Amazon" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["deforestation-in-the-amazon"]?.subContent
+            .polaroids,
+        ),
       },
     },
-    {
+    plainSectionsDictionary[
+      "the-amazon-is-the-biggest-tropical-rainforest"
+    ] && {
       type: "regular",
       name: "the-amazon-is-the-biggest-tropical-rainforest",
       background: backgroundRiver8,
@@ -581,7 +573,11 @@ export function useGetDiscoverTheAmazonContent() {
       content: {
         type: "plain",
         data: {
-          text: "The Amazon is the biggest tropical rainforest in the world! At its heart: <b>the Amazon River, the largest river on Earth, by far</b>",
+          ...mapPlainData(
+            plainSectionsDictionary[
+              "the-amazon-is-the-biggest-tropical-rainforest"
+            ],
+          ),
         },
       },
       illustrations: {
@@ -593,30 +589,20 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          {
-            image: amazonRiver8,
-            caption:
-              "The Amazon River is huge, In fact, it has the most water of any river on Earth.",
-            captionStyle: PolaroidCaptionStyle.wrap,
-          },
-
-          {
-            image: amazonRiverWide8,
-            caption:
-              "At its widest, the Amazon river could hold all of Paris, France!",
-            captionStyle: PolaroidCaptionStyle.wrap,
-          },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary[
+            "the-amazon-is-the-biggest-tropical-rainforest"
+          ]?.subContent.polaroids,
+        ),
       },
     },
-    {
+    plainSectionsDictionary["other-rivers-on-earth"] && {
       type: "wavy",
       name: "other-rivers-on-earth",
       content: {
         type: "plain",
         data: {
-          text: "<b>The other 9 largest rivers on Earth combined</b>, would have less water than the Amazon!",
+          ...mapPlainData(plainSectionsDictionary["other-rivers-on-earth"]),
         },
       },
       illustrations: {
@@ -636,11 +622,10 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: nileRiver09, caption: "Nile River" },
-          { image: yangtzeRiver09, caption: "Yangtze river" },
-          { image: mississippiRiver09, caption: "Mississippi River" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["other-rivers-on-earth"]?.subContent
+            .polaroids,
+        ),
       },
     },
     {
@@ -748,14 +733,14 @@ export function useGetDiscoverTheAmazonContent() {
         data: { question: "", center: [-65, -22], scale: 280 },
       },
     },
-    {
+    plainSectionsDictionary["life-in-the-amazon"] && {
       type: "regular",
       name: "life-in-the-amazon",
       background: backgroundHouse13,
       content: {
         type: "plain",
         data: {
-          text: "Now we know how big my home is, <b>but what does life in the Amazon actually look like?</b>",
+          ...mapPlainData(plainSectionsDictionary["life-in-the-amazon"]),
         },
       },
       illustrations: {
@@ -784,15 +769,16 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    plainSectionsDictionary["indigenous-peoples-in-the-amazon"] && {
       type: "regular",
       name: "indigenous-peoples-in-the-amazon",
       content: {
         type: "plain",
         data: {
           wideness: "md",
-          text: "Rainforest Foundation US (RFUS) partners with Indigenous peoples in the Amazon.\n<strong>What does <u>Indigenous</u> mean to you?</strong>",
-          subText: "See the pictures from various Indigenous communities!",
+          ...mapPlainData(
+            plainSectionsDictionary["indigenous-peoples-in-the-amazon"],
+          ),
         },
       },
       illustrations: {
@@ -812,11 +798,10 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: elders7 },
-          { image: family7 },
-          { image: monitors7 },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["indigenous-peoples-in-the-amazon"]
+            ?.subContent.polaroids,
+        ),
       },
     },
     whatAreRainforestsQuizPickOptionMultiPageGame && {
@@ -850,14 +835,14 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    plainSectionsDictionary["so-much-more-to-learn"] && {
       type: "regular",
       name: "so-much-more-to-learn",
       background: backgroundHouse13,
       content: {
         type: "plain",
         data: {
-          text: "So, we understand a bit about rainforests!\n<b>But, there's a lot more to learn...</b>",
+          ...mapPlainData(plainSectionsDictionary["so-much-more-to-learn"]),
         },
       },
       illustrations: {
@@ -873,7 +858,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: { type: "illustration", kind: "waving-sloth" },
     },
-    {
+    plainSectionsDictionary["more-plants-and-animals-than-anywhere-else"] && {
       type: "regular",
       name: "more-plants-and-animals-than-anywhere-else",
       background: backgroundAmazon,
@@ -881,30 +866,40 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "lg",
-          textAlign: "center",
-          text: "There are more types of plants and animals in the Amazon <b>than anywhere else on Earth...</b>",
+          ...mapPlainData(
+            plainSectionsDictionary[
+              "more-plants-and-animals-than-anywhere-else"
+            ],
+          ),
         },
       },
       subContent: {
         type: "postcard",
-        postcard: { image: biodiversityCollage21, alt: "Biodiversity collage" },
+        postcard: mapPostcard(
+          plainSectionsDictionary["more-plants-and-animals-than-anywhere-else"]
+            ?.subContent.postcard,
+        ),
       },
     },
-    {
+    plainSectionsDictionary["indigenous-communities-in-the-amazon"] && {
       type: "regular",
-      name: "indigenous-peoples-in-the-amazon",
+      name: "indigenous-communities-in-the-amazon",
       background: backgroundAmazon,
       content: {
         type: "plain",
         data: {
           wideness: "lg",
-          textAlign: "center",
-          text: "...and the <b>400 Indigenous communities</b> that live here <b>protect</b> this biodiversity!",
+          ...mapPlainData(
+            plainSectionsDictionary["indigenous-communities-in-the-amazon"],
+          ),
         },
       },
       subContent: {
         type: "postcard",
-        postcard: { image: familyOnBoat22, alt: "Family on boat" },
+        postcard: mapPostcard(
+          plainSectionsDictionary["indigenous-communities-in-the-amazon"]
+            ?.subContent.postcard,
+        ),
       },
     },
     {
@@ -935,13 +930,15 @@ export function useGetDiscoverTheAmazonContent() {
       background: secondBackground,
       content: { type: "find-the-animals" },
     },
-    {
+    plainSectionsDictionary["statistics-about-biodiversity"] && {
       type: "regular",
       name: "statistics-about-biodiversity",
       content: {
         type: "plain",
         data: {
-          text: "So, just how biodiverse is the Amazon, and how much biodiversity do Indigenous peoples really protect?",
+          ...mapPlainData(
+            plainSectionsDictionary["statistics-about-biodiversity"],
+          ),
         },
       },
       illustrations: {
@@ -956,7 +953,12 @@ export function useGetDiscoverTheAmazonContent() {
         { type: "illustration", kind: "sitting-sloth" },
         {
           type: "plain",
-          data: { text: "<b>These numbers give us a better picture...</b>" },
+          data: {
+            ...mapPlainData(
+              plainSectionsDictionary["statistics-about-biodiversity"]
+                .subContent.data,
+            ),
+          },
         },
       ],
     },
@@ -965,15 +967,13 @@ export function useGetDiscoverTheAmazonContent() {
       name: "statistics-about-biodiversity-cards",
       content: { type: "statistics", data: { cards: statisticsCards ?? [] } },
     },
-    {
+    plainSectionsDictionary["memory-game-pre"] && {
       type: "regular",
       name: "memory-game-pre",
       content: {
         type: "plain",
         data: {
-          text: "Amazon biodiversity is so important, <b> but it is under threat! </b> ",
-          subText:
-            "Learn about the plants and animals whose home is disappearing with a Memory game.",
+          ...mapPlainData(plainSectionsDictionary["memory-game-pre"]),
         },
       },
       illustrations: {
@@ -1012,14 +1012,20 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    plainSectionsDictionary[
+      "what-happens-to-animals-when-rainforest-disappears"
+    ] && {
       type: "wavy",
       name: "what-happens-to-animals-when-rainforest-disappears",
       content: {
         type: "plain",
         data: {
           wideness: "md",
-          text: "What do you think happens to animals \n <b> when rainforest disappears?</b>",
+          ...mapPlainData(
+            plainSectionsDictionary[
+              "what-happens-to-animals-when-rainforest-disappears"
+            ],
+          ),
         },
       },
       illustrations: {
@@ -1061,6 +1067,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: [
         { type: "illustration", kind: "happy-sloth" },
+        // TODOK
         {
           type: "plain",
           data: {
@@ -1069,14 +1076,16 @@ export function useGetDiscoverTheAmazonContent() {
         },
       ],
     },
-    {
+    plainSectionsDictionary["rainforests-keep-our-planet-healthy"] && {
       type: "regular",
       name: "rainforests-keep-our-planet-healthy",
       className: "min-h-80",
       content: {
         type: "plain",
         data: {
-          text: "I see! <b>People around the world need a healthy rainforest</b>, just as much as my friends and I do!",
+          ...mapPlainData(
+            plainSectionsDictionary["rainforests-keep-our-planet-healthy"],
+          ),
         },
       },
       subContent: { type: "illustration", kind: "sad-sloth" },
@@ -1135,7 +1144,7 @@ export function useGetDiscoverTheAmazonContent() {
       },
     },
     { type: "divider", style: "dark" },
-    {
+    plainSectionsDictionary["climate-change-and-deforestation"] && {
       type: "regular",
       name: "climate-change-and-deforestation",
       backgroundColor: "#1E1F1B",
@@ -1146,19 +1155,21 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "2xl",
-          text: "I'm not sure what <q>climate change</q> and <q>deforestation</q> are. <b>Let's take a deeper look!</b>",
+          ...mapPlainData(
+            plainSectionsDictionary["climate-change-and-deforestation"],
+          ),
         },
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: floodsClimateChange34, caption: "Climate change" },
-          { image: deforestation34, caption: "Deforestation" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["climate-change-and-deforestation"]
+            ?.subContent.polaroids,
+        ),
       },
     },
     { type: "divider", style: "dark" },
-    {
+    plainSectionsDictionary["what-is-climate-change"] && {
       type: "regular",
       name: "what-is-climate-change",
       backgroundColor: "#1E1F1B",
@@ -1168,22 +1179,19 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "lg",
-          text: "What is climate change?",
-          subText:
-            "When we burn fossil fuels (like oil) we send greenhouse gasses (like carbon dioxide) into the air. These gasses heat out planet.",
+          ...mapPlainData(plainSectionsDictionary["what-is-climate-change"]),
         },
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: trash35, caption: "Trash" },
-          { image: industryPollution35, caption: "Industry" },
-          { image: transport35, caption: "Transport" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["what-is-climate-change"]?.subContent
+            .polaroids,
+        ),
       },
     },
     { type: "divider", style: "dark" },
-    {
+    plainSectionsDictionary["climate-change-effects"] && {
       type: "regular",
       name: "climate-change-effects",
       background: spatialPlanetEarth36,
@@ -1192,23 +1200,18 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "Climate change has all kinds of negative effects, including causing more dangerous storms, and making it harder to grow food!",
+          ...mapPlainData(plainSectionsDictionary["climate-change-effects"]),
         },
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          { image: flood36, caption: "Floods" },
-          {
-            image: desert36,
-            caption: "The hotter the planet is harder to live on!",
-            captionStyle: PolaroidCaptionStyle.wrapPreserveAspectRatio,
-          },
-          { image: snowstorms36, caption: "Snowstorms" },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["climate-change-effects"]?.subContent
+            .polaroids,
+        ),
       },
     },
-    {
+    plainSectionsDictionary["rainforest-is-a-carbon-sink"] && {
       type: "regular",
       name: "rainforest-is-a-carbon-sink",
       backgroundColor: "#F0F4EF", // complementary-100
@@ -1219,18 +1222,20 @@ export function useGetDiscoverTheAmazonContent() {
         type: "plain",
         data: {
           wideness: "xl",
-          text: "The rainforest is a <b>carbon sink</b>. It absorbs greenhouse gasses we send into the air, and Earth heats up less)",
+          ...mapPlainData(
+            plainSectionsDictionary["rainforest-is-a-carbon-sink"],
+          ),
         },
       },
       subContent: [
         {
           type: "polaroids",
-          polaroids: [
-            { image: industryPollution35 },
-            { image: rainforest37 },
-            { image: earth37 },
-          ],
+          polaroids: mapPolaroids(
+            plainSectionsDictionary["rainforest-is-a-carbon-sink"]?.subContent
+              .polaroids,
+          ),
         },
+        // TODOK
         {
           type: "plain",
           data: {
@@ -1241,14 +1246,14 @@ export function useGetDiscoverTheAmazonContent() {
         },
       ],
     },
-    {
+    plainSectionsDictionary["deforestation-effects"] && {
       type: "wavy",
       name: "deforestation-effects",
       content: {
         type: "plain",
         data: {
           wideness: "md",
-          text: "Scientists have learned that cutting down trees in the Amazon makes it less rainy in California, 4,000 miles away! Drought makes it harder to grow the food that feeds the U.S.",
+          ...mapPlainData(plainSectionsDictionary["deforestation-effects"]),
         },
       },
       illustrations: {
@@ -1284,21 +1289,23 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    plainSectionsDictionary["is-this-actor-deforesting-the-amazon"] && {
       type: "wavy",
       name: "is-this-actor-deforesting-the-amazon",
       content: {
         type: "plain",
         data: {
-          text: "Is this actor deforesting the<br/>Amazon?",
+          ...mapPlainData(
+            plainSectionsDictionary["is-this-actor-deforesting-the-amazon"],
+          ),
         },
       },
       subContent: {
         type: "postcard",
-        postcard: {
-          image: manOnBoat,
-          alt: "Man on boat",
-        },
+        postcard: mapPostcard(
+          plainSectionsDictionary["is-this-actor-deforesting-the-amazon"]
+            ?.subContent.postcard,
+        ),
       },
       illustrations: {
         topLeft: (
@@ -1313,21 +1320,23 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"] && {
       type: "regular",
       name: "is-this-actor-deforesting-the-amazon-2",
       content: {
         type: "plain",
         data: {
-          text: "Is this actor deforesting the<br/>Amazon 2?",
+          ...mapPlainData(
+            plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"],
+          ),
         },
       },
       subContent: {
         type: "postcard",
-        postcard: {
-          image: manOnBoat,
-          alt: "Man on boat",
-        },
+        postcard: mapPostcard(
+          plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"]
+            ?.subContent.postcard,
+        ),
       },
       illustrations: {
         bottomLeft: (
@@ -1376,18 +1385,16 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    plainSectionsDictionary["why-do-indigenous-people-work-with-rfus"] && {
       type: "regular",
       name: "why-do-indigenous-people-work-with-rfus",
       content: {
         type: "plain",
         data: {
-          text: "Indigenous peoples sure do a lot to protect the rainforest! If they already have solutions, <b>why do they work with Rainforest Foundation US?</b>",
-          subText:
-            "Before we can answer this question, we have to understand what everyday life in the Amazon rainforest is like!",
-          subTextColor: "text-neutral-dark-500",
+          ...mapPlainData(
+            plainSectionsDictionary["why-do-indigenous-people-work-with-rfus"],
+          ),
           subTextSize: "xl",
-          textAlign: "left",
           wideness: "custom",
           customWidth: "40.75rem",
           tracking: "-0.02em",
@@ -1405,22 +1412,46 @@ export function useGetDiscoverTheAmazonContent() {
       },
       subContent: {
         type: "polaroids",
-        polaroids: [
-          {
-            image: littleGirls,
-            caption: "Learn about life in the Amazon",
-            captionStyle: PolaroidCaptionStyle.wrap,
-          },
-
-          {
-            image: rfusTeam,
-            caption: "Learn how RFUS supports indigenous peoples!",
-            captionStyle: PolaroidCaptionStyle.wrap,
-          },
-        ],
+        polaroids: mapPolaroids(
+          plainSectionsDictionary["why-do-indigenous-people-work-with-rfus"]
+            ?.subContent.polaroids,
+        ),
       },
     },
   ];
 
   return discoverTheAmazonSections;
+}
+
+function mapPlainData(plainData: PlainData | undefined) {
+  return {
+    caption: plainData?.caption ?? "",
+    captionAlign: plainData?.captionAlign as "left" | "center" | "right",
+    title: plainData?.title ?? "",
+    titleAlign: plainData?.titleAlign as "left" | "center" | "right",
+    text: plainData?.text ?? "",
+    textAlign:
+      plainData?.textAlign ?? ("center" as "left" | "center" | "right"),
+    subText: plainData?.subText ?? "",
+  };
+}
+
+function mapPostcard(postcard: PostcardData | undefined) {
+  return {
+    image: postcard?.image ?? "",
+    alt: postcard?.alt ?? "",
+    description: postcard?.description ?? "",
+  };
+}
+
+function mapPolaroids(polaroids: PolaroidData[] | undefined) {
+  return (
+    polaroids?.map((polaroid) => ({
+      image: urlFor(polaroid.image).url(),
+      caption: polaroid.caption,
+      captionStyle: polaroid.captionStyle,
+      description: polaroid.description,
+      imageAlignment: polaroid.imageAlignment,
+    })) ?? []
+  );
 }

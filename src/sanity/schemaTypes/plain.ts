@@ -70,7 +70,6 @@ export const PlainSchemaType = defineType({
       options: {
         list: ["left", "center", "right"],
       },
-      initialValue: "left",
     }),
     defineField({
       name: "title",
@@ -84,13 +83,13 @@ export const PlainSchemaType = defineType({
       options: {
         list: ["left", "center", "right"],
       },
-      initialValue: "left",
     }),
     defineField({
       name: "text",
       title: "Text",
       type: "array",
       of: [{ type: "block", marks: { annotations: defaultMarkAnnotations } }],
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "textAlign",
@@ -99,7 +98,6 @@ export const PlainSchemaType = defineType({
       options: {
         list: ["left", "center", "right"],
       },
-      initialValue: "left",
     }),
     defineField({
       name: "subText",
@@ -169,9 +167,12 @@ interface BasePlainData {
   name?: SectionNames;
   customName?: string;
   text: TypedObject;
-  textAlign: "left" | "center" | "right";
-  caption: string;
-  subText: string;
+  textAlign?: "left" | "center" | "right";
+  caption?: string;
+  captionAlign?: "left" | "center" | "right";
+  title?: string;
+  titleAlign?: "left" | "center" | "right";
+  subText?: string;
 }
 
 export interface PlainData extends BasePlainData {

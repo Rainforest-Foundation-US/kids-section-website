@@ -142,13 +142,13 @@ type PolaroidData = {
 type SubContent =
   | {
       type: "postcard";
-      postcard: PostcardData;
+      postcard?: PostcardData;
       polaroid?: PolaroidData;
       shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "polaroids";
-      polaroids: PolaroidData[];
+      polaroids?: PolaroidData[];
       shouldShowFlipIconReminder?: boolean;
     }
   | { type: "illustration"; kind: PolymorphicIllustrationOptions["kind"] }
@@ -329,6 +329,10 @@ function PolymorphicSubContent({
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   if (subContent.type === "postcard") {
+    if (!subContent.postcard) {
+      return null;
+    }
+
     return (
       <div className={clsx("relative mt-12", className)}>
         <div
@@ -356,6 +360,10 @@ function PolymorphicSubContent({
   }
 
   if (subContent.type === "polaroids") {
+    if (!subContent.polaroids) {
+      return null;
+    }
+
     return (
       <ul className="mt-12 flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-8">
         {subContent.polaroids.map((polaroid, i) => (

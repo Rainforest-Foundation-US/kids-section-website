@@ -10,6 +10,8 @@ import { StoryCompositionData } from "../schemaTypes/storyComposition";
 import { PickOptionMultiPageGameData } from "../schemaTypes/pickOptionMultiPageGame";
 import { FillInTheBlankGameData } from "../schemaTypes/fillInTheBlankGame";
 import { FillInTheBlankMultiPageGameData } from "../schemaTypes/fillInTheBlankMultiPageGame";
+import { PlainData } from "../schemaTypes/plain";
+import { LocateInMapData } from "../schemaTypes/locateInMap";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -33,6 +35,7 @@ const plainDataQuery = groq`
   {
     name,
     customName,
+    contentType,
     text,
     textAlign,
     caption,
@@ -321,4 +324,39 @@ export async function getStoryComposition() {
   );
 
   return storyComposition;
+}
+
+export async function getPlainData() {
+  const plain = await client.fetch<PlainData[]>(
+    groq`*[_type == "plain"]${plainDataQuery}`,
+  );
+
+  return plain;
+}
+
+export async function getLocateInMaps() {
+  const locateInMaps = await client.fetch<LocateInMapData[]>(
+    groq`*[_type == "locateInMap"]{
+      _id,
+      name,
+      background,
+      backgroundColor,
+      defaultHintContent,
+      question,
+      questionPosition,
+      questionIllustration,
+      center,
+      scale,
+      highlightedCountries,
+      secondaryCountries,
+      shouldApplyLGVignette,
+      markers[]{
+        position,
+        text,
+        orientation,
+      }
+    }`,
+  );
+
+  return locateInMaps;
 }
