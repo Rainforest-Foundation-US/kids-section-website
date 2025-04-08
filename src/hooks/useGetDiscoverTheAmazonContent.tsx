@@ -9,6 +9,7 @@ import {
   getFillInTheBlankGames,
   getFillInTheBlankMultiPageGames,
   getPlainData,
+  getLocateInMaps,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -70,6 +71,7 @@ import { PlainData } from "@/sanity/schemaTypes/plain";
 import { urlFor } from "@/sanity/lib/image";
 import { PolaroidData } from "@/sanity/schemaTypes/polaroid";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
+import { LocateInMapData } from "@/sanity/schemaTypes/locateInMap";
 
 // TODOK: use this type as a name of each schema type
 export const sectionNames = [
@@ -220,6 +222,9 @@ export function useGetDiscoverTheAmazonContent() {
   const [fillInTheBlankMultiPageGames, setFillInTheBlankMultiPageGames] =
     React.useState<FillInTheBlankMultiPageGameData[]>();
   const [plainSections, setPlainSections] = React.useState<PlainData[]>([]);
+  const [locateInMapSections, setLocateInMapSections] = React.useState<
+    LocateInMapData[]
+  >([]);
 
   React.useEffect(() => {
     async function getData() {
@@ -233,6 +238,7 @@ export function useGetDiscoverTheAmazonContent() {
       const fillInTheBlankMultiPageGamesFromServer =
         await getFillInTheBlankMultiPageGames();
       const plainSectionsFromServer = await getPlainData();
+      const locateInMapSectionsFromServer = await getLocateInMaps();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
@@ -242,6 +248,7 @@ export function useGetDiscoverTheAmazonContent() {
       setFillInTheBlankGames(fillInTheBlankGamesFromServer);
       setFillInTheBlankMultiPageGames(fillInTheBlankMultiPageGamesFromServer);
       setPlainSections(plainSectionsFromServer);
+      setLocateInMapSections(locateInMapSectionsFromServer);
     }
 
     getData();
@@ -302,6 +309,16 @@ export function useGetDiscoverTheAmazonContent() {
         return acc;
       },
       {} as Record<string, PlainData>,
+    );
+
+  const locateInMapSectionsDictionary = locateInMapSections
+    .filter((section) => section.name)
+    .reduce(
+      (acc, section) => {
+        acc[section.name!] = section;
+        return acc;
+      },
+      {} as Record<string, LocateInMapData>,
     );
 
   const discoverTheAmazonSections: (SectionWithContent | undefined)[] = [
@@ -403,61 +420,10 @@ export function useGetDiscoverTheAmazonContent() {
         postcard: { image: fillInTheBlank2, alt: "Rainforest" },
       },
     },
-    {
-      type: "regular",
-      name: "three-most-important-rainforests",
-      background: null,
-      defaultHintContent: {
-        hint: "Rainforest Foundation US works in the Amazon",
-      },
-      content: {
-        type: "locate-in-map",
-        data: {
-          question: "The three most important rainforests are:",
-          center: [0, 20],
-          scale: 125,
-          highlightedCountries: [
-            "VEN",
-            "COL",
-            "BRA",
-            "PER",
-            "ECU",
-            "GUY",
-            "SUR",
-            "CMR",
-            "GAB",
-            "COG",
-            "COD",
-            "CAF",
-            "IDN",
-          ],
-          secondaryCountries: ["USA"],
-          shouldApplyLGVignette: false,
-          markers: [
-            {
-              position: [-110, 46],
-              text: "United States",
-              orientation: "top-right",
-            },
-            {
-              position: [-81, -1],
-              text: "The Amazon Basin, in South America",
-              orientation: "left",
-            },
-            {
-              position: [10, 7],
-              text: "The Congo Basin, in Subsaharan Africa",
-              orientation: "top-left",
-            },
-            {
-              position: [105, -6],
-              text: "The Indonesian Archipelago",
-              orientation: "bottom-left",
-            },
-          ],
-        },
-      },
-    },
+    locateInMapSectionsDictionary["three-most-important-rainforests"] &&
+      mapLocateInMap(
+        locateInMapSectionsDictionary["three-most-important-rainforests"],
+      ),
     plainSectionsDictionary["why-no-rainforests-in-antarctica"] && {
       type: "wavy",
       name: "why-no-rainforests-in-antarctica",
@@ -628,39 +594,20 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
-      type: "regular",
-      name: "half-of-the-worlds-rainforests-are-in-the-amazon",
-      background: null,
-      backgroundColor: "#F0F4EF",
-      content: {
-        type: "locate-in-map",
-        data: {
-          question:
-            "Half of the world's remaining rainforest <b>is in the Amazon</b>.",
-          questionPosition: "left",
-          questionIllustration: "sitting-sloth",
-          center: [-88, -20],
-          scale: 280,
-          highlightedCountries: [
-            "VEN",
-            "COL",
-            "BRA",
-            "PER",
-            "ECU",
-            "GUY",
-            "SUR",
-            "CMR",
-            "GAB",
-            "COG",
-            "COD",
-            "CAF",
-            "IDN",
-            "FRA",
-          ],
-        },
-      },
-    },
+    locateInMapSectionsDictionary[
+      "half-of-the-worlds-rainforests-are-in-the-amazon"
+    ] &&
+      mapLocateInMap(
+        locateInMapSectionsDictionary[
+          "half-of-the-worlds-rainforests-are-in-the-amazon"
+        ],
+      ),
+    locateInMapSectionsDictionary[
+      "half-of-the-worlds-rainforests-are-in-the-amazon"
+    ] &&
+      mapLocateInMap(
+        locateInMapSectionsDictionary["the-whole-united-states-in-the-amazon"],
+      ),
     {
       type: "regular",
       name: "the-whole-united-states-in-the-amazon",
@@ -1454,4 +1401,33 @@ function mapPolaroids(polaroids: PolaroidData[] | undefined) {
       imageAlignment: polaroid.imageAlignment,
     })) ?? []
   );
+}
+
+function mapLocateInMap(locateInMap: LocateInMapData) {
+  return {
+    type: "regular" as const,
+    name: locateInMap?.name,
+    background: locateInMap?.background
+      ? urlFor(locateInMap.background).url()
+      : null,
+    backgroundColor: locateInMap?.backgroundColor,
+    defaultHintContent: locateInMap?.defaultHintContent,
+    content: {
+      type: "locate-in-map" as const,
+      data: mapLocateInMapData(locateInMap),
+    },
+  };
+}
+
+function mapLocateInMapData(locateInMapData: LocateInMapData) {
+  return {
+    question: locateInMapData?.question ?? "",
+    questionPosition: locateInMapData?.questionPosition ?? "top",
+    questionIllustration:
+      locateInMapData?.questionIllustration ?? "sitting-sloth",
+    center: locateInMapData?.center ?? [0, 0],
+    scale: locateInMapData?.scale ?? 1,
+    highlightedCountries: locateInMapData?.highlightedCountries ?? [],
+    secondaryCountries: locateInMapData?.secondaryCountries ?? [],
+  };
 }

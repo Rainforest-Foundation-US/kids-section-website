@@ -337,7 +337,6 @@ export async function getPlainData() {
 export async function getLocateInMaps() {
   const locateInMaps = await client.fetch<LocateInMapData[]>(
     groq`*[_type == "locateInMap"]{
-      _id,
       name,
       background,
       backgroundColor,

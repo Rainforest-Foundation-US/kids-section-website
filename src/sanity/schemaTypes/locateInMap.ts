@@ -1,12 +1,16 @@
 import { defineField, defineType } from "sanity";
-import { DocumentIcon } from "@sanity/icons";
+import { MarkerIcon } from "@sanity/icons";
 import { MapWithMarkersOptions } from "@/components/content/maps/map-with-markers-component";
 import { SanityImageObject } from "@sanity/image-url/lib/types/types";
+import {
+  sectionNames,
+  SectionName,
+} from "@/hooks/useGetDiscoverTheAmazonContent";
 
 export const LocateInMapSchemaType = defineType({
   name: "locateInMap",
   title: "Locate In Map",
-  icon: DocumentIcon,
+  icon: MarkerIcon,
   type: "document",
   fields: [
     defineField({
@@ -14,6 +18,9 @@ export const LocateInMapSchemaType = defineType({
       title: "Name",
       type: "string",
       validation: (rule) => rule.required(),
+      options: {
+        list: sectionNames,
+      },
     }),
     defineField({
       name: "background",
@@ -162,6 +169,14 @@ export const LocateInMapSchemaType = defineType({
 
 export interface LocateInMapData
   extends Omit<MapWithMarkersOptions, "onSelectCountry"> {
+  name: SectionName;
+  question: string;
+  questionPosition: "top" | "left" | "right";
+  questionIllustration:
+    | "sitting-sloth"
+    | "waving-sloth"
+    | "happy-sloth"
+    | "sad-sloth";
   background: SanityImageObject;
   backgroundColor: string;
   defaultHintContent: {
