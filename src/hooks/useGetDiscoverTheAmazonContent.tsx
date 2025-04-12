@@ -602,45 +602,10 @@ export function useGetDiscoverTheAmazonContent() {
           "half-of-the-worlds-rainforests-are-in-the-amazon"
         ],
       ),
-    locateInMapSectionsDictionary[
-      "half-of-the-worlds-rainforests-are-in-the-amazon"
-    ] &&
+    locateInMapSectionsDictionary["the-whole-united-states-in-the-amazon"] &&
       mapLocateInMap(
         locateInMapSectionsDictionary["the-whole-united-states-in-the-amazon"],
       ),
-    {
-      type: "regular",
-      name: "the-whole-united-states-in-the-amazon",
-      background: null,
-      backgroundColor: "#F0F4EF",
-      content: {
-        type: "locate-in-map",
-        data: {
-          question:
-            "Wow, <b>the whole United States</b> can fit inside the Amazon!",
-          questionPosition: "left",
-          questionIllustration: "sitting-sloth",
-          center: [-88, -20],
-          scale: 280,
-          highlightedCountries: [
-            "VEN",
-            "COL",
-            "BRA",
-            "PER",
-            "ECU",
-            "GUY",
-            "SUR",
-            "CMR",
-            "GAB",
-            "COG",
-            "COD",
-            "CAF",
-            "IDN",
-            "FRA",
-          ],
-        },
-      },
-    },
     theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame && {
       type: "regular",
       name: "the-amazon-spreads-across-multiple-countries",
