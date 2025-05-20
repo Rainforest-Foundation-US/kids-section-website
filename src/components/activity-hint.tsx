@@ -32,7 +32,9 @@ interface ActivityHintProps {
   hintPosition: "start" | "center" | "end";
   hintPositioning?: "absolute" | "relative";
   hintSize: "xs" | "sm" | "md" | "lg" | "xl";
+  hintClassName?: string;
   textAlign?: "left" | "center" | "right";
+  slothClassName?: string;
 }
 
 /**
@@ -44,6 +46,8 @@ export function ActivityHint({
   textAlign = "center",
   hintPositioning = "relative",
   hintData,
+  hintClassName,
+  slothClassName,
   ...props
 }: ActivityHintProps) {
   const content = hintData.hint && (
@@ -77,6 +81,7 @@ export function ActivityHint({
         textAlign === "left" && "text-left",
         textAlign === "center" && "text-center [text-wrap:balance]",
         textAlign === "right" && "text-right",
+        hintClassName,
       )}
     >
       {hintData.hint}
@@ -100,7 +105,9 @@ export function ActivityHint({
       )}
     >
       {!props.noSloth && (
-        <RoundSlothIllustration className="shadow-app-lg shadow-shadow-gray" />
+        <RoundSlothIllustration
+          className={clsx("shadow-app-lg shadow-shadow-gray", slothClassName)}
+        />
       )}
 
       {props.noAnimation ? (

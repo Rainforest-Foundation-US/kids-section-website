@@ -86,7 +86,7 @@ export function NavBar({ styles }: { styles?: string }) {
             expanded
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none translate-y-[-100vh] opacity-0 transition-none",
-            "absolute inset-x-0 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl rounded-tr-none bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:bottom-auto xs:left-auto xs:right-0 xs:p-12 lg:hidden",
+            "absolute inset-x-0 right-1 top-[calc(100%_-_1rem)] z-10 space-y-2 rounded-xl bg-neutral-dark-700 p-6 text-center transition-opacity duration-150 xs:bottom-auto xs:left-auto xs:p-12 lg:hidden",
           )}
           aria-hidden={!expanded}
         >

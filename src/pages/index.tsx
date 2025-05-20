@@ -81,7 +81,7 @@ export default function Home() {
               </header>
 
               {homePageData ? (
-                <div className="space-y-4 text-center xs:space-x-4">
+                <div className="space-y-4 text-center 2xs:flex 2xs:flex-col xs:space-x-4 md:block">
                   <AppLink
                     className="inline-block"
                     variant="primary"
@@ -131,7 +131,7 @@ export default function Home() {
           </div>
 
           {homePageData?.videoUrl ? (
-            <div className="relative z-20 -mt-[calc(542px_/_2)]">
+            <div className="relative z-20 z-50 -mt-[calc(542px_/_2)]">
               <div className="relative mx-2 flex flex-1 flex-col items-center justify-center md:mx-10">
                 <div className="relative z-10 w-full max-w-[814px] border-1 border-neutral-600 bg-neutral-100 p-2 lg:p-4">
                   <div className="relative aspect-video w-full flex-col shadow-app-lg shadow-shadow-gray">
