@@ -6,26 +6,37 @@ import { RegularSection } from "@/components/sections/regular-section";
 import { QANav } from "@/components/q-and-a/nav";
 import { useGetQAndAContent } from "@/components/q-and-a/useGetContent";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import React from "react";
 import PortableTextRenderer from "@/components/portable-text-renderer";
+import { Modal } from "@/components/modal";
 
 export default function QAndARoute() {
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [activeQuestionI, setActiveQuestionI] = useState(0);
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  const [activeQuestionI, setActiveQuestionI] = React.useState(-1);
+  const [isMobile, setIsMobile] = React.useState(true);
+  const [isClient, setIsClient] = React.useState(false);
 
   const qAndAContent = useGetQAndAContent();
   const activeQuestion = qAndAContent[activeQuestionI] ?? null;
 
+  React.useEffect(() => {
+    setIsClient(true);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Clean up
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const navClick = (index: number) => {
     setActiveQuestionI(index);
-    // Only scroll into view on mobile devices
-    if (typeof window !== "undefined" && window.mobileCheck?.()) {
-      mainRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "nearest",
-      });
-    }
   };
 
   return (
@@ -45,40 +56,51 @@ export default function QAndARoute() {
               itemClick={navClick}
             />
 
-            <div className="flex flex-1 flex-col space-y-6 pt-6 lg:flex-row lg:space-y-0">
-              {activeQuestion && (
-                <>
-                  <span className="inline-flex max-w-sm flex-col space-y-6">
-                    <span className="ml-8 inline-flex w-min lg:ml-16">
-                      <ActivityHint
-                        noSloth
-                        noAnimation
-                        hintSize="md"
-                        hintPosition="center"
-                        hintData={{
-                          hint: activeQuestion.hint,
-                          status: ActivityHintStatus.CORRECT,
-                        }}
-                      />
+            {!isClient ? null : isMobile ? (
+              <Modal
+                isOpen={Boolean(activeQuestion)}
+                onClose={() => setActiveQuestionI(-1)}
+                title={activeQuestion?.answer}
+                hint={activeQuestion?.hint}
+              >
+                <PortableTextRenderer content={activeQuestion?.description} />
+              </Modal>
+            ) : (
+              <div className="flex flex-1 flex-col space-y-6 pt-6 lg:flex-row lg:space-y-0">
+                {activeQuestion && (
+                  <>
+                    <span className="inline-flex max-w-sm flex-col">
+                      <span className="ml-[5%] inline-flex w-min">
+                        <ActivityHint
+                          noSloth
+                          noAnimation
+                          hintSize="md"
+                          hintPosition="center"
+                          hintData={{
+                            hint: activeQuestion.hint,
+                            status: ActivityHintStatus.CORRECT,
+                          }}
+                        />
+                      </span>
+                      <WavingSlothIllustration className="w-[90%] lg:w-full" />
                     </span>
-                    <WavingSlothIllustration />
-                  </span>
 
-                  <section
-                    className="space-y-6 px-8 pb-8 lg:max-w-5xl lg:px-16"
-                    ref={mainRef}
-                  >
-                    <h2 className="whitespace-pre-line text-3xl font-bold text-neutral-dark-800">
-                      {activeQuestion.answer}
-                    </h2>
+                    <section
+                      className="space-y-6 px-8 pb-8 lg:max-w-5xl lg:px-16"
+                      ref={mainRef}
+                    >
+                      <h2 className="whitespace-pre-line text-3xl font-bold text-neutral-dark-800">
+                        {activeQuestion.answer}
+                      </h2>
 
-                    <PortableTextRenderer
-                      content={activeQuestion.description}
-                    />
-                  </section>
-                </>
-              )}
-            </div>
+                      <PortableTextRenderer
+                        content={activeQuestion.description}
+                      />
+                    </section>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </RegularSection>
       </main>

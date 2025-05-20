@@ -4,7 +4,7 @@ import { Poppins } from "next/font/google";
 import Head from "next/head";
 import { Provider } from "jotai";
 
-const fontFamily = Poppins({
+export const fontFamily = Poppins({
   subsets: ["latin"],
   variable: "--app-font",
   weight: ["100", "200", "300", "400", "500", "600", "700"],
