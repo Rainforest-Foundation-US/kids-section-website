@@ -631,7 +631,7 @@ export function ContentPager(props: {
             {index > 0 && (
               <GoToButton
                 className={clsx(
-                  "absolute right-[calc(50%+10rem)] top-[40%]",
+                  "absolute right-[calc(50%+5rem)] top-[40%] md:right-[calc(50%+10rem)]",
                   props.leftArrowClassName,
                 )}
                 key="left"
@@ -644,7 +644,7 @@ export function ContentPager(props: {
             {!isLastAnswer && (
               <GoToButton
                 className={clsx(
-                  "absolute left-[calc(50%+10rem)] top-[40%]",
+                  "absolute left-[calc(50%+5rem)] top-[40%] md:left-[calc(50%+10rem)]",
                   props.rightArrowClassName,
                 )}
                 key="right"
@@ -671,7 +671,7 @@ export function ContentPager(props: {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
-            className={clsx("mb-4 h-[30vh]", props.mainContentClassName)}
+            className={clsx("mb-4", props.mainContentClassName)}
           >
             <PolymorphicContent
               name={props.name}
@@ -684,7 +684,7 @@ export function ContentPager(props: {
                 <PolymorphicSubContent
                   key={i}
                   subContent={subContent}
-                  className="ml-10 w-11/12"
+                  className="mx-auto mt-5 w-11/12 md:mt-8"
                 />
               ))}
           </motion.div>

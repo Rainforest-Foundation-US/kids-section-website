@@ -18,7 +18,7 @@ import {
 } from "@/components/illustrations/activities-illustrations";
 import {
   bottomLeftIllustrationStyles,
-  rightIllustrationStyles,
+  bottomRightIllustrationStyles,
 } from "@/styles/illustration-styles";
 import { StoryCompositionData } from "@/sanity/schemaTypes/storyComposition";
 
@@ -95,21 +95,23 @@ export default function StoriesRoute() {
         <RegularSection fullScreen textColorStyle="dark" name="stories">
           <NavBar />
 
-          <SectionContent>
+          <SectionContent className="justify-start">
             {/* Bottom left illustration */}
             <MonkeyInABushIllustration
               className={bottomLeftIllustrationStyles}
             />
 
             {/* Right leaves illustration */}
-            <RightLeavesIllustration className={rightIllustrationStyles} />
+            <RightLeavesIllustration
+              className={bottomRightIllustrationStyles}
+            />
 
             <ContentPager
               name="stories"
               contentList={pageContent}
-              mainContentClassName="h-[50vh] overflow-y-auto overflow-x-hidden"
-              leftArrowClassName="top-1/3"
-              rightArrowClassName="top-1/3"
+              mainContentClassName="mb-24 bg-primary-300 border-2 border-primary-600 bg-opacity-60 rounded-lg p-4 pb-12"
+              leftArrowClassName="md:top-1/3 top-[20%]"
+              rightArrowClassName="md:top-1/3 top-[20%]"
               isStories
             />
           </SectionContent>
