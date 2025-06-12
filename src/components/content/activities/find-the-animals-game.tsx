@@ -191,7 +191,7 @@ export function FindTheAnimalsGame() {
             },
             place: animal.tooltipPlace,
             content:
-              "Can you spot all 20 of my friends? Click on each animal to reveal its name and mark it as found!",
+              "Click on my friends to reveal their names! Can you find all 20?",
           });
           isLoadedRef.current = true;
         }

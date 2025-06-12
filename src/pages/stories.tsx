@@ -110,9 +110,6 @@ export default function StoriesRoute() {
               name="stories"
               contentList={pageContent}
               mainContentClassName="mb-24 bg-primary-300 border-2 border-primary-600 bg-opacity-60 rounded-lg p-4 pb-12"
-              leftArrowClassName="md:top-1/3 top-[20%]"
-              rightArrowClassName="md:top-1/3 top-[20%]"
-              isStories
             />
           </SectionContent>
         </RegularSection>

@@ -84,8 +84,10 @@ export function Congratulations({ name }: { name: SectionNames }) {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h1 className="text-white mb-4 text-6xl font-bold">Congratulations!</h1>
-        <p className="text-white mb-6 text-2xl">
+        <h1 className="text-white mb-4 text-4xl font-bold md:text-6xl">
+          Congratulations!
+        </h1>
+        <p className="text-white mb-6 text-2xl md:text-4xl">
           Great job on finishing the game!
         </p>
         <AppButton

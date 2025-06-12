@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function StatisticsScreen({ cards }: { cards: StatisticsCard[] }) {
   return (
-    <div className="flex flex-col flex-wrap gap-8 px-6 py-8 md:flex-row">
+    <div className="flex flex-col flex-wrap justify-center gap-8 px-6 py-8 md:flex-row">
       {cards?.map((card) => (
         <div
           key={card.title[0]._key}

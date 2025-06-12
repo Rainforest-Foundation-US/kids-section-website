@@ -334,7 +334,13 @@ function PolymorphicSubContent({
     }
 
     return (
-      <div className={clsx("relative mt-12", className)}>
+      <div
+        className={clsx(
+          "relative",
+          subContent.shouldShowFlipIconReminder ? "mt-40" : "mt-12",
+          className,
+        )}
+      >
         <div
           onMouseEnter={() => setIsMouseOver(true)}
           onMouseLeave={() => setIsMouseOver(false)}
@@ -347,8 +353,9 @@ function PolymorphicSubContent({
         {subContent.polaroid && (
           <Polaroid
             className={clsx(
-              "absolute bottom-0 right-0 top-0 my-auto w-[14rem] rotate-[6.5deg] transition-all duration-150 hover:rotate-0 hover:scale-105 lg:w-[18rem] lg:translate-x-[50%]",
-              isMouseOver && "right-[-50%] lg:right-[-40%] xl:right-[-25%]",
+              "absolute bottom-0 right-0 top-0 my-auto w-36 rotate-[6.5deg] transition-all duration-150 hover:rotate-0 hover:scale-105 sm:w-56 lg:w-72 lg:translate-x-[50%]",
+              isMouseOver &&
+                "right-[-65%] sm:right-[-50%] lg:right-[-40%] xl:right-[-25%]",
             )}
             src={subContent.polaroid.image}
             caption={subContent.polaroid.caption}
@@ -590,9 +597,6 @@ export function ContentPager(props: {
   initialIndex?: number;
   noSloth?: boolean;
   mainContentClassName?: string;
-  leftArrowClassName?: string;
-  rightArrowClassName?: string;
-  isStories?: boolean;
 }) {
   const congratulations = useAtomValue(congratulationsAtom);
   const [index, setIndex] = useState(props.initialIndex ?? 0);
@@ -625,38 +629,29 @@ export function ContentPager(props: {
 
   return (
     <>
-      <div className="relative inset-y-0 z-10 mb-4 flex items-center">
-        {props.isStories && (
-          <>
-            {index > 0 && (
-              <GoToButton
-                className={clsx(
-                  "absolute right-[calc(50%+5rem)] top-[40%] md:right-[calc(50%+10rem)]",
-                  props.leftArrowClassName,
-                )}
-                key="left"
-                direction="left"
-                disabled={false}
-                onClick={goBack}
-              />
-            )}
-
-            {!isLastAnswer && (
-              <GoToButton
-                className={clsx(
-                  "absolute left-[calc(50%+5rem)] top-[40%] md:left-[calc(50%+10rem)]",
-                  props.rightArrowClassName,
-                )}
-                key="right"
-                direction="right"
-                disabled={false}
-                onClick={goNext}
-              />
-            )}
-          </>
-        )}
-
+      <div className="relative inset-y-0 z-10 mb-4 flex items-start gap-4 lg:gap-8">
+        <GoToButton
+          className={clsx(
+            "mt-[10%] lg:mt-[15%]",
+            index > 0 ? "visible" : "invisible",
+          )}
+          key="left"
+          direction="left"
+          disabled={false}
+          onClick={goBack}
+        />
         <ControlledActivityHint name={props.name} noSloth={props.noSloth} />
+
+        <GoToButton
+          className={clsx(
+            "mt-[10%] lg:mt-[15%]",
+            !isLastAnswer ? "visible" : "invisible",
+          )}
+          key="right"
+          direction="right"
+          disabled={false}
+          onClick={goNext}
+        />
       </div>
 
       <div
@@ -689,36 +684,6 @@ export function ContentPager(props: {
               ))}
           </motion.div>
         </AnimatePresence>
-
-        {!props.isStories && (
-          <>
-            {index > 0 && (
-              <GoToButton
-                className={clsx(
-                  "absolute right-[calc(50%+26rem)] top-[40%]",
-                  props.leftArrowClassName,
-                )}
-                key="left"
-                direction="left"
-                disabled={false}
-                onClick={goBack}
-              />
-            )}
-
-            {!isLastAnswer && (
-              <GoToButton
-                className={clsx(
-                  "absolute left-[calc(50%+26rem)] top-[40%]",
-                  props.rightArrowClassName,
-                )}
-                key="right"
-                direction="right"
-                disabled={false}
-                onClick={goNext}
-              />
-            )}
-          </>
-        )}
       </div>
     </>
   );

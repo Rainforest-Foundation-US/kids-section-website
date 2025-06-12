@@ -8,6 +8,7 @@ import clsx from "@/utils/clsx";
 import { congratulationsAtom } from "@/components/congratulations";
 import { useAtom } from "jotai";
 import { usePlaySounds } from "@/hooks/usePlaySound";
+import { useIsMediumScreen } from "@/hooks/use-media-query";
 
 interface MemoryCard {
   id?: string;
@@ -127,7 +128,7 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         Memory Game
       </h1>
 
-      <div className="mx-auto mt-7 grid max-w-full grid-cols-6 gap-5 xl:max-w-[80%] xl:px-12 2xl:max-w-[50%]">
+      <div className="mx-auto mt-7 grid max-w-full grid-cols-3 gap-2 md:grid-cols-6 md:gap-5 lg:max-w-4xl xl:max-w-[80%] 2xl:max-w-[50%]">
         {localCards.map((card, index) => (
           <Card
             key={card.id}
@@ -170,6 +171,7 @@ function Card({
   handleChoice,
 }: CardProps) {
   const [shouldRenderText, setShouldRenderText] = React.useState(false);
+  const isMediumScreen = useIsMediumScreen();
 
   React.useEffect(() => {
     if (flipped) {
@@ -187,10 +189,21 @@ function Card({
     handleChoice(card);
   }
 
-  const textPositionClass = index % 2 === 0 ? "bottom-6" : "bottom-2";
+  const isMiddleColumn = index % 3 === 1;
+  let textPositionClass;
+  if (!isMediumScreen) {
+    textPositionClass = !isMiddleColumn ? "bottom-4" : "bottom-1";
+  } else {
+    textPositionClass = index % 2 === 0 ? "bottom-5 " : "bottom-2";
+  }
 
   return (
-    <div className="relative even:pt-3">
+    <div
+      className={clsx(
+        "relative md:even:pt-3",
+        !isMediumScreen && isMiddleColumn && "pt-3",
+      )}
+    >
       <div className="cursor-pointer">
         <Image
           src={card.image}

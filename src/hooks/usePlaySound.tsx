@@ -24,12 +24,14 @@ export function usePlaySounds() {
     }
 
     return () => {
-      Object.values(sounds.current).forEach((sound) => {
-        if (sound) {
-          sound.pause();
-          sound.currentTime = 0;
-        }
-      });
+      if (sounds.current.correct) {
+        sounds.current.correct.pause();
+        sounds.current.correct.currentTime = 0;
+      }
+      if (sounds.current.incorrect) {
+        sounds.current.incorrect.pause();
+        sounds.current.incorrect.currentTime = 0;
+      }
     };
   }, []);
 

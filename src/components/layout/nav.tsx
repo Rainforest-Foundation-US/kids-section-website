@@ -28,7 +28,7 @@ export function NavBar({ styles }: { styles?: string }) {
   return (
     <header
       className={clsx(
-        "relative z-50 flex flex-row justify-between border-b-1 border-neutral-500 px-6 pb-2 pt-6",
+        "relative z-[99999] flex flex-row justify-between border-b-1 border-neutral-500 px-6 pb-2 pt-6",
         styles,
       )}
     >

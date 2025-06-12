@@ -14,7 +14,7 @@ const AnimatedDiv = animated("div");
 export function LearningPath() {
   const { onGoToSection } = useHomeSectionNavigation();
   const [containerRef, size] = useMeasure<HTMLDivElement>();
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [learningPath, setLearningPath] = React.useState<
     { id: SectionName; title: string }[]
@@ -99,7 +99,7 @@ export function LearningPath() {
     <AnimatedDiv
       role="menu"
       className={clsx(
-        "fixed right-10 overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.8)] shadow-app-lg shadow-shadow-gray",
+        "fixed right-[10px] overflow-hidden rounded-2xl border-1 border-neutral-600 bg-[rgba(250,245,238,0.95)] shadow-app-lg shadow-shadow-gray lg:right-9",
         isScrolled ? "top-[10px]" : "top-[110px]",
       )}
       style={learningPathStyle}
