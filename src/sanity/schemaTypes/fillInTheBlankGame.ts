@@ -1,6 +1,9 @@
 import { SectionNames } from "@/components/content/content";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { type TextColor, textColorList } from "../lib/colors";
+import { PolaroidData } from "./polaroid";
+import { PostcardData } from "./postcard";
 
 export const FillInTheBlankGameSchemaType = defineType({
   name: "fillInTheBlankGame",
@@ -71,15 +74,11 @@ export const FillInTheBlankGameSchemaType = defineType({
       type: "string",
     }),
     defineField({
-      name: "textColorStyle",
-      title: "Text Color Style",
-      type: "string",
+      name: "textColor",
+      title: "Text Color",
+      type: "color",
       options: {
-        list: [
-          { title: "Primary", value: "primary" },
-          { title: "Dark", value: "dark" },
-          { title: "Light", value: "light" },
-        ],
+        colorList: textColorList,
       },
     }),
     defineField({
@@ -152,6 +151,27 @@ export const FillInTheBlankGameSchemaType = defineType({
       type: "string",
       initialValue: "",
     }),
+    defineField({
+      name: "subContent",
+      title: "Sub Content",
+      type: "object",
+      fields: [
+        defineField({
+          name: "postcard",
+          title: "Postcard",
+          type: "reference",
+          to: { type: "postcard" },
+          description: "Select a postcard to display on the page.",
+        }),
+        defineField({
+          name: "polaroid",
+          title: "Polaroid",
+          type: "reference",
+          to: { type: "polaroid" },
+          description: "Select a polaroid to display on the page.",
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {
@@ -174,7 +194,7 @@ export interface FillInTheBlankGameData {
   preText: string;
   question: string;
   subText?: string;
-  textColorStyle?: "primary" | "dark" | "light";
+  textColor?: TextColor;
   fontWeightStyle?: "regular" | "bold";
   isNeutral?: boolean;
   blanks: {
@@ -185,4 +205,8 @@ export interface FillInTheBlankGameData {
     incorrectHintText?: string;
   }[];
   hint: string;
+  subContent: {
+    postcard?: PostcardData;
+    polaroid?: PolaroidData;
+  };
 }

@@ -3,6 +3,7 @@ import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { FillInTheBlankGameData } from "./fillInTheBlankGame";
+import { type TextColor, textColorList } from "../lib/colors";
 
 export const FillInTheBlankMultiPageGameSchemaType = defineType({
   name: "fillInTheBlankMultiPageGame",
@@ -62,6 +63,14 @@ export const FillInTheBlankMultiPageGameSchemaType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "titleColor",
+      title: "Title Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
+    }),
+    defineField({
       name: "gamePages",
       title: "Game Pages",
       type: "array",
@@ -87,5 +96,6 @@ export interface FillInTheBlankMultiPageGameData {
   name?: SectionNames;
   customName?: string;
   title: string;
+  titleColor?: TextColor;
   gamePages: FillInTheBlankGameData[];
 }

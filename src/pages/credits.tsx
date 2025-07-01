@@ -69,7 +69,7 @@ export default function CreditsRoute({
       </Head>
 
       <main className="overflow-hidden bg-secondary-100">
-        <RegularSection fullScreen textColorStyle="dark" name="credits">
+        <RegularSection fullScreen textColor="#1e1f1b" name="credits">
           <NavBar />
 
           <div className="relative">

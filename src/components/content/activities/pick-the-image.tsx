@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { CommonActivityOptions } from "./common";
 import { usePlaySounds } from "@/hooks/usePlaySound";
+import { textColorMap, type TextColor } from "@/sanity/lib/colors";
 
 interface PickTheImageOption {
   id: string;
@@ -16,6 +17,7 @@ interface PickTheImageOption {
 
 export interface PickTheImageActivityOptions {
   question: string;
+  questionColor?: TextColor;
   wideness?: "sm" | "md" | "lg" | "xl" | "2xl";
   options: Omit<PickTheImageOption, "id">[];
   wrap?: boolean;
@@ -109,7 +111,14 @@ export function PickTheImageActivity({
         wideness === "2xl" && "max-w-[70rem]",
       )}
     >
-      <p className="text-center text-4xl leading-snug">{props.question}</p>
+      <p
+        className={clsx(
+          "text-center text-4xl leading-snug",
+          props.questionColor && textColorMap[props.questionColor],
+        )}
+      >
+        {props.question}
+      </p>
 
       {props.children}
 

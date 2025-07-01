@@ -19,7 +19,7 @@ export enum PolaroidCaptionStyle {
 
 interface PolaroidProps {
   className?: string;
-  src: string | StaticImageData;
+  src: string | StaticImageData | undefined;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
   verticalAlign?: "top" | "center" | "bottom";
@@ -28,6 +28,8 @@ interface PolaroidProps {
 }
 
 export function Polaroid({ isFlipped, ...rest }: PolaroidProps) {
+  if (!rest.src) return null;
+
   if (rest.description) {
     return (
       <motion.div
@@ -73,6 +75,8 @@ function PolaroidFront(props: PolaroidProps) {
 
     return [caption + (truncated ? "..." : "")];
   }, [props.captionStyle, captionFromProps]);
+
+  if (!props.src) return null;
 
   const style = {
     "--el-align": props.verticalAlign ?? "center",

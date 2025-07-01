@@ -3,10 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 
-import {
-  RoundSlothIllustration,
-  WavySeparator,
-} from "../illustrations/activities-illustrations";
+import { RoundSlothIllustration } from "../illustrations/activities-illustrations";
 import { GoToButton } from "../buttons";
 import {
   ControlledActivityHint,
@@ -67,6 +64,7 @@ import {
   ClickTheAnimals,
   ClickTheAnimalsActivityOptions,
 } from "./activities/click-the-animals";
+import { TextColor } from "@/sanity/lib/colors";
 
 type PreContent = { type: "sloth" };
 
@@ -135,6 +133,7 @@ type PagerData = { type: "pager"; data: SingleContent[]; noSloth?: boolean };
 
 type PolaroidData = {
   image: string | StaticImageData;
+  description?: string;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
 };
@@ -142,13 +141,13 @@ type PolaroidData = {
 type SubContent =
   | {
       type: "postcard";
-      postcard?: PostcardData;
-      polaroid?: PolaroidData;
+      postcard?: PostcardData | null;
+      polaroid?: PolaroidData | null;
       shouldShowFlipIconReminder?: boolean;
     }
   | {
       type: "polaroids";
-      polaroids?: PolaroidData[];
+      polaroids?: (PolaroidData | null)[];
       shouldShowFlipIconReminder?: boolean;
     }
   | { type: "illustration"; kind: PolymorphicIllustrationOptions["kind"] }
@@ -175,7 +174,7 @@ export type SectionWithContent =
       name: SectionName;
       align?: "left" | "center" | "right";
       layout?: "space-between" | "packed";
-      textColorStyle?: "dark" | "light" | "light-shadows";
+      textColor?: TextColor;
       className?: string;
       background?: string | StaticImageData | null;
       backgroundOpacity?: number;
@@ -360,6 +359,7 @@ function PolymorphicSubContent({
             src={subContent.polaroid.image}
             caption={subContent.polaroid.caption}
             captionStyle={subContent.polaroid.captionStyle}
+            description={subContent.polaroid.description}
           />
         )}
       </div>
@@ -392,9 +392,10 @@ function PolymorphicSubContent({
             }
           >
             <Polaroid
-              src={polaroid.image}
-              caption={polaroid.caption}
-              captionStyle={polaroid.captionStyle}
+              src={polaroid?.image}
+              caption={polaroid?.caption}
+              captionStyle={polaroid?.captionStyle}
+              description={polaroid?.description}
               isFlipped={isFlipped === i}
             />
           </li>
@@ -519,7 +520,7 @@ function ContentSection(props: {
 
           <RegularSection
             name={props.name}
-            textColorStyle={props.section.textColorStyle}
+            textColor={props.section.textColor}
             backgroundImage={props.section.background}
             backgroundOpacity={props.section.backgroundOpacity}
             backgroundColor={props.section.backgroundColor}
@@ -541,15 +542,7 @@ function ContentSection(props: {
   if (props.section.type === "vignette") {
     return (
       <div className="relative z-10">
-        <VignetteSection
-          name={props.name}
-          defaultHintContent={props.section.defaultHintContent}
-          {...props.section.content}
-        />
-
-        {props.nextSectionType !== "vignette" && (
-          <WavySeparator color="#1E1F1B" direction="down" />
-        )}
+        <VignetteSection name={props.name} {...props.section.content} />
       </div>
     );
   }

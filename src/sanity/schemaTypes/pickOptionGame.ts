@@ -1,6 +1,7 @@
 import { SectionNames } from "@/components/content/content";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { type TextColor, textColorList } from "../lib/colors";
 
 export const PickOptionGameSchemaType = defineType({
   name: "pickOptionGame",
@@ -57,6 +58,14 @@ export const PickOptionGameSchemaType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "questionColor",
+      title: "Question Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
+    }),
+    defineField({
       name: "rotateOptions",
       title: "Rotate Options",
       type: "boolean",
@@ -102,6 +111,7 @@ export interface PickOptionGameData {
   name?: SectionNames;
   customName?: string;
   question: string;
+  questionColor?: TextColor;
   rotateOptions: boolean;
   options: {
     isCorrect: boolean;

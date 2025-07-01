@@ -92,7 +92,7 @@ export default function StoriesRoute() {
       </Head>
 
       <main className="overflow-hidden bg-secondary-100">
-        <RegularSection fullScreen textColorStyle="dark" name="stories">
+        <RegularSection fullScreen textColor="#1e1f1b" name="stories">
           <NavBar />
 
           <SectionContent className="justify-start">

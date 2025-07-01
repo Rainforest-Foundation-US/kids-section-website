@@ -19,6 +19,7 @@ const pickImageGameQuery = groq`
     name,
     customName,
     question,
+    "questionColor": questionColor.hex,
     hintContent {
       hint
     },
@@ -38,11 +39,15 @@ const plainDataQuery = groq`
     contentType,
     text,
     textAlign,
+    "textColor": textColor.hex,
     caption,
     captionAlign,
+    "captionColor": captionColor.hex,
     title,
     titleAlign,
+    "titleColor": titleColor.hex,
     subText,
+    "subTextColor": subTextColor.hex,
     subContent {
       type,
       "polaroids": reference[]->{
@@ -88,6 +93,7 @@ const pickOptionGameQuery = groq`
     name,
     customName,
     question,
+    "questionColor": questionColor.hex,
     rotateOptions,
     options[]{
       text,
@@ -103,6 +109,7 @@ const pickOptionMultiPageGameQuery = groq`
     name,
     customName,
     title,
+    "titleColor": titleColor.hex,
     gamePages[]->${pickOptionGameQuery}
   }
 `;
@@ -114,7 +121,7 @@ const fillInTheBlankGameQuery = groq`
     question,
     preText,
     subText,
-    textColorStyle,
+    "textColor": textColor.hex,
     fontWeightStyle,
     isNeutral,
     blanks[] {
@@ -124,7 +131,27 @@ const fillInTheBlankGameQuery = groq`
       correctHintText,
       incorrectHintText,
     },
-    hint
+    hint,
+    subContent {
+      "postcard": postcard->{
+        "alt": image.alt,
+        "image": image{
+          "src": asset->url,
+          "blurDataURL": asset->metadata.lqip,
+          "height": asset->metadata.dimensions.height,
+          "width": asset->metadata.dimensions.width,
+        },
+        description,
+      },
+      "polaroid": polaroid->{
+        _id,
+        caption,
+        captionStyle,
+        image,
+        description,
+        imageAlignment
+      },
+    }
   }
 `;
 
@@ -134,6 +161,7 @@ const fillInTheBlankMultiPageGameQuery = groq`
     name,
     customName,
     title,
+    "titleColor": titleColor.hex,
     gamePages[]->${fillInTheBlankGameQuery}
   }
 `;
@@ -178,7 +206,10 @@ export async function getVignettes() {
           "width": asset->metadata.dimensions.width,
       },
       imageAlignment,
-      body
+      body,
+      hintContent {
+        hint
+      }
     }`,
   );
 
@@ -339,7 +370,7 @@ export async function getLocateInMaps() {
     groq`*[_type == "locateInMap"]{
       name,
       background,
-      backgroundColor,
+      "backgroundColor": backgroundColor.hex,
       defaultHintContent,
       question,
       questionPosition,

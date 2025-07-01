@@ -3,6 +3,7 @@ import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { PickOptionGameData } from "./pickOptionGame";
+import { textColorList, type TextColor } from "../lib/colors";
 
 export const PickOptionMultiPageGameSchemaType = defineType({
   name: "pickOptionMultiPageGame",
@@ -62,6 +63,14 @@ export const PickOptionMultiPageGameSchemaType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "titleColor",
+      title: "Title Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
+    }),
+    defineField({
       name: "gamePages",
       title: "Game Pages",
       type: "array",
@@ -87,5 +96,6 @@ export interface PickOptionMultiPageGameData {
   name?: SectionNames;
   customName?: string;
   title: string;
+  titleColor?: TextColor;
   gamePages: PickOptionGameData[];
 }
