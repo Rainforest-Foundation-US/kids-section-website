@@ -2,6 +2,7 @@ import { SectionNames } from "@/components/content/content";
 import { sectionNames } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { ComponentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { type TextColor, textColorList } from "../lib/colors";
 
 export const PickImageGameSchemaType = defineType({
   name: "pickImageGame",
@@ -59,6 +60,14 @@ export const PickImageGameSchemaType = defineType({
       title: "Question",
       type: "string",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "questionColor",
+      title: "Question Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
     }),
     defineField({
       name: "hintContent",
@@ -121,6 +130,7 @@ export interface PickImageGameData {
   name?: SectionNames;
   customName?: string;
   question: string;
+  questionColor?: TextColor;
   hintContent: { hint: string };
   options: {
     imageSrc: string;

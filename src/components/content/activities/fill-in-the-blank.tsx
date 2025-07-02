@@ -8,12 +8,13 @@ import { ActivityHintStatus } from "@/components/activity-hint";
 import { congratulationsAtom } from "@/components/congratulations";
 import { useAtom } from "jotai";
 import { usePlaySounds } from "@/hooks/usePlaySound";
+import { type TextColor, textColorMap } from "@/sanity/lib/colors";
 
 export interface FillInTheBlankActivityOptions {
   preText: string;
   subText?: string;
   isNeutral?: boolean;
-  textColorStyle?: "dark" | "light" | "primary";
+  textColor?: TextColor;
   fontWeightStyle?: "regular" | "bold";
   question: StringifiedQuestion;
   numberToOptions: NumberToOptions;
@@ -245,24 +246,15 @@ type FillInTheBlankActivityProps = React.PropsWithChildren<
 >;
 export function FillInTheBlankActivity({
   onHint,
+  textColor,
   ...props
 }: FillInTheBlankActivityProps) {
+  const color = textColorMap[textColor ?? "#066406"];
   const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
   const [optionSelected, setOptionSelected] = useState(false);
   const [{ elements: questions, allOptions }, answers, setAnswers] =
     useSyncParseQuestions(props.question, props.numberToOptions);
   const { playSound } = usePlaySounds();
-
-  const textColor = useMemo(() => {
-    switch (props.textColorStyle) {
-      case "dark":
-        return "text-neutral-dark-700";
-      case "light":
-        return "text-neutral-100";
-      case "primary":
-        return "text-primary-100";
-    }
-  }, [props.textColorStyle]);
 
   const onSelectOption = useCallback(
     (option: ParsedBlankOption) => {
@@ -359,9 +351,7 @@ export function FillInTheBlankActivity({
         </div>
       )}
 
-      <p
-        className={clsx("mb-2 max-w-[814px] text-4xl leading-snug", textColor)}
-      >
+      <p className={clsx("mb-2 max-w-[814px] text-4xl leading-snug", color)}>
         {props.preText}
       </p>
 
@@ -372,7 +362,7 @@ export function FillInTheBlankActivity({
               "max-w-3xl select-none text-center text-3xl leading-loose md:text-4xl",
               (!props.fontWeightStyle || props.fontWeightStyle === "bold") &&
                 "font-bold",
-              textColor,
+              color,
             )}
           >
             {questions.map((blank) => {
@@ -386,7 +376,7 @@ export function FillInTheBlankActivity({
                     onDrop={onSelectOption}
                     onClick={() => onDeselectOption(blank)}
                     selectedOption={getSelectedOption(blank)}
-                    isPrimary={props.textColorStyle === "primary"}
+                    isPrimary={textColor === "#e6fae6"}
                     canShowWrongAnswer
                   />
                 );

@@ -13,7 +13,6 @@ export const PolaroidSchemaType = defineType({
       name: "caption",
       title: "Caption",
       type: "string",
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "captionStyle",

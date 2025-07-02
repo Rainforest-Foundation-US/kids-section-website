@@ -6,6 +6,7 @@ import { PostcardData } from "./postcard";
 import { PolaroidData } from "./polaroid";
 import { defaultMarkAnnotations } from "../lib/defaultMarkAnnotations";
 import { SectionNames } from "@/components/content/content";
+import { type TextColor, textColorList } from "../lib/colors";
 
 export const PlainSchemaType = defineType({
   name: "plain",
@@ -72,6 +73,14 @@ export const PlainSchemaType = defineType({
       },
     }),
     defineField({
+      name: "captionColor",
+      title: "Caption Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
+    }),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
@@ -82,6 +91,14 @@ export const PlainSchemaType = defineType({
       type: "string",
       options: {
         list: ["left", "center", "right"],
+      },
+    }),
+    defineField({
+      name: "titleColor",
+      title: "Title Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
       },
     }),
     defineField({
@@ -100,9 +117,25 @@ export const PlainSchemaType = defineType({
       },
     }),
     defineField({
+      name: "textColor",
+      title: "Text Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
+    }),
+    defineField({
       name: "subText",
       title: "Sub Text",
       type: "string",
+    }),
+    defineField({
+      name: "subTextColor",
+      title: "Sub Text Color",
+      type: "color",
+      options: {
+        colorList: textColorList,
+      },
     }),
     defineField({
       name: "subContent",
@@ -168,11 +201,15 @@ interface BasePlainData {
   customName?: string;
   text: TypedObject;
   textAlign?: "left" | "center" | "right";
+  textColor?: TextColor;
   caption?: string;
   captionAlign?: "left" | "center" | "right";
+  captionColor?: TextColor;
   title?: string;
   titleAlign?: "left" | "center" | "right";
+  titleColor?: TextColor;
   subText?: string;
+  subTextColor?: TextColor;
 }
 
 export interface PlainData extends BasePlainData {

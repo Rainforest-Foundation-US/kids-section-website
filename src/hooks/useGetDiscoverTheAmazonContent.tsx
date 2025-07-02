@@ -16,11 +16,9 @@ import { SectionWithContent } from "@/components/content/content";
 
 import secondBackground from "@/assets/activities/2-background.png";
 
-import tropicalRainRiver1 from "@/assets/activities/01-tropical-rain-river.jpeg";
 import backgroundAmazon from "@/assets/activities/background-amazon.png";
 
 import fillInTheBlank2 from "@/assets/activities/fill-in-the-blank/climate/2-weather.jpg";
-import frogInRain2 from "@/assets/activities/02-frog-in-rain.jpg";
 
 import backgroundDeforestation6 from "@/assets/activities/06-background-deforestation.jpg";
 
@@ -352,6 +350,8 @@ export function useGetDiscoverTheAmazonContent() {
           preText: rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.preText,
           question:
             rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.question,
+          textColor:
+            rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.textColor,
           numberToOptions:
             rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.blanks.map(
               (blank) => ({
@@ -377,13 +377,14 @@ export function useGetDiscoverTheAmazonContent() {
       subContent: {
         type: "postcard",
         shouldShowFlipIconReminder: true,
-        postcard: {
-          image: tropicalRainRiver1,
-          alt: "Tropical rainforest",
-          description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        },
-        polaroid: { image: frogInRain2 },
+        postcard: mapPostcard(
+          rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.subContent
+            .postcard,
+        ),
+        polaroid: mapPolaroid(
+          rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.subContent
+            .polaroid,
+        ),
       },
     },
     rainforestsHaveALotOfRainFillInTheBlankGame && {
@@ -395,6 +396,7 @@ export function useGetDiscoverTheAmazonContent() {
         data: {
           preText: rainforestsHaveALotOfRainFillInTheBlankGame.preText,
           question: rainforestsHaveALotOfRainFillInTheBlankGame.question,
+          textColor: rainforestsHaveALotOfRainFillInTheBlankGame.textColor,
           numberToOptions:
             rainforestsHaveALotOfRainFillInTheBlankGame.blanks.map((blank) => ({
               options: blank.options,
@@ -508,9 +510,9 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "deforestation-in-the-amazon",
       backgroundOpacity: 0.5,
-      backgroundColor: "#1E1F1B",
+      backgroundColor: "#1e1f1b",
       background: backgroundDeforestation6,
-      textColorStyle: "light",
+      textColor: "#e6fae6",
       content: {
         type: "plain",
         data: {
@@ -622,6 +624,8 @@ export function useGetDiscoverTheAmazonContent() {
             theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.subText,
           question:
             theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.question,
+          textColor:
+            theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.textColor,
           numberToOptions:
             theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.blanks.map(
               (blank) => ({
@@ -677,6 +681,7 @@ export function useGetDiscoverTheAmazonContent() {
           wrap: true,
           wideness: "xl",
           question: whichImagesShowTheAmazonPickImageGame.question,
+          questionColor: whichImagesShowTheAmazonPickImageGame.questionColor,
           options: whichImagesShowTheAmazonPickImageGame.options,
         },
       },
@@ -726,6 +731,7 @@ export function useGetDiscoverTheAmazonContent() {
             type: "pick-the-option",
             data: {
               question: gamePage.question,
+              questionColor: gamePage.questionColor,
               options: gamePage.options,
             },
           }),
@@ -832,10 +838,12 @@ export function useGetDiscoverTheAmazonContent() {
               body: vignette.body ?? "",
               imageAlignment: vignette.imageAlignment ?? "middle",
               image: vignette.image,
+              hintContent: vignette.hintContent,
             })),
         ],
       },
     },
+    { type: "divider", style: "dark" },
     {
       type: "regular",
       name: "find-the-animals",
@@ -941,11 +949,6 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
       illustrations: {
-        topLeft: (
-          <HangingSlothIllustration
-            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
-          />
-        ),
         bottomRight: (
           <RightBushIllustration
             className={clsx(
@@ -1013,6 +1016,7 @@ export function useGetDiscoverTheAmazonContent() {
             data: {
               wrap: true,
               question: gamePage.question,
+              questionColor: gamePage.questionColor,
               options: gamePage.options,
             },
           }),
@@ -1046,6 +1050,7 @@ export function useGetDiscoverTheAmazonContent() {
         data: {
           preText: rainforestsInDangerFillInTheBlankGame.preText,
           question: rainforestsInDangerFillInTheBlankGame.question,
+          textColor: rainforestsInDangerFillInTheBlankGame.textColor,
           numberToOptions: rainforestsInDangerFillInTheBlankGame.blanks.map(
             (blank) => ({
               options: blank.options,
@@ -1059,9 +1064,9 @@ export function useGetDiscoverTheAmazonContent() {
     plainSectionsDictionary["climate-change-and-deforestation"] && {
       type: "regular",
       name: "climate-change-and-deforestation",
-      backgroundColor: "#1E1F1B",
+      backgroundColor: "#1e1f1b",
       background: climateChangeWildfires34,
-      textColorStyle: "light",
+      textColor: "#e6fae6",
       preContent: { type: "sloth" },
       content: {
         type: "plain",
@@ -1084,9 +1089,9 @@ export function useGetDiscoverTheAmazonContent() {
     plainSectionsDictionary["what-is-climate-change"] && {
       type: "regular",
       name: "what-is-climate-change",
-      backgroundColor: "#1E1F1B",
+      backgroundColor: "#1e1f1b",
       background: null,
-      textColorStyle: "light",
+      textColor: "#e6fae6",
       content: {
         type: "plain",
         data: {
@@ -1107,7 +1112,7 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "climate-change-effects",
       background: spatialPlanetEarth36,
-      textColorStyle: "light-shadows",
+      textColor: "#faf5ee",
       content: {
         type: "plain",
         data: {
@@ -1126,9 +1131,9 @@ export function useGetDiscoverTheAmazonContent() {
     plainSectionsDictionary["rainforest-is-a-carbon-sink"] && {
       type: "regular",
       name: "rainforest-is-a-carbon-sink",
-      backgroundColor: "#F0F4EF", // complementary-100
+      backgroundColor: "#f0f4ef", // complementary-100
       background: null,
-      textColorStyle: "dark",
+      textColor: "#1e1f1b",
       preContent: { type: "sloth" },
       content: {
         type: "plain",
@@ -1197,6 +1202,7 @@ export function useGetDiscoverTheAmazonContent() {
           wideness: "xl",
           showAltText: true,
           question: rainforestUnderThreatPickImageGame.question,
+          questionColor: rainforestUnderThreatPickImageGame.questionColor,
           options: rainforestUnderThreatPickImageGame.options,
         },
       },
@@ -1235,6 +1241,7 @@ export function useGetDiscoverTheAmazonContent() {
     plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"] && {
       type: "regular",
       name: "is-this-actor-deforesting-the-amazon-2",
+      background: backgroundDeforestation6,
       content: {
         type: "plain",
         data: {
@@ -1339,12 +1346,16 @@ function mapPlainData(plainData: PlainData | undefined) {
   return {
     caption: plainData?.caption ?? "",
     captionAlign: plainData?.captionAlign as "left" | "center" | "right",
+    captionColor: plainData?.captionColor,
     title: plainData?.title ?? "",
     titleAlign: plainData?.titleAlign as "left" | "center" | "right",
+    titleColor: plainData?.titleColor,
     text: plainData?.text ?? "",
     textAlign:
       plainData?.textAlign ?? ("center" as "left" | "center" | "right"),
+    textColor: plainData?.textColor,
     subText: plainData?.subText ?? "",
+    subTextColor: plainData?.subTextColor,
   };
 }
 
@@ -1356,16 +1367,20 @@ function mapPostcard(postcard: PostcardData | undefined) {
   };
 }
 
+function mapPolaroid(polaroid: PolaroidData | undefined) {
+  if (!polaroid?.image) return null;
+
+  return {
+    image: urlFor(polaroid.image)?.url(),
+    caption: polaroid?.caption,
+    captionStyle: polaroid?.captionStyle,
+    description: polaroid?.description,
+    imageAlignment: polaroid?.imageAlignment,
+  };
+}
+
 function mapPolaroids(polaroids: PolaroidData[] | undefined) {
-  return (
-    polaroids?.map((polaroid) => ({
-      image: urlFor(polaroid.image).url(),
-      caption: polaroid.caption,
-      captionStyle: polaroid.captionStyle,
-      description: polaroid.description,
-      imageAlignment: polaroid.imageAlignment,
-    })) ?? []
-  );
+  return polaroids?.map(mapPolaroid) ?? [];
 }
 
 function mapLocateInMap(locateInMap: LocateInMapData) {
@@ -1373,7 +1388,7 @@ function mapLocateInMap(locateInMap: LocateInMapData) {
     type: "regular" as const,
     name: locateInMap?.name,
     background: locateInMap?.background
-      ? urlFor(locateInMap.background).url()
+      ? urlFor(locateInMap.background)?.url()
       : null,
     backgroundColor: locateInMap?.backgroundColor,
     defaultHintContent: locateInMap?.defaultHintContent,

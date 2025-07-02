@@ -46,7 +46,7 @@ export default function QAndARoute() {
       </Head>
 
       <main className="overflow-hidden overflow-y-auto bg-secondary-100">
-        <RegularSection fullScreen textColorStyle="dark" name="faq">
+        <RegularSection fullScreen textColor="#1e1f1b" name="faq">
           <NavBar />
 
           <div className="relative z-10 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">

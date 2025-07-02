@@ -4,6 +4,7 @@ import { ActivitySection } from "../sections";
 import mainBackground from "@/assets/activities/1-background.png";
 import clsx from "@/utils/clsx";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
+import { textColorMap, type TextColor } from "@/sanity/lib/colors";
 
 interface RegularSectionProps {
   children?: React.ReactNode;
@@ -11,20 +12,19 @@ interface RegularSectionProps {
   backgroundOpacity?: number;
   backgroundColor?: string;
   fullScreen?: boolean;
-  textColorStyle?: "dark" | "light" | "light-shadows";
+  textColor?: TextColor;
   name?: SectionName;
   className?: string;
 }
 export function RegularSection(props: RegularSectionProps) {
+  const color = textColorMap[props.textColor ?? "#1e1f1b"];
+
   return (
     <ActivitySection
       name={props.name}
       className={clsx(
         "py-0",
-        props.textColorStyle === "dark" && "text-neutral-dark-700",
-        props.textColorStyle === "light" && "text-neutral-100",
-        props.textColorStyle === "light-shadows" &&
-          "text-neutral-100 [text-shadow:1px_1px_5px_black]",
+        color,
         props.fullScreen && "max-h-[unset] min-h-screen",
         props.className,
       )}

@@ -1,20 +1,24 @@
 import clsx from "@/utils/clsx";
 import { TypedObject } from "sanity";
 import PortableTextRenderer from "../portable-text-renderer";
+import { textColorMap, type TextColor } from "@/sanity/lib/colors";
 
 interface PlainTextContentProps {
   caption?: string;
   captionAlign?: "left" | "center" | "right";
+  captionColor?: TextColor;
   title?: string;
   titleAlign?: "left" | "center" | "right";
+  titleColor?: TextColor;
   subText?: string;
   text: TypedObject | string;
   wideness?: "sm" | "md" | "lg" | "xl" | "2xl" | "custom";
   customWidth?: string;
   textSize?: "base" | "md";
   textAlign?: "left" | "center" | "right";
+  textColor?: TextColor;
   subTextSize?: "lg" | "xl";
-  subTextColor?: string;
+  subTextColor?: TextColor;
   tracking?: string;
   paddingTop?: string;
   children?: React.ReactNode;
@@ -24,7 +28,6 @@ export function PlainTextContent({
   subTextSize = "lg",
   textAlign = "center",
   textSize = "base",
-  subTextColor,
   customWidth,
   tracking,
   paddingTop,
@@ -52,6 +55,7 @@ export function PlainTextContent({
             "text-center text-xl font-medium text-primary-700",
             props.captionAlign === "left" && "text-left",
             props.captionAlign === "right" && "text-right",
+            props.captionColor && textColorMap[props.captionColor],
           )}
         >
           {props.caption}
@@ -64,6 +68,7 @@ export function PlainTextContent({
             "text-center text-3xl font-bold text-neutral-dark-800",
             props.titleAlign === "left" && "text-left",
             props.titleAlign === "right" && "text-right",
+            props.titleColor && textColorMap[props.titleColor],
           )}
         >
           {props.title}
@@ -78,6 +83,7 @@ export function PlainTextContent({
           textAlign === "left" && "text-left",
           textAlign === "center" && "text-center",
           textAlign === "right" && "text-right",
+          props.textColor && textColorMap[props.textColor],
         )}
       >
         {/* TODO: remove once everything is loaded from the Sanity CMS */}
@@ -92,7 +98,7 @@ export function PlainTextContent({
           className={clsx(
             "whitespace-pre-line leading-snug",
             `text-${subTextSize}`,
-            subTextColor && `${subTextColor}`,
+            props.subTextColor && textColorMap[props.subTextColor],
             textAlign === "left" && "text-left",
             textAlign === "center" && "text-center",
             textAlign === "right" && "text-right",

@@ -74,6 +74,18 @@ export const VignetteSchemaType = defineType({
       title: "Body",
       type: "text",
     }),
+    defineField({
+      name: "hintContent",
+      title: "Hint Content",
+      type: "object",
+      fields: [
+        {
+          name: "hint",
+          title: "Hint",
+          type: "string",
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

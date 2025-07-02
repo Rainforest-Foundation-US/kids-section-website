@@ -8,9 +8,11 @@ import { Postcard } from "@/components/postcard";
 import { useAtom } from "jotai";
 import { congratulationsAtom } from "@/components/congratulations";
 import { usePlaySounds } from "@/hooks/usePlaySound";
+import { textColorMap, type TextColor } from "@/sanity/lib/colors";
 
 export interface PickTheOptionActivityOptions {
   question: string;
+  questionColor?: TextColor;
   options: Omit<Option, "id">[];
   postCardContent?: {
     image: string | StaticImageData;
@@ -133,7 +135,10 @@ export function PickTheOptionActivity({
   return (
     <div className="flex max-w-3xl flex-col items-center space-y-6">
       <p
-        className="text-center text-4xl leading-snug"
+        className={clsx(
+          "text-center text-4xl leading-snug",
+          props.questionColor && textColorMap[props.questionColor],
+        )}
         dangerouslySetInnerHTML={{ __html: props.question }}
       />
 

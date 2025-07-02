@@ -14,6 +14,8 @@ interface PostcardProps {
 export function Postcard({ image, alt, description }: PostcardProps) {
   const [isFlipped, setIsFlipped] = React.useState(false);
 
+  if (!image) return null;
+
   return (
     <div className="mx-auto w-full max-w-[814px]">
       {/* Invisible image to make the parent grow to the child size, since that cannot be done with absolute positioning */}
