@@ -1,13 +1,13 @@
+import clsx from "@/utils/clsx";
 import {
   RainforestFoundationLogoSVGImage,
   RainforestFoundationLogoSVGImageID,
 } from "./RainforestFoundationLogoSVGImage";
 
-export function SadSlothIllustration() {
+export function SadSlothIllustration({ className }: { className?: string }) {
   return (
     <svg
-      width="394"
-      height="318"
+      className={clsx("h-[318px] w-[394px]", className)}
       viewBox="0 0 394 318"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

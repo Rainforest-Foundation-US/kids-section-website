@@ -1,11 +1,20 @@
+import clsx from "@/utils/clsx";
 import {
   RainforestFoundationLogoSVGImage,
   RainforestFoundationLogoSVGImageID,
 } from "./RainforestFoundationLogoSVGImage";
 
-export function SittingSlothIllustration() {
+export function SittingSlothIllustration({
+  className,
+}: {
+  className?: string;
+}) {
   return (
-    <svg width="394" height="318" viewBox="0 0 394 318" fill="none">
+    <svg
+      className={clsx("h-[318px] w-[394px]", className)}
+      viewBox="0 0 394 318"
+      fill="none"
+    >
       <ellipse
         cx="197"
         cy="245.5"

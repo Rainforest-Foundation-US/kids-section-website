@@ -222,7 +222,7 @@ const MapWithMarkersComponent = ({
             <feFlood floodColor="black" result="BLACK_FLOOD" />
             <feGaussianBlur
               in="BLACK_FLOOD"
-              stdDeviation="90 30"
+              stdDeviation="50 30"
               result="BLURRED_BLACK_FLOOD"
             />
             <feComponentTransfer
@@ -305,13 +305,11 @@ const MapWithMarkersComponent = ({
             tooltipText={marker.tooltipText}
           />
         ))}
-      </ComposableMap>
 
-      {name === "the-whole-united-states-in-the-amazon" && (
-        <div className="absolute inset-0 z-10">
-          <USMapChart />
-        </div>
-      )}
+        {name === "the-whole-united-states-in-the-amazon" && (
+          <USMapChart scale={scale - 25} />
+        )}
+      </ComposableMap>
 
       {markers?.map((marker) =>
         marker.tooltipText ? (

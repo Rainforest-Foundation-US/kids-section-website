@@ -21,15 +21,18 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
     <div className="w-full max-w-5xl">
       <div
         className={clsx(
-          "z-10 flex -translate-x-16 items-center",
+          "z-10 flex flex-col items-center text-center",
           props.questionPosition === "left" &&
-            "absolute inset-y-0 my-auto max-h-[200px] -translate-y-10 flex-row",
+            "absolute inset-y-0 mx-auto max-w-[50%] justify-center",
           (props.questionPosition === "top" || !props.questionPosition) &&
-            "relative mx-auto max-w-[500px] translate-y-10 flex-col text-center",
+            "relative mx-auto max-w-[500px] translate-y-10",
         )}
       >
         {props.questionIllustration && (
-          <PolymorphicIllustration kind={props.questionIllustration} />
+          <PolymorphicIllustration
+            kind={props.questionIllustration}
+            className="w-[200px] lg:h-[200px] lg:w-[400px]"
+          />
         )}
 
         <p

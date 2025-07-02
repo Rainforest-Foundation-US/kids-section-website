@@ -1391,7 +1391,7 @@ function mapLocateInMapData(locateInMapData: LocateInMapData) {
     questionIllustration:
       locateInMapData?.questionIllustration ?? "sitting-sloth",
     center: locateInMapData?.center ?? [0, 0],
-    scale: locateInMapData?.scale ?? 1,
+    scale: locateInMapData?.scale ?? 100,
     highlightedCountries: locateInMapData?.highlightedCountries ?? [],
     secondaryCountries: locateInMapData?.secondaryCountries ?? [],
   };
