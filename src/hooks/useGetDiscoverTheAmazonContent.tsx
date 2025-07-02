@@ -50,8 +50,9 @@ import {
   ToucanWithDeadLeavesIllustration,
   LeftDeadLeavesIllustration,
   HelpSlothIllustration,
-  FlamingoAndChameleonIllustration,
+  FlamingoChameleonAndButterflyIIllustration,
   RightParrotAndLemurIllustration,
+  RightParrotLemurAndFrogIllustration,
 } from "@/components/illustrations/activities-illustrations";
 import {
   bottomLeftIllustrationStyles,
@@ -175,6 +176,10 @@ export const sectionNames = [
     value: "what-happens-to-animals-when-rainforest-disappears" as const,
   },
   { title: "rainforests-matter", value: "rainforests-matter" as const },
+  {
+    title: "indigenous-communities-have-spent",
+    value: "indigenous-communities-have-spent" as const,
+  },
   {
     title: "rainforests-keep-our-planet-healthy",
     value: "rainforests-keep-our-planet-healthy" as const,
@@ -969,27 +974,40 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
       illustrations: {
-        bottomLeft: (
-          <FlamingoAndChameleonIllustration
-            className={bottomLeftIllustrationStyles}
+        left: (
+          <FlamingoChameleonAndButterflyIIllustration
+            className={clsx(
+              leftIllustrationStyles,
+              "top-[15%] z-20 lg:top-[20%]",
+            )}
           />
         ),
         right: (
-          <RightParrotAndLemurIllustration
-            className={rightIllustrationStyles}
+          <RightParrotLemurAndFrogIllustration
+            className={clsx(
+              rightIllustrationStyles,
+              "top-[15%] z-20 lg:top-[20%]",
+            )}
           />
         ),
       },
       subContent: [
-        { type: "illustration", kind: "happy-sloth" },
-        // TODOK
         {
-          type: "plain",
-          data: {
-            text: "Indigenous communities have spent thousands of years learning about all the creatures in the rainforest, and have carefully passed down values, knowledge, and practices for keeping the forest where they live in balance.",
-          },
+          type: "illustration",
+          kind: "happy-sloth",
+          className: "scale-75 md:scale-100 xl:scale-125",
         },
       ],
+    },
+    {
+      type: "regular",
+      name: "indigenous-communities-have-spent",
+      content: {
+        type: "plain",
+        data: {
+          text: "Indigenous communities have spent thousands of years learning about all the creatures in the rainforest, and have carefully passed down values, knowledge, and practices for keeping the forest where they live in balance.",
+        },
+      },
     },
     plainSectionsDictionary["rainforests-keep-our-planet-healthy"] && {
       type: "regular",
@@ -1406,7 +1424,7 @@ function mapLocateInMapData(locateInMapData: LocateInMapData) {
     questionIllustration:
       locateInMapData?.questionIllustration ?? "sitting-sloth",
     center: locateInMapData?.center ?? [0, 0],
-    scale: locateInMapData?.scale ?? 1,
+    scale: locateInMapData?.scale ?? 100,
     highlightedCountries: locateInMapData?.highlightedCountries ?? [],
     secondaryCountries: locateInMapData?.secondaryCountries ?? [],
   };

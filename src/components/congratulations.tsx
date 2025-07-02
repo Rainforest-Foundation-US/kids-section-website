@@ -39,7 +39,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
       />
 
       <motion.div
-        className="absolute left-0 top-0 h-1/2 w-1/2"
+        className="absolute left-0 top-0 h-1/3 w-1/3 lg:h-1/2 lg:w-1/2"
         initial="topLeft"
         animate="visible"
         variants={variants}
@@ -59,7 +59,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
       </motion.div>
 
       <motion.div
-        className="absolute right-0 top-0 h-full w-full"
+        className="absolute right-0 top-0 h-3/5 w-3/5 xl:h-3/4 xl:w-3/4"
         initial="topRight"
         animate="visible"
         variants={variants}
@@ -69,7 +69,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-0 left-0 h-full w-full"
+        className="absolute bottom-0 left-0 h-1/2 w-1/2 lg:h-full lg:w-full"
         initial="bottomLeft"
         animate="visible"
         variants={variants}

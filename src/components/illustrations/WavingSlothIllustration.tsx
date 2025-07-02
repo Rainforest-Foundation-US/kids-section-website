@@ -1,3 +1,4 @@
+import clsx from "@/utils/clsx";
 import {
   RainforestFoundationLogoSVGImage,
   RainforestFoundationLogoSVGImageID,
@@ -6,9 +7,7 @@ import {
 export function WavingSlothIllustration({ className }: { className?: string }) {
   return (
     <svg
-      className={className}
-      width="393"
-      height="398"
+      className={clsx("h-[398px] w-[393px]", className)}
       viewBox="0 0 393 398"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -150,7 +150,11 @@ type SubContent =
       polaroids?: (PolaroidData | null)[];
       shouldShowFlipIconReminder?: boolean;
     }
-  | { type: "illustration"; kind: PolymorphicIllustrationOptions["kind"] }
+  | {
+      type: "illustration";
+      kind: PolymorphicIllustrationOptions["kind"];
+      className?: string;
+    }
   | PlainContentData;
 
 type Content = SingleContent | PagerData;
@@ -407,7 +411,10 @@ function PolymorphicSubContent({
   if (subContent.type === "illustration") {
     return (
       <div className="mt-2">
-        <PolymorphicIllustration kind={subContent.kind} />
+        <PolymorphicIllustration
+          kind={subContent.kind}
+          className={subContent.className}
+        />
       </div>
     );
   }

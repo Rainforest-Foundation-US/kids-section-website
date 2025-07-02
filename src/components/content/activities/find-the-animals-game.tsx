@@ -1,5 +1,6 @@
 import { PlacesType, Tooltip, TooltipRefProps } from "react-tooltip";
 import React from "react";
+import { AppButton } from "@/components/buttons";
 
 interface Animal {
   id: string;
@@ -199,6 +200,15 @@ export function FindTheAnimalsGame() {
     );
   }, []);
 
+  const handleReset = React.useCallback(() => {
+    Object.values(animalElementsRef.current).forEach(({ element }) => {
+      element.style.opacity = "0";
+    });
+    tooltipRef.current?.close();
+    isLoadedRef.current = false;
+    updatePositions();
+  }, [updatePositions]);
+
   React.useLayoutEffect(() => {
     const iframe = iframeRef.current;
 
@@ -266,13 +276,18 @@ export function FindTheAnimalsGame() {
   }, [updatePositions]);
 
   return (
-    <div className="h-full w-full md:w-5/6">
+    <div className="relative h-full w-full md:w-5/6">
       <iframe
         ref={iframeRef}
         src="/rainforest.html"
         className="h-full w-full"
         style={{ aspectRatio: "7408.16/4697.1" }} // This is the SVG size inside the rainforest.html file
       />
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+        <AppButton variant="secondary" size="small" onClick={handleReset}>
+          Start over
+        </AppButton>
+      </div>
       <Tooltip
         ref={tooltipRef}
         className="!w-fit !max-w-48 !rounded-md !bg-neutral-100 !text-primary-700 !opacity-95"

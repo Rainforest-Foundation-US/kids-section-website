@@ -8,12 +8,12 @@ import {
 
 import usStatesTopoJSON from "@/assets/us-states.json";
 
-export function USMapChart() {
+export function USMapChart({ scale }: { scale: number }) {
   return (
     <>
       <ComposableMap
         projection="geoMercator"
-        projectionConfig={{ scale: 340, center: [-135, 28] }}
+        projectionConfig={{ scale, center: [-133, 32] }}
         className="h-full w-full"
       >
         <Geographies geography={usStatesTopoJSON}>
