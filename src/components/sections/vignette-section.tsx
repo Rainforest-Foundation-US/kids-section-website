@@ -65,19 +65,19 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
           direction="left"
           onClick={goToPrevSlide}
           disabled={false}
-          className="absolute bottom-12 left-1/3 z-20"
+          className="absolute bottom-12 left-1/4 z-20 md:left-1/3"
         />
         {/* Right Arrow Navigation */}
         <GoToButton
           direction="right"
           onClick={goToNextSlide}
           disabled={false}
-          className="absolute bottom-12 right-1/3 z-20"
+          className="absolute bottom-12 right-1/4 z-20 md:right-1/3"
         />
 
         {slides.map((slide, index) => (
           <React.Fragment key={slide._id}>
-            {slide.hintContent?.hint && (
+            {slide.hintContent?.hint && index === activeIndex && (
               <HintContent
                 name={name}
                 hintContent={{ text: slide.hintContent.hint }}
@@ -118,18 +118,18 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
                 className="absolute inset-x-0 bottom-0 h-[120px] rotate-180"
               />
 
-              <div className="relative z-20 flex h-full flex-col items-center justify-center p-10 text-center">
-                <p
-                  className={clsx(
-                    "break-all text-7xl font-semibold text-neutral-100 transition-all duration-700",
-                    index === activeIndex
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-10 opacity-0",
-                  )}
-                >
-                  {slide.title}
-                </p>
+              <p
+                className={clsx(
+                  "absolute left-1/2 top-32 w-max -translate-x-1/2 break-all text-5xl font-semibold text-neutral-100 transition-all duration-700 md:top-8 md:text-7xl",
+                  index === activeIndex
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0",
+                )}
+              >
+                {slide.title}
+              </p>
 
+              <div className="relative z-20 flex h-full flex-col items-center justify-center text-center">
                 <p
                   className={clsx(
                     "my-2 text-base font-semibold text-neutral-100 transition-all duration-700",
@@ -150,7 +150,6 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
                         : "translate-y-10 opacity-0",
                     )}
                   >
-                    <div className="my-2 h-1 w-24 justify-self-center bg-neutral-100/75" />
                     <p className="my-2 max-w-xl text-base text-secondary-100">
                       {slide.body}
                     </p>

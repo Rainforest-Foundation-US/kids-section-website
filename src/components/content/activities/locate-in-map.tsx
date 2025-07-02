@@ -31,13 +31,13 @@ export function LocateInMapActivity(props: LocateInMapActivityProps) {
         {props.questionIllustration && (
           <PolymorphicIllustration
             kind={props.questionIllustration}
-            className="w-[200px] lg:h-[200px] lg:w-[400px]"
+            className="h-[20%] w-[200px] lg:h-[200px] lg:w-[400px]"
           />
         )}
 
         <p
           className={clsx(
-            "z-10 text-3xl font-normal leading-relaxed text-neutral-dark-700",
+            "z-10 text-xl font-normal leading-relaxed text-neutral-dark-700 md:text-3xl",
             props.questionPosition === "left" && "max-w-[250px]",
           )}
           dangerouslySetInnerHTML={{ __html: props.question }}

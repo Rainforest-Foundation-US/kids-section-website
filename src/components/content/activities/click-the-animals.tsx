@@ -20,7 +20,7 @@ const animals: {
     place: "right-start",
     offset: {
       x: 10,
-      y: -60,
+      y: -190,
     },
   },
   {
@@ -28,7 +28,17 @@ const animals: {
     content: "Without fewer plants, animals don’t have enough food",
     place: "right-start",
     offset: {
-      x: -30,
+      x: -10,
+      y: -80,
+    },
+  },
+  {
+    id: "butterfly",
+    content:
+      "When animals are pushed out of their homes, it’s becoming more difficult for them to coexist peacefully with humans",
+    place: "right-start",
+    offset: {
+      x: 0,
       y: 0,
     },
   },
@@ -48,6 +58,17 @@ const animals: {
       "My friends and I—all the plants and animals of the rainforest—need people to keep our home safe!",
     place: "left",
   },
+
+  {
+    id: "frog",
+    content:
+      "People around the world need a healthy rainforest, just as much as my friends and I do!",
+    place: "left",
+    offset: {
+      x: 0,
+      y: 0,
+    },
+  },
 ];
 
 export function ClickTheAnimals({
@@ -65,7 +86,7 @@ export function ClickTheAnimals({
           content={animal.content}
           place={animal.place}
           border="1px solid green"
-          className="!z-[100] !w-fit !max-w-96 !rounded-md !bg-neutral-100 !text-2xl !text-primary-700 !opacity-100"
+          className="!lg:max-w-96 !z-[100] !w-fit max-w-72 !rounded-md !bg-neutral-100 !text-2xl !text-primary-700 !opacity-100"
           middlewares={[
             {
               name: "offset",

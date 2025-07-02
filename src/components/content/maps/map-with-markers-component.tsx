@@ -278,11 +278,11 @@ const MapWithMarkersComponent = ({
                     className={clsx(
                       "focus-visible::stroke-primary-600 fill-neutral-100 stroke-neutral-600 stroke-[0.5px] opacity-50 outline-none",
                       isHighlightedCountry &&
-                        "fill-primary-300 opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-1",
+                        "!fill-primary-300 !opacity-100 transition-all duration-150 hover:z-10 focus:stroke-primary-600 focus:stroke-1",
                       isErrorCountry &&
-                        "fill-error-500 opacity-100 transition-all duration-150 hover:z-10",
-                      isHintedCountry && "stroke-primary-400 stroke-1",
-                      isSecondaryCountry && "fill-secondary-300 opacity-100",
+                        "!fill-error-500 !opacity-100 transition-all duration-150 hover:z-10",
+                      isHintedCountry && "!stroke-primary-400 !stroke-1",
+                      isSecondaryCountry && "!fill-secondary-300 !opacity-100",
                     )}
                     tabIndex={
                       highlightedCountries?.includes(getCountryCode(geo))
@@ -316,7 +316,7 @@ const MapWithMarkersComponent = ({
           <Tooltip
             key={marker.tooltipText}
             id={marker.tooltipText}
-            className="!w-48 !rounded-md !bg-neutral-100 !text-primary-700"
+            className="!z-[9999] !w-48 !rounded-md !bg-neutral-100 !text-primary-700 !opacity-100"
             defaultIsOpen
             globalCloseEvents={{
               clickOutsideAnchor: true,
