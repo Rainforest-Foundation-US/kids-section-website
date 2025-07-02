@@ -276,15 +276,15 @@ export function FindTheAnimalsGame() {
   }, [updatePositions]);
 
   return (
-    <div className="relative h-full w-full md:w-5/6">
+    <div className="relative h-full w-full lg:w-5/6">
       <iframe
         ref={iframeRef}
         src="/rainforest.html"
         className="h-full w-full"
         style={{ aspectRatio: "7408.16/4697.1" }} // This is the SVG size inside the rainforest.html file
       />
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-        <AppButton variant="secondary" size="small" onClick={handleReset}>
+      <div className="absolute -bottom-12 left-1/2 -translate-x-1/2">
+        <AppButton variant="primary" size="small" onClick={handleReset}>
           Start over
         </AppButton>
       </div>

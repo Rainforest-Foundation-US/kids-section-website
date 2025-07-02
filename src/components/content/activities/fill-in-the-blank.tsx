@@ -333,7 +333,7 @@ export function FillInTheBlankActivity({
   );
 
   return (
-    <div className="text-center">
+    <div className="max-w-[814px] text-center">
       {!props.isNeutral && (
         <p className="text-xl font-medium leading-snug text-primary-600">
           Click on the box with the right answer
@@ -351,7 +351,7 @@ export function FillInTheBlankActivity({
         </div>
       )}
 
-      <p className={clsx("mb-2 max-w-[814px] text-4xl leading-snug", color)}>
+      <p className={clsx("mb-2 text-4xl leading-snug", color)}>
         {props.preText}
       </p>
 

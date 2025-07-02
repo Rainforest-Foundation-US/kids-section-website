@@ -51,7 +51,6 @@ import {
   LeftDeadLeavesIllustration,
   HelpSlothIllustration,
   FlamingoChameleonAndButterflyIIllustration,
-  RightParrotAndLemurIllustration,
   RightParrotLemurAndFrogIllustration,
 } from "@/components/illustrations/activities-illustrations";
 import {
@@ -658,6 +657,7 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "life-in-the-amazon",
       background: backgroundHouse13,
+      backgroundOpacity: 0.5,
       content: {
         type: "plain",
         data: {
@@ -762,6 +762,7 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "so-much-more-to-learn",
       background: backgroundHouse13,
+      backgroundOpacity: 0.5,
       content: {
         type: "plain",
         data: {
@@ -1000,7 +1001,7 @@ export function useGetDiscoverTheAmazonContent() {
       ],
     },
     {
-      type: "regular",
+      type: "wavy",
       name: "indigenous-communities-have-spent",
       content: {
         type: "plain",
@@ -1256,10 +1257,10 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
+    // TODOK: Re-add illustrations
     plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"] && {
       type: "regular",
       name: "is-this-actor-deforesting-the-amazon-2",
-      background: backgroundDeforestation6,
       content: {
         type: "plain",
         data: {
@@ -1273,18 +1274,6 @@ export function useGetDiscoverTheAmazonContent() {
         postcard: mapPostcard(
           plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"]
             ?.subContent.postcard,
-        ),
-      },
-      illustrations: {
-        bottomLeft: (
-          <MonkeyInABushIllustration
-            className={clsx(bottomLeftIllustrationStyles)}
-          />
-        ),
-        bottomRight: (
-          <RightParrotAndLemurIllustration
-            className={clsx(bottomRightIllustrationStyles, "-right-10")}
-          />
         ),
       },
     },

@@ -120,7 +120,7 @@ export function VignetteSection({ slides, name }: VignetteSectionProps) {
 
               <p
                 className={clsx(
-                  "absolute left-1/2 top-32 w-max -translate-x-1/2 break-all text-5xl font-semibold text-neutral-100 transition-all duration-700 md:top-8 md:text-7xl",
+                  "absolute left-1/2 top-32 w-max -translate-x-1/2 break-all text-5xl font-semibold text-neutral-100 transition-all duration-700 lg:top-8 lg:text-7xl",
                   index === activeIndex
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0",
