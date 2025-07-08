@@ -17,6 +17,7 @@ import { PickOptionMultiPageGameSchemaType } from "./pickOptionMultiPageGame";
 import { FillInTheBlankGameSchemaType } from "./fillInTheBlankGame";
 import { FillInTheBlankMultiPageGameSchemaType } from "./fillInTheBlankMultiPageGame";
 import { LocateInMapSchemaType } from "./locateInMap";
+import { SelectCountriesWithRainforestSchemaType } from "./selectCountriesWithRainforest";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -38,5 +39,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     FillInTheBlankGameSchemaType,
     FillInTheBlankMultiPageGameSchemaType,
     LocateInMapSchemaType,
+    SelectCountriesWithRainforestSchemaType,
   ],
 };

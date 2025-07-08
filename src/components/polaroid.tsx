@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React from "react";
 
-import { FlipIcon } from "./icons/icons";
+import { FlipIcon, JumpToIcon } from "./icons/icons";
 
 const MAX_POLAROID_LENGTH = 30; // Max chars in line - eye precision 😉.
 const DEFAULT_POLAROID_HEIGHT = 132;
@@ -25,6 +25,7 @@ interface PolaroidProps {
   verticalAlign?: "top" | "center" | "bottom";
   description?: string;
   isFlipped?: boolean;
+  isLink?: boolean;
 }
 
 export function Polaroid({ isFlipped, ...rest }: PolaroidProps) {
@@ -104,6 +105,8 @@ function PolaroidFront(props: PolaroidProps) {
     : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
+  const Icon = props.description ? FlipIcon : props.isLink ? JumpToIcon : null;
+
   return (
     <motion.svg
       className={clsx(
@@ -148,21 +151,21 @@ function PolaroidFront(props: PolaroidProps) {
         </text>
       ))}
 
-      {props.description && (
+      {Icon ? (
         <>
           <rect
             x={TURN_ICON_STARTING_X}
             y={0}
             className="h-3 w-3 fill-neutral-100 opacity-80"
           />
-          <FlipIcon
+          <Icon
             x={TURN_ICON_STARTING_X}
             y={0}
             viewBox="0 0 32 32"
             className="text-neutral-dark-800"
           />
         </>
-      )}
+      ) : null}
     </motion.svg>
   );
 }

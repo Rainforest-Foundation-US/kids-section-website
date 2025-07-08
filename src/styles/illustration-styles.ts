@@ -10,5 +10,3 @@ export const leftIllustrationStyles = `left-0 origin-left top-1/4 ${commonIllust
 export const rightIllustrationStyles = `right-0 origin-right top-1/4 ${commonIllustrationStyles}`;
 
 export const topLeftIllustrationStyles = `left-0 top-0 origin-top-left ${commonIllustrationStyles}`;
-
-export const topRightIllustrationStyles = `right-0 top-0 origin-top-right ${commonIllustrationStyles}`;

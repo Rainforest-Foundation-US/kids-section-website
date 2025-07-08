@@ -2,6 +2,10 @@ import { defineField, defineType } from "sanity";
 import { ImageIcon } from "@sanity/icons";
 import { PolaroidCaptionStyle } from "@/components/polaroid";
 import { SanityImageObject } from "@sanity/image-url/lib/types/types";
+import {
+  SectionName,
+  sectionNames,
+} from "@/hooks/useGetDiscoverTheAmazonContent";
 
 export const PolaroidSchemaType = defineType({
   name: "polaroid",
@@ -78,6 +82,14 @@ export const PolaroidSchemaType = defineType({
       },
       initialValue: "center",
     }),
+    defineField({
+      name: "linkTo",
+      title: "Link To",
+      type: "string",
+      options: {
+        list: sectionNames,
+      },
+    }),
   ],
   preview: {
     select: {
@@ -91,6 +103,7 @@ export interface PolaroidData {
   _id: string;
   image: SanityImageObject;
   description?: string;
+  linkTo?: SectionName;
   imageAlignment: "top" | "center" | "bottom";
   caption: string;
   captionStyle?: PolaroidCaptionStyle;

@@ -12,6 +12,7 @@ import { FillInTheBlankGameData } from "../schemaTypes/fillInTheBlankGame";
 import { FillInTheBlankMultiPageGameData } from "../schemaTypes/fillInTheBlankMultiPageGame";
 import { PlainData } from "../schemaTypes/plain";
 import { LocateInMapData } from "../schemaTypes/locateInMap";
+import { SelectCountriesWithRainforestData } from "../schemaTypes/selectCountriesWithRainforest";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -56,7 +57,8 @@ const plainDataQuery = groq`
         captionStyle,
         image,
         description,
-        imageAlignment
+        imageAlignment,
+        linkTo
       },
       "polaroid": singleReference->{
         _id,
@@ -64,7 +66,8 @@ const plainDataQuery = groq`
         captionStyle,
         image,
         description,
-        imageAlignment
+        imageAlignment,
+        linkTo
       },
       "data": singleReference->{
         name,
@@ -149,7 +152,8 @@ const fillInTheBlankGameQuery = groq`
         captionStyle,
         image,
         description,
-        imageAlignment
+        imageAlignment,
+        linkTo
       },
     }
   }
@@ -185,7 +189,8 @@ export async function getHomePage() {
         captionStyle,
         image,
         description,
-        imageAlignment
+        imageAlignment,
+        linkTo
       }
     }`,
   );
@@ -389,4 +394,26 @@ export async function getLocateInMaps() {
   );
 
   return locateInMaps;
+}
+
+export async function getSelectCountriesWithRainforest() {
+  const selectCountriesWithRainforest =
+    await client.fetch<SelectCountriesWithRainforestData>(
+      groq`*[_type == "selectCountriesWithRainforest"][0]{
+      name,
+      background,
+      "backgroundColor": backgroundColor.hex,
+      defaultHintContent,
+      center,
+      scale,
+      markers[]{
+        countryCode,
+        position,
+        tooltipTitle,
+        tooltipDescription,
+      }
+    }`,
+    );
+
+  return selectCountriesWithRainforest;
 }

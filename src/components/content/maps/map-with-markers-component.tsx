@@ -32,7 +32,8 @@ export interface MapWithMarkersOptions {
 export interface Marker {
   position: [number, number];
   text?: string;
-  tooltipText?: string;
+  tooltipTitle?: string;
+  tooltipDescription?: string;
   orientation?:
     | "top-right"
     | "top-left"
@@ -121,16 +122,15 @@ function MapAnnotation(props: Marker) {
       break;
   }
 
-  const tooltipProps = props.tooltipText
+  const tooltipProps = props.tooltipTitle
     ? {
-        "data-tooltip-id": props.tooltipText,
+        "data-tooltip-id": props.tooltipTitle,
         "data-tooltip-html": ReactDOMServer.renderToStaticMarkup(
           <div>
-            <div className="text-lg font-bold">{props.tooltipText}</div>
+            <div className="text-lg font-bold">{props.tooltipTitle}</div>
             <hr className="border-gray-300 my-2" />
             <div className="text-gray-200 text-sm">
-              This is a description with some extra information. You can add
-              more content here.
+              {props.tooltipDescription}
             </div>
           </div>,
         ),
@@ -302,7 +302,8 @@ const MapWithMarkersComponent = ({
             key={marker.position[0] + "-" + marker.position[1]}
             position={marker.position}
             text={marker.text}
-            tooltipText={marker.tooltipText}
+            tooltipTitle={marker.tooltipTitle}
+            tooltipDescription={marker.tooltipDescription}
           />
         ))}
 
@@ -312,10 +313,10 @@ const MapWithMarkersComponent = ({
       </ComposableMap>
 
       {markers?.map((marker) =>
-        marker.tooltipText ? (
+        marker.tooltipTitle ? (
           <Tooltip
-            key={marker.tooltipText}
-            id={marker.tooltipText}
+            key={marker.tooltipTitle}
+            id={marker.tooltipTitle}
             className="!z-[9999] !w-48 !rounded-md !bg-neutral-100 !text-primary-700 !opacity-100"
             defaultIsOpen
             globalCloseEvents={{

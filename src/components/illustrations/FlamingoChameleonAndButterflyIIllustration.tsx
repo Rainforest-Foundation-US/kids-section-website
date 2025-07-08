@@ -445,7 +445,7 @@ export function FlamingoChameleonAndButterflyIIllustration({
           d="M183.52 521.086C148.112 558.513 117.187 593.025 2.02144 583.264"
           stroke="#599B2F"
           strokeWidth="3"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           strokeLinecap="round"
         />
         <path

@@ -65,6 +65,7 @@ import {
   ClickTheAnimalsActivityOptions,
 } from "./activities/click-the-animals";
 import { TextColor } from "@/sanity/lib/colors";
+import { useHomeSectionNavigation } from "../sections";
 
 type PreContent = { type: "sloth" };
 
@@ -136,6 +137,7 @@ type PolaroidData = {
   description?: string;
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
+  linkTo?: SectionName;
 };
 
 type SubContent =
@@ -331,6 +333,8 @@ function PolymorphicSubContent({
   const [isFlipped, setIsFlipped] = useState(-1);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
+  const { onGoToSection } = useHomeSectionNavigation();
+
   if (subContent.type === "postcard") {
     if (!subContent.postcard) {
       return null;
@@ -386,13 +390,17 @@ function PolymorphicSubContent({
             )}
             style={{ perspective: "1000px" }}
             onClick={() =>
-              setIsFlipped((prev) => {
-                if (i === prev) {
-                  return -1;
-                }
+              polaroid?.description
+                ? setIsFlipped((prev) => {
+                    if (i === prev) {
+                      return -1;
+                    }
 
-                return i;
-              })
+                    return i;
+                  })
+                : polaroid?.linkTo
+                  ? onGoToSection(polaroid.linkTo)
+                  : null
             }
           >
             <Polaroid
@@ -401,6 +409,7 @@ function PolymorphicSubContent({
               captionStyle={polaroid?.captionStyle}
               description={polaroid?.description}
               isFlipped={isFlipped === i}
+              isLink={Boolean(polaroid?.linkTo)}
             />
           </li>
         ))}

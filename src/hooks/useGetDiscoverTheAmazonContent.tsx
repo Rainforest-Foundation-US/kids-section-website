@@ -10,6 +10,7 @@ import {
   getFillInTheBlankMultiPageGames,
   getPlainData,
   getLocateInMaps,
+  getSelectCountriesWithRainforest,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -52,6 +53,7 @@ import {
   HelpSlothIllustration,
   FlamingoChameleonAndButterflyIIllustration,
   RightParrotLemurAndFrogIllustration,
+  RightParrotAndLemurIllustration,
 } from "@/components/illustrations/activities-illustrations";
 import {
   bottomLeftIllustrationStyles,
@@ -70,8 +72,9 @@ import { urlFor } from "@/sanity/lib/image";
 import { PolaroidData } from "@/sanity/schemaTypes/polaroid";
 import { PostcardData } from "@/sanity/schemaTypes/postcard";
 import { LocateInMapData } from "@/sanity/schemaTypes/locateInMap";
+import { SelectCountriesWithRainforestData } from "@/sanity/schemaTypes/selectCountriesWithRainforest";
+import { GlassesSlothIllustration } from "@/components/illustrations/GlassesSlothIllustration";
 
-// TODOK: use this type as a name of each schema type
 export const sectionNames = [
   { title: "what-is-the-amazon", value: "what-is-the-amazon" as const },
   {
@@ -227,6 +230,10 @@ export function useGetDiscoverTheAmazonContent() {
   const [locateInMapSections, setLocateInMapSections] = React.useState<
     LocateInMapData[]
   >([]);
+  const [
+    selectCountriesWithRainforestSections,
+    setSelectCountriesWithRainforestSections,
+  ] = React.useState<SelectCountriesWithRainforestData>();
 
   React.useEffect(() => {
     async function getData() {
@@ -241,6 +248,8 @@ export function useGetDiscoverTheAmazonContent() {
         await getFillInTheBlankMultiPageGames();
       const plainSectionsFromServer = await getPlainData();
       const locateInMapSectionsFromServer = await getLocateInMaps();
+      const selectCountriesWithRainforestSectionsFromServer =
+        await getSelectCountriesWithRainforest();
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
@@ -251,6 +260,9 @@ export function useGetDiscoverTheAmazonContent() {
       setFillInTheBlankMultiPageGames(fillInTheBlankMultiPageGamesFromServer);
       setPlainSections(plainSectionsFromServer);
       setLocateInMapSections(locateInMapSectionsFromServer);
+      setSelectCountriesWithRainforestSections(
+        selectCountriesWithRainforestSectionsFromServer,
+      );
     }
 
     getData();
@@ -443,9 +455,9 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
       illustrations: {
-        topLeft: (
-          <HangingSlothIllustration
-            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+        bottomLeft: (
+          <GlassesSlothIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-left-24 -top-24")}
           />
         ),
         bottomRight: (
@@ -516,7 +528,6 @@ export function useGetDiscoverTheAmazonContent() {
       backgroundOpacity: 0.5,
       backgroundColor: "#1e1f1b",
       background: backgroundDeforestation6,
-      textColor: "#e6fae6",
       content: {
         type: "plain",
         data: {
@@ -640,17 +651,21 @@ export function useGetDiscoverTheAmazonContent() {
         },
       },
     },
-    {
+    selectCountriesWithRainforestSections && {
       type: "regular",
       name: "select-countries-with-rainforest",
       background: null,
-      backgroundColor: "#F0F4EF",
+      backgroundColor: selectCountriesWithRainforestSections.backgroundColor,
       defaultHintContent: {
-        hint: "Select the countries with Amazon Rainforest in them",
+        hint: selectCountriesWithRainforestSections.defaultHintContent.hint,
       },
       content: {
         type: "select-countries-with-rainforest",
-        data: { question: "", center: [-65, -22], scale: 280 },
+        data: {
+          center: selectCountriesWithRainforestSections.center,
+          scale: selectCountriesWithRainforestSections.scale,
+          markers: selectCountriesWithRainforestSections.markers,
+        },
       },
     },
     plainSectionsDictionary["life-in-the-amazon"] && {
@@ -1085,7 +1100,6 @@ export function useGetDiscoverTheAmazonContent() {
       name: "climate-change-and-deforestation",
       backgroundColor: "#1e1f1b",
       background: climateChangeWildfires34,
-      textColor: "#e6fae6",
       preContent: { type: "sloth" },
       content: {
         type: "plain",
@@ -1110,7 +1124,6 @@ export function useGetDiscoverTheAmazonContent() {
       name: "what-is-climate-change",
       backgroundColor: "#1e1f1b",
       background: null,
-      textColor: "#e6fae6",
       content: {
         type: "plain",
         data: {
@@ -1131,7 +1144,6 @@ export function useGetDiscoverTheAmazonContent() {
       type: "regular",
       name: "climate-change-effects",
       background: spatialPlanetEarth36,
-      textColor: "#faf5ee",
       content: {
         type: "plain",
         data: {
@@ -1152,7 +1164,6 @@ export function useGetDiscoverTheAmazonContent() {
       name: "rainforest-is-a-carbon-sink",
       backgroundColor: "#f0f4ef", // complementary-100
       background: null,
-      textColor: "#1e1f1b",
       preContent: { type: "sloth" },
       content: {
         type: "plain",
@@ -1171,7 +1182,6 @@ export function useGetDiscoverTheAmazonContent() {
               .polaroids,
           ),
         },
-        // TODOK
         {
           type: "plain",
           data: {
@@ -1245,9 +1255,9 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
       illustrations: {
-        topLeft: (
-          <HangingSlothIllustration
-            className={clsx(topLeftIllustrationStyles, "-left-10 -top-24")}
+        bottomLeft: (
+          <GlassesSlothIllustration
+            className={clsx(bottomLeftIllustrationStyles, "-left-24 -top-24")}
           />
         ),
         bottomRight: (
@@ -1257,7 +1267,6 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    // TODOK: Re-add illustrations
     plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"] && {
       type: "regular",
       name: "is-this-actor-deforesting-the-amazon-2",
@@ -1274,6 +1283,13 @@ export function useGetDiscoverTheAmazonContent() {
         postcard: mapPostcard(
           plainSectionsDictionary["is-this-actor-deforesting-the-amazon-2"]
             ?.subContent.postcard,
+        ),
+      },
+      illustrations: {
+        bottomRight: (
+          <RightParrotAndLemurIllustration
+            className={clsx(bottomRightIllustrationStyles, "-right-10")}
+          />
         ),
       },
     },
@@ -1383,6 +1399,7 @@ function mapPolaroid(polaroid: PolaroidData | undefined) {
     captionStyle: polaroid?.captionStyle,
     description: polaroid?.description,
     imageAlignment: polaroid?.imageAlignment,
+    linkTo: polaroid?.linkTo,
   };
 }
 
