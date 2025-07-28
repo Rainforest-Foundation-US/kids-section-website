@@ -2,6 +2,7 @@ import clsx from "@/utils/clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
 
 import { RoundSlothIllustration } from "../illustrations/activities-illustrations";
 import { GoToButton } from "../buttons";
@@ -65,7 +66,6 @@ import {
   ClickTheAnimalsActivityOptions,
 } from "./activities/click-the-animals";
 import { TextColor } from "@/sanity/lib/colors";
-import { useHomeSectionNavigation } from "../sections";
 
 type PreContent = { type: "sloth" };
 
@@ -332,8 +332,7 @@ function PolymorphicSubContent({
 }) {
   const [isFlipped, setIsFlipped] = useState(-1);
   const [isMouseOver, setIsMouseOver] = useState(false);
-
-  const { onGoToSection } = useHomeSectionNavigation();
+  const router = useRouter();
 
   if (subContent.type === "postcard") {
     if (!subContent.postcard) {
@@ -360,9 +359,9 @@ function PolymorphicSubContent({
         {subContent.polaroid && (
           <Polaroid
             className={clsx(
-              "absolute bottom-0 right-0 top-0 my-auto w-36 rotate-[6.5deg] transition-all duration-150 hover:rotate-0 hover:scale-105 sm:w-56 lg:w-72 lg:translate-x-[50%]",
+              "absolute bottom-0 right-0 top-0 my-auto w-36 rotate-[6.5deg] transition-all duration-150 hover:rotate-0 hover:scale-105 sm:w-56 xl:w-72 xl:translate-x-[50%]",
               isMouseOver &&
-                "right-[-65%] sm:right-[-50%] lg:right-[-40%] xl:right-[-25%]",
+                "right-[-65%] sm:right-[-50%] xl:right-[-40%] 2xl:right-[-25%]",
             )}
             src={subContent.polaroid.image}
             caption={subContent.polaroid.caption}
@@ -389,19 +388,19 @@ function PolymorphicSubContent({
               "flex w-64 cursor-pointer transition-all duration-150 hover:z-10 hover:rotate-0 hover:scale-105 lg:w-72 xl:w-96",
             )}
             style={{ perspective: "1000px" }}
-            onClick={() =>
-              polaroid?.description
-                ? setIsFlipped((prev) => {
-                    if (i === prev) {
-                      return -1;
-                    }
+            onClick={() => {
+              if (polaroid?.description) {
+                setIsFlipped((prev) => {
+                  if (i === prev) {
+                    return -1;
+                  }
 
-                    return i;
-                  })
-                : polaroid?.linkTo
-                  ? onGoToSection(polaroid.linkTo)
-                  : null
-            }
+                  return i;
+                });
+              } else if (polaroid?.linkTo) {
+                router.push(`/${polaroid.linkTo}`);
+              }
+            }}
           >
             <Polaroid
               src={polaroid?.image}

@@ -105,7 +105,13 @@ function PolaroidFront(props: PolaroidProps) {
     : DEFAULT_POLAROID_HEIGHT + (lines.length - 1) * 12;
   const imageHeight = textStartY - 17;
 
-  const Icon = props.description ? FlipIcon : props.isLink ? JumpToIcon : null;
+  let Icon = null;
+
+  if (props.description) {
+    Icon = FlipIcon;
+  } else if (props.isLink) {
+    Icon = JumpToIcon;
+  }
 
   return (
     <motion.svg

@@ -207,7 +207,7 @@ export const sectionNames = [
     value: "why-rfus-works-in-the-amazon" as const,
   },
   { title: "stories", value: "stories" as const },
-  { title: "faq", value: "faq" as const },
+  { title: "q-and-a", value: "q-and-a" as const },
   { title: "credits", value: "credits" as const },
 ];
 

@@ -7,13 +7,12 @@ export function FlipIconReminder() {
   return (
     <div
       ref={elementRef}
-      className="absolute -top-40 bottom-full right-0 my-8 max-w-full md:left-[10%] md:right-[10%] md:max-w-[80%]"
+      className="absolute -top-40 left-1/2 my-8 max-w-full -translate-x-1/2 md:max-w-[80%]"
     >
-      <div className="rounded-lg border-2 border-primary-400 bg-neutral-100 p-4 text-primary-700 shadow-lg">
+      <div className="w-max rounded-lg border-2 border-primary-400 bg-neutral-100 p-4 text-primary-700 shadow-lg">
         <p className="text-gray-800 text-sm">
-          If you see this icon <FlipIcon className="inline h-6 w-6" /> on the
-          top right corner of a postcard or a polaroid, that means you can flip
-          it by clicking on it.
+          If you see this icon <FlipIcon className="inline h-6 w-6" /> click to
+          flip
         </p>
       </div>
     </div>
