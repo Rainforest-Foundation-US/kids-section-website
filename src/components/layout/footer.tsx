@@ -52,7 +52,7 @@ function DownloadResourcesLink({
       onClick={onClick}
       className="cursor-pointer text-left text-base text-neutral-100"
     >
-      Resources for educators
+      Resources for Educators
     </button>
   );
 }
@@ -154,8 +154,8 @@ export function Footer() {
           for the good continuation of our work.
         </div>
         <div className="pb-10 pt-8 text-base text-neutral-dark-100">
-          RAINFOREST FOUNDATION US IS A 501 (C) (3) NOT FOR PROFIT
-          ORGANIZATIONTAX ID: 95-1622945 | PRIVACY POLICY
+          RAINFOREST FOUNDATION US IS A 501 (C) (3) NOT FOR PROFIT ORGANIZATION
+          TAX ID: 95-1622945 | PRIVACY POLICY
         </div>
 
         <VercelSponsorshipBanner />
