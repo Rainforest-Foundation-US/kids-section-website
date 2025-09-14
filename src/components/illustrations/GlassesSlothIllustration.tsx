@@ -253,8 +253,8 @@ export function GlassesSlothIllustration({
           y2="713.568"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9A7326" />
-          <stop offset="1" stop-color="#9A7326" stop-opacity="0" />
+          <stop stopColor="#9A7326" />
+          <stop offset="1" stopColor="#9A7326" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_4_431"
@@ -264,8 +264,8 @@ export function GlassesSlothIllustration({
           y2="803.801"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9A7326" />
-          <stop offset="1" stop-color="#9A7326" stop-opacity="0" />
+          <stop stopColor="#9A7326" />
+          <stop offset="1" stopColor="#9A7326" stopOpacity="0" />
         </linearGradient>
         <image
           id="image0_4_431"

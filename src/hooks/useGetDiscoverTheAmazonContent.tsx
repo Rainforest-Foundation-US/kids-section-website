@@ -11,6 +11,7 @@ import {
   getPlainData,
   getLocateInMaps,
   getSelectCountriesWithRainforest,
+  getClickTheAnimalsGame,
 } from "@/sanity/lib/queries";
 
 import { SectionWithContent } from "@/components/content/content";
@@ -74,6 +75,7 @@ import { PostcardData } from "@/sanity/schemaTypes/postcard";
 import { LocateInMapData } from "@/sanity/schemaTypes/locateInMap";
 import { SelectCountriesWithRainforestData } from "@/sanity/schemaTypes/selectCountriesWithRainforest";
 import { GlassesSlothIllustration } from "@/components/illustrations/GlassesSlothIllustration";
+import { ClickTheAnimalsGameData } from "@/sanity/schemaTypes/clickTheAnimalsGame";
 
 export const sectionNames = [
   { title: "what-is-the-amazon", value: "what-is-the-amazon" as const },
@@ -216,6 +218,8 @@ export type SectionName = (typeof sectionNames)[number]["value"];
 export function useGetDiscoverTheAmazonContent() {
   const [vignettes, setVignettes] = React.useState<VignetteSlide[]>([]);
   const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
+  const [clickTheAnimalsGame, setClickTheAnimalsGame] =
+    React.useState<ClickTheAnimalsGameData>();
   const [statisticsCards, setStatisticsCards] =
     React.useState<StatisticsCard[]>();
   const [pickImageGames, setPickImageGames] =
@@ -239,6 +243,7 @@ export function useGetDiscoverTheAmazonContent() {
     async function getData() {
       const vignettesFromServer = await getVignettes();
       const memoryGameFromServer = await getMemoryGame();
+      const clickTheAnimalsGameFromServer = await getClickTheAnimalsGame();
       const statisticsCardsFromServer = await getStatisticsCards();
       const pickImageGamesFromServer = await getPickImageGames();
       const pickOptionMultiPageGamesFromServer =
@@ -253,6 +258,7 @@ export function useGetDiscoverTheAmazonContent() {
 
       setVignettes(vignettesFromServer);
       setMemoryGame(memoryGameFromServer);
+      setClickTheAnimalsGame(clickTheAnimalsGameFromServer);
       setStatisticsCards(statisticsCardsFromServer);
       setPickImageGames(pickImageGamesFromServer);
       setPickOptionMultiPageGames(pickOptionMultiPageGamesFromServer);
@@ -980,13 +986,14 @@ export function useGetDiscoverTheAmazonContent() {
         ),
       },
     },
-    {
+    clickTheAnimalsGame && {
       type: "regular",
       name: "rainforests-matter",
       content: {
         type: "click-the-animals",
         data: {
-          defaultText: "Click on different animals to see what they say",
+          defaultText: clickTheAnimalsGame.defaultText,
+          animals: clickTheAnimalsGame.animals,
         },
       },
       illustrations: {
@@ -1181,14 +1188,6 @@ export function useGetDiscoverTheAmazonContent() {
             plainSectionsDictionary["rainforest-is-a-carbon-sink"]?.subContent
               .polaroids,
           ),
-        },
-        {
-          type: "plain",
-          data: {
-            wideness: "lg",
-            text: "<b>Rainforest</b> reduces climate change (<b>Biodiversity</b> and <b>Indigenous</b> people keep the rainforest healthy!)",
-            textSize: "md",
-          },
         },
       ],
     },
@@ -1400,6 +1399,7 @@ function mapPolaroid(polaroid: PolaroidData | undefined) {
     description: polaroid?.description,
     imageAlignment: polaroid?.imageAlignment,
     linkTo: polaroid?.linkTo,
+    scrollTo: polaroid?.scrollTo,
   };
 }
 
@@ -1433,5 +1433,6 @@ function mapLocateInMapData(locateInMapData: LocateInMapData) {
     scale: locateInMapData?.scale ?? 100,
     highlightedCountries: locateInMapData?.highlightedCountries ?? [],
     secondaryCountries: locateInMapData?.secondaryCountries ?? [],
+    markers: locateInMapData?.markers ?? [],
   };
 }

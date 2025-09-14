@@ -6,6 +6,7 @@ import {
   sectionNames,
   SectionName,
 } from "@/hooks/useGetDiscoverTheAmazonContent";
+import { Marker } from "@/components/content/maps/map-with-markers-component";
 
 export const LocateInMapSchemaType = defineType({
   name: "locateInMap",
@@ -182,4 +183,5 @@ export interface LocateInMapData
   defaultHintContent: {
     hint: string;
   };
+  markers: Marker[];
 }

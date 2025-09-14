@@ -376,7 +376,12 @@ export function FillInTheBlankActivity({
                     onDrop={onSelectOption}
                     onClick={() => onDeselectOption(blank)}
                     selectedOption={getSelectedOption(blank)}
-                    isPrimary={textColor === "#e6fae6"}
+                    isPrimary={[
+                      "#e6fae6",
+                      "#faf5ee",
+                      "#066406",
+                      "#ffffff",
+                    ].includes(textColor ?? "")}
                     canShowWrongAnswer
                   />
                 );
@@ -385,7 +390,7 @@ export function FillInTheBlankActivity({
           </p>
 
           {props.subText && (
-            <p className={clsx("mt-2 text-4xl leading-snug", textColor)}>
+            <p className={clsx("mt-2 text-4xl leading-snug", color)}>
               {props.subText}
             </p>
           )}

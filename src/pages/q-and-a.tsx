@@ -9,6 +9,7 @@ import Head from "next/head";
 import React from "react";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Modal } from "@/components/modal";
+import { PolymorphicIllustration } from "@/components/content/polymorphic-illustration";
 
 export default function QAndARoute() {
   const mainRef = React.useRef<HTMLDivElement>(null);
@@ -67,7 +68,7 @@ export default function QAndARoute() {
               </Modal>
             ) : (
               <div className="flex flex-1 flex-col space-y-6 pt-6 lg:flex-row lg:space-y-0">
-                {activeQuestion && (
+                {activeQuestion ? (
                   <>
                     <span className="inline-flex max-w-sm flex-col">
                       <span className="ml-[5%] inline-flex w-min">
@@ -98,6 +99,16 @@ export default function QAndARoute() {
                       />
                     </section>
                   </>
+                ) : (
+                  <div className="mx-auto mt-16 flex flex-col items-center">
+                    <p className="text-center text-2xl font-bold text-primary-500">
+                      Click on a question to see the answer
+                    </p>
+                    <PolymorphicIllustration
+                      kind="happy-sloth"
+                      className="scale-75 md:scale-100 xl:scale-125"
+                    />
+                  </div>
                 )}
               </div>
             )}

@@ -36,6 +36,7 @@ const ALL_SELECTABLE_COUNTRIES_KEYS = {
 
 const COUNTRIES_WITH_AMAZON_RAINFOREST = [
   "BRA",
+  "BOL",
   "COL",
   "BOL",
   "GUY",

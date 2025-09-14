@@ -1,77 +1,20 @@
-import { PlacesType, Tooltip } from "react-tooltip";
+import { type PlacesType, Tooltip } from "react-tooltip";
 
 export interface ClickTheAnimalsActivityOptions {
   defaultText: string;
+  animals: {
+    id: string;
+    content: string;
+    place: PlacesType;
+    offset?: {
+      x: number;
+      y: number;
+    };
+  }[];
 }
 
-const animals: {
-  id: string;
-  content: string;
-  place: PlacesType;
-  offset?: {
-    x: number;
-    y: number;
-  };
-}[] = [
-  {
-    id: "flamingo",
-    content:
-      "Many of us live in trees and plants, and with forests disappearing, it’s harder to find a home",
-    place: "right-start",
-    offset: {
-      x: 10,
-      y: -190,
-    },
-  },
-  {
-    id: "chameleon",
-    content: "Without fewer plants, animals don’t have enough food",
-    place: "right-start",
-    offset: {
-      x: -10,
-      y: -80,
-    },
-  },
-  {
-    id: "butterfly",
-    content:
-      "When animals are pushed out of their homes, it’s becoming more difficult for them to coexist peacefully with humans",
-    place: "right-start",
-    offset: {
-      x: 0,
-      y: 0,
-    },
-  },
-  {
-    id: "parrot",
-    content:
-      "When large parts of forests are cut down, animals could become isolated and sick",
-    place: "left-start",
-    offset: {
-      x: -10,
-      y: -60,
-    },
-  },
-  {
-    id: "lemur",
-    content:
-      "My friends and I—all the plants and animals of the rainforest—need people to keep our home safe!",
-    place: "left",
-  },
-
-  {
-    id: "frog",
-    content:
-      "People around the world need a healthy rainforest, just as much as my friends and I do!",
-    place: "left",
-    offset: {
-      x: 0,
-      y: 0,
-    },
-  },
-];
-
 export function ClickTheAnimals({
+  animals,
   defaultText,
 }: ClickTheAnimalsActivityOptions) {
   return (

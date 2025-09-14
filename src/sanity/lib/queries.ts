@@ -13,6 +13,7 @@ import { FillInTheBlankMultiPageGameData } from "../schemaTypes/fillInTheBlankMu
 import { PlainData } from "../schemaTypes/plain";
 import { LocateInMapData } from "../schemaTypes/locateInMap";
 import { SelectCountriesWithRainforestData } from "../schemaTypes/selectCountriesWithRainforest";
+import { ClickTheAnimalsGameData } from "../schemaTypes/clickTheAnimalsGame";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -58,7 +59,8 @@ const plainDataQuery = groq`
         image,
         description,
         imageAlignment,
-        linkTo
+        linkTo,
+        scrollTo
       },
       "polaroid": singleReference->{
         _id,
@@ -67,7 +69,8 @@ const plainDataQuery = groq`
         image,
         description,
         imageAlignment,
-        linkTo
+        linkTo,
+        scrollTo
       },
       "data": singleReference->{
         name,
@@ -153,7 +156,8 @@ const fillInTheBlankGameQuery = groq`
         image,
         description,
         imageAlignment,
-        linkTo
+        linkTo,
+        scrollTo
       },
     }
   }
@@ -169,6 +173,30 @@ const fillInTheBlankMultiPageGameQuery = groq`
     gamePages[]->${fillInTheBlankGameQuery}
   }
 `;
+
+const clickTheAnimalsGameQuery = groq`
+  {
+    name,
+    defaultText,
+    animals[]{
+      id,
+      content,
+      place,
+      offset{
+        x,
+        y
+      }
+    }
+  }
+`;
+
+export async function getClickTheAnimalsGame() {
+  const clickTheAnimalsGame = await client.fetch<ClickTheAnimalsGameData>(
+    groq`*[_type == "clickTheAnimalsGame"][0]${clickTheAnimalsGameQuery}`,
+  );
+
+  return clickTheAnimalsGame;
+}
 
 export async function getHomePage() {
   const homePage = await client.fetch(
@@ -190,7 +218,8 @@ export async function getHomePage() {
         image,
         description,
         imageAlignment,
-        linkTo
+        linkTo,
+        scrollTo
       }
     }`,
   );

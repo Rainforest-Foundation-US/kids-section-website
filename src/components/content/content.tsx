@@ -12,7 +12,7 @@ import {
   useSetHint,
 } from "../controlled-activity-hint";
 import { Polaroid, PolaroidCaptionStyle } from "../polaroid";
-import { ActivitySectionDivider } from "../sections";
+import { ActivitySectionDivider, useHomeSectionNavigation } from "../sections";
 import { RegularSection } from "../sections/regular-section";
 import {
   VignetteSection,
@@ -138,6 +138,7 @@ type PolaroidData = {
   caption?: string;
   captionStyle?: PolaroidCaptionStyle;
   linkTo?: SectionName;
+  scrollTo?: SectionName;
 };
 
 type SubContent =
@@ -333,6 +334,7 @@ function PolymorphicSubContent({
   const [isFlipped, setIsFlipped] = useState(-1);
   const [isMouseOver, setIsMouseOver] = useState(false);
   const router = useRouter();
+  const { onGoToSection } = useHomeSectionNavigation();
 
   if (subContent.type === "postcard") {
     if (!subContent.postcard) {
@@ -399,6 +401,8 @@ function PolymorphicSubContent({
                 });
               } else if (polaroid?.linkTo) {
                 router.push(`/${polaroid.linkTo}`);
+              } else if (polaroid?.scrollTo) {
+                onGoToSection(polaroid.scrollTo);
               }
             }}
           >

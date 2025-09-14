@@ -90,6 +90,14 @@ export const PolaroidSchemaType = defineType({
         list: sectionNames,
       },
     }),
+    defineField({
+      name: "scrollTo",
+      title: "Scroll To",
+      type: "string",
+      options: {
+        list: sectionNames,
+      },
+    }),
   ],
   preview: {
     select: {
@@ -104,6 +112,7 @@ export interface PolaroidData {
   image: SanityImageObject;
   description?: string;
   linkTo?: SectionName;
+  scrollTo?: SectionName;
   imageAlignment: "top" | "center" | "bottom";
   caption: string;
   captionStyle?: PolaroidCaptionStyle;
