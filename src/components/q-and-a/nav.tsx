@@ -10,8 +10,6 @@ type Props = {
 export function QANav({ activeQuestionI, qAndAContent, itemClick }: Props) {
   return (
     <nav className="h-full overflow-hidden px-6 lg:h-[calc(100vh-theme(height.header))] lg:overflow-auto">
-      <h1 className="mb-4 text-lg text-primary-800">What’s your question?</h1>
-
       <ul className="space-y-4 lg:max-w-xs">
         {qAndAContent.map((content, index) => (
           <li key={content.question}>
