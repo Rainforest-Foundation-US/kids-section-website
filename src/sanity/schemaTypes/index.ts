@@ -19,6 +19,7 @@ import { FillInTheBlankMultiPageGameSchemaType } from "./fillInTheBlankMultiPage
 import { LocateInMapSchemaType } from "./locateInMap";
 import { SelectCountriesWithRainforestSchemaType } from "./selectCountriesWithRainforest";
 import { ClickTheAnimalsGameSchemaType } from "./clickTheAnimalsGame";
+import { CongratulationsSchemaType } from "./congratulations";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -42,5 +43,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     LocateInMapSchemaType,
     SelectCountriesWithRainforestSchemaType,
     ClickTheAnimalsGameSchemaType,
+    CongratulationsSchemaType,
   ],
 };

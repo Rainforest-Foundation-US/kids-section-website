@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { AppButton } from "./buttons";
 import { atom, useAtom } from "jotai";
 import { SectionNames } from "./content/content";
+import { useGetCongratulations } from "@/hooks/useGetCongratulations";
 
 type CongratulationsAtomValue = Record<SectionNames, boolean>;
 export const congratulationsAtom = atom<Partial<CongratulationsAtomValue>>({
@@ -19,6 +20,7 @@ export const congratulationsAtom = atom<Partial<CongratulationsAtomValue>>({
 
 export function Congratulations({ name }: { name: SectionNames }) {
   const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
+  const congratulationsData = useGetCongratulations();
 
   // Define animation variants
   const variants = {
@@ -85,10 +87,11 @@ export function Congratulations({ name }: { name: SectionNames }) {
         transition={{ duration: 1 }}
       >
         <h1 className="text-white mb-4 text-4xl font-bold md:text-6xl">
-          Congratulations!
+          {congratulationsData?.title || "Congratulations!"}
         </h1>
         <p className="text-white mb-6 text-2xl md:text-4xl">
-          Great job on finishing the game!
+          {congratulationsData?.description ||
+            "Great job on finishing the game!"}
         </p>
         <AppButton
           variant="primary"
@@ -96,7 +99,7 @@ export function Congratulations({ name }: { name: SectionNames }) {
             setCongratulations({ ...congratulations, [name]: false });
           }}
         >
-          New Game
+          {congratulationsData?.buttonLabel || "New Game"}
         </AppButton>
       </motion.div>
     </div>

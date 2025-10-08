@@ -14,6 +14,7 @@ import { PlainData } from "../schemaTypes/plain";
 import { LocateInMapData } from "../schemaTypes/locateInMap";
 import { SelectCountriesWithRainforestData } from "../schemaTypes/selectCountriesWithRainforest";
 import { ClickTheAnimalsGameData } from "../schemaTypes/clickTheAnimalsGame";
+import { CongratulationsData } from "../schemaTypes/congratulations";
 
 // Define reusable query fragments
 const pickImageGameQuery = groq`
@@ -124,6 +125,7 @@ const fillInTheBlankGameQuery = groq`
   {
     name,
     customName,
+    background,
     question,
     preText,
     subText,
@@ -445,4 +447,16 @@ export async function getSelectCountriesWithRainforest() {
     );
 
   return selectCountriesWithRainforest;
+}
+
+export async function getCongratulations() {
+  const congratulations = await client.fetch<CongratulationsData>(
+    groq`*[_type == "congratulations"][0]{
+      title,
+      description,
+      buttonLabel
+    }`,
+  );
+
+  return congratulations;
 }

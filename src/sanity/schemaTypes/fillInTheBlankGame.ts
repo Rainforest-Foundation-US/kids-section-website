@@ -4,6 +4,7 @@ import { defineField, defineType } from "sanity";
 import { type TextColor, textColorList } from "../lib/colors";
 import { PolaroidData } from "./polaroid";
 import { PostcardData } from "./postcard";
+import { SanityImageObject } from "@sanity/image-url/lib/types/types";
 
 export const FillInTheBlankGameSchemaType = defineType({
   name: "fillInTheBlankGame",
@@ -52,6 +53,14 @@ export const FillInTheBlankGameSchemaType = defineType({
           }
           return true;
         }),
+    }),
+    defineField({
+      name: "background",
+      title: "Background",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
       name: "preText",
@@ -191,6 +200,7 @@ export interface FillInTheBlankGameData {
   contentType: "aboutTheAmazon" | "stories";
   name?: SectionNames;
   customName?: string;
+  background?: SanityImageObject;
   preText: string;
   question: string;
   subText?: string;

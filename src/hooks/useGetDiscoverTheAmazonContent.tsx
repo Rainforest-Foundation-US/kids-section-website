@@ -365,7 +365,11 @@ export function useGetDiscoverTheAmazonContent() {
     rainforestAreExactlyWhatYoudThinkFillInTheBlankGame && {
       type: "regular",
       name: "rainforests-are-exactly-what-you-d-think",
-      background: secondBackground,
+      background: rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.background
+        ? urlFor(
+            rainforestAreExactlyWhatYoudThinkFillInTheBlankGame.background,
+          )?.url()
+        : secondBackground,
       content: {
         type: "fill-in-the-blank",
         data: {
@@ -411,7 +415,9 @@ export function useGetDiscoverTheAmazonContent() {
     },
     rainforestsHaveALotOfRainFillInTheBlankGame && {
       type: "regular",
-      background: secondBackground,
+      background: rainforestsHaveALotOfRainFillInTheBlankGame.background
+        ? urlFor(rainforestsHaveALotOfRainFillInTheBlankGame.background)?.url()
+        : secondBackground,
       name: "rainforests-have-a-lot-of-rain",
       content: {
         type: "fill-in-the-blank",
@@ -636,6 +642,12 @@ export function useGetDiscoverTheAmazonContent() {
       defaultHintContent: {
         hint: theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.hint,
       },
+      background:
+        theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.background
+          ? urlFor(
+              theAmazonSpreadsAcrossMultipleCountriesFillInTheBlankGame.background,
+            )?.url()
+          : null,
       content: {
         type: "fill-in-the-blank",
         data: {
@@ -660,7 +672,9 @@ export function useGetDiscoverTheAmazonContent() {
     selectCountriesWithRainforestSections && {
       type: "regular",
       name: "select-countries-with-rainforest",
-      background: null,
+      background: selectCountriesWithRainforestSections?.background
+        ? urlFor(selectCountriesWithRainforestSections.background)?.url()
+        : null,
       backgroundColor: selectCountriesWithRainforestSections.backgroundColor,
       defaultHintContent: {
         hint: selectCountriesWithRainforestSections.defaultHintContent.hint,
@@ -1022,13 +1036,15 @@ export function useGetDiscoverTheAmazonContent() {
         },
       ],
     },
-    {
+    plainSectionsDictionary["indigenous-communities-have-spent"] && {
       type: "wavy",
       name: "indigenous-communities-have-spent",
       content: {
         type: "plain",
         data: {
-          text: "Indigenous communities have spent thousands of years learning about all the creatures in the rainforest, and have carefully passed down values, knowledge, and practices for keeping the forest where they live in balance.",
+          ...mapPlainData(
+            plainSectionsDictionary["indigenous-communities-have-spent"],
+          ),
         },
       },
     },
@@ -1082,7 +1098,9 @@ export function useGetDiscoverTheAmazonContent() {
     rainforestsInDangerFillInTheBlankGame && {
       type: "regular",
       name: "rainforests-in-danger",
-      background: backgroundForest33,
+      background: rainforestsInDangerFillInTheBlankGame.background
+        ? urlFor(rainforestsInDangerFillInTheBlankGame.background)?.url()
+        : backgroundForest33,
       defaultHintContent: {
         hint: rainforestsInDangerFillInTheBlankGame.hint,
       },
