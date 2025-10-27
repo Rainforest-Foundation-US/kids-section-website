@@ -1,4 +1,5 @@
 import clsx from "@/utils/clsx";
+import { TextColor } from "@/sanity/lib/colors";
 import { AnimatePresence, motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
@@ -65,7 +66,6 @@ import {
   ClickTheAnimals,
   ClickTheAnimalsActivityOptions,
 } from "./activities/click-the-animals";
-import { TextColor } from "@/sanity/lib/colors";
 
 type PreContent = { type: "sloth" };
 

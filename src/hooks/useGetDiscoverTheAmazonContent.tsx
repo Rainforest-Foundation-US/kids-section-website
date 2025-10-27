@@ -1,3 +1,4 @@
+import omit from "lodash/omit";
 import * as React from "react";
 
 import {
@@ -1319,7 +1320,7 @@ export function useGetDiscoverTheAmazonContent() {
           (gamePage) => ({
             type: "fill-in-the-blank",
             data: {
-              ...gamePage,
+              ...omit(gamePage, "name"),
               numberToOptions: gamePage.blanks.map((blank) => ({
                 options: blank.options,
                 correctOptionPosition: blank.correctOptionPosition,
