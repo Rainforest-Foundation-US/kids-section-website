@@ -50,7 +50,7 @@ function CreditsPage({
         Project Credits
       </h1>
       <div className="container mx-auto px-4">
-        <div className="flex flex-col flex-wrap gap-6 lg:h-[900px]">
+        <div className="flex flex-col flex-wrap content-center gap-6 lg:h-[900px]">
           {contributorData.map((category, index) => (
             <Category
               key={category.title}
