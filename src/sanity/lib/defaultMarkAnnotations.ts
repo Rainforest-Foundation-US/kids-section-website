@@ -14,6 +14,12 @@ export const defaultMarkAnnotations = [
         type: "url",
         title: "URL",
       },
+      {
+        name: "blank",
+        title: "Open in new tab",
+        type: "boolean",
+        initialValue: false,
+      },
     ],
   },
   {

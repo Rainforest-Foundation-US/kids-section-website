@@ -15,6 +15,26 @@ const PortableTextRenderer = ({ content }: { content: any }) => {
       strong: ({ children }: { children?: React.ReactNode }) => (
         <strong>{children}</strong>
       ),
+      link: ({
+        children,
+        value,
+      }: {
+        children?: React.ReactNode;
+        value?: { href?: string; blank?: boolean };
+      }) => {
+        const href = value?.href || "#";
+        const isBlank = Boolean(value?.blank);
+
+        return (
+          <a
+            href={href}
+            target={isBlank ? "_blank" : undefined}
+            rel={isBlank ? "noopener noreferrer" : undefined}
+          >
+            {children}
+          </a>
+        );
+      },
       highlightWithTooltip: WordHighlightWithTooltip,
       highlightWithImage: WordHighlightWithImage,
     },
