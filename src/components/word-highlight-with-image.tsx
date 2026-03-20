@@ -25,7 +25,7 @@ export function WordHighlightWithImage({
     return () => setMounted(false);
   }, []);
 
-  if (!value) {
+  if (!value?.image) {
     return (
       <span className="group relative cursor-pointer underline">
         {children}

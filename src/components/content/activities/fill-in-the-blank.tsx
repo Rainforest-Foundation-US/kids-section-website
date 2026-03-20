@@ -336,7 +336,7 @@ export function FillInTheBlankActivity({
     <div className="max-w-[814px] text-center">
       {!props.isNeutral && (
         <p className="text-xl font-medium leading-snug text-primary-600">
-          Click on the box with the right answer
+          Click on the box with the right answer.
         </p>
       )}
 

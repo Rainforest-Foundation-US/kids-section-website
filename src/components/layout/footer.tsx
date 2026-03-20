@@ -113,8 +113,10 @@ export function Footer() {
           <a
             href="https://rainforestfoundation.org/"
             className="cursor-pointer text-base text-neutral-100"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            RFUS website
+            RFUS Website
           </a>
           <Link
             href="/discover-the-amazon"

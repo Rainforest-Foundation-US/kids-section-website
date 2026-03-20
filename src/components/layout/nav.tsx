@@ -66,7 +66,7 @@ export function NavBar({ styles }: { styles?: string }) {
           <li>
             <NavBarLink href="https://rainforestfoundation.org/engage/start-a-fundraiser/">
               <AppButton variant="primary" size="small">
-                Start a fundraiser
+                Start a Fundraiser
               </AppButton>
             </NavBarLink>
           </li>
@@ -120,7 +120,7 @@ export function NavBar({ styles }: { styles?: string }) {
               variant="primary"
               className="block w-full"
             >
-              Start a fundraiser
+              Start a Fundraiser
             </AppLink>
           </li>
         </ul>

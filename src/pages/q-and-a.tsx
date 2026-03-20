@@ -102,7 +102,7 @@ export default function QAndARoute() {
                 ) : (
                   <div className="mx-auto mt-16 flex flex-col items-center">
                     <p className="text-center text-2xl font-bold text-primary-500">
-                      Click on a question to see the answer
+                      Click on a question to see the answer.
                     </p>
                     <PolymorphicIllustration
                       kind="happy-sloth"

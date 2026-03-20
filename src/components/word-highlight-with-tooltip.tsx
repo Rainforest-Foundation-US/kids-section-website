@@ -22,7 +22,7 @@ export function WordHighlightWithTooltip({
     return () => setMounted(false);
   }, []);
 
-  if (!value) {
+  if (!value?.description) {
     return (
       <span className="group relative cursor-pointer underline">
         {children}
