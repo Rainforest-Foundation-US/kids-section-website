@@ -264,7 +264,7 @@ export function FlipIcon(
   const { className, ...rest } = props;
 
   return (
-    <RevertIcon className={`${styles.revertIcon} ${className} `} {...rest} />
+    <RevertIcon className={`${styles.revertIcon} ${className}`} {...rest} />
   );
 }
 
@@ -273,7 +273,5 @@ export function JumpToIcon(
 ) {
   const { className, ...rest } = props;
 
-  return (
-    <LinkIcon className={`${styles.revertIcon} ${className} `} {...rest} />
-  );
+  return <LinkIcon className={`${styles.revertIcon} ${className}`} {...rest} />;
 }

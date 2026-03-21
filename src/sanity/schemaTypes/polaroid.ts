@@ -16,7 +16,18 @@ export const PolaroidSchemaType = defineType({
     defineField({
       name: "caption",
       title: "Caption",
-      type: "string",
+      type: "array",
+      of: [
+        {
+          type: "block",
+          styles: [],
+          marks: {
+            decorators: [{ title: "Strong", value: "strong" }],
+            annotations: [],
+          },
+          lists: [],
+        },
+      ],
     }),
     defineField({
       name: "captionStyle",
@@ -114,6 +125,7 @@ export interface PolaroidData {
   linkTo?: SectionName;
   scrollTo?: SectionName;
   imageAlignment: "top" | "center" | "bottom";
-  caption: string;
+  /** Portable Text blocks or legacy string (Polaroid component accepts both). */
+  caption: string | { _type: string; children?: { text?: string; marks?: string[] }[] }[];
   captionStyle?: PolaroidCaptionStyle;
 }

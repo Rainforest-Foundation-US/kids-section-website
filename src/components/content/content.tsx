@@ -135,7 +135,7 @@ type PagerData = { type: "pager"; data: SingleContent[]; noSloth?: boolean };
 type PolaroidData = {
   image: string | StaticImageData;
   description?: string;
-  caption?: string;
+  caption?: string | { _type: string; children?: { text?: string; marks?: string[] }[] }[];
   captionStyle?: PolaroidCaptionStyle;
   linkTo?: SectionName;
   scrollTo?: SectionName;

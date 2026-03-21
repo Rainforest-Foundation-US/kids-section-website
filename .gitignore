@@ -40,6 +40,12 @@ yarn-error.log*
 # vscode
 .vscode
 
+# cursor
+.cursor
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sanity backup
+backup.tar.gz

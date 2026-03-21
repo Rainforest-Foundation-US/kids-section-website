@@ -1,5 +1,6 @@
 import clsx from "@/utils/clsx";
-import { wrapText, truncateText } from "@/utils/truncateText";
+import { portableTextToSegments } from "@/utils/portable-text-to-caption";
+import { wrapSegments, truncateSegments, wrapText } from "@/utils/truncateText";
 import { motion } from "framer-motion";
 import { StaticImageData } from "next/image";
 import React from "react";
@@ -17,10 +18,15 @@ export enum PolaroidCaptionStyle {
   truncate = "truncate",
 }
 
+/** Portable Text block (caption can be string or array after migration). */
+type CaptionInput =
+  | string
+  | { _type: string; children?: { text?: string; marks?: string[] }[] }[];
+
 interface PolaroidProps {
   className?: string;
   src: string | StaticImageData | undefined;
-  caption?: string;
+  caption?: CaptionInput;
   captionStyle?: PolaroidCaptionStyle;
   verticalAlign?: "top" | "center" | "bottom";
   description?: string;
@@ -57,25 +63,34 @@ export function Polaroid({ isFlipped, ...rest }: PolaroidProps) {
 }
 
 function PolaroidFront(props: PolaroidProps) {
-  const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
+  const segments = React.useMemo(
+    () => portableTextToSegments(props.caption),
+    [props.caption],
+  );
 
-  const noCaption = !props.caption?.length;
+  const noCaption =
+    segments.length === 0 || !segments.some((s) => s.text.trim());
 
   const lines = React.useMemo(() => {
+    if (segments.length === 0) return [];
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
     ) {
-      return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
+      return wrapSegments(segments, MAX_POLAROID_LENGTH);
     }
 
-    const [caption, truncated] = truncateText(
-      captionFromProps,
+    const [truncatedSegments, wasTruncated] = truncateSegments(
+      segments,
       MAX_POLAROID_LENGTH,
     );
-
-    return [caption + (truncated ? "..." : "")];
-  }, [props.captionStyle, captionFromProps]);
+    return [
+      [
+        ...truncatedSegments,
+        ...(wasTruncated ? [{ text: "...", bold: false }] : []),
+      ],
+    ];
+  }, [props.captionStyle, segments]);
 
   if (!props.src) return null;
 
@@ -145,7 +160,7 @@ function PolaroidFront(props: PolaroidProps) {
         height={noCaption ? DEFAULT_POLAROID_HEIGHT : imageHeight}
       />
 
-      {lines.map((caption, i) => (
+      {lines.map((lineSegments, i) => (
         <text
           key={i}
           className="text-4xs [text-shadow:none]"
@@ -153,7 +168,15 @@ function PolaroidFront(props: PolaroidProps) {
           x={70}
           y={textStartY + 12 * i}
         >
-          {caption}
+          {lineSegments.map((seg, j) =>
+            seg.bold ? (
+              <tspan key={j} fontWeight="bold">
+                {seg.text}
+              </tspan>
+            ) : (
+              <tspan key={j}>{seg.text}</tspan>
+            ),
+          )}
         </text>
       ))}
 
@@ -177,25 +200,34 @@ function PolaroidFront(props: PolaroidProps) {
 }
 
 function PolaroidBack(props: PolaroidProps) {
-  const captionFromProps = props.caption ?? ""; // ?? "Fujifilm Instax Wide Format";
+  const segments = React.useMemo(
+    () => portableTextToSegments(props.caption),
+    [props.caption],
+  );
 
-  const noCaption = !props.caption?.length;
+  const noCaption =
+    segments.length === 0 || !segments.some((s) => s.text.trim());
 
   const lines = React.useMemo(() => {
+    if (segments.length === 0) return [];
     if (
       props.captionStyle === PolaroidCaptionStyle.wrap ||
       props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio
     ) {
-      return wrapText(captionFromProps, MAX_POLAROID_LENGTH);
+      return wrapSegments(segments, MAX_POLAROID_LENGTH);
     }
 
-    const [caption, truncated] = truncateText(
-      captionFromProps,
+    const [truncatedSegments, wasTruncated] = truncateSegments(
+      segments,
       MAX_POLAROID_LENGTH,
     );
-
-    return [caption + (truncated ? "..." : "")];
-  }, [props.captionStyle, captionFromProps]);
+    return [
+      [
+        ...truncatedSegments,
+        ...(wasTruncated ? [{ text: "...", bold: false }] : []),
+      ],
+    ];
+  }, [props.captionStyle, segments]);
 
   const shouldWrapPreserveAspectRatio =
     props.captionStyle === PolaroidCaptionStyle.wrapPreserveAspectRatio;
@@ -241,7 +273,7 @@ function PolaroidBack(props: PolaroidProps) {
         )}
       </g>
 
-      {lines.map((caption, i) => (
+      {lines.map((lineSegments, i) => (
         <text
           key={i}
           className="text-4xs [text-shadow:none]"
@@ -249,7 +281,15 @@ function PolaroidBack(props: PolaroidProps) {
           x={70}
           y={textStartY + 12 * i}
         >
-          {caption}
+          {lineSegments.map((seg, j) =>
+            seg.bold ? (
+              <tspan key={j} fontWeight="bold">
+                {seg.text}
+              </tspan>
+            ) : (
+              <tspan key={j}>{seg.text}</tspan>
+            ),
+          )}
         </text>
       ))}
 
