@@ -52,5 +52,5 @@ export * from "./HangingSlothIllustration";
 export * from "./BottomLeftBushIllustration";
 export * from "./HelpSlothIllustration";
 export * from "./RightParrotIllustration";
-export * from "./RightParrotAndLemurIllustration";
-export * from "./RightParrotLemurAndFrogIllustration";
+export * from "./RightToucanAndLemurIllustration";
+export * from "./RightToucanLemurAndFrogIllustration";

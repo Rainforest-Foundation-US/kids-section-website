@@ -42,7 +42,7 @@ export const ClickTheAnimalsGameSchemaType = defineType({
                   { title: "Flamingo", value: "flamingo" },
                   { title: "Chameleon", value: "chameleon" },
                   { title: "Butterfly", value: "butterfly" },
-                  { title: "Parrot", value: "parrot" },
+                  { title: "Toucan", value: "toucan" },
                   { title: "Lemur", value: "lemur" },
                   { title: "Frog", value: "frog" },
                 ],

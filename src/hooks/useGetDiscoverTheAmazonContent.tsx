@@ -54,8 +54,8 @@ import {
   LeftDeadLeavesIllustration,
   HelpSlothIllustration,
   FlamingoChameleonAndButterflyIIllustration,
-  RightParrotLemurAndFrogIllustration,
-  RightParrotAndLemurIllustration,
+  RightToucanLemurAndFrogIllustration,
+  RightToucanAndLemurIllustration,
 } from "@/components/illustrations/activities-illustrations";
 import {
   bottomLeftIllustrationStyles,
@@ -1021,7 +1021,7 @@ export function useGetDiscoverTheAmazonContent() {
           />
         ),
         right: (
-          <RightParrotLemurAndFrogIllustration
+          <RightToucanLemurAndFrogIllustration
             className={clsx(
               rightIllustrationStyles,
               "top-[15%] z-20 lg:top-[20%]",
@@ -1305,8 +1305,8 @@ export function useGetDiscoverTheAmazonContent() {
       },
       illustrations: {
         bottomRight: (
-          <RightParrotAndLemurIllustration
-            className={clsx(bottomRightIllustrationStyles, "-right-10")}
+          <RightToucanAndLemurIllustration
+            className={clsx(bottomRightIllustrationStyles, "-right-32")}
           />
         ),
       },
