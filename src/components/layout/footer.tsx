@@ -1,11 +1,4 @@
 import Image from "next/image";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  InstagramIcon,
-  LinkedinIcon,
-  YoutubeIcon,
-} from "../icons/icons";
 import Link from "next/link";
 import { VercelLogo } from "../icons/vercel";
 import { getEducatorResources } from "@/sanity/lib/queries";
@@ -74,39 +67,6 @@ export function Footer() {
             width={262}
             alt="Rainforest Logo"
           />
-
-          <div className="flex flex-row gap-2">
-            <a
-              href="https://www.facebook.com/RainforestUS"
-              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
-            >
-              <FacebookIcon className="ml-2 mt-1 inline" />
-            </a>
-            <a
-              href="https://twitter.com/RainforestUS"
-              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
-            >
-              <TwitterIcon className="ml-2 mt-1 inline" />
-            </a>
-            <a
-              href="https://www.youtube.com/channel/UC9rUHT4FkKXfNSeVmpr2zYw"
-              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
-            >
-              <YoutubeIcon className="ml-2 mt-1 inline" />
-            </a>
-            <a
-              href="https://www.instagram.com/rainforestUS/"
-              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
-            >
-              <InstagramIcon className="ml-1 mt-1 inline" />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/rainforestus"
-              className="h-8 w-8 rounded-2xl bg-neutral-dark-600"
-            >
-              <LinkedinIcon className="ml-2 mt-1 inline" />
-            </a>
-          </div>
         </div>
 
         <div className="-mx-4 mb-6 mt-8 flex flex-col flex-wrap children:mx-4 children:mb-2 md:flex-row">

@@ -360,8 +360,8 @@ export function useGetDiscoverTheAmazonContent() {
             className={clsx(bottomLeftIllustrationStyles, "-bottom-24")}
           />
         ),
-        left: <WavingSlothIllustration className={leftIllustrationStyles} />,
       },
+      subContent: { type: "illustration", kind: "waving-sloth" },
     },
     rainforestAreExactlyWhatYoudThinkFillInTheBlankGame && {
       type: "regular",
