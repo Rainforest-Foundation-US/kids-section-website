@@ -16,6 +16,16 @@ export default function Document() {
           `,
           }}
         />
+
+        <meta
+          property="og:title"
+          content="Kids' Corner - Rainforest Foundation US"
+        />
+        <meta
+          property="og:description"
+          content="The RFUS Kids' Corner is a place to discover the fascinating secrets of the Amazon and help us protect its animals, plants and communities."
+        />
+        <meta property="og:image" content="Link preview image URL" />
       </Head>
 
       <body>
