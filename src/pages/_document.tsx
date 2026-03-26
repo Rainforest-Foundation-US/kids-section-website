@@ -25,7 +25,7 @@ export default function Document() {
           property="og:description"
           content="The RFUS Kids' Corner is a place to discover the fascinating secrets of the Amazon and help us protect its animals, plants and communities."
         />
-        <meta property="og:image" content="Link preview image URL" />
+        <meta property="og:image" content="/rfus-web-preview.jpeg" />
       </Head>
 
       <body>
