@@ -222,6 +222,12 @@ export async function getHomePage() {
         imageAlignment,
         linkTo,
         scrollTo
+      },
+      seo {
+        title,
+        description,
+        noIndex,
+        "imageUrl": image.asset->url
       }
     }`,
   );
@@ -336,18 +342,53 @@ export async function getFillInTheBlankMultiPageGames() {
 }
 
 export async function getFaqs() {
-  const faqs = await client.fetch(
+  const faqs = await client.fetch<{
+    seo?: { title?: string; description?: string; noIndex?: boolean; imageUrl?: string | null };
+    entries: {
+      question: string;
+      hint: string;
+      answer: string;
+      description: unknown;
+      descriptionPlain?: string;
+    }[];
+  }>(
     groq`*[_type == "faq"][0]{
+      seo {
+        title,
+        description,
+        noIndex,
+        "imageUrl": image.asset->url
+      },
       entries[]{
         question,
         hint,
         answer,
-        description
+        description,
+        "descriptionPlain": pt::text(description)
       }
     }`,
   );
 
   return faqs;
+}
+
+/** ISO timestamps for sitemap <lastmod> (Pages Router sitemap page). */
+export async function getSitemapLastModified() {
+  return client.fetch<{
+    home: string | null;
+    stories: string | null;
+    faq: string | null;
+  }>(groq`{
+    "home": *[_type == "home"][0]._updatedAt,
+    "stories": *[_type == "storyComposition"][0]._updatedAt,
+    "faq": *[_type == "faq"][0]._updatedAt
+  }`).then((data) => ({
+    home: data.home ?? new Date().toISOString(),
+    discover: data.home ?? new Date().toISOString(),
+    stories: data.stories ?? new Date().toISOString(),
+    faq: data.faq ?? new Date().toISOString(),
+    credits: data.home ?? new Date().toISOString(),
+  }));
 }
 
 export async function getNavigation() {
@@ -379,6 +420,12 @@ export async function getStoryComposition() {
     groq`*[_type == "storyComposition"][0]{
       title,
       description,
+      seo {
+        title,
+        description,
+        noIndex,
+        "imageUrl": image.asset->url
+      },
       contentItems[]->{
         "type": _type,
         "data": select(

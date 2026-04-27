@@ -38,7 +38,7 @@ export function NavBar({ styles }: { styles?: string }) {
           height={66}
           width={262}
           priority
-          alt="Rainforest Logo"
+          alt="Rainforest Foundation US logo"
         />
       </Link>
 
