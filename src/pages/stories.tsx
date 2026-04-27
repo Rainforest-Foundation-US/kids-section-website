@@ -1,7 +1,5 @@
 import { NavBar } from "@/components/layout/nav";
 
-import Head from "next/head";
-
 import { Footer } from "@/components/layout/footer";
 import { RegularSection } from "@/components/sections/regular-section";
 import { ContentPager, PagerContent } from "@/components/content/content";
@@ -9,7 +7,7 @@ import { SectionContent } from "@/components/content/section-content";
 
 import React from "react";
 import { PlainData } from "@/sanity/schemaTypes/plain";
-import { getStoryComposition } from "@/sanity/lib/queries";
+import { getEducatorResources, getStoryComposition } from "@/sanity/lib/queries";
 import { PickImageGameData } from "@/sanity/schemaTypes/pickImageGame";
 import { PickOptionGameData } from "@/sanity/schemaTypes/pickOptionGame";
 import {
@@ -21,87 +19,129 @@ import {
   bottomRightIllustrationStyles,
 } from "@/styles/illustration-styles";
 import { StoryCompositionData } from "@/sanity/schemaTypes/storyComposition";
+import type { GetStaticProps } from "next";
+import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
+import { Seo } from "@/components/seo";
+import { JsonLd, breadcrumbJsonLd } from "@/components/json-ld";
+import { resolveStoriesSeo } from "@/lib/resolve-page-seo";
 
-function useGetStoriesContent() {
-  const [storyComposition, setStoryComposition] =
-    React.useState<StoryCompositionData>();
-
-  React.useEffect(() => {
-    async function getData() {
-      const storyCompositionFromServer = await getStoryComposition();
-
-      setStoryComposition(storyCompositionFromServer);
-    }
-
-    getData();
-  }, []);
-
-  if (!storyComposition) {
-    return null;
-  }
-
-  const pageContent: PagerContent[] = storyComposition.contentItems.map(
-    (item) => {
-      switch (item.type) {
-        case "plain":
-          const plainData = item.data as PlainData;
-          return {
-            type: "plain",
-            data: plainData,
-            subContent: plainData.subContent?.postcard && {
-              type: plainData.subContent?.type as "postcard",
-              postcard: plainData.subContent?.postcard,
-            },
-          };
-        case "pickImageGame":
-          const pickImageGameData = item.data as PickImageGameData;
-          return {
-            type: "pick-the-image",
-            data: {
-              wrap: true,
-              ...pickImageGameData,
-            },
-          };
-        case "pickOptionGame":
-          const pickOptionGameData = item.data as PickOptionGameData;
-          return {
-            type: "pick-the-option",
-            data: {
-              wrap: true,
-              ...pickOptionGameData,
-            },
-          };
+function buildStoriesPageContent(
+  storyComposition: StoryCompositionData,
+): PagerContent[] {
+  return storyComposition.contentItems.map((item) => {
+    switch (item.type) {
+      case "plain": {
+        const plainData = item.data as PlainData;
+        return {
+          type: "plain",
+          data: plainData,
+          ...(plainData.subContent?.postcard
+            ? {
+                subContent: {
+                  type: plainData.subContent.type as "postcard",
+                  postcard: plainData.subContent.postcard,
+                },
+              }
+            : {}),
+        };
       }
-    },
-  );
-
-  return pageContent;
+      case "pickImageGame": {
+        const pickImageGameData = item.data as PickImageGameData;
+        return {
+          type: "pick-the-image",
+          data: {
+            wrap: true,
+            ...pickImageGameData,
+          },
+        };
+      }
+      case "pickOptionGame": {
+        const pickOptionGameData = item.data as PickOptionGameData;
+        return {
+          type: "pick-the-option",
+          data: {
+            wrap: true,
+            ...pickOptionGameData,
+          },
+        };
+      }
+    }
+  });
 }
 
-export default function StoriesRoute() {
-  const pageContent = useGetStoriesContent();
+type StoriesProps = {
+  storyComposition: StoryCompositionData | null;
+  pageContent: PagerContent[] | null;
+  educatorResources: EducatorResource[];
+};
 
-  if (!pageContent) {
-    return null;
+export const getStaticProps: GetStaticProps<StoriesProps> = async () => {
+  const [storyComposition, educatorResources] = await Promise.all([
+    getStoryComposition(),
+    getEducatorResources(),
+  ]);
+  const pageContent = storyComposition
+    ? buildStoriesPageContent(storyComposition)
+    : null;
+  return {
+    props: {
+      storyComposition,
+      pageContent,
+      educatorResources,
+    },
+    revalidate: 60,
+  };
+};
+
+export default function StoriesRoute({
+  storyComposition,
+  pageContent,
+  educatorResources,
+}: StoriesProps) {
+  if (!pageContent || !storyComposition) {
+    return (
+      <>
+        <Seo
+          path="/stories"
+          title={resolveStoriesSeo(null).title}
+          description={resolveStoriesSeo(null).description}
+          noIndex
+        />
+        <main className="overflow-hidden bg-secondary-100 p-8">
+          <p className="text-neutral-dark-700">Stories are not available.</p>
+        </main>
+      </>
+    );
   }
+
+  const seo = resolveStoriesSeo(storyComposition);
 
   return (
     <>
-      <Head>
-        <title>{"Stories - Kids' Corner - Rainforest Foundation US"}</title>
-      </Head>
+      <Seo
+        path="/stories"
+        title={seo.title}
+        description={seo.description}
+        imageUrl={seo.imageUrl}
+        noIndex={seo.noIndex}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Stories", path: "/stories" },
+        ])}
+      />
 
       <main className="overflow-hidden bg-secondary-100">
         <RegularSection fullScreen textColor="#1e1f1b" name="stories">
           <NavBar />
 
           <SectionContent className="justify-start">
-            {/* Bottom left illustration */}
+            <h1 className="sr-only">Amazon stories for kids</h1>
             <MonkeyInABushIllustration
               className={bottomLeftIllustrationStyles}
             />
 
-            {/* Right leaves illustration */}
             <RightLeavesIllustration
               className={bottomRightIllustrationStyles}
             />
@@ -115,7 +155,7 @@ export default function StoriesRoute() {
         </RegularSection>
       </main>
 
-      <Footer />
+      <Footer educatorResources={educatorResources} />
     </>
   );
 }

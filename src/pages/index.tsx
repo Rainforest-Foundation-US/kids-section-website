@@ -9,21 +9,39 @@ import {
 } from "@/components/illustrations/home-illustrations";
 import { Polaroid } from "@/components/polaroid";
 import clsx from "@/utils/clsx";
-import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
+import type { GetStaticProps } from "next";
 
 import firstBackground from "@/assets/home/background/first-background.png";
 import secondBackground from "@/assets/home/background/second-background.png";
 
 import { NavBar } from "@/components/layout/nav";
 import { Footer } from "@/components/layout/footer";
-import { useGetHomePageData } from "@/hooks/useGetHomePageData";
+import { getEducatorResources, getHomePage } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import React from "react";
+import { HomePageData } from "@/sanity/schemaTypes/home";
+import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
+import { Seo } from "@/components/seo";
+import { JsonLd, organizationAndWebSiteJsonLd } from "@/components/json-ld";
+import { resolveHomeSeo } from "@/lib/resolve-page-seo";
 
-export default function Home() {
-  const { homePageData, educatorResources } = useGetHomePageData();
+type HomeProps = {
+  homePageData: HomePageData | null;
+  educatorResources: EducatorResource[];
+};
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const [homePageData, educatorResources] = await Promise.all([
+    getHomePage(),
+    getEducatorResources(),
+  ]);
+  return { props: { homePageData, educatorResources }, revalidate: 60 };
+};
+
+export default function Home({ homePageData, educatorResources }: HomeProps) {
+  const seo = resolveHomeSeo(homePageData);
 
   const [isFlipped, setIsFlipped] = React.useState(-1);
 
@@ -42,15 +60,21 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>{"Kids' Corner - Rainforest Foundation US"}</title>
-      </Head>
+      <Seo
+        path="/"
+        title={seo.title}
+        description={seo.description}
+        imageUrl={seo.imageUrl}
+        noIndex={seo.noIndex}
+      />
+      <JsonLd data={organizationAndWebSiteJsonLd()} />
 
       <main className="flex flex-col bg-secondary-100">
         <NavBar styles="bg-secondary-100 sticky top-0" />
 
         <div className="relative pb-[calc(4rem_+_(542px_/_2))]">
           <Image
+            priority
             placeholder="blur"
             className="absolute left-0 right-0 top-0 block h-full w-full object-cover object-bottom"
             src={firstBackground}
@@ -236,7 +260,7 @@ export default function Home() {
           <HomeRightLeavesIllustration className="absolute bottom-[clamp(-6.5rem,_-8vw,_-2.75rem)] right-0 z-20 block w-[25vw] min-w-[9rem] max-w-[21rem]" />
         </div>
 
-        <Footer />
+        <Footer educatorResources={educatorResources} />
       </main>
     </>
   );

@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 import { PlainData } from "./plain";
 import { PickImageGameData } from "./pickImageGame";
 import { PickOptionGameData } from "./pickOptionGame";
+import type { SeoFields } from "./seo";
 
 export const StoryCompositionSchemaType = defineType({
   name: "storyComposition",
@@ -20,6 +21,11 @@ export const StoryCompositionSchemaType = defineType({
       name: "description",
       title: "Description",
       type: "text",
+    }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
     }),
     defineField({
       name: "contentItems",
@@ -55,5 +61,6 @@ interface ContentItem {
 export interface StoryCompositionData {
   title: string;
   description?: string;
+  seo?: SeoFields;
   contentItems: ContentItem[];
 }
