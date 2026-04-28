@@ -8,4 +8,4 @@ export function getDefaultOgImageUrl(): string {
 }
 
 export const DEFAULT_DESCRIPTION =
-  "The RFUS Kids' Corner is a place to discover the fascinating secrets of the Amazon and help us protect its animals, plants and communities." as const;
+  "Learn About Rainforests. Dive into our rainforest-related games, activities, and learning materials for kids. Plus examples of how kids can help to protect rainforests." as const;
