@@ -27,10 +27,6 @@ export default function App({ Component, pageProps }: AppProps) {
         `}
       </Script>
       <Head>
-        <meta
-          name="description"
-          content="The RFUS Kids' Corner is a place to discover the fascinating secrets of the Amazon and help us protect its animals, plants and communities."
-        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

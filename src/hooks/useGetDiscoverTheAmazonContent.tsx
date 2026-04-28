@@ -1,5 +1,4 @@
 import omit from "lodash/omit";
-import * as React from "react";
 
 import {
   getPickImageGames,
@@ -216,64 +215,78 @@ export const sectionNames = [
 
 export type SectionName = (typeof sectionNames)[number]["value"];
 
-export function useGetDiscoverTheAmazonContent() {
-  const [vignettes, setVignettes] = React.useState<VignetteSlide[]>([]);
-  const [memoryGame, setMemoryGame] = React.useState<MemoryGameData>();
-  const [clickTheAnimalsGame, setClickTheAnimalsGame] =
-    React.useState<ClickTheAnimalsGameData>();
-  const [statisticsCards, setStatisticsCards] =
-    React.useState<StatisticsCard[]>();
-  const [pickImageGames, setPickImageGames] =
-    React.useState<PickImageGameData[]>();
-  const [pickOptionMultiPageGames, setPickOptionMultiPageGames] =
-    React.useState<PickOptionMultiPageGameData[]>();
-  const [fillInTheBlankGames, setFillInTheBlankGames] =
-    React.useState<FillInTheBlankGameData[]>();
-  const [fillInTheBlankMultiPageGames, setFillInTheBlankMultiPageGames] =
-    React.useState<FillInTheBlankMultiPageGameData[]>();
-  const [plainSections, setPlainSections] = React.useState<PlainData[]>([]);
-  const [locateInMapSections, setLocateInMapSections] = React.useState<
-    LocateInMapData[]
-  >([]);
+export type DiscoverTheAmazonData = {
+  vignettes: VignetteSlide[];
+  memoryGame: MemoryGameData | undefined;
+  clickTheAnimalsGame: ClickTheAnimalsGameData | undefined;
+  statisticsCards: StatisticsCard[] | undefined;
+  pickImageGames: PickImageGameData[] | undefined;
+  pickOptionMultiPageGames: PickOptionMultiPageGameData[] | undefined;
+  fillInTheBlankGames: FillInTheBlankGameData[] | undefined;
+  fillInTheBlankMultiPageGames: FillInTheBlankMultiPageGameData[] | undefined;
+  plainSections: PlainData[];
+  locateInMapSections: LocateInMapData[];
+  selectCountriesWithRainforestSections:
+    | SelectCountriesWithRainforestData
+    | undefined;
+};
+
+export async function fetchDiscoverTheAmazonData(): Promise<DiscoverTheAmazonData> {
   const [
+    vignettes,
+    memoryGame,
+    clickTheAnimalsGame,
+    statisticsCards,
+    pickImageGames,
+    pickOptionMultiPageGames,
+    fillInTheBlankGames,
+    fillInTheBlankMultiPageGames,
+    plainSections,
+    locateInMapSections,
     selectCountriesWithRainforestSections,
-    setSelectCountriesWithRainforestSections,
-  ] = React.useState<SelectCountriesWithRainforestData>();
+  ] = await Promise.all([
+    getVignettes(),
+    getMemoryGame(),
+    getClickTheAnimalsGame(),
+    getStatisticsCards(),
+    getPickImageGames(),
+    getPickOptionMultiPageGames(),
+    getFillInTheBlankGames(),
+    getFillInTheBlankMultiPageGames(),
+    getPlainData(),
+    getLocateInMaps(),
+    getSelectCountriesWithRainforest(),
+  ]);
 
-  React.useEffect(() => {
-    async function getData() {
-      const vignettesFromServer = await getVignettes();
-      const memoryGameFromServer = await getMemoryGame();
-      const clickTheAnimalsGameFromServer = await getClickTheAnimalsGame();
-      const statisticsCardsFromServer = await getStatisticsCards();
-      const pickImageGamesFromServer = await getPickImageGames();
-      const pickOptionMultiPageGamesFromServer =
-        await getPickOptionMultiPageGames();
-      const fillInTheBlankGamesFromServer = await getFillInTheBlankGames();
-      const fillInTheBlankMultiPageGamesFromServer =
-        await getFillInTheBlankMultiPageGames();
-      const plainSectionsFromServer = await getPlainData();
-      const locateInMapSectionsFromServer = await getLocateInMaps();
-      const selectCountriesWithRainforestSectionsFromServer =
-        await getSelectCountriesWithRainforest();
+  return {
+    vignettes,
+    memoryGame,
+    clickTheAnimalsGame,
+    statisticsCards,
+    pickImageGames,
+    pickOptionMultiPageGames,
+    fillInTheBlankGames,
+    fillInTheBlankMultiPageGames,
+    plainSections,
+    locateInMapSections,
+    selectCountriesWithRainforestSections,
+  };
+}
 
-      setVignettes(vignettesFromServer);
-      setMemoryGame(memoryGameFromServer);
-      setClickTheAnimalsGame(clickTheAnimalsGameFromServer);
-      setStatisticsCards(statisticsCardsFromServer);
-      setPickImageGames(pickImageGamesFromServer);
-      setPickOptionMultiPageGames(pickOptionMultiPageGamesFromServer);
-      setFillInTheBlankGames(fillInTheBlankGamesFromServer);
-      setFillInTheBlankMultiPageGames(fillInTheBlankMultiPageGamesFromServer);
-      setPlainSections(plainSectionsFromServer);
-      setLocateInMapSections(locateInMapSectionsFromServer);
-      setSelectCountriesWithRainforestSections(
-        selectCountriesWithRainforestSectionsFromServer,
-      );
-    }
-
-    getData();
-  }, []);
+export function buildDiscoverTheAmazonContent(data: DiscoverTheAmazonData) {
+  const {
+    vignettes,
+    memoryGame,
+    clickTheAnimalsGame,
+    statisticsCards,
+    pickImageGames,
+    pickOptionMultiPageGames,
+    fillInTheBlankGames,
+    fillInTheBlankMultiPageGames,
+    plainSections,
+    locateInMapSections,
+    selectCountriesWithRainforestSections,
+  } = data;
 
   const whichImagesShowTheAmazonPickImageGame = pickImageGames?.find(
     (pickImageGame) => pickImageGame.name === "which-images-show-the-amazon",

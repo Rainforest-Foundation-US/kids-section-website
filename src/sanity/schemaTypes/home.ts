@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 import { HomeIcon } from "@sanity/icons";
 import { PolaroidData } from "./polaroid";
+import type { SeoFields } from "./seo";
 
 export const HomePageSchemaType = defineType({
   name: "home",
@@ -79,6 +80,11 @@ export const HomePageSchemaType = defineType({
       title: "Description Subtitle",
       type: "string",
     }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
   ],
   preview: {
     select: {
@@ -99,4 +105,5 @@ export interface HomePageData {
   subtitle?: string;
   supportButtonLabel: string;
   supportLinkUrl: string;
+  seo?: SeoFields;
 }

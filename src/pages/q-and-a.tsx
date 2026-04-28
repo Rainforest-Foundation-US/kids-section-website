@@ -4,20 +4,54 @@ import { Footer } from "@/components/layout/footer";
 import { NavBar } from "@/components/layout/nav";
 import { RegularSection } from "@/components/sections/regular-section";
 import { QANav } from "@/components/q-and-a/nav";
-import { useGetQAndAContent } from "@/components/q-and-a/useGetContent";
-import Head from "next/head";
+import type { QAndAQuestion } from "@/components/q-and-a/useGetContent";
 import React from "react";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 import { Modal } from "@/components/modal";
 import { PolymorphicIllustration } from "@/components/content/polymorphic-illustration";
+import { getEducatorResources, getFaqs } from "@/sanity/lib/queries";
+import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
+import type { GetStaticProps } from "next";
+import { Seo } from "@/components/seo";
+import { JsonLd, breadcrumbJsonLd, faqPageJsonLd } from "@/components/json-ld";
+import { resolveFaqSeo } from "@/lib/resolve-page-seo";
 
-export default function QAndARoute() {
+type QAndAProps = {
+  qAndAContent: QAndAQuestion[];
+  faqSeo: Parameters<typeof resolveFaqSeo>[0];
+  educatorResources: EducatorResource[];
+};
+
+export const getStaticProps: GetStaticProps<QAndAProps> = async () => {
+  const [faqs, educatorResources] = await Promise.all([
+    getFaqs(),
+    getEducatorResources(),
+  ]);
+  const entries = (faqs?.entries ?? []) as QAndAQuestion[];
+  return {
+    props: {
+      qAndAContent: entries,
+      faqSeo: faqs?.seo,
+      educatorResources,
+    },
+    revalidate: 60,
+  };
+};
+
+function combinedAnswerText(entry: QAndAQuestion) {
+  return [entry.answer, entry.descriptionPlain].filter(Boolean).join(" ");
+}
+
+export default function QAndARoute({
+  qAndAContent,
+  faqSeo,
+  educatorResources,
+}: QAndAProps) {
   const mainRef = React.useRef<HTMLDivElement>(null);
   const [activeQuestionI, setActiveQuestionI] = React.useState(-1);
   const [isMobile, setIsMobile] = React.useState(true);
   const [isClient, setIsClient] = React.useState(false);
 
-  const qAndAContent = useGetQAndAContent();
   const activeQuestion = qAndAContent[activeQuestionI] ?? null;
 
   React.useEffect(() => {
@@ -25,14 +59,8 @@ export default function QAndARoute() {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1024);
     };
-
-    // Set initial value
     handleResize();
-
-    // Add event listener
     window.addEventListener("resize", handleResize);
-
-    // Clean up
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -40,16 +68,44 @@ export default function QAndARoute() {
     setActiveQuestionI(index);
   };
 
+  const seo = resolveFaqSeo(faqSeo);
+  const faqJson = qAndAContent.map((e) => ({
+    question: e.question,
+    answerText: combinedAnswerText(e),
+  }));
+
   return (
     <>
-      <Head>
-        <title>{"Q&A - Kids' Corner - Rainforest Foundation US"}</title>
-      </Head>
+      <Seo
+        path="/q-and-a"
+        title={seo.title}
+        description={seo.description}
+        imageUrl={seo.imageUrl}
+        noIndex={seo.noIndex}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Q&A", path: "/q-and-a" },
+        ])}
+      />
+      {faqJson.length > 0 ? <JsonLd data={faqPageJsonLd(faqJson)} /> : null}
+
+      <section className="sr-only" aria-hidden>
+        {qAndAContent.map((entry, i) => (
+          <article key={i}>
+            <h2>{entry.question}</h2>
+            <p>{entry.answer}</p>
+            {entry.descriptionPlain ? <p>{entry.descriptionPlain}</p> : null}
+          </article>
+        ))}
+      </section>
 
       <main className="overflow-hidden overflow-y-auto bg-secondary-100">
         <RegularSection fullScreen textColor="#1e1f1b" name="q-and-a">
           <NavBar />
 
+          <h1 className="sr-only">Amazon rainforest questions and answers for kids</h1>
           <div className="relative z-10 my-4 flex flex-1 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
             <QANav
               activeQuestionI={activeQuestionI}
@@ -116,7 +172,7 @@ export default function QAndARoute() {
         </RegularSection>
       </main>
 
-      <Footer />
+      <Footer educatorResources={educatorResources} />
     </>
   );
 }

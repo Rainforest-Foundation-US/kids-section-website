@@ -14,6 +14,11 @@ export const FaqSchemaType = defineType({
       type: "string",
     }),
     defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
+    defineField({
       name: "entries",
       title: "Entries",
       type: "array",

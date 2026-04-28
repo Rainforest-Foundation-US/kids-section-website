@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { VercelLogo } from "../icons/vercel";
-import { getEducatorResources } from "@/sanity/lib/queries";
-import { useEffect, useState } from "react";
 import { EducatorResource } from "@/sanity/schemaTypes/educatorResource";
 
 function VercelSponsorshipBanner() {
@@ -50,13 +48,11 @@ function DownloadResourcesLink({
   );
 }
 
-export function Footer() {
-  const [resources, setResources] = useState<EducatorResource[]>([]);
-
-  useEffect(() => {
-    getEducatorResources().then(setResources);
-  }, []);
-
+export function Footer({
+  educatorResources,
+}: {
+  educatorResources: EducatorResource[];
+}) {
   return (
     <footer className="relative z-10 bg-neutral-dark-700 py-10">
       <div className="mx-6 max-w-5xl lg:mx-auto">
@@ -65,7 +61,7 @@ export function Footer() {
             src="/large-logo-white.png"
             height={66}
             width={262}
-            alt="Rainforest Logo"
+            alt="Rainforest Foundation US logo"
           />
         </div>
 
@@ -96,7 +92,7 @@ export function Footer() {
           >
             Questions and Answers
           </Link>
-          <DownloadResourcesLink resources={resources} />
+          <DownloadResourcesLink resources={educatorResources} />
           <Link
             href="/credits"
             className="cursor-pointer text-base text-neutral-100"

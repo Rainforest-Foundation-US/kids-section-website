@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /studio/
+Disallow: /api/
+
+Sitemap: https://kids.rainforestfoundation.org/sitemap.xml

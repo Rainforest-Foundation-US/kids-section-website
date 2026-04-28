@@ -5,7 +5,3 @@ type PropsOf<C extends (...args: any) => any> = Parameters<C>[0];
 
 type Id = string | number;
 
-// Extend Window interface to include mobileCheck
-interface Window {
-  mobileCheck?: () => boolean;
-}

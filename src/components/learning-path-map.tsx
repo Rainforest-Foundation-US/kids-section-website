@@ -8,22 +8,35 @@ import { useHomeSectionNavigation } from "./sections";
 import { SectionName } from "@/hooks/useGetDiscoverTheAmazonContent";
 import { getNavigation } from "@/sanity/lib/queries";
 
+type LearningPathItem = { id: SectionName; title: string };
+
 const AnimatedIconChevronUp = animated(IconChevronUp);
 const AnimatedDiv = animated("div");
 
-export function LearningPath() {
+export function LearningPath({
+  initialPaths,
+}: {
+  /** When set (e.g. from ISR), skips client fetch of navigation. */
+  initialPaths?: LearningPathItem[];
+}) {
   const { onGoToSection } = useHomeSectionNavigation();
   const [containerRef, size] = useMeasure<HTMLDivElement>();
   const [isCollapsed, setIsCollapsed] = React.useState(true);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  const [learningPath, setLearningPath] = React.useState<
-    { id: SectionName; title: string }[]
-  >([]);
+  const [learningPath, setLearningPath] = React.useState<LearningPathItem[]>(
+    () => initialPaths ?? [],
+  );
   const [activeActivity, setActiveActivity] = React.useState<
     SectionName | undefined
-  >(undefined);
+  >(() => initialPaths?.[0]?.id);
 
   React.useEffect(() => {
+    if (initialPaths?.length) {
+      setLearningPath(initialPaths);
+      setActiveActivity(initialPaths[0]?.id);
+      return;
+    }
+
     getNavigation().then((data) => {
       const path = data.paths.map((path) => ({
         id: path.id,
@@ -33,7 +46,7 @@ export function LearningPath() {
       setActiveActivity(path?.[0]?.id ?? undefined);
       setLearningPath(path);
     });
-  }, []);
+  }, [initialPaths]);
 
   React.useEffect(() => {
     const handleScroll = () => {

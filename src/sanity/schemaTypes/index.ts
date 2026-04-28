@@ -20,9 +20,11 @@ import { LocateInMapSchemaType } from "./locateInMap";
 import { SelectCountriesWithRainforestSchemaType } from "./selectCountriesWithRainforest";
 import { ClickTheAnimalsGameSchemaType } from "./clickTheAnimalsGame";
 import { CongratulationsSchemaType } from "./congratulations";
+import { SeoObjectType } from "./seo";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
+    SeoObjectType,
     VignetteSchemaType,
     MemoryGameSchemaType,
     EducatorResource,
