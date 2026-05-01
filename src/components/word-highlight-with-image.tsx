@@ -13,6 +13,8 @@ export function WordHighlightWithImage({
   value?: { image: SanityImage };
 }) {
   const [mounted, setMounted] = React.useState(false);
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
+  const imgRef = React.useRef<HTMLImageElement>(null);
 
   // Generate a unique ID for each tooltip
   const tooltipId = React.useMemo(
@@ -24,6 +26,14 @@ export function WordHighlightWithImage({
     setMounted(true);
     return () => setMounted(false);
   }, []);
+
+  // Cached images may finish before React attaches `onLoad`, so re-check
+  // once the <img> is in the DOM.
+  React.useEffect(() => {
+    if (mounted && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setIsImageLoaded(true);
+    }
+  }, [mounted]);
 
   if (!value?.image) {
     return (
@@ -53,14 +63,35 @@ export function WordHighlightWithImage({
             place="top"
             className="!z-50 !rounded-md !border-primary-300 !bg-primary-600 !p-2 !opacity-95"
           >
-            <Image
-              src={image}
-              alt={alt}
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: "200px", height: "auto" }}
-            />
+            <div
+              className="relative"
+              style={{
+                width: "200px",
+                aspectRatio: isImageLoaded ? undefined : "1 / 1",
+              }}
+            >
+              {!isImageLoaded && (
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 animate-pulse rounded bg-primary-300/40"
+                />
+              )}
+              <Image
+                ref={imgRef}
+                src={image}
+                alt={alt}
+                width={0}
+                height={0}
+                sizes="100vw"
+                loading="eager"
+                onLoad={() => setIsImageLoaded(true)}
+                style={{
+                  width: "200px",
+                  height: "auto",
+                  opacity: isImageLoaded ? 1 : 0,
+                }}
+              />
+            </div>
           </Tooltip>,
           document.getElementById("app-root")!,
         )}

@@ -29,6 +29,9 @@ type MemoryGameActivityProps = React.PropsWithChildren<
 
 const MAX_UNIQUE_CARDS_IN_THE_GAME = 9;
 
+/** Matches card flip: `delay-200` + `duration-200` on the face image. */
+const FLIP_ANIMATION_END_MS = 400;
+
 export function MemoryGame(props: MemoryGameActivityProps) {
   const [congratulations, setCongratulations] = useAtom(congratulationsAtom);
   const [cardsLeft, setCardsLeft] = React.useState(
@@ -43,10 +46,25 @@ export function MemoryGame(props: MemoryGameActivityProps) {
   const [disabled, setDisabled] = React.useState(false);
 
   const { playSound } = usePlaySounds();
+  const flipSoundTimeoutRef = React.useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (flipSoundTimeoutRef.current !== null) {
+        clearTimeout(flipSoundTimeoutRef.current);
+      }
+    };
+  }, []);
 
   React.useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
+
+      if (flipSoundTimeoutRef.current !== null) {
+        clearTimeout(flipSoundTimeoutRef.current);
+      }
 
       if (choiceOne.image.src === choiceTwo.image.src) {
         setLocalCards((prevCards) => {
@@ -60,12 +78,18 @@ export function MemoryGame(props: MemoryGameActivityProps) {
         });
         setCardsLeft((prev) => prev - 1);
         resetTurn();
-        playSound("correct");
+        flipSoundTimeoutRef.current = setTimeout(() => {
+          flipSoundTimeoutRef.current = null;
+          playSound("correct");
+        }, FLIP_ANIMATION_END_MS);
       } else {
         setTimeout(() => {
           resetTurn();
         }, 2000);
-        playSound("incorrect");
+        flipSoundTimeoutRef.current = setTimeout(() => {
+          flipSoundTimeoutRef.current = null;
+          playSound("incorrect");
+        }, FLIP_ANIMATION_END_MS);
       }
     }
   }, [choiceOne, choiceTwo, playSound]);
